@@ -1,0 +1,9 @@
+GB:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 6
+  :account_number_position: 15
+  :account_number_length: 8
+  :total_length: 22
+  :iban_national_id_length: 10
