@@ -38,6 +38,8 @@ module IBAN
     end
 
     def branch_code
+      return unless structure[:branch_code_length] > 0
+
       iban.slice(
         structure[:branch_code_position] - 1,
         structure[:branch_code_length]
@@ -52,7 +54,12 @@ module IBAN
     end
 
     def iban_national_id
-      (bank_code + branch_code).slice(0, structure[:iban_national_id_length])
+      national_id = branch_code.nil? ? bank_code : bank_code + branch_code
+      national_id.slice(0, structure[:iban_national_id_length])
+    end
+
+    def bban
+      iban[4..-1]
     end
 
     ###############
@@ -64,7 +71,8 @@ module IBAN
         valid_country_code?,
         valid_characters?,
         valid_check_digits?,
-        valid_length?
+        valid_length?,
+        valid_format?,
       ].all?
     end
 
@@ -86,8 +94,9 @@ module IBAN
         @errors.delete(:check_digits)
         true
       else
-        @errors[:check_digits] = "Check digits failed modulus check. Should " \
-                                 "have been #{calculated_check_digits}"
+        @errors[:check_digits] = "Check digits failed modulus check. " \
+                                 "Expected #{check_digits}, received " \
+                                 "#{calculated_check_digits}"
         false
       end
     end
@@ -114,6 +123,18 @@ module IBAN
       else
         @errors.delete(:characters)
         true
+      end
+    end
+
+    def valid_format?
+      return unless valid_country_code?
+
+      if bban =~ Regexp.new(structure[:bban_format])
+        @errors.delete(:format)
+        true
+      else
+        @errors[:format] = "Unexpected format for a #{country_code} IBAN."
+        false
       end
     end
 

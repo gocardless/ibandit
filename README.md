@@ -5,10 +5,9 @@ IBAN is a Ruby library for manipulating and validating
 allows you to:
 1) Validate an IBAN's check digits and structure
 2) Deconstruct an IBAN into national banking details
-3) TODO: Build an IBAN from national banking details
+3) TODO: Build an IBAN from national banking details (e.g., UK account number and sort code)
 
-The gem is kept up to date using the IBAN structure file from SWIFT. (TODO: add
-script that automatically converts this to YAML)
+The gem is kept up to date using the IBAN structure file from SWIFT.
 
 ## Usage
 
@@ -47,6 +46,13 @@ After validations, you can fetch details of any errors:
 iban.errors                    # => { country_code: "'XQ' is not a valid..." }
 ```
 
+The following error keys may be set:
+- `country_code`
+- `check_digits`
+- `characters`
+- `length`
+- `format`
+
 ### Deconstructing an IBAN into national banking details
 
 SWIFT define the following components for IBANs, and publish details of how each
@@ -54,6 +60,9 @@ county combines them:
 
 `country_code`
 :    The [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) country code prefix
+
+`check_digits`
+:    Two digits calculated using part of the ISO/IEC 7064:2003 standard
 
 `bank_code`
 :    The SWIFT identifier for the bank to which the IBAN refers
@@ -63,9 +72,6 @@ county combines them:
 
 `account_number`
 :    The account number for the account
-
-`check_digits`
-:    Two digits calculated using part of the ISO/IEC 7064:2003 standard
 
 The SWIFT IBAN components are all available as methods on an `IBAN` object:
 

@@ -153,6 +153,41 @@ describe IBAN::IBAN do
     end
   end
 
+  describe "#valid_format?" do
+    subject { iban.valid_format? }
+
+    context "with valid details" do
+      let(:iban_code) { "GB82WEST12345698765432" }
+      it { is_expected.to eq(true) }
+
+      it "clears errors on the IBAN" do
+        iban.instance_variable_set(:@errors, format: "error!")
+        iban.valid_format?
+        expect(iban.errors).to_not include(:format)
+      end
+    end
+
+    context "with invalid details" do
+      let(:iban_code) { "GB82WEST12AAAAAA7654" }
+      it { is_expected.to eq(false) }
+
+      it "sets errors on the IBAN" do
+        iban.valid_format?
+        expect(iban.errors).to include(:format)
+      end
+    end
+
+    context "with an invalid country_code" do
+      let(:iban_code) { "AA82WEST12AAAAAA7654" }
+      it { is_expected.to be_nil }
+
+      it "does not set errors on the IBAN" do
+        iban.valid_format?
+        expect(iban.errors).to_not include(:format)
+      end
+    end
+  end
+
   describe "#valid?" do
     after { iban.valid? }
 
@@ -160,5 +195,6 @@ describe IBAN::IBAN do
     specify { expect(iban).to receive(:valid_characters?).at_least(1) }
     specify { expect(iban).to receive(:valid_check_digits?).at_least(1) }
     specify { expect(iban).to receive(:valid_length?).at_least(1) }
+    specify { expect(iban).to receive(:valid_format?).at_least(1) }
   end
 end
