@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC)
+    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC SM)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -17,6 +17,10 @@ module IBAN
         build_iban(country_code, bban)
       end
     end
+
+    ##################################
+    # Country-specific BBAN creation #
+    ##################################
 
     def self.build_es_bban(opts)
       [
@@ -38,11 +42,13 @@ module IBAN
       [italian_check_digit(combined_code), combined_code].join
     end
 
-    # Note: the French "rib_key" check digit is a public attribute. It's
-    # probably wiser to ask the customer for it than to calculate it (or it
-    # obviously can't serve its purpose of checking for typos in the other
-    # fields they've entered).
+    def self.build_sm_bban(opts)
+      build_it_bban(opts)
+    end
+
     def self.build_fr_bban(opts)
+      # Note: since the French "rib_key" check digit is a public attribute it's
+      # probably wiser to ask the customer for it than to calculate it
       rib_key = opts[:rib_key] || rib_check_digits(opts[:bank_code],
                                                    opts[:branch_code],
                                                    opts[:account_number])
@@ -72,9 +78,9 @@ module IBAN
       ].join
     end
 
-    ##########################
-    # Check digit generation #
-    ##########################
+    ##############################
+    # Check digit helper methods #
+    ##############################
 
     def self.mod_11_check_digit(string)
       scaled_values = string.chars.map.with_index do |digit, index|
@@ -165,6 +171,7 @@ module IBAN
       when 'PT' then %i(bank_code branch_code account_number)
       when 'IT' then %i(bank_code branch_code account_number)
       when 'MC' then %i(bank_code branch_code account_number)
+      when 'SM' then %i(bank_code branch_code account_number)
       end
     end
 

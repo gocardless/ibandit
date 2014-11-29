@@ -107,6 +107,49 @@ describe IBAN::IBANBuilder do
       end
     end
 
+    context "with SM as the country_code" do
+      let(:args) do
+        {
+          country_code: 'SM',
+          bank_code: "05428",
+          branch_code: '11101',
+          account_number: '000000123456'
+        }
+      end
+
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("SM88X0542811101000000123456") }
+      end
+
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+    end
+
     context "with FR as the country_code" do
       let(:args) do
         {
