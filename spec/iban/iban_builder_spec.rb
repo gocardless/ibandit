@@ -21,186 +21,230 @@ describe IBAN::IBANBuilder do
       end
     end
 
-    context "with a supported country_code" do
-      let(:args) { { country_code: 'ES' } }
-
-      it "calls the relevant builder" do
-        expect(described_class).to receive(:build_es_iban)
-        build
+    context "with ES as the country_code" do
+      let(:args) do
+        {
+          country_code: 'ES',
+          bank_code: "2310",
+          branch_code: '0001',
+          account_number: '0000012345'
+        }
       end
-    end
-  end
 
-  describe ".build_es_iban" do
-    subject(:build_es_iban) { described_class.build_es_iban(args) }
-    let(:args) do
-      { bank_code: "2310", branch_code: '0001', account_number: '0000012345' }
-    end
-
-    context "with valid arguments" do
-      it { is_expected.to be_a(IBAN::IBAN) }
-      its(:iban) { is_expected.to eq("ES8023100001180000012345") }
-    end
-
-    context "without a bank_code" do
-      before { args.delete(:bank_code) }
-
-      it "raises a helpful error message" do
-        expect { build_es_iban }.
-          to raise_error(ArgumentError, /bank_code is a required field/)
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("ES8023100001180000012345") }
       end
-    end
 
-    context "without a branch_code" do
-      before { args.delete(:branch_code) }
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
 
-      it "raises a helpful error message" do
-        expect { build_es_iban }.
-          to raise_error(ArgumentError, /branch_code is a required field/)
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
       end
-    end
 
-    context "without an account_number" do
-      before { args.delete(:account_number) }
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
 
-      it "raises a helpful error message" do
-        expect { build_es_iban }.
-          to raise_error(ArgumentError, /account_number is a required field/)
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
       end
-    end
-  end
 
-  describe ".build_it_iban" do
-    subject(:build_it_iban) { described_class.build_it_iban(args) }
-    let(:args) do
-      {
-        bank_code: "05428",
-        branch_code: '11101',
-        account_number: '000000123456'
-      }
-    end
+      context "without an account_number" do
+        before { args.delete(:account_number) }
 
-    context "with valid arguments" do
-      it { is_expected.to be_a(IBAN::IBAN) }
-      its(:iban) { is_expected.to eq("IT60X0542811101000000123456") }
-    end
-
-    context "without a bank_code" do
-      before { args.delete(:bank_code) }
-
-      it "raises a helpful error message" do
-        expect { build_it_iban }.
-          to raise_error(ArgumentError, /bank_code is a required field/)
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
       end
     end
 
-    context "without a branch_code" do
-      before { args.delete(:branch_code) }
+    context "with IT as the country_code" do
+      let(:args) do
+        {
+          country_code: 'IT',
+          bank_code: "05428",
+          branch_code: '11101',
+          account_number: '000000123456'
+        }
+      end
 
-      it "raises a helpful error message" do
-        expect { build_it_iban }.
-          to raise_error(ArgumentError, /branch_code is a required field/)
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("IT60X0542811101000000123456") }
+      end
+
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
       end
     end
 
-    context "without an account_number" do
-      before { args.delete(:account_number) }
-
-      it "raises a helpful error message" do
-        expect { build_it_iban }.
-          to raise_error(ArgumentError, /account_number is a required field/)
+    context "with FR as the country_code" do
+      let(:args) do
+        {
+          country_code: 'FR',
+          bank_code: "20041",
+          branch_code: '01005',
+          account_number: '0500013M026'
+        }
       end
-    end
-  end
 
-  describe ".build_fr_iban" do
-    subject(:build_fr_iban) { described_class.build_fr_iban(args) }
-    let(:args) do
-      {
-        bank_code: "20041",
-        branch_code: '01005',
-        account_number: '0500013M026'
-      }
-    end
-
-    context "with valid arguments" do
-      it { is_expected.to be_a(IBAN::IBAN) }
-      its(:iban) { is_expected.to eq("FR1420041010050500013M02606") }
-    end
-
-    context "with a rib_key" do
-      before { args[:rib_key] = "00" }
-      it { is_expected.to be_a(IBAN::IBAN) }
-      its(:iban) { is_expected.to eq("FR7920041010050500013M02600") }
-    end
-
-    context "without a bank_code" do
-      before { args.delete(:bank_code) }
-
-      it "raises a helpful error message" do
-        expect { build_fr_iban }.
-          to raise_error(ArgumentError, /bank_code is a required field/)
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("FR1420041010050500013M02606") }
       end
-    end
 
-    context "without a branch_code" do
-      before { args.delete(:branch_code) }
-
-      it "raises a helpful error message" do
-        expect { build_fr_iban }.
-          to raise_error(ArgumentError, /branch_code is a required field/)
+      context "with a rib_key" do
+        before { args[:rib_key] = "00" }
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("FR7920041010050500013M02600") }
       end
-    end
 
-    context "without an account_number" do
-      before { args.delete(:account_number) }
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
 
-      it "raises a helpful error message" do
-        expect { build_fr_iban }.
-          to raise_error(ArgumentError, /account_number is a required field/)
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
       end
-    end
-  end
 
-  describe ".build_pt_iban" do
-    subject(:build_pt_iban) { described_class.build_pt_iban(args) }
-    let(:args) do
-      {
-        bank_code: '0002',
-        branch_code: '0023',
-        account_number: '00238430005'
-      }
-    end
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
 
-    context "with valid arguments" do
-      it { is_expected.to be_a(IBAN::IBAN) }
-      its(:iban) { is_expected.to eq("PT50000200230023843000578") }
-    end
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
 
-    context "without a bank_code" do
-      before { args.delete(:bank_code) }
+      context "without an account_number" do
+        before { args.delete(:account_number) }
 
-      it "raises a helpful error message" do
-        expect { build_pt_iban }.
-          to raise_error(ArgumentError, /bank_code is a required field/)
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
       end
     end
 
-    context "without a branch_code" do
-      before { args.delete(:branch_code) }
+    context "with MC as the country_code" do
+      let(:args) do
+        {
+          country_code: 'MC',
+          bank_code: "20041",
+          branch_code: '01005',
+          account_number: '0500013M026'
+        }
+      end
 
-      it "raises a helpful error message" do
-        expect { build_pt_iban }.
-          to raise_error(ArgumentError, /branch_code is a required field/)
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("MC9320041010050500013M02606") }
+      end
+
+      context "with a rib_key" do
+        before { args[:rib_key] = "00" }
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("MC6120041010050500013M02600") }
+      end
+
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
       end
     end
 
-    context "without an account_number" do
-      before { args.delete(:account_number) }
+    context "with PT as the country_code" do
+      let(:args) do
+        {
+          country_code: 'PT',
+          bank_code: '0002',
+          branch_code: '0023',
+          account_number: '00238430005'
+        }
+      end
 
-      it "raises a helpful error message" do
-        expect { build_pt_iban }.
-          to raise_error(ArgumentError, /account_number is a required field/)
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("PT50000200230023843000578") }
+      end
+
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
       end
     end
   end

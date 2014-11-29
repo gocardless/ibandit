@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT)
+    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -12,72 +12,54 @@ module IBAN
         msg = "Don't know how to build an IBAN for country code #{country_code}"
         raise ArgumentError.new(msg)
       else
-        self.send(:"build_#{country_code.downcase}_iban", opts)
+        require_fields(country_code, opts)
+        bban = self.send(:"build_#{country_code.downcase}_bban", opts)
+        build_iban(country_code, bban)
       end
     end
 
-    def self.build_es_iban(opts)
-      %i(bank_code branch_code account_number).each do |arg|
-        msg = "#{arg} is a required field when building an ES IBAN"
-        raise ArgumentError.new(msg) unless opts[arg]
-      end
-
-      bban = [
+    def self.build_es_bban(opts)
+      [
         opts[:bank_code],
         opts[:branch_code],
         mod_11_check_digit('00' + opts[:bank_code] + opts[:branch_code]),
         mod_11_check_digit(opts[:account_number]),
         opts[:account_number]
       ].join
-
-      IBAN.new("ES#{iban_check_digits("ES", bban)}#{bban}")
     end
 
-    def self.build_it_iban(opts)
-      %i(bank_code branch_code account_number).each do |arg|
-        msg = "#{arg} is a required field when building an IT IBAN"
-        raise ArgumentError.new(msg) unless opts[arg]
-      end
-
+    def self.build_it_bban(opts)
       combined_code = [
         opts[:bank_code],
         opts[:branch_code],
         opts[:account_number]
       ].join
-      bban = [italian_check_digit(combined_code), combined_code].join
 
-      IBAN.new("IT#{iban_check_digits("IT", bban)}#{bban}")
+      [italian_check_digit(combined_code), combined_code].join
     end
 
     # Note: the French "rib_key" check digit is a public attribute. It's
     # probably wiser to ask the customer for it than to calculate it (or it
     # obviously can't serve its purpose of checking for typos in the other
     # fields they've entered).
-    def self.build_fr_iban(opts)
-      %i(bank_code branch_code account_number).each do |arg|
-        msg = "#{arg} is a required field when building an FR IBAN"
-        raise ArgumentError.new(msg) unless opts[arg]
-      end
-
+    def self.build_fr_bban(opts)
       rib_key = opts[:rib_key] || rib_check_digits(opts[:bank_code],
                                                    opts[:branch_code],
                                                    opts[:account_number])
+
       bban = [
         opts[:bank_code],
         opts[:branch_code],
         opts[:account_number],
         rib_key
       ].join
-
-      IBAN.new("FR#{iban_check_digits("FR", bban)}#{bban}")
     end
 
-    def self.build_pt_iban(opts)
-      %i(bank_code branch_code account_number).each do |arg|
-        msg = "#{arg} is a required field when building an PT IBAN"
-        raise ArgumentError.new(msg) unless opts[arg]
-      end
+    def self.build_mc_bban(opts)
+      build_fr_bban(opts)
+    end
 
+    def self.build_pt_bban(opts)
       check_digits = mod_97_10_check_digits(opts[:bank_code] +
                                             opts[:branch_code] +
                                             opts[:account_number])
@@ -88,8 +70,6 @@ module IBAN
         opts[:account_number],
         check_digits
       ].join
-
-      IBAN.new("PT#{iban_check_digits("PT", bban)}#{bban}")
     end
 
     ##########################
@@ -167,6 +147,35 @@ module IBAN
         raise "Unexpected byte '#{character}' in RIB" unless rib_mapping[char]
         rib_mapping[char]
       end.join.to_i
+    end
+
+    def self.require_fields(country_code, opts)
+      required_fields(country_code).each do |arg|
+        next if opts[arg]
+
+        msg = "#{arg} is a required field when building an #{country_code} IBAN"
+        raise ArgumentError.new(msg)
+      end
+    end
+
+    def self.required_fields(country_code)
+      case country_code
+      when 'ES' then %i(bank_code branch_code account_number)
+      when 'FR' then %i(bank_code branch_code account_number)
+      when 'PT' then %i(bank_code branch_code account_number)
+      when 'IT' then %i(bank_code branch_code account_number)
+      when 'MC' then %i(bank_code branch_code account_number)
+      end
+    end
+
+    def self.build_iban(country_code, bban)
+      iban = [
+        country_code,
+        iban_check_digits(country_code, bban),
+        bban
+      ].join
+
+      IBAN.new(iban)
     end
   end
 end
