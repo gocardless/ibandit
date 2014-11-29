@@ -14,7 +14,7 @@ module IBAN
       @errors = {}
     end
 
-    def pretty
+    def formatted
       iban.gsub(/(.{4})/, '\1 ').strip
     end
 

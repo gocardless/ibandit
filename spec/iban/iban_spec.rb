@@ -20,8 +20,8 @@ describe IBAN::IBAN do
     its(:iban_national_id) { is_expected.to eq("WEST123456") }
   end
 
-  describe "#pretty" do
-    subject { iban.pretty }
+  describe "#formatted" do
+    subject { iban.formatted }
     it { is_expected.to eq("GB82 WEST 1234 5698 7654 32")}
   end
 

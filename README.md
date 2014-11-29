@@ -27,7 +27,7 @@ whitespace:
 
 ```ruby
 iban = IBAN::IBAN.new("xq75 B a dCode 666")
-iban.pretty                    # => "XQ75 BADC ODE6 66"
+iban.formatted                 # => "XQ75 BADC ODE6 66"
 ```
 
 ### Validating an IBAN
