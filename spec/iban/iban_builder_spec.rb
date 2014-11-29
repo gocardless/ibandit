@@ -161,4 +161,47 @@ describe IBAN::IBANBuilder do
       end
     end
   end
+
+  describe ".build_pt_iban" do
+    subject(:build_pt_iban) { described_class.build_pt_iban(args) }
+    let(:args) do
+      {
+        bank_code: '0002',
+        branch_code: '0023',
+        account_number: '00238430005'
+      }
+    end
+
+    context "with valid arguments" do
+      it { is_expected.to be_a(IBAN::IBAN) }
+      its(:iban) { is_expected.to eq("PT50000200230023843000578") }
+    end
+
+    context "without a bank_code" do
+      before { args.delete(:bank_code) }
+
+      it "raises a helpful error message" do
+        expect { build_pt_iban }.
+          to raise_error(ArgumentError, /bank_code is a required field/)
+      end
+    end
+
+    context "without a branch_code" do
+      before { args.delete(:branch_code) }
+
+      it "raises a helpful error message" do
+        expect { build_pt_iban }.
+          to raise_error(ArgumentError, /branch_code is a required field/)
+      end
+    end
+
+    context "without an account_number" do
+      before { args.delete(:account_number) }
+
+      it "raises a helpful error message" do
+        expect { build_pt_iban }.
+          to raise_error(ArgumentError, /account_number is a required field/)
+      end
+    end
+  end
 end

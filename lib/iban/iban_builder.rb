@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = ['ES', 'IT', 'FR']
+    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -72,6 +72,26 @@ module IBAN
       IBAN.new("FR#{iban_check_digits("FR", bban)}#{bban}")
     end
 
+    def self.build_pt_iban(opts)
+      %i(bank_code branch_code account_number).each do |arg|
+        msg = "#{arg} is a required field when building an PT IBAN"
+        raise ArgumentError.new(msg) unless opts[arg]
+      end
+
+      check_digits = mod_97_10_check_digits(opts[:bank_code] +
+                                            opts[:branch_code] +
+                                            opts[:account_number])
+
+      bban = [
+        opts[:bank_code],
+        opts[:branch_code],
+        opts[:account_number],
+        check_digits
+      ].join
+
+      IBAN.new("PT#{iban_check_digits("PT", bban)}#{bban}")
+    end
+
     ##########################
     # Check digit generation #
     ##########################
@@ -82,6 +102,19 @@ module IBAN
       end
       result = 11 - scaled_values.inject(:+) % 11
       result < 10 ? result.to_s : (11 - result).to_s
+    end
+
+    def self.mod_97_10_check_digits(string)
+      chars = string + "00"
+      digits = chars.bytes.map do |byte|
+        case byte
+        when 48..57 then byte.chr           # 0..9
+        when 65..90 then (byte - 55).to_s   # A..Z
+        else raise "Unexpected byte '#{byte}'"
+        end
+      end
+      remainder = digits.join.to_i % 97
+      format('%02d', 98 - remainder)
     end
 
     def self.italian_check_digit(string)
@@ -117,16 +150,7 @@ module IBAN
     end
 
     def self.iban_check_digits(country_code, bban)
-      iban_chars = bban + country_code + "00"
-      iban_digits = iban_chars.bytes.map do |byte|
-        case byte
-        when 48..57 then byte.chr           # 0..9
-        when 65..90 then (byte - 55).to_s   # A..Z
-        else raise "Unexpected byte '#{byte}' in IBAN code"
-        end
-      end
-      remainder = iban_digits.join.to_i % 97
-      format('%02d', 98 - remainder)
+      mod_97_10_check_digits(bban + country_code)
     end
 
     def self.rib_value(string)
