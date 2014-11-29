@@ -1,11 +1,10 @@
-# IBAN Ruby
+# IBAN Utils
 
-IBAN is a Ruby library for manipulating and validating
+IBAN Utils is a Ruby library for manipulating and validating
 [IBANs](http://en.wikipedia.org/wiki/International_Bank_Account_Number). It
 allows you to:
 1) Validate an IBAN's check digits and structure
 2) Deconstruct an IBAN into national banking details
-3) TODO: Build an IBAN from national banking details (e.g., UK account number and sort code)
 
 The gem is kept up to date using the IBAN structure file from SWIFT.
 
@@ -13,7 +12,12 @@ The gem is kept up to date using the IBAN structure file from SWIFT.
 
 ### Installation
 
-TODO!
+You don't need this source code unless you want to modify the gem. If you just
+want to use it, you should run:
+
+```ruby
+gem install iban-utils
+````
 
 ### Creating IBANs
 
@@ -25,10 +29,6 @@ whitespace:
 iban = IBAN::IBAN.new("xq75 B a dCode 666")
 iban.pretty                    # => "XQ75 BADC ODE6 66"
 ```
-
-TODO: In future, this gem will also support building an IBAN from national
-banking details. Doing so is non-trivial, because the `bank_code` element
-typically needs to be looked up.
 
 ### Validating an IBAN
 
@@ -84,7 +84,3 @@ iban.branch_code               # => "123456"
 iban.account_number            # => "98765432"
 iban.check_digits              # => "82"
 ```
-
-### Building an IBAN from national banking details
-
-TODO!
