@@ -112,4 +112,53 @@ describe IBAN::IBANBuilder do
       end
     end
   end
+
+  describe ".build_fr_iban" do
+    subject(:build_fr_iban) { described_class.build_fr_iban(args) }
+    let(:args) do
+      {
+        bank_code: "20041",
+        branch_code: '01005',
+        account_number: '0500013M026'
+      }
+    end
+
+    context "with valid arguments" do
+      it { is_expected.to be_a(IBAN::IBAN) }
+      its(:iban) { is_expected.to eq("FR1420041010050500013M02606") }
+    end
+
+    context "with a rib_key" do
+      before { args[:rib_key] = "00" }
+      it { is_expected.to be_a(IBAN::IBAN) }
+      its(:iban) { is_expected.to eq("FR7920041010050500013M02600") }
+    end
+
+    context "without a bank_code" do
+      before { args.delete(:bank_code) }
+
+      it "raises a helpful error message" do
+        expect { build_fr_iban }.
+          to raise_error(ArgumentError, /bank_code is a required field/)
+      end
+    end
+
+    context "without a branch_code" do
+      before { args.delete(:branch_code) }
+
+      it "raises a helpful error message" do
+        expect { build_fr_iban }.
+          to raise_error(ArgumentError, /branch_code is a required field/)
+      end
+    end
+
+    context "without an account_number" do
+      before { args.delete(:account_number) }
+
+      it "raises a helpful error message" do
+        expect { build_fr_iban }.
+          to raise_error(ArgumentError, /account_number is a required field/)
+      end
+    end
+  end
 end
