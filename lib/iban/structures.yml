@@ -99,3 +99,13 @@ GB:
   :total_length: 22
   :iban_national_id_length: 10
   :bban_format: '[A-Z]{4}\d{6}\d{8}'
+ES:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 15
+  :account_number_length: 10
+  :total_length: 24
+  :iban_national_id_length: 8
+  :bban_format: \d{4}\d{4}\d{1}\d{1}\d{10}

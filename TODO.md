@@ -7,3 +7,5 @@
 
 - Validate the format of each IBAN component individually or remove the format
   validator (which would then be the job of a modulus checking gem)
+
+- Specs for IBANSTRUCTURE parser

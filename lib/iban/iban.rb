@@ -90,13 +90,14 @@ module IBAN
     def valid_check_digits?
       return unless valid_characters?
 
-      if check_digits == calculated_check_digits
+      expected_check_digits = IBANBuilder.iban_check_digits(country_code, bban)
+      if check_digits == expected_check_digits
         @errors.delete(:check_digits)
         true
       else
         @errors[:check_digits] = "Check digits failed modulus check. " \
                                  "Expected #{check_digits}, received " \
-                                 "#{calculated_check_digits}"
+                                 "#{expected_check_digits}"
         false
       end
     end
@@ -143,19 +144,6 @@ module IBAN
     ###################
 
     private
-
-    def calculated_check_digits
-      iban_chars = iban[4..-1] + iban[0..1] + "00"
-      iban_digits = iban_chars.bytes.map do |byte|
-        case byte
-        when 48..57 then byte.chr           # 0..9
-        when 65..90 then (byte - 55).to_s   # A..Z
-        else raise "Unexpected byte '#{byte}' in IBAN code"
-        end
-      end
-      remainder = iban_digits.join.to_i % 97
-      format('%02d', 98 - remainder)
-    end
 
     def structure
       IBAN.structures[country_code]
