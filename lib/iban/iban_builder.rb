@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC SM)
+    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC SM BE)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -63,6 +63,15 @@ module IBAN
 
     def self.build_mc_bban(opts)
       build_fr_bban(opts)
+    end
+
+    def self.build_be_bban(opts)
+      # Belgian account numbers can be split into a bank_code and account_number
+      # (the last two digits of which are a check_digit), but they're never
+      # shown separately. As a result, this method needs to handle being passed
+      # a single "account_number" argument that represents all three.
+      bban = opts[:bank_code] || ""
+      bban += opts[:account_number]
     end
 
     def self.build_pt_bban(opts)
@@ -128,6 +137,13 @@ module IBAN
       result = (scaled_values.inject(:+) % 26 + 65).chr
     end
 
+    # Currently unused in this class. This method calculates the last two digits
+    # of a Belgian account number when given the first ten digits.
+    def self.belgian_check_digits(string)
+      remainder = string.to_i % 97
+      format('%02d', remainder)
+    end
+
     def self.rib_check_digits(bank_code, branch_code, account_number)
       remainder = 97 - (89 * rib_value(bank_code) +
                         15 * rib_value(branch_code) +
@@ -166,12 +182,8 @@ module IBAN
 
     def self.required_fields(country_code)
       case country_code
-      when 'ES' then %i(bank_code branch_code account_number)
-      when 'FR' then %i(bank_code branch_code account_number)
-      when 'PT' then %i(bank_code branch_code account_number)
-      when 'IT' then %i(bank_code branch_code account_number)
-      when 'MC' then %i(bank_code branch_code account_number)
-      when 'SM' then %i(bank_code branch_code account_number)
+      when 'BE' then %i(account_number)
+      else %i(bank_code branch_code account_number)
       end
     end
 
