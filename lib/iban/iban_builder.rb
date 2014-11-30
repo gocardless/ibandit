@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -167,6 +167,20 @@ module IBAN
       ].join
     end
 
+    def self.build_si_bban(opts)
+      # Slovenian BBANs include two BBAN-specific check digits, calculated using
+      # the same algorithm as the overall IBAN check digits. A side-effect is
+      # that the overall IBAN check digits will therefor always be 56.
+      check_digits = mod_97_10_check_digits(opts[:bank_code] +
+                                            opts[:account_number].rjust(8, "0"))
+
+      bban = [
+        opts[:bank_code],
+        opts[:account_number].rjust(8, "0"),
+        check_digits
+      ].join
+    end
+
     def self.build_sm_bban(opts)
       # San Marino uses the same BBAN construction method as Italy
       build_it_bban(opts)
@@ -308,6 +322,7 @@ module IBAN
       when 'FI' then %i(account_number)
       when 'LV' then %i(bank_code account_number)
       when 'LU' then %i(bank_code account_number)
+      when 'SI' then %i(bank_code account_number)
       else %i(bank_code branch_code account_number)
       end
     end
