@@ -5,7 +5,7 @@
   - BELGIUM: Done!
   - CYPRUS: Done!
   - ESTONIA: Done!
-  - FINLAND: TODO
+  - FINLAND: Done!
   - FRANCE: Done!
   - GERMANY: TODO
   - GREECE: TODO

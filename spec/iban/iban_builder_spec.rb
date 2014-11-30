@@ -413,16 +413,50 @@ describe IBAN::IBANBuilder do
     end
 
     context "with EE as the country_code" do
-      let(:args) do
-        {
-          country_code: 'EE',
-          account_number: '0221020145685'
-        }
-      end
+      let(:args) { { country_code: 'EE', account_number: '0221020145685' } }
 
       context "with valid arguments" do
         it { is_expected.to be_a(IBAN::IBAN) }
         its(:iban) { is_expected.to eq("EE382200221020145685") }
+      end
+
+      context "with an account number that needs translating" do
+        before { args[:account_number] = "111020145685" }
+
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("EE412200111020145685") }
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+    end
+
+    context "with FI as the country_code" do
+      let(:args) { { country_code: 'FI', account_number: '123456-785' } }
+
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("FI2112345600000785") }
+      end
+
+      context "with an electronic format account_number" do
+        before { args[:account_number] = "12345600000785" }
+
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("FI2112345600000785") }
+      end
+
+      context "with a savings bank account_number in traditional format" do
+        before { args[:account_number] = "423456-785" }
+
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("FI4442345670000085") }
       end
 
       context "without an account_number" do
@@ -448,6 +482,18 @@ describe IBAN::IBANBuilder do
       let(:account_number) { "0022102014568" }
       it { is_expected.to eq("5") }
     end
+
+    context "with a non-numeric character" do
+      let(:account_number) { "1BAD2014" }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
+  describe ".finnish_check_digit" do
+    subject { described_class.finnish_check_digit(account_number) }
+
+    let(:account_number) { "1234560000078" }
+    it { is_expected.to eq("5") }
 
     context "with a non-numeric character" do
       let(:account_number) { "1BAD2014" }

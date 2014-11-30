@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -29,69 +29,6 @@ module IBAN
       [opts[:bank_code], opts[:account_number].rjust(11, "0")].join
     end
 
-    def self.build_cy_bban(opts)
-      # Cypriot BBANs don't include any BBAN-specific check digits. (Some
-      # Cypriot banks may be using check digits in their account numbers, but
-      # there's no central source of them.)
-      #
-      # Cypriot bank and branch codes are often communicated as a single code,
-      # so this method handles being passed them together or separatedly.
-      combined_bank_code = opts[:bank_code]
-      combined_bank_code += opts[:branch_code] || ""
-
-      [combined_bank_code, opts[:account_number].rjust(16, "0")].join
-    end
-
-    def self.build_es_bban(opts)
-      # Spanish BBANs include two BBAN-specific check digits (i.e., not included
-      # in domestic details). They are calculated using a Mod 11 check.
-      [
-        opts[:bank_code],
-        opts[:branch_code],
-        mod_11_check_digit('00' + opts[:bank_code] + opts[:branch_code]),
-        mod_11_check_digit(opts[:account_number]),
-        opts[:account_number]
-      ].join
-    end
-
-    def self.build_it_bban(opts)
-      # Italian BBANs include a single BBAN-specific check digit, calculated
-      # using a bespoke algorithm.
-      combined_code = [
-        opts[:bank_code],
-        opts[:branch_code],
-        opts[:account_number]
-      ].join
-
-      [italian_check_digit(combined_code), combined_code].join
-    end
-
-    def self.build_sm_bban(opts)
-      # San Marino uses the same BBAN construction method as Italy
-      build_it_bban(opts)
-    end
-
-    def self.build_fr_bban(opts)
-      # French BBANs include two "rib_key" check digits. These digits are part
-      # of the bank details shown to customers, so it's wise to ask the customer
-      # to provide them if possible. If not, this gem will generate them.
-      rib_key = opts[:rib_key] || rib_check_digits(opts[:bank_code],
-                                                   opts[:branch_code],
-                                                   opts[:account_number])
-
-      bban = [
-        opts[:bank_code],
-        opts[:branch_code],
-        opts[:account_number],
-        rib_key
-      ].join
-    end
-
-    def self.build_mc_bban(opts)
-      # Monaco uses the same BBAN construction method as France
-      build_fr_bban(opts)
-    end
-
     def self.build_be_bban(opts)
       # Belgian BBANs don't include any BBAN-specific check digits. (The last
       # two digits of the account number are check digits, but these are
@@ -106,20 +43,17 @@ module IBAN
       bban += opts[:account_number]
     end
 
-    def self.build_pt_bban(opts)
-      # Portugues BBANs include two BBAN-specific check digits, calculated using
-      # the same algorithm as the overall IBAN check digits. A side-effect is
-      # that the overall IBAN check digits will therefor always be 50.
-      check_digits = mod_97_10_check_digits(opts[:bank_code] +
-                                            opts[:branch_code] +
-                                            opts[:account_number])
+    def self.build_cy_bban(opts)
+      # Cypriot BBANs don't include any BBAN-specific check digits. (Some
+      # Cypriot banks may be using check digits in their account numbers, but
+      # there's no central source of them.)
+      #
+      # Cypriot bank and branch codes are often communicated as a single code,
+      # so this method handles being passed them together or separatedly.
+      combined_bank_code = opts[:bank_code]
+      combined_bank_code += opts[:branch_code] || ""
 
-      bban = [
-        opts[:bank_code],
-        opts[:branch_code],
-        opts[:account_number],
-        check_digits
-      ].join
+      [combined_bank_code, opts[:account_number].rjust(16, "0")].join
     end
 
     def self.build_ee_bban(opts)
@@ -139,6 +73,91 @@ module IBAN
       end
 
       iban_bank_code + opts[:account_number].rjust(14, "0")
+    end
+
+    def self.build_es_bban(opts)
+      # Spanish BBANs include two BBAN-specific check digits (i.e., not included
+      # in domestic details). They are calculated using a Mod 11 check.
+      [
+        opts[:bank_code],
+        opts[:branch_code],
+        mod_11_check_digit('00' + opts[:bank_code] + opts[:branch_code]),
+        mod_11_check_digit(opts[:account_number]),
+        opts[:account_number]
+      ].join
+    end
+
+    def self.build_fi_bban(opts)
+      # Finnish BBANs don't include any BBAN-specific check digits. (The last
+      # digit of the account number is a check digit, but this is built-in. An
+      # implementation of the check digit algorithm is available in
+      # .finnish_check_digit for completeness.)
+      #
+      # Finnish account numbers need to be expanded into "electronic format"
+      # if they have been written in "traditional format" (with a dash), and
+      # the expansion method depends on the first character.
+      return opts[:account_number] unless opts[:account_number].scan(/-/).any?
+
+      account_number = opts[:account_number].gsub(/-/, "")
+      if ["4", "5", "6"].include?(account_number[0])
+        account_number[0,7] + "00000" + account_number[7,2]
+      else
+        account_number[0,6] + "00000" + account_number[6,3]
+      end
+    end
+
+    def self.build_fr_bban(opts)
+      # French BBANs include two "rib_key" check digits. These digits are part
+      # of the bank details shown to customers, so it's wise to ask the customer
+      # to provide them if possible. If not, this gem will generate them.
+      rib_key = opts[:rib_key] || rib_check_digits(opts[:bank_code],
+                                                   opts[:branch_code],
+                                                   opts[:account_number])
+
+      bban = [
+        opts[:bank_code],
+        opts[:branch_code],
+        opts[:account_number],
+        rib_key
+      ].join
+    end
+
+    def self.build_it_bban(opts)
+      # Italian BBANs include a single BBAN-specific check digit, calculated
+      # using a bespoke algorithm.
+      combined_code = [
+        opts[:bank_code],
+        opts[:branch_code],
+        opts[:account_number]
+      ].join
+
+      [italian_check_digit(combined_code), combined_code].join
+    end
+
+    def self.build_mc_bban(opts)
+      # Monaco uses the same BBAN construction method as France
+      build_fr_bban(opts)
+    end
+
+    def self.build_pt_bban(opts)
+      # Portugues BBANs include two BBAN-specific check digits, calculated using
+      # the same algorithm as the overall IBAN check digits. A side-effect is
+      # that the overall IBAN check digits will therefor always be 50.
+      check_digits = mod_97_10_check_digits(opts[:bank_code] +
+                                            opts[:branch_code] +
+                                            opts[:account_number])
+
+      bban = [
+        opts[:bank_code],
+        opts[:branch_code],
+        opts[:account_number],
+        check_digits
+      ].join
+    end
+
+    def self.build_sm_bban(opts)
+      # San Marino uses the same BBAN construction method as Italy
+      build_it_bban(opts)
     end
 
     ##############################
@@ -208,7 +227,24 @@ module IBAN
           raise "Unexpected non-numeric character '#{char}'"
         end
 
-        char.to_i * weights[index % 3]
+        char.to_i * weights[index % weights.size]
+      end
+
+      (scaled_values.inject(:+) % 10).to_s
+    end
+
+    # Currently unused in this class. This method calculates the last digit
+    # of a Finnish account number when given the initial digits (in electronic
+    # format).
+    def self.finnish_check_digit(string)
+      weights = [1, 2]
+
+      scaled_values = string.reverse.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * weights[index % weights.size]
       end
 
       (scaled_values.inject(:+) % 10).to_s
@@ -256,6 +292,7 @@ module IBAN
       when 'BE' then %i(account_number)
       when 'CY' then %i(bank_code account_number)
       when 'EE' then %i(account_number)
+      when 'FI' then %i(account_number)
       else %i(bank_code branch_code account_number)
       end
     end
