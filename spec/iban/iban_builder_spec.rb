@@ -323,5 +323,47 @@ describe IBAN::IBANBuilder do
         end
       end
     end
+
+    context "with EE as the country_code" do
+      let(:args) do
+        {
+          country_code: 'EE',
+          account_number: '0221020145685'
+        }
+      end
+
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("EE382200221020145685") }
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+    end
+  end
+
+  describe ".estonian_check_digit" do
+    subject { described_class.estonian_check_digit(account_number) }
+
+    context "with an account_number that doesn't start with a zero" do
+      let(:account_number) { "22102014568" }
+      it { is_expected.to eq("5") }
+    end
+
+    context "with leading zeros" do
+      let(:account_number) { "0022102014568" }
+      it { is_expected.to eq("5") }
+    end
+
+    context "with a non-numeric character" do
+      let(:account_number) { "1BAD2014" }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
   end
 end

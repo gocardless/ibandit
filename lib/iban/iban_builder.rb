@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC SM BE)
+    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC SM BE EE)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -68,8 +68,8 @@ module IBAN
     def self.build_be_bban(opts)
       # Belgian account numbers can be split into a bank_code and account_number
       # (the last two digits of which are a check_digit), but they're never
-      # shown separately. As a result, this method needs to handle being passed
-      # a single "account_number" argument that represents all three.
+      # shown separately. This method handles being passed a single
+      # "account_number" argument or an "account_number" and "bank_code".
       bban = opts[:bank_code] || ""
       bban += opts[:account_number]
     end
@@ -85,6 +85,20 @@ module IBAN
         opts[:account_number],
         check_digits
       ].join
+    end
+
+    def self.build_ee_bban(opts)
+      # Estonian bank codes can be looked up from the account number itself. See
+      # http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
+      domestic_bank_code = opts[:account_number].to_i.to_s.slice(0, 2)
+
+      case domestic_bank_code
+      when "11" then iban_bank_code = "22"
+      when "93" then iban_bank_code = "00"
+      else iban_bank_code = domestic_bank_code
+      end
+
+      iban_bank_code + opts[:account_number].rjust( 14, "0")
     end
 
     ##############################
@@ -144,6 +158,22 @@ module IBAN
       format('%02d', remainder)
     end
 
+    # Currently unused in this class. This method calculates the last digit
+    # of a Estonian account number when given the initial digits.
+    def self.estonian_check_digit(string)
+      weights = [7, 3, 1]
+
+      scaled_values = string.reverse.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * weights[index % 3]
+      end
+
+      (scaled_values.inject(:+) % 10).to_s
+    end
+
     def self.rib_check_digits(bank_code, branch_code, account_number)
       remainder = 97 - (89 * rib_value(bank_code) +
                         15 * rib_value(branch_code) +
@@ -183,6 +213,7 @@ module IBAN
     def self.required_fields(country_code)
       case country_code
       when 'BE' then %i(account_number)
+      when 'EE' then %i(account_number)
       else %i(bank_code branch_code account_number)
       end
     end

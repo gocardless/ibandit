@@ -17,7 +17,7 @@ want to use it, you should run:
 
 ```ruby
 gem install iban-utils
-````
+```
 
 ### Creating IBANs
 
