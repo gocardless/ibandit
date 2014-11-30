@@ -23,10 +23,15 @@ module IBAN
     ##################################
 
     def self.build_at_bban(opts)
+      # Austrian BBANs don't include any BBAN-specific check digits. (Austrian
+      # account numbers have built-in check digits, the checking of which is out
+      # of scope for this gem.)
       [opts[:bank_code], opts[:account_number].rjust( 11, "0")].join
     end
 
     def self.build_es_bban(opts)
+      # Spanish BBANs include two BBAN-specific check digits (i.e., not included
+      # in domestic details). They are calculated using a Mod 11 check.
       [
         opts[:bank_code],
         opts[:branch_code],
@@ -37,6 +42,8 @@ module IBAN
     end
 
     def self.build_it_bban(opts)
+      # Italian BBANs include a single BBAN-specific check digit, calculated
+      # using a bespoke algorithm.
       combined_code = [
         opts[:bank_code],
         opts[:branch_code],
@@ -47,12 +54,14 @@ module IBAN
     end
 
     def self.build_sm_bban(opts)
+      # San Marino uses the same BBAN construction method as Italy
       build_it_bban(opts)
     end
 
     def self.build_fr_bban(opts)
-      # Note: since the French "rib_key" check digit is a public attribute it's
-      # probably wiser to ask the customer for it than to calculate it
+      # French BBANs include two "rib_key" check digits. These digits are part
+      # of the bank details shown to customers, so it's wise to ask the customer
+      # to provide them if possible. If not, this gem will generate them.
       rib_key = opts[:rib_key] || rib_check_digits(opts[:bank_code],
                                                    opts[:branch_code],
                                                    opts[:account_number])
@@ -66,19 +75,28 @@ module IBAN
     end
 
     def self.build_mc_bban(opts)
+      # Monaco uses the same BBAN construction method as France
       build_fr_bban(opts)
     end
 
     def self.build_be_bban(opts)
+      # Belgian BBANs don't include any BBAN-specific check digits. (The last
+      # two digits of the account number are check digits, but these are
+      # built-in. An implementation of the check digit algorithm is available in
+      # .belgian_check_digits for completeness.)
+      #
       # Belgian account numbers can be split into a bank_code and account_number
-      # (the last two digits of which are a check_digit), but they're never
-      # shown separately. This method handles being passed a single
-      # "account_number" argument or an "account_number" and "bank_code".
+      # but they're never shown separately. This method therefore handles being
+      # passed either a single account_number argument or an account_number
+      # and bank_code.
       bban = opts[:bank_code] || ""
       bban += opts[:account_number]
     end
 
     def self.build_pt_bban(opts)
+      # Portugues BBANs include two BBAN-specific check digits, calculated using
+      # the same algorithm as the overall IBAN check digits. A side-effect is
+      # that the overall IBAN check digits will therefor always be 50.
       check_digits = mod_97_10_check_digits(opts[:bank_code] +
                                             opts[:branch_code] +
                                             opts[:account_number])
@@ -92,7 +110,12 @@ module IBAN
     end
 
     def self.build_ee_bban(opts)
-      # Estonian bank codes can be looked up from the account number itself. See
+      # Estonian BBANs don't include any BBAN-specific check digits. (The last
+      # digit of the account number is a check digit, but this is built-in. An
+      # implementation of the check digit algorithm is available in
+      # .estonian_check_digit for completeness.)
+      #
+      # Estonian bank codes are looked up from the account number. See
       # http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
       domestic_bank_code = opts[:account_number].to_i.to_s.slice(0, 2)
 
