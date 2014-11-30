@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -26,7 +26,20 @@ module IBAN
       # Austrian BBANs don't include any BBAN-specific check digits. (Austrian
       # account numbers have built-in check digits, the checking of which is out
       # of scope for this gem.)
-      [opts[:bank_code], opts[:account_number].rjust( 11, "0")].join
+      [opts[:bank_code], opts[:account_number].rjust(11, "0")].join
+    end
+
+    def self.build_cy_bban(opts)
+      # Cypriot BBANs don't include any BBAN-specific check digits. (Some
+      # Cypriot banks may be using check digits in their account numbers, but
+      # there's no central source of them.)
+      #
+      # Cypriot bank and branch codes are often communicated as a single code,
+      # so this method handles being passed them together or separatedly.
+      combined_bank_code = opts[:bank_code]
+      combined_bank_code += opts[:branch_code] || ""
+
+      [combined_bank_code, opts[:account_number].rjust(16, "0")].join
     end
 
     def self.build_es_bban(opts)
@@ -125,7 +138,7 @@ module IBAN
       else iban_bank_code = domestic_bank_code
       end
 
-      iban_bank_code + opts[:account_number].rjust( 14, "0")
+      iban_bank_code + opts[:account_number].rjust(14, "0")
     end
 
     ##############################
@@ -241,6 +254,7 @@ module IBAN
       case country_code
       when 'AT' then %i(bank_code account_number)
       when 'BE' then %i(account_number)
+      when 'CY' then %i(bank_code account_number)
       when 'EE' then %i(account_number)
       else %i(bank_code branch_code account_number)
       end

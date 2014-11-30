@@ -3,7 +3,7 @@
 - Build IBANs from national banking details for each SEPA country
   - AUSTRIA: Done!
   - BELGIUM: Done!
-  - CYPRUS: TODO
+  - CYPRUS: Done!
   - ESTONIA: Done!
   - FINLAND: TODO
   - FRANCE: Done!

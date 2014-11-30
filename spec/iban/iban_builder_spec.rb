@@ -61,6 +61,54 @@ describe IBAN::IBANBuilder do
       end
     end
 
+    context "with CY as the country_code" do
+      let(:args) do
+        {
+          country_code: 'CY',
+          account_number: '0000001200527600',
+          bank_code: '002',
+          branch_code: '00128'
+        }
+      end
+
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("CY17002001280000001200527600") }
+      end
+
+      context "with an account number that hasn't been zero-padded" do
+        before { args[:account_number] = '1200527600' }
+
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("CY17002001280000001200527600") }
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context "without an bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without an branch_code" do
+        before { args.delete(:branch_code) }
+
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("CY040020000001200527600") }
+      end
+    end
+
     context "with ES as the country_code" do
       let(:args) do
         {
