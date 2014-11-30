@@ -12,7 +12,7 @@
   - IRELAND: TODO
   - ITALY: Done!
   - LATVIA: Done!
-  - LUXEMBOURG: TODO
+  - LUXEMBOURG: Done!
   - MALTA: TODO
   - NETHERLANDS: TODO
   - PORTUGAL: Done!

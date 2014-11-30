@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LV)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -122,6 +122,11 @@ module IBAN
         opts[:account_number],
         rib_key
       ].join
+    end
+
+    def self.build_lu_bban(opts)
+      # Luxembourgian BBANs don't include any BBAN-specific check digits.
+      bban = [opts[:bank_code], opts[:account_number].rjust(13, "0")].join
     end
 
     def self.build_lv_bban(opts)
@@ -302,6 +307,7 @@ module IBAN
       when 'EE' then %i(account_number)
       when 'FI' then %i(account_number)
       when 'LV' then %i(bank_code account_number)
+      when 'LU' then %i(bank_code account_number)
       else %i(bank_code branch_code account_number)
       end
     end
