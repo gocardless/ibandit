@@ -91,7 +91,7 @@ module IBAN
       # Finnish BBANs don't include any BBAN-specific check digits. (The last
       # digit of the account number is a check digit, but this is built-in. An
       # implementation of the check digit algorithm is available in
-      # .finnish_check_digit for completeness.)
+      # .lund_check_digit for completeness.)
       #
       # Finnish account numbers need to be expanded into "electronic format"
       # if they have been written in "traditional format" (with a dash), and
@@ -99,10 +99,12 @@ module IBAN
       return opts[:account_number] unless opts[:account_number].scan(/-/).any?
 
       account_number = opts[:account_number].gsub(/-/, "")
+      length = account_number.size
+
       if ["4", "5", "6"].include?(account_number[0])
-        account_number[0,7] + "00000" + account_number[7,2]
+        account_number[0, 7] + "0" * (14 - length) + account_number[7..-1]
       else
-        account_number[0,6] + "00000" + account_number[6,3]
+        account_number[0, 6] + "0" * (14 - length) + account_number[6..-1]
       end
     end
 
@@ -236,18 +238,19 @@ module IBAN
     # Currently unused in this class. This method calculates the last digit
     # of a Finnish account number when given the initial digits (in electronic
     # format).
-    def self.finnish_check_digit(string)
-      weights = [1, 2]
+    def self.lund_check_digit(string)
+      weights = [2, 1]
 
       scaled_values = string.reverse.chars.map.with_index do |char, index|
         unless char.to_i.to_s == char
           raise "Unexpected non-numeric character '#{char}'"
         end
 
-        char.to_i * weights[index % weights.size]
+        scaled_value = char.to_i * weights[index % weights.size]
+        scaled_value < 10 ? scaled_value : scaled_value % 10 + 1
       end
 
-      (scaled_values.inject(:+) % 10).to_s
+      (10 - scaled_values.inject(:+) % 10).to_s
     end
 
     def self.rib_check_digits(bank_code, branch_code, account_number)

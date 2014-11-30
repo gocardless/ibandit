@@ -453,10 +453,10 @@ describe IBAN::IBANBuilder do
       end
 
       context "with a savings bank account_number in traditional format" do
-        before { args[:account_number] = "423456-785" }
+        before { args[:account_number] = "423456-78510" }
 
         it { is_expected.to be_a(IBAN::IBAN) }
-        its(:iban) { is_expected.to eq("FI4442345670000085") }
+        its(:iban) { is_expected.to eq("FI3442345670008510") }
       end
 
       context "without an account_number" do
@@ -489,11 +489,16 @@ describe IBAN::IBANBuilder do
     end
   end
 
-  describe ".finnish_check_digit" do
-    subject { described_class.finnish_check_digit(account_number) }
+  describe ".lund_check_digit" do
+    subject { described_class.lund_check_digit(account_number) }
 
-    let(:account_number) { "1234560000078" }
-    it { is_expected.to eq("5") }
+    let(:account_number) { "1200300002088" }
+    it { is_expected.to eq("3") }
+
+    context "with another account number (double checking!)" do
+      let(:account_number) { "1428350017114" }
+      it { is_expected.to eq("1") }
+    end
 
     context "with a non-numeric character" do
       let(:account_number) { "1BAD2014" }
