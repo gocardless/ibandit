@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(ES IT FR PT MC SM BE EE)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -21,6 +21,10 @@ module IBAN
     ##################################
     # Country-specific BBAN creation #
     ##################################
+
+    def self.build_at_bban(opts)
+      [opts[:bank_code], opts[:account_number].rjust( 11, "0")].join
+    end
 
     def self.build_es_bban(opts)
       [
@@ -212,6 +216,7 @@ module IBAN
 
     def self.required_fields(country_code)
       case country_code
+      when 'AT' then %i(bank_code account_number)
       when 'BE' then %i(account_number)
       when 'EE' then %i(account_number)
       else %i(bank_code branch_code account_number)
