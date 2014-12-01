@@ -82,8 +82,8 @@ module IBAN
         opts[:bank_code],
         opts[:branch_code],
         mod_11_check_digit('00' + opts[:bank_code] + opts[:branch_code]),
-        mod_11_check_digit(opts[:account_number]),
-        opts[:account_number]
+        mod_11_check_digit(opts[:account_number].rjust(10, "0")),
+        opts[:account_number].rjust(10, "0")
       ].join
     end
 
