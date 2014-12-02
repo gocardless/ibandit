@@ -64,7 +64,7 @@ module IBAN
       #
       # Estonian bank codes are looked up from the account number. See
       # http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
-      domestic_bank_code = opts[:account_number].to_i.to_s.slice(0, 2)
+      domestic_bank_code = opts[:account_number].gsub(/\A0+/, '').slice(0, 2)
 
       case domestic_bank_code
       when "11" then iban_bank_code = "22"
