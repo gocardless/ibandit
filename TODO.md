@@ -16,7 +16,7 @@
   - MALTA: TODO
   - NETHERLANDS: TODO
   - PORTUGAL: Done!
-  - SLOVAKIA: TODO
+  - SLOVAKIA: Done!
   - SLOVENIA: Done!
   - SPAIN: Done!
   - MONACO: Done!

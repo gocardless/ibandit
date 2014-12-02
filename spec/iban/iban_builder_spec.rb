@@ -539,6 +539,56 @@ describe IBAN::IBANBuilder do
       end
     end
 
+    context "with SK as the country_code" do
+      let(:args) do
+        {
+          country_code: 'SK',
+          bank_code: '1200',
+          account_number_prefix: '000019',
+          account_number: '8742637541'
+        }
+      end
+
+      context "with valid arguments" do
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("SK3112000000198742637541") }
+      end
+
+      context "with an account number prefix that needs padding" do
+        before { args[:account_number_prefix] = '19' }
+
+        it { is_expected.to be_a(IBAN::IBAN) }
+        its(:iban) { is_expected.to eq("SK3112000000198742637541") }
+      end
+
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context "without an account_number_prefix" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+    end
+
     context "with SM as the country_code" do
       let(:args) do
         {
@@ -595,6 +645,30 @@ describe IBAN::IBANBuilder do
       let(:account_number) { "0022102014568" }
       it { is_expected.to eq("5") }
     end
+
+    context "with a non-numeric character" do
+      let(:account_number) { "1BAD2014" }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
+  describe ".slovakian_prefix_check_digit" do
+    subject { described_class.slovakian_prefix_check_digit(account_number) }
+
+    let(:account_number) { "00001" }
+    it { is_expected.to eq("9") }
+
+    context "with a non-numeric character" do
+      let(:account_number) { "1BAD2014" }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
+  describe ".slovakian_basic_check_digit" do
+    subject { described_class.slovakian_basic_check_digit(account_number) }
+
+    let(:account_number) { "874263754" }
+    it { is_expected.to eq("1") }
 
     context "with a non-numeric character" do
       let(:account_number) { "1BAD2014" }

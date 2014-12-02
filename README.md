@@ -169,6 +169,15 @@ iban = IBAN::IBANBuilder.build(
 )
 iban.iban                     # => "LU75BANK1234567890123"
 
+# Monaco
+iban = IBAN::IBANBuilder.build(
+  country_code: 'MC',
+  bank_code: '20041',
+  branch_code: '01005',
+  account_number: '0500013M026'
+)
+iban.iban                     # => "MC9320041010050500013M02606"
+
 # Portugal
 iban = IBAN::IBANBuilder.build(
   country_code: 'PT',
@@ -177,6 +186,15 @@ iban = IBAN::IBANBuilder.build(
   account_number: '00238430005'
 )
 iban.iban                     # => "PT50000200230023843000578"
+
+# Slovakia
+iban = IBAN::IBANBuilder.build(
+  country_code: 'SK',
+  bank_code: '1200',
+  account_number_prefix: '19',
+  account_number: '8742637541'
+)
+iban.iban                     # => "SK3112000000198742637541"
 
 # Slovenia
 iban = IBAN::IBANBuilder.build(
@@ -195,15 +213,6 @@ iban = IBAN::IBANBuilder.build(
 )
 iban.iban                     # => "ES8023100001180000012345"
 
-# Monaco
-iban = IBAN::IBANBuilder.build(
-  country_code: 'MC',
-  bank_code: '20041',
-  branch_code: '01005',
-  account_number: '0500013M026'
-)
-iban.iban                     # => "MC9320041010050500013M02606"
-
 # San Marino
 iban = IBAN::IBANBuilder.build(
   country_code: 'SM',
@@ -214,5 +223,5 @@ iban = IBAN::IBANBuilder.build(
 iban.iban                     # => "SM88X0542811101000000123456"
 ```
 
-Support for Germany, Greece, Ireland, Malta, The Netherlands, Slovakia and the
+Support for Germany, Greece, Ireland, Malta, The Netherlands and the
 UK is coming soon.

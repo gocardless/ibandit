@@ -1,6 +1,6 @@
 module IBAN
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI SK)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -181,6 +181,19 @@ module IBAN
       ].join
     end
 
+    def self.build_sk_bban(opts)
+      # Slovakian BBANs don't include any BBAN-specific check digits. (There are
+      # two check digits built in to the Slovakian account number, the
+      # implementation for which are available in .slovakian_prefix_check_digit
+      # and .slovakian_basic_check_digit for completeness)
+
+      bban = [
+        opts[:bank_code],
+        opts[:account_number_prefix].rjust(6, "0"),
+        opts[:account_number]
+      ].join
+    end
+
     def self.build_sm_bban(opts)
       # San Marino uses the same BBAN construction method as Italy
       build_it_bban(opts)
@@ -260,6 +273,38 @@ module IBAN
     end
 
     # Currently unused in this class. This method calculates the last digit
+    # of a Slovakian account number (basic) when given the initial digits.
+    def self.slovakian_prefix_check_digit(string)
+      weights = [10, 5, 8, 4, 2]
+
+      scaled_values = string.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * weights[index]
+      end
+
+      (11 - scaled_values.inject(:+) % 11).to_s
+    end
+
+    # Currently unused in this class. This method calculates the last digit
+    # of a Slovakian account number prefix when given the initial digits.
+    def self.slovakian_basic_check_digit(string)
+      weights = [6, 3, 7, 9, 10, 5, 8, 4, 2]
+
+      scaled_values = string.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * weights[index]
+      end
+
+      (11 - scaled_values.inject(:+) % 11).to_s
+    end
+
+    # Currently unused in this class. This method calculates the last digit
     # of a Finnish account number when given the initial digits (in electronic
     # format).
     def self.lund_check_digit(string)
@@ -323,6 +368,7 @@ module IBAN
       when 'LV' then %i(bank_code account_number)
       when 'LU' then %i(bank_code account_number)
       when 'SI' then %i(bank_code account_number)
+      when 'SK' then %i(bank_code account_number_prefix account_number)
       else %i(bank_code branch_code account_number)
       end
     end
