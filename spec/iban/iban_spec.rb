@@ -34,12 +34,6 @@ describe IBAN::IBAN do
 
     context "with valid details" do
       it { is_expected.to eq(true) }
-
-      it "clears errors on the IBAN" do
-        iban.instance_variable_set(:@errors, country_code: "error!")
-        iban.valid_country_code?
-        expect(iban.errors).to_not include(:country_code)
-      end
     end
 
     context "with an unknown country code" do
@@ -59,12 +53,6 @@ describe IBAN::IBAN do
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
       it { is_expected.to eq(true) }
-
-      it "clears errors on the IBAN" do
-        iban.instance_variable_set(:@errors, check_digits: "error!")
-        iban.valid_check_digits?
-        expect(iban.errors).to_not include(:check_digits)
-      end
 
       context "where the check digit is zero-padded" do
         let(:iban_code) { "GB06WEST12345698765442" }
@@ -99,12 +87,6 @@ describe IBAN::IBAN do
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
       it { is_expected.to eq(true) }
-
-      it "clears errors on the IBAN" do
-        iban.instance_variable_set(:@errors, length: "error!")
-        iban.valid_length?
-        expect(iban.errors).to_not include(:length)
-      end
     end
 
     context "with invalid details" do
@@ -134,12 +116,6 @@ describe IBAN::IBAN do
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
       it { is_expected.to eq(true) }
-
-      it "clears errors on the IBAN" do
-        iban.instance_variable_set(:@errors, characters: "error!")
-        iban.valid_characters?
-        expect(iban.errors).to_not include(:characters)
-      end
     end
 
     context "with invalid details" do
@@ -159,12 +135,6 @@ describe IBAN::IBAN do
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
       it { is_expected.to eq(true) }
-
-      it "clears errors on the IBAN" do
-        iban.instance_variable_set(:@errors, format: "error!")
-        iban.valid_format?
-        expect(iban.errors).to_not include(:format)
-      end
     end
 
     context "with invalid details" do

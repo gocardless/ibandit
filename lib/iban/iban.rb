@@ -78,7 +78,6 @@ module IBAN
 
     def valid_country_code?
       if IBAN.structures.key?(country_code)
-        @errors.delete(:country_code)
         true
       else
         @errors[:country_code] = "'#{country_code}' is not a valid " \
@@ -92,7 +91,6 @@ module IBAN
 
       expected_check_digits = IBANBuilder.iban_check_digits(country_code, bban)
       if check_digits == expected_check_digits
-        @errors.delete(:check_digits)
         true
       else
         @errors[:check_digits] = "Check digits failed modulus check. " \
@@ -106,7 +104,6 @@ module IBAN
       return unless valid_country_code?
 
       if iban.size == structure[:total_length]
-        @errors.delete(:length)
         true
       else
         @errors[:length] = "Length doesn't match SWIFT specification " \
@@ -122,7 +119,6 @@ module IBAN
                                "#{iban.scan(/[^A-Z\d]/).join(' ')}"
         false
       else
-        @errors.delete(:characters)
         true
       end
     end
@@ -131,7 +127,6 @@ module IBAN
       return unless valid_country_code?
 
       if bban =~ Regexp.new(structure[:bban_format])
-        @errors.delete(:format)
         true
       else
         @errors[:format] = "Unexpected format for a #{country_code} IBAN."
