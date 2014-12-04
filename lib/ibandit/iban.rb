@@ -1,6 +1,6 @@
 require 'yaml'
 
-module IbanBru
+module Ibandit
   class IBAN
     attr_reader :iban
     attr_reader :errors

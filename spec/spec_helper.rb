@@ -1,4 +1,4 @@
-require 'iban'
+require 'ibandit'
 require 'rspec/its'
 
 RSpec.configure do |config|
