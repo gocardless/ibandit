@@ -1,6 +1,6 @@
-require 'iban/version'
-require 'iban/iban'
-require 'iban/iban_builder'
+require 'iban_bru/version'
+require 'iban_bru/iban'
+require 'iban_bru/iban_builder'
 
-module IBAN
+module IbanBru
 end

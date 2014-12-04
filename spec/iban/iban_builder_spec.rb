@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IBAN::IBANBuilder do
+describe IbanBru::IBANBuilder do
   describe ".build" do
     subject(:build) { described_class.build(args) }
     let(:args) { { country_code: "ES" } }
@@ -31,14 +31,14 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("AT611904300234573201") }
       end
 
       context "with an account number that hasn't been zero-padded" do
         before { args[:account_number] = '234573201' }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("AT611904300234573201") }
       end
 
@@ -71,7 +71,7 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("BE62510007547061") }
       end
 
@@ -79,7 +79,7 @@ describe IBAN::IBANBuilder do
         before { args.delete(:bank_code) }
 
         describe "uses the account number alone to generate the bban" do
-          it { is_expected.to be_a(IBAN::IBAN) }
+          it { is_expected.to be_a(IbanBru::IBAN) }
           its(:iban) { is_expected.to eq("BE23007547061") }
         end
       end
@@ -105,14 +105,14 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("CY17002001280000001200527600") }
       end
 
       context "with an account number that hasn't been zero-padded" do
         before { args[:account_number] = '1200527600' }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("CY17002001280000001200527600") }
       end
 
@@ -137,7 +137,7 @@ describe IBAN::IBANBuilder do
       context "without an branch_code" do
         before { args.delete(:branch_code) }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("CY040020000001200527600") }
       end
     end
@@ -146,14 +146,14 @@ describe IBAN::IBANBuilder do
       let(:args) { { country_code: 'EE', account_number: '0221020145685' } }
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("EE382200221020145685") }
       end
 
       context "with an account number that needs translating" do
         before { args[:account_number] = "111020145685" }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("EE412200111020145685") }
       end
 
@@ -178,14 +178,14 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("ES8023100001180000012345") }
       end
 
       context "with an account number that needs to be zero-padded" do
         before { args[:account_number] = '12345' }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("ES8023100001180000012345") }
       end
 
@@ -221,21 +221,21 @@ describe IBAN::IBANBuilder do
       let(:args) { { country_code: 'FI', account_number: '123456-785' } }
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("FI2112345600000785") }
       end
 
       context "with an electronic format account_number" do
         before { args[:account_number] = "12345600000785" }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("FI2112345600000785") }
       end
 
       context "with a savings bank account_number in traditional format" do
         before { args[:account_number] = "423456-78510" }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("FI3442345670008510") }
       end
 
@@ -260,13 +260,13 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("FR1420041010050500013M02606") }
       end
 
       context "with a rib_key" do
         before { args[:rib_key] = "00" }
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("FR7920041010050500013M02600") }
       end
 
@@ -309,7 +309,7 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("IT60X0542811101000000123456") }
       end
 
@@ -351,7 +351,7 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("LU75BANK1234567890123") }
       end
 
@@ -384,7 +384,7 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("LV72BANK1234567890123") }
       end
 
@@ -418,13 +418,13 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("MC9320041010050500013M02606") }
       end
 
       context "with a rib_key" do
         before { args[:rib_key] = "00" }
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("MC6120041010050500013M02600") }
       end
 
@@ -467,7 +467,7 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("PT50000200230023843000578") }
       end
 
@@ -509,14 +509,14 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("SI56191000000123438") }
       end
 
       context "with an account number that needs padding" do
         before { args[:account_number] = '1234' }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("SI56191000000123438") }
       end
 
@@ -550,14 +550,14 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("SK3112000000198742637541") }
       end
 
       context "with an account number prefix that needs padding" do
         before { args[:account_number_prefix] = '19' }
 
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("SK3112000000198742637541") }
       end
 
@@ -600,7 +600,7 @@ describe IBAN::IBANBuilder do
       end
 
       context "with valid arguments" do
-        it { is_expected.to be_a(IBAN::IBAN) }
+        it { is_expected.to be_a(IbanBru::IBAN) }
         its(:iban) { is_expected.to eq("SM88X0542811101000000123456") }
       end
 

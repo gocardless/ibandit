@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IBAN::IBAN do
+describe IbanBru::IBAN do
   subject(:iban) { described_class.new(iban_code) }
   let(:iban_code) { "GB82WEST12345698765432" }
 

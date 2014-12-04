@@ -1,3 +1,3 @@
-module IBAN
+module IbanBru
   VERSION = '0.0.1'.freeze
 end

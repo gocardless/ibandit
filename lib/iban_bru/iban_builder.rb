@@ -1,4 +1,4 @@
-module IBAN
+module IbanBru
   module IBANBuilder
     SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI SK)
 
