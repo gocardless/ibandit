@@ -57,7 +57,10 @@ if __FILE__ == $0
     iban_registry_file
   )
 
-  output_file_path = File.expand_path("../../lib/iban/structures.yml", __FILE__)
+  output_file_path = File.expand_path(
+    "../../lib/ibandit/structures.yml",
+    __FILE__
+  )
 
   File.open(output_file_path, "w") do |f|
     f.write(iban_structures.to_yaml)
