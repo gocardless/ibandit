@@ -9,6 +9,8 @@ allows you to:
 
 The gem is kept up to date using the IBAN structure file from SWIFT.
 
+**At some point we might want to open source this. It's not ready yet!**
+
 ## Usage
 
 ### Installation
