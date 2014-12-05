@@ -298,6 +298,49 @@ describe Ibandit::IBANBuilder do
       end
     end
 
+    context "with IE as the country_code" do
+      let(:args) do
+        {
+          country_code: 'IE',
+          bank_code: 'AIBK',
+          branch_code: '931152',
+          account_number: '12345678'
+        }
+      end
+
+      context "with valid arguments" do
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq("IE29AIBK93115212345678") }
+      end
+
+      context "without a bank_code" do
+        before { args.delete(:bank_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+
+      context "without a branch_code" do
+        before { args.delete(:branch_code) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
+
+      context "without an account_number" do
+        before { args.delete(:account_number) }
+
+        it "raises a helpful error message" do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+    end
+
     context "with IT as the country_code" do
       let(:args) do
         {

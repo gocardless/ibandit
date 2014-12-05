@@ -223,6 +223,15 @@ iban = Ibandit::IBANBuilder.build(
   account_number: '000000123456'
 )
 iban.iban                     # => "SM88X0542811101000000123456"
+
+# Ireland
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'IE',
+  bank_code: 'AIBK',
+  branch_code: '931152',
+  account_number: '12345678'
+)
+iban.iban                     # => "IE29AIBK93115212345678"
 ```
 
 Support for Germany, Greece, Ireland, Malta, The Netherlands and the

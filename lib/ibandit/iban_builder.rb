@@ -1,6 +1,6 @@
 module Ibandit
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI SK)
+    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI SK IE)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -132,6 +132,11 @@ module Ibandit
     def self.build_lv_bban(opts)
       # Latvian BBANs don't include any BBAN-specific check digits.
       bban = [opts[:bank_code], opts[:account_number].rjust(13, "0")].join
+    end
+
+    def self.build_ie_bban(opts)
+      # Irish BBANs don't include any BBAN-specific check digits.
+      bban = [opts[:bank_code], opts[:branch_code], opts[:account_number]].join
     end
 
     def self.build_it_bban(opts)
