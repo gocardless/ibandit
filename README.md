@@ -109,8 +109,7 @@ iban.iban                     # => "AT611904300234573201"
 # Belgium
 iban = Ibandit::IBANBuilder.build(
   country_code: 'BE',
-  bank_code: '510',
-  account_number: '007547061'
+  account_number: '510-0075470-61'
 )
 iban.iban                     # => "BE62510007547061"
 
