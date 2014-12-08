@@ -1,10 +1,29 @@
 #!/usr/bin/env ruby
 
 # Script for parsing the IBAN registry (IBAN_Registry.txt) and IBAN structures
-# (IBANSTRUCTURE.txt) files from SWIFT.
+# (IBANSTRUCTURE.xml) files from SWIFT.
 #
 require 'csv'
 require 'yaml'
+require 'sax-machine'
+
+class Country
+  include SAXMachine
+  element "iban_country_code", as: :country_code
+  element "bank_identifier_position", as: :bank_code_position
+  element "bank_identifier_length", as: :bank_code_length
+  element "branch_identifier_position", as: :branch_code_position
+  element "branch_identifier_length", as: :branch_code_length
+  element "account_number_position", as: :account_number_position
+  element "account_number_length", as: :account_number_length
+  element "iban_total_length", as: :total_length
+  element "iban_national_id_length", as: :iban_national_id_length
+end
+
+class Report
+  include SAXMachine
+  elements "ibanstructure", as: :countries, class: Country
+end
 
 def get_iban_structures(iban_structures_file, iban_registry_file)
   bban_formats = iban_registry_file.each_with_object({}) do |line, hash|
@@ -13,19 +32,18 @@ def get_iban_structures(iban_structures_file, iban_registry_file)
     hash[country_code] = convert_swift_convention(bban_structure)
   end
 
-  iban_structures_file.each_with_object({}) do |line, hash|
-    country_code = line['IBAN COUNTRY CODE']
-
-    hash[country_code] = {
-      bank_code_position: line['BANK IDENTIFIER POSITION'].to_i,
-      bank_code_length: line['BANK IDENTIFIER LENGTH'].to_i,
-      branch_code_position: line['BRANCH IDENTIFIER POSITION'].to_i,
-      branch_code_length: line['BRANCH IDENTIFIER LENGTH'].to_i,
-      account_number_position: line['ACCOUNT NUMBER POSITION'].to_i,
-      account_number_length: line['ACCOUNT NUMBER LENGTH'].to_i,
-      total_length: line['IBAN TOTAL LENGTH'].to_i,
-      iban_national_id_length: line['IBAN NATIONAL ID LENGTH'].to_i,
-      bban_format: bban_formats[country_code]
+  report = Report.parse(iban_structures_file)
+  report.countries.each_with_object({}) do |country, hash|
+    hash[country.country_code] = {
+      bank_code_position: country.bank_code_position.to_i,
+      bank_code_length: country.bank_code_length.to_i,
+      branch_code_position: country.branch_code_position.to_i,
+      branch_code_length: country.branch_code_length.to_i,
+      account_number_position: country.account_number_position.to_i,
+      account_number_length: country.account_number_length.to_i,
+      total_length: country.total_length.to_i,
+      iban_national_id_length: country.iban_national_id_length.to_i,
+      bban_format: bban_formats[country.country_code]
     }
   end
 end
@@ -46,10 +64,8 @@ if __FILE__ == $PROGRAM_NAME
     headers: true
   )
 
-  iban_structures_file = CSV.read(
-    File.expand_path('../../data/IBANSTRUCTURE.txt', __FILE__),
-    col_sep: "\t",
-    headers: true
+  iban_structures_file = File.read(
+    File.expand_path('../../data/IBANSTRUCTURE.xml', __FILE__)
   )
 
   iban_structures = get_iban_structures(
