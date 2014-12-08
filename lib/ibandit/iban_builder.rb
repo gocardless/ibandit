@@ -1,7 +1,7 @@
 module Ibandit
   module IBANBuilder
     SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR IE IT LU LV MC PT SI SK
-                                 SM)
+                                 SM).freeze
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
