@@ -1,19 +1,20 @@
 module Ibandit
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR IE IT LU LV MC PT SI SK SM)
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR IE IT LU LV MC PT SI SK
+                                 SM)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
 
       if country_code.nil?
-        msg = "You must provide a country_code"
-        raise ArgumentError.new(msg)
+        msg = 'You must provide a country_code'
+        raise ArgumentError, msg
       elsif !SUPPORTED_COUNTRY_CODES.include?(country_code)
         msg = "Don't know how to build an IBAN for country code #{country_code}"
-        raise ArgumentError.new(msg)
+        raise ArgumentError, msg
       else
         require_fields(country_code, opts)
-        bban = self.send(:"build_#{country_code.downcase}_bban", opts)
+        bban = send(:"build_#{country_code.downcase}_bban", opts)
         build_iban(country_code, bban)
       end
     end
@@ -26,7 +27,7 @@ module Ibandit
       # Austrian BBANs don't include any BBAN-specific check digits. (Austrian
       # account numbers have built-in check digits, the checking of which is out
       # of scope for this gem.)
-      [opts[:bank_code], opts[:account_number].rjust(11, "0")].join
+      [opts[:bank_code], opts[:account_number].rjust(11, '0')].join
     end
 
     def self.build_be_bban(opts)
@@ -39,8 +40,7 @@ module Ibandit
       # but they're never shown separately. This method therefore handles being
       # passed either a single account_number argument or an account_number
       # and bank_code.
-      bban = opts[:bank_code] || ""
-      bban += opts[:account_number]
+      (opts[:bank_code] || '') + opts[:account_number]
     end
 
     def self.build_cy_bban(opts)
@@ -51,13 +51,13 @@ module Ibandit
       # Cypriot bank and branch codes are often communicated as a single code,
       # so this method handles being passed them together or separatedly.
       combined_bank_code = opts[:bank_code]
-      combined_bank_code += opts[:branch_code] || ""
+      combined_bank_code += opts[:branch_code] || ''
 
-      [combined_bank_code, opts[:account_number].rjust(16, "0")].join
+      [combined_bank_code, opts[:account_number].rjust(16, '0')].join
     end
 
     def self.build_de_bban(opts)
-      # German BBANs don't include any BBAN-specific check digits, and are just 
+      # German BBANs don't include any BBAN-specific check digits, and are just
       # the concatenation of the Bankleitzahl (bank number) and Kontonummer
       # (account number).
       opts[:bank_code] + opts[:account_number]
@@ -74,12 +74,12 @@ module Ibandit
       domestic_bank_code = opts[:account_number].gsub(/\A0+/, '').slice(0, 2)
 
       case domestic_bank_code
-      when "11" then iban_bank_code = "22"
-      when "93" then iban_bank_code = "00"
+      when '11' then iban_bank_code = '22'
+      when '93' then iban_bank_code = '00'
       else iban_bank_code = domestic_bank_code
       end
 
-      iban_bank_code + opts[:account_number].rjust(14, "0")
+      iban_bank_code + opts[:account_number].rjust(14, '0')
     end
 
     def self.build_es_bban(opts)
@@ -89,8 +89,8 @@ module Ibandit
         opts[:bank_code],
         opts[:branch_code],
         mod_11_check_digit('00' + opts[:bank_code] + opts[:branch_code]),
-        mod_11_check_digit(opts[:account_number].rjust(10, "0")),
-        opts[:account_number].rjust(10, "0")
+        mod_11_check_digit(opts[:account_number].rjust(10, '0')),
+        opts[:account_number].rjust(10, '0')
       ].join
     end
 
@@ -105,13 +105,13 @@ module Ibandit
       # the expansion method depends on the first character.
       return opts[:account_number] unless opts[:account_number].scan(/-/).any?
 
-      account_number = opts[:account_number].gsub(/-/, "")
+      account_number = opts[:account_number].gsub(/-/, '')
       length = account_number.size
 
-      if ["4", "5", "6"].include?(account_number[0])
-        account_number[0, 7] + "0" * (14 - length) + account_number[7..-1]
+      if %w(4 5 6).include?(account_number[0])
+        account_number[0, 7] + '0' * (14 - length) + account_number[7..-1]
       else
-        account_number[0, 6] + "0" * (14 - length) + account_number[6..-1]
+        account_number[0, 6] + '0' * (14 - length) + account_number[6..-1]
       end
     end
 
@@ -123,7 +123,7 @@ module Ibandit
                                                    opts[:branch_code],
                                                    opts[:account_number])
 
-      bban = [
+      [
         opts[:bank_code],
         opts[:branch_code],
         opts[:account_number],
@@ -133,17 +133,17 @@ module Ibandit
 
     def self.build_lu_bban(opts)
       # Luxembourgian BBANs don't include any BBAN-specific check digits.
-      bban = [opts[:bank_code], opts[:account_number].rjust(13, "0")].join
+      [opts[:bank_code], opts[:account_number].rjust(13, '0')].join
     end
 
     def self.build_lv_bban(opts)
       # Latvian BBANs don't include any BBAN-specific check digits.
-      bban = [opts[:bank_code], opts[:account_number].rjust(13, "0")].join
+      [opts[:bank_code], opts[:account_number].rjust(13, '0')].join
     end
 
     def self.build_ie_bban(opts)
       # Irish BBANs don't include any BBAN-specific check digits.
-      bban = [opts[:bank_code], opts[:branch_code], opts[:account_number]].join
+      [opts[:bank_code], opts[:branch_code], opts[:account_number]].join
     end
 
     def self.build_it_bban(opts)
@@ -171,7 +171,7 @@ module Ibandit
                                             opts[:branch_code] +
                                             opts[:account_number])
 
-      bban = [
+      [
         opts[:bank_code],
         opts[:branch_code],
         opts[:account_number],
@@ -184,11 +184,11 @@ module Ibandit
       # the same algorithm as the overall IBAN check digits. A side-effect is
       # that the overall IBAN check digits will therefor always be 56.
       check_digits = mod_97_10_check_digits(opts[:bank_code] +
-                                            opts[:account_number].rjust(8, "0"))
+                                            opts[:account_number].rjust(8, '0'))
 
-      bban = [
+      [
         opts[:bank_code],
-        opts[:account_number].rjust(8, "0"),
+        opts[:account_number].rjust(8, '0'),
         check_digits
       ].join
     end
@@ -199,9 +199,9 @@ module Ibandit
       # implementation for which are available in .slovakian_prefix_check_digit
       # and .slovakian_basic_check_digit for completeness)
 
-      bban = [
+      [
         opts[:bank_code],
-        opts[:account_number_prefix].rjust(6, "0"),
+        opts[:account_number_prefix].rjust(6, '0'),
         opts[:account_number]
       ].join
     end
@@ -217,14 +217,14 @@ module Ibandit
 
     def self.mod_11_check_digit(string)
       scaled_values = string.chars.map.with_index do |digit, index|
-        digit.to_i * (2 ** index % 11)
+        digit.to_i * (2**index % 11)
       end
       result = 11 - scaled_values.inject(:+) % 11
       result < 10 ? result.to_s : (11 - result).to_s
     end
 
     def self.mod_97_10_check_digits(string)
-      chars = string + "00"
+      chars = string + '00'
       digits = chars.bytes.map do |byte|
         case byte
         when 48..57 then byte.chr           # 0..9
@@ -238,12 +238,12 @@ module Ibandit
 
     def self.italian_check_digit(string)
       odd_mapping = {
-        "A" => 1,  "B" => 0,  "C" => 5,  "D" => 7,  "E" => 9,  "F" => 13,
-        "G" => 15, "H" => 17, "I" => 19, "J" => 21, "K" => 2,  "L" => 4,
-        "M" => 18, "N" => 20, "O" => 11, "P" => 3,  "Q" => 6,  "R" => 8,
-        "S" => 12, "T" => 14, "U" => 16, "V" => 10, "W" => 22, "X" => 25,
-        "Y" => 24, "Z" => 23, "0" => 1,  "1" => 0,  "2" => 5,  "3" => 7,
-        "4" => 9,  "5" => 13, "6" => 15, "7" => 17, "8" => 19, "9" => 21
+        'A' => 1,  'B' => 0,  'C' => 5,  'D' => 7,  'E' => 9,  'F' => 13,
+        'G' => 15, 'H' => 17, 'I' => 19, 'J' => 21, 'K' => 2,  'L' => 4,
+        'M' => 18, 'N' => 20, 'O' => 11, 'P' => 3,  'Q' => 6,  'R' => 8,
+        'S' => 12, 'T' => 14, 'U' => 16, 'V' => 10, 'W' => 22, 'X' => 25,
+        'Y' => 24, 'Z' => 23, '0' => 1,  '1' => 0,  '2' => 5,  '3' => 7,
+        '4' => 9,  '5' => 13, '6' => 15, '7' => 17, '8' => 19, '9' => 21
       }
 
       scaled_values = string.chars.map.with_index do |character, index|
@@ -258,7 +258,7 @@ module Ibandit
         end
       end
 
-      result = (scaled_values.inject(:+) % 26 + 65).chr
+      (scaled_values.inject(:+) % 26 + 65).chr
     end
 
     # Currently unused in this class. This method calculates the last two digits
@@ -347,12 +347,12 @@ module Ibandit
 
     def self.rib_value(string)
       rib_mapping = {
-        "A" => 1, "B" => 2, "C" => 3, "D" => 4, "E" => 5, "F" => 6, "G" => 7,
-        "H" => 8, "I" => 9, "J" => 1, "K" => 2, "L" => 3, "M" => 4, "N" => 5,
-        "O" => 6, "P" => 7, "Q" => 8, "R" => 9, "S" => 2, "T" => 3, "U" => 4,
-        "V" => 5, "W" => 6, "X" => 7, "Y" => 8, "Z" => 9, "0" => 0, "1" => 1,
-        "2" => 2, "3" => 3, "4" => 4, "5" => 5, "6" => 6, "7" => 7, "8" => 8,
-        "9" => 9
+        'A' => 1, 'B' => 2, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7,
+        'H' => 8, 'I' => 9, 'J' => 1, 'K' => 2, 'L' => 3, 'M' => 4, 'N' => 5,
+        'O' => 6, 'P' => 7, 'Q' => 8, 'R' => 9, 'S' => 2, 'T' => 3, 'U' => 4,
+        'V' => 5, 'W' => 6, 'X' => 7, 'Y' => 8, 'Z' => 9, '0' => 0, '1' => 1,
+        '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8,
+        '9' => 9
       }
 
       string.chars.map do |char|
@@ -366,24 +366,23 @@ module Ibandit
         next if opts[arg]
 
         msg = "#{arg} is a required field when building an #{country_code} IBAN"
-        raise ArgumentError.new(msg)
+        raise ArgumentError, msg
       end
     end
 
     def self.required_fields(country_code)
-      case country_code
-      when 'AT' then %i(bank_code account_number)
-      when 'BE' then %i(account_number)
-      when 'CY' then %i(bank_code account_number)
-      when 'EE' then %i(account_number)
-      when 'FI' then %i(account_number)
-      when 'LV' then %i(bank_code account_number)
-      when 'LU' then %i(bank_code account_number)
-      when 'SI' then %i(bank_code account_number)
-      when 'SK' then %i(bank_code account_number_prefix account_number)
-      when 'DE' then %i(bank_code account_number)
-      else %i(bank_code branch_code account_number)
-      end
+      {
+        'AT' => %i(bank_code account_number),
+        'BE' => %i(account_number),
+        'CY' => %i(bank_code account_number),
+        'EE' => %i(account_number),
+        'FI' => %i(account_number),
+        'LV' => %i(bank_code account_number),
+        'LU' => %i(bank_code account_number),
+        'SI' => %i(bank_code account_number),
+        'SK' => %i(bank_code account_number_prefix account_number),
+        'DE' => %i(bank_code account_number)
+      }.fetch(country_code, %i(bank_code branch_code account_number))
     end
 
     def self.build_iban(country_code, bban)
