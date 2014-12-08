@@ -1,5 +1,3 @@
-- Give it a name
-
 - Build IBANs from national banking details for each SEPA country
   - AUSTRIA: Done!
   - BELGIUM: Done!
@@ -9,19 +7,21 @@
   - FRANCE: Done!
   - GERMANY: Done!
   - GREECE: TODO
-  - IRELAND: TODO
+  - IRELAND: Done!
   - ITALY: Done!
   - LATVIA: Done!
   - LUXEMBOURG: Done!
-  - MALTA: TODO
+  - MALTA: TODO (maybe - not sure if local details are still used in Malta).
   - NETHERLANDS: TODO
+    - Looking up the BIC in the SWIFT Bank Directory Plus database
+    - IBAN is NL + check digits + 4 characters of BIC + 10-digit account number, zero-padded
   - PORTUGAL: Done!
   - SLOVAKIA: Done!
   - SLOVENIA: Done!
   - SPAIN: Done!
   - MONACO: Done!
   - SAN_MARINO: Done!
-  - UK: TODO
+  - UK: Done!
     - Looking up the BIC from the SWIFT Bank Directory Plus database
     - Using the BIC to calculate the Bank Code (first 4 digits)
     - Combining the Bank Code, Sort Code and Account Number to get the BBAN
@@ -30,3 +30,5 @@
   validator (which would then be the job of a modulus checking gem)
 
 - Specs for IBANSTRUCTURE parser
+
+- Rethink how bad input is handled

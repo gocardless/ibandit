@@ -1,7 +1,7 @@
 module Ibandit
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR IE IT LU LV MC PT SI SK
-                                 SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LU LV MC PT SI
+                                 SK SM).freeze
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -130,6 +130,23 @@ module Ibandit
       ].join
     end
 
+    def self.build_gb_bban(opts)
+      # UK BBANs include the first four characters of the BIC. This requires a
+      # BIC finder lambda to be defined, or the bank_code to be supplied.
+      bank_code = opts[:bank_code] || Ibandit.find_bic('GB', opts[:branch_code])
+
+      unless bank_code
+        raise ArgumentError,
+              'bank_code is required if a BIC finder is not defined'
+      end
+
+      [
+        bank_code.slice(0, 4),
+        opts[:branch_code],
+        opts[:account_number].rjust(8, '0')
+      ].join
+    end
+
     def self.build_lu_bban(opts)
       # Luxembourgian BBANs don't include any BBAN-specific check digits.
       [opts[:bank_code], opts[:account_number].rjust(13, '0')].join
@@ -141,8 +158,21 @@ module Ibandit
     end
 
     def self.build_ie_bban(opts)
-      # Irish BBANs don't include any BBAN-specific check digits.
-      [opts[:bank_code], opts[:branch_code], opts[:account_number]].join
+      # Irish BBANs include the first four characters of the BIC as the bank
+      # code. This requires a BIC finder lambda to be defined, or the bank code
+      # to be supplied.
+      bank_code = opts[:bank_code] || Ibandit.find_bic('IE', opts[:branch_code])
+
+      unless bank_code
+        raise ArgumentError,
+              'bank_code is required if a BIC finder is not defined'
+      end
+
+      [
+        bank_code.slice(0, 4),
+        opts[:branch_code],
+        opts[:account_number].rjust(8, '0')
+      ].join
     end
 
     def self.build_it_bban(opts)
@@ -370,18 +400,18 @@ module Ibandit
     end
 
     def self.required_fields(country_code)
-      {
-        'AT' => %i(bank_code account_number),
-        'BE' => %i(account_number),
-        'CY' => %i(bank_code account_number),
-        'EE' => %i(account_number),
-        'FI' => %i(account_number),
-        'LV' => %i(bank_code account_number),
-        'LU' => %i(bank_code account_number),
-        'SI' => %i(bank_code account_number),
-        'SK' => %i(bank_code account_number_prefix account_number),
-        'DE' => %i(bank_code account_number)
-      }.fetch(country_code, %i(bank_code branch_code account_number))
+      case country_code
+      when 'AT', 'CY', 'DE', 'LU', 'LV', 'SI'
+        %i(bank_code account_number)
+      when 'BE', 'EE', 'FI'
+        %i(account_number)
+      when 'SK'
+        %i(bank_code account_number_prefix account_number)
+      when 'GB', 'IE'
+        %i(branch_code account_number)
+      else
+        %i(bank_code branch_code account_number)
+      end
     end
 
     def self.build_iban(country_code, bban)
