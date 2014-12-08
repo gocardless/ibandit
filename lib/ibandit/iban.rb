@@ -72,7 +72,7 @@ module Ibandit
         valid_characters?,
         valid_check_digits?,
         valid_length?,
-        valid_format?,
+        valid_format?
       ].all?
     end
 
@@ -81,7 +81,7 @@ module Ibandit
         true
       else
         @errors[:country_code] = "'#{country_code}' is not a valid " \
-                                 "ISO 3166-1 IBAN country code"
+                                 'ISO 3166-1 IBAN country code'
         false
       end
     end
@@ -93,7 +93,7 @@ module Ibandit
       if check_digits == expected_check_digits
         true
       else
-        @errors[:check_digits] = "Check digits failed modulus check. " \
+        @errors[:check_digits] = 'Check digits failed modulus check. ' \
                                  "Expected #{check_digits}, received " \
                                  "#{expected_check_digits}"
         false
@@ -115,7 +115,7 @@ module Ibandit
 
     def valid_characters?
       if iban.scan(/[^A-Z0-9]/).any?
-        @errors[:characters] = "Non-alphanumeric characters found: " \
+        @errors[:characters] = 'Non-alphanumeric characters found: ' \
                                "#{iban.scan(/[^A-Z\d]/).join(' ')}"
         false
       else
