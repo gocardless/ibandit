@@ -7,8 +7,7 @@ module Ibandit
       country_code = opts.delete(:country_code)
 
       if country_code.nil?
-        msg = 'You must provide a country_code'
-        raise ArgumentError, msg
+        raise ArgumentError, 'You must provide a country_code'
       elsif !SUPPORTED_COUNTRY_CODES.include?(country_code)
         msg = "Don't know how to build an IBAN for country code #{country_code}"
         raise ArgumentError, msg
@@ -40,7 +39,7 @@ module Ibandit
       # but they're never shown separately. This method therefore handles being
       # passed either a single account_number argument or an account_number
       # and bank_code.
-      (opts[:bank_code] || '') + opts[:account_number]
+      opts.fetch(:bank_code, '') + opts[:account_number]
     end
 
     def self.build_cy_bban(opts)
