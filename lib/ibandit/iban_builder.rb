@@ -1,6 +1,6 @@
 module Ibandit
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT ES IT FR PT MC SM BE EE CY FI LU LV SI SK IE)
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR IE IT LU LV MC PT SI SK SM)
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -54,6 +54,13 @@ module Ibandit
       combined_bank_code += opts[:branch_code] || ""
 
       [combined_bank_code, opts[:account_number].rjust(16, "0")].join
+    end
+
+    def self.build_de_bban(opts)
+      # German BBANs don't include any BBAN-specific check digits, and are just 
+      # the concatenation of the Bankleitzahl (bank number) and Kontonummer
+      # (account number).
+      opts[:bank_code] + opts[:account_number]
     end
 
     def self.build_ee_bban(opts)
@@ -374,6 +381,7 @@ module Ibandit
       when 'LU' then %i(bank_code account_number)
       when 'SI' then %i(bank_code account_number)
       when 'SK' then %i(bank_code account_number_prefix account_number)
+      when 'DE' then %i(bank_code account_number)
       else %i(bank_code branch_code account_number)
       end
     end

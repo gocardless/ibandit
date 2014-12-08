@@ -123,6 +123,14 @@ iban = Ibandit::IBANBuilder.build(
 )
 iban.iban                     # => "CY17002001280000001200527600"
 
+# Germany
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'DE',
+  bank_code: '37040044',
+  account_number: '0532013000'
+)
+iban.iban                     # => "DE89370400440532013000"
+
 # Estonia
 iban = Ibandit::IBANBuilder.build(
   country_code: 'EE',
