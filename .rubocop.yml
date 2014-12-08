@@ -25,3 +25,5 @@ Style/SignalException:
 Metrics/MethodLength:
   Max: 20
 
+Style/DotPosition:
+  EnforcedStyle: 'trailing'

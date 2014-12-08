@@ -46,8 +46,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
 
@@ -55,8 +55,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
     end
@@ -88,8 +88,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -120,8 +120,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
 
@@ -129,8 +129,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -158,8 +158,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         specify do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -167,8 +167,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         specify do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -192,8 +192,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -224,8 +224,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -233,8 +233,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -242,8 +242,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -274,8 +274,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -305,8 +305,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -314,8 +314,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -323,8 +323,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -348,8 +348,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -357,8 +357,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -366,8 +366,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -391,8 +391,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -400,8 +400,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -409,8 +409,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -433,8 +433,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
 
@@ -442,8 +442,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
     end
@@ -466,8 +466,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
 
@@ -475,8 +475,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
     end
@@ -506,8 +506,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -515,8 +515,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -524,8 +524,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -549,8 +549,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -558,8 +558,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -567,8 +567,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -598,8 +598,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -607,8 +607,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -639,8 +639,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -648,8 +648,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
 
@@ -657,8 +657,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end
@@ -682,8 +682,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /bank_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
 
@@ -691,8 +691,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:branch_code) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /branch_code is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
         end
       end
 
@@ -700,8 +700,8 @@ describe Ibandit::IBANBuilder do
         before { args.delete(:account_number) }
 
         it 'raises a helpful error message' do
-          expect { build }
-            .to raise_error(ArgumentError, /account_number is a required field/)
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
     end

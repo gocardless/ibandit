@@ -31,10 +31,10 @@ def get_iban_structures(iban_structures_file, iban_registry_file)
 end
 
 def convert_swift_convention(swift_string)
-  swift_string.gsub(/(\d+)!([nac])/, '\2{\1}')
-    .gsub('n', '\d')
-    .gsub('a', '[A-Z]')
-    .gsub('c', '[A-Z0-9]')
+  swift_string.gsub(/(\d+)!([nac])/, '\2{\1}').
+    gsub('n', '\d').
+    gsub('a', '[A-Z]').
+    gsub('c', '[A-Z0-9]')
 end
 
 # Only parse the files if this file is run as an executable (not required in,
