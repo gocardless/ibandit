@@ -4,9 +4,9 @@ Ibandit is a Ruby library for manipulating and validating
 [IBANs](http://en.wikipedia.org/wiki/International_Bank_Account_Number). It
 allows you to:
 
-1) Validate an IBAN's check digits and structure
-2) Deconstruct an IBAN into national banking details
-3) Create an IBAN from national banking details
+1. Validate an IBAN's check digits and structure
+2. Deconstruct an IBAN into national banking details
+3. Create an IBAN from national banking details
 
 The gem is kept up to date using the IBAN structure file from SWIFT.
 
