@@ -7,7 +7,7 @@
   - ESTONIA: Done!
   - FINLAND: Done!
   - FRANCE: Done!
-  - GERMANY: TODO
+  - GERMANY: Done!
   - GREECE: TODO
   - IRELAND: TODO
   - ITALY: Done!
