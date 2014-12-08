@@ -40,7 +40,7 @@ module Ibandit
       # numbers and the IBAN structure file includes them in its definition of
       # the account number. As a result, this method ignores all arguments other
       # than the account number.
-      opts[:account_number].gsub(/-/, '')
+      opts[:account_number].gsub('-', '')
     end
 
     def self.build_cy_bban(opts)
@@ -103,9 +103,9 @@ module Ibandit
       # Finnish account numbers need to be expanded into "electronic format"
       # if they have been written in "traditional format" (with a dash), and
       # the expansion method depends on the first character.
-      return opts[:account_number] unless opts[:account_number].scan(/-/).any?
+      return opts[:account_number] unless opts[:account_number].scan('-').any?
 
-      account_number = opts[:account_number].gsub(/-/, '')
+      account_number = opts[:account_number].gsub('-', '')
       length = account_number.size
 
       if %w(4 5 6).include?(account_number[0])
