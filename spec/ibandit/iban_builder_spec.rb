@@ -65,8 +65,7 @@ describe Ibandit::IBANBuilder do
       let(:args) do
         {
           country_code: 'BE',
-          bank_code: '510',
-          account_number: '007547061'
+          account_number: '510007547061'
         }
       end
 
@@ -75,12 +74,12 @@ describe Ibandit::IBANBuilder do
         its(:iban) { is_expected.to eq('BE62510007547061') }
       end
 
-      context 'without a bank_code' do
-        before { args.delete(:bank_code) }
+      context 'with dashes' do
+        before { args[:account_number] = '510-0075470-61' }
 
-        describe 'uses the account number alone to generate the bban' do
+        describe 'it strips the dashes out' do
           it { is_expected.to be_a(Ibandit::IBAN) }
-          its(:iban) { is_expected.to eq('BE23007547061') }
+          its(:iban) { is_expected.to eq('BE62510007547061') }
         end
       end
 
