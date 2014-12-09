@@ -203,7 +203,7 @@ describe Ibandit::IBANBuilder do
           country_code: 'ES',
           bank_code: '2310',
           branch_code: '0001',
-          account_number: '0000012345'
+          account_number: '180000012345'
         }
       end
 
@@ -212,29 +212,14 @@ describe Ibandit::IBANBuilder do
         its(:iban) { is_expected.to eq('ES8023100001180000012345') }
       end
 
-      context 'with an account number that needs to be zero-padded' do
-        before { args[:account_number] = '12345' }
+      context 'without a bank_code or branch code' do
+        before do
+          args.delete(:bank_code)
+          args.delete(:branch_code)
+          args[:account_number] = '23100001180000012345'
+        end
 
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('ES8023100001180000012345') }
-      end
-
-      context 'without a bank_code' do
-        before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { build }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
-      end
-
-      context 'without a branch_code' do
-        before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { build }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
       end
 
       context 'without an account_number' do
@@ -826,6 +811,27 @@ describe Ibandit::IBANBuilder do
     context 'with a non-numeric character' do
       let(:account_number) { '1BAD2014' }
       specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
+  describe '.mod_11_check_digit' do
+    subject { described_class.mod_11_check_digit(account_number) }
+
+    context 'sequence that should give a check digit of 0' do
+      let(:account_number) { '12345678' }
+      it { is_expected.to eq('0') }
+    end
+
+    context 'sequence that should give a check digit of 8' do
+      let(:account_number) { '0000012345' }
+      it { is_expected.to eq('8') }
+    end
+
+    context 'with a non-numeric character' do
+      let(:account_number) { '000001234A' }
+      it 'raises an error' do
+        expect { subject }.to raise_error(ArgumentError)
+      end
     end
   end
 end

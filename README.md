@@ -256,7 +256,14 @@ iban = Ibandit::IBANBuilder.build(
   country_code: 'ES',
   bank_code: '2310',
   branch_code: '0001',
-  account_number: '12345'
+  account_number: '180000012345'
+)
+iban.iban                     # => "ES8023100001180000012345"
+
+# Spain with 20 digit account number
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'ES',
+  account_number: '23100001180000012345'
 )
 iban.iban                     # => "ES8023100001180000012345"
 
