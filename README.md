@@ -154,6 +154,50 @@ iban = Ibandit::IBANBuilder.build(
 )
 iban.iban                     # => "FR1420041010050500013M02606"
 
+# United Kingdom
+# UK IBANs use the first four characters of the BIC as the bank code. You must
+# either supply the bank_code as an option to IBANBuilder, or define a BIC
+# finder lambda:
+Ibandit.bic_finder = ->(country_code, national_id) do
+  BankDirectory.find(country_code, national_id).bic
+end
+
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'GB',
+  branch_code: '200000',
+  account_number: '55779911'
+)
+iban.iban                     # => "GB60BARC20000055779911"
+
+# Alternatively, you can supply the bank code:
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'GB',
+  bank_code: 'BARC',
+  branch_code: '200000',
+  account_number: '55779911'
+)
+iban.iban                     # => "GB60BARC20000055779911"
+
+# Ireland uses the same IBAN construction as the UK:
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'IE',
+  bank_code: 'AIBK',
+  branch_code: '931152',
+  account_number: '12345678'
+)
+iban.iban                     # => "IE29AIBK93115212345678"
+
+# or:
+Ibandit.bic_finder = -> (country_code, national_id) do
+  BankDirectory.find(country_code, national_id).bic
+end
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'IE',
+  branch_code: '931152',
+  account_number: '12345678'
+)
+iban.iban                     # => "IE29AIBK93115212345678"
+
 # Italy
 iban = Ibandit::IBANBuilder.build(
   country_code: 'IT',
@@ -231,16 +275,6 @@ iban = Ibandit::IBANBuilder.build(
   account_number: '000000123456'
 )
 iban.iban                     # => "SM88X0542811101000000123456"
-
-# Ireland
-iban = Ibandit::IBANBuilder.build(
-  country_code: 'IE',
-  bank_code: 'AIBK',
-  branch_code: '931152',
-  account_number: '12345678'
-)
-iban.iban                     # => "IE29AIBK93115212345678"
 ```
 
-Support for Germany, Greece, Ireland, Malta, The Netherlands and the
-UK is coming soon.
+Support for Greece, Malta, and The Netherlands is coming soon.

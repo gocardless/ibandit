@@ -328,14 +328,69 @@ describe Ibandit::IBANBuilder do
       end
     end
 
-    context 'with IE as the country_code' do
+    context 'with GB as the country_code' do
+      before { Ibandit.bic_finder = ->(_cc, _id) { 'BARC1234XXX' } }
       let(:args) do
-        {
-          country_code: 'IE',
-          bank_code: 'AIBK',
+        { country_code: 'GB',
+          branch_code: '200000',
+          account_number: '579135' }
+      end
+
+      context 'with valid arguments' do
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+      end
+
+      context 'with the bank_code supplied manually' do
+        before { Ibandit.bic_finder = nil }
+        before { args.merge!(bank_code: 'BARC') }
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+      end
+
+      context 'without a branch_code' do
+        before { args.delete(:branch_code) }
+
+        specify do
+          expect { build }.
+            to raise_error(ArgumentError, /branch_code is a required field/)
+        end
+      end
+
+      context 'without an account_number' do
+        before { args.delete(:account_number) }
+
+        specify do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context "when the BIC can't be found" do
+        before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
+
+        specify do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is required/)
+        end
+      end
+
+      context 'when no BIC finder or manual BIC is available' do
+        before { Ibandit.bic_finder = nil }
+
+        specify do
+          expect { build }.
+            to raise_error(NotImplementedError, /BIC finder is not defined/)
+        end
+      end
+    end
+
+    context 'with IE as the country_code' do
+      before { Ibandit.bic_finder = -> (_cc, _id) { 'AIBK1234XXX' } }
+      let(:args) do
+        { country_code: 'IE',
           branch_code: '931152',
-          account_number: '12345678'
-        }
+          account_number: '12345678' }
       end
 
       context 'with valid arguments' do
@@ -343,12 +398,20 @@ describe Ibandit::IBANBuilder do
         its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
       end
 
-      context 'without a bank_code' do
+      context 'with an explicit bank_code' do
+        before { args.merge!(bank_code: 'BANK') }
+
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq('IE07BANK93115212345678') }
+      end
+
+      context 'without a bank_code or BIC finder' do
+        before { Ibandit.bic_finder = nil }
         before { args.delete(:bank_code) }
 
         it 'raises a helpful error message' do
           expect { build }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
+            to raise_error(NotImplementedError, /BIC finder is not defined/)
         end
       end
 
