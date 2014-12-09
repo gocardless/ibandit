@@ -89,6 +89,25 @@ iban.account_number            # => "98765432"
 iban.check_digits              # => "82"
 ```
 
+### Initializing Ibandit
+
+The UK and Ireland both use part of the BIC as the `bank_code` in their IBANs. 
+If you wish to construct UK or Irish IBANs you will either need to pass the
+`bank_code` explicitly, or configure Ibandit with a BIC finder:
+
+```ruby
+# config/initializers/ibandit.rb
+Ibandit.bic_finder = -> (country_code, national_id) do
+  # This assumes you have `BankDirectoryPlus` set up to access the data provided
+  # by SWIFTRef in their Bank Directory Plus product. The `national_id` is the
+  # local national ID, not the "IBAN National ID" referred to in the IBAN Plus
+  # file (since that is the `bank_code` and the `branch_code`).
+ BankDirectoryPlus.find_by(country_code: country_code,
+                            national_id: national_id).
+                    try(:bic)
+end
+```
+
 ### Creating an IBAN from national banking details
 
 In many countries customers are familiar with national details rather than
@@ -155,44 +174,18 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "FR1420041010050500013M02606"
 
 # United Kingdom
-# UK IBANs use the first four characters of the BIC as the bank code. You must
-# either supply the bank_code as an option to IBANBuilder, or define a BIC
-# finder lambda:
-Ibandit.bic_finder = ->(country_code, national_id) do
-  BankDirectory.find(country_code, national_id).bic
-end
-
 iban = Ibandit::IBANBuilder.build(
   country_code: 'GB',
+  bank_code: 'BARC', # optional if you've configured a BIC finder
   branch_code: '200000',
   account_number: '55779911'
 )
 iban.iban                     # => "GB60BARC20000055779911"
 
-# Alternatively, you can supply the bank code:
-iban = Ibandit::IBANBuilder.build(
-  country_code: 'GB',
-  bank_code: 'BARC',
-  branch_code: '200000',
-  account_number: '55779911'
-)
-iban.iban                     # => "GB60BARC20000055779911"
-
-# Ireland uses the same IBAN construction as the UK:
+# Ireland
 iban = Ibandit::IBANBuilder.build(
   country_code: 'IE',
-  bank_code: 'AIBK',
-  branch_code: '931152',
-  account_number: '12345678'
-)
-iban.iban                     # => "IE29AIBK93115212345678"
-
-# or:
-Ibandit.bic_finder = -> (country_code, national_id) do
-  BankDirectory.find(country_code, national_id).bic
-end
-iban = Ibandit::IBANBuilder.build(
-  country_code: 'IE',
+  bank_code: 'AIBK', # optional if you've configured a BIC finder
   branch_code: '931152',
   account_number: '12345678'
 )
