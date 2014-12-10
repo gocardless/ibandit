@@ -124,17 +124,13 @@ module Ibandit
 
     def self.build_fr_bban(opts)
       # French BBANs include two "rib_key" check digits. These digits are part
-      # of the bank details shown to customers, so it's wise to ask the customer
-      # to provide them if possible. If not, this gem will generate them.
-      rib_key = opts[:rib_key] || CheckDigit.rib(opts[:bank_code],
-                                                 opts[:branch_code],
-                                                 opts[:account_number])
-
+      # of the bank details shown to customers and part of the account number
+      # in the IBAN structure definition. Hence we expect the account_number
+      # below to be 13 digits long = customer_acct_number + rib_key
       [
         opts[:bank_code],
         opts[:branch_code],
-        opts[:account_number],
-        rib_key
+        opts[:account_number]
       ].join
     end
 
