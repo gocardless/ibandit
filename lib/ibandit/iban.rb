@@ -27,39 +27,44 @@ module Ibandit
     end
 
     def check_digits
-      iban[2, 2]
+      iban[2, 2] || ''
     end
 
     def bank_code
+      return '' unless structure
       iban.slice(
         structure[:bank_code_position] - 1,
         structure[:bank_code_length]
-      )
+      ) || ''
     end
 
     def branch_code
-      return unless structure[:branch_code_length] > 0
+      return '' unless structure && structure[:branch_code_length] > 0
 
       iban.slice(
         structure[:branch_code_position] - 1,
         structure[:branch_code_length]
-      )
+      ) || ''
     end
 
     def account_number
+      return '' unless structure
+
       iban.slice(
         structure[:account_number_position] - 1,
         structure[:account_number_length]
-      )
+      ) || ''
     end
 
     def iban_national_id
+      return '' unless structure
+
       national_id = branch_code.nil? ? bank_code : bank_code + branch_code
       national_id.slice(0, structure[:iban_national_id_length])
     end
 
     def bban
-      iban[4..-1]
+      iban[4..-1] || ''
     end
 
     ###############
@@ -87,7 +92,7 @@ module Ibandit
     end
 
     def valid_check_digits?
-      return unless valid_characters?
+      return unless valid_country_code? && valid_characters?
 
       expected_check_digits = CheckDigit.iban(country_code, bban)
       if check_digits == expected_check_digits
