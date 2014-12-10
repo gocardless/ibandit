@@ -270,19 +270,13 @@ describe Ibandit::IBANBuilder do
           country_code: 'FR',
           bank_code: '20041',
           branch_code: '01005',
-          account_number: '0500013M026'
+          account_number: '0500013M02606'
         }
       end
 
       context 'with valid arguments' do
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('FR1420041010050500013M02606') }
-      end
-
-      context 'with a rib_key' do
-        before { args[:rib_key] = '00' }
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('FR7920041010050500013M02600') }
       end
 
       context 'without a bank_code' do
@@ -310,6 +304,12 @@ describe Ibandit::IBANBuilder do
           expect { build }.
             to raise_error(ArgumentError, /account_number is a required field/)
         end
+      end
+
+      context 'without the rib key in the account number' do
+        before { args[:account_number] = '0500013M026' }
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:valid?) { is_expected.to be_falsey }
       end
     end
 
@@ -546,19 +546,13 @@ describe Ibandit::IBANBuilder do
           country_code: 'MC',
           bank_code: '20041',
           branch_code: '01005',
-          account_number: '0500013M026'
+          account_number: '0500013M02606'
         }
       end
 
       context 'with valid arguments' do
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('MC9320041010050500013M02606') }
-      end
-
-      context 'with a rib_key' do
-        before { args[:rib_key] = '00' }
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('MC6120041010050500013M02600') }
       end
 
       context 'without a bank_code' do
@@ -586,6 +580,12 @@ describe Ibandit::IBANBuilder do
           expect { build }.
             to raise_error(ArgumentError, /account_number is a required field/)
         end
+      end
+
+      context 'without the rib key in the account number' do
+        before { args[:account_number] = '0500013M026' }
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:valid?) { is_expected.to be_falsey }
       end
     end
 
