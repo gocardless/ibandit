@@ -83,15 +83,22 @@ module Ibandit
     end
 
     def self.build_es_bban(opts)
-      # Spanish BBANs include two BBAN-specific check digits (i.e., not included
-      # in domestic details). They are calculated using a Mod 11 check.
-      [
-        opts[:bank_code],
-        opts[:branch_code],
-        mod_11_check_digit('00' + opts[:bank_code] + opts[:branch_code]),
-        mod_11_check_digit(opts[:account_number].rjust(10, '0')),
-        opts[:account_number].rjust(10, '0')
-      ].join
+      # Spanish account numbers include two check digits, these digits are
+      # part of the bank details shown to customers (the first 2 digits
+      # of the account number). A method for generating these check digits
+      # can be found below: mod_11_check_digit
+      #
+      # As Spanish account numbers can be split into three groups of digits
+      # or given as a single 20 digit string, we allow both options.
+      if opts.include?(:bank_code) && opts.include?(:branch_code)
+        [
+          opts[:bank_code],
+          opts[:branch_code],
+          opts[:account_number]
+        ].join
+      else
+        opts[:account_number]
+      end
     end
 
     def self.build_fi_bban(opts)
@@ -245,9 +252,14 @@ module Ibandit
     # Check digit helper methods #
     ##############################
 
+    # Currently unused in this class. This method calculates a mod 11
+    # check digit from the string of digits passed in. These check
+    # digits are used in the 1st and 2nd digits of local Spanish
+    # account numbers.
     def self.mod_11_check_digit(string)
+      raise ArgumentError, 'String must be numeric' unless /^\d+$/ =~ string
       scaled_values = string.chars.map.with_index do |digit, index|
-        digit.to_i * (2**index % 11)
+        Integer(digit) * (2**index % 11)
       end
       result = 11 - scaled_values.inject(:+) % 11
       result < 10 ? result.to_s : (11 - result).to_s
@@ -404,7 +416,7 @@ module Ibandit
       case country_code
       when 'AT', 'CY', 'DE', 'LU', 'LV', 'SI'
         %i(bank_code account_number)
-      when 'BE', 'EE', 'FI'
+      when 'BE', 'EE', 'FI', 'ES'
         %i(account_number)
       when 'SK'
         %i(bank_code account_number_prefix account_number)

@@ -9,20 +9,20 @@ require 'sax-machine'
 
 class Country
   include SAXMachine
-  element "iban_country_code", as: :country_code
-  element "bank_identifier_position", as: :bank_code_position
-  element "bank_identifier_length", as: :bank_code_length
-  element "branch_identifier_position", as: :branch_code_position
-  element "branch_identifier_length", as: :branch_code_length
-  element "account_number_position", as: :account_number_position
-  element "account_number_length", as: :account_number_length
-  element "iban_total_length", as: :total_length
-  element "iban_national_id_length", as: :iban_national_id_length
+  element 'iban_country_code', as: :country_code
+  element 'bank_identifier_position', as: :bank_code_position
+  element 'bank_identifier_length', as: :bank_code_length
+  element 'branch_identifier_position', as: :branch_code_position
+  element 'branch_identifier_length', as: :branch_code_length
+  element 'account_number_position', as: :account_number_position
+  element 'account_number_length', as: :account_number_length
+  element 'iban_total_length', as: :total_length
+  element 'iban_national_id_length', as: :iban_national_id_length
 end
 
 class Report
   include SAXMachine
-  elements "ibanstructure", as: :countries, class: Country
+  elements 'ibanstructure', as: :countries, class: Country
 end
 
 def get_iban_structures(iban_structures_file, iban_registry_file)
@@ -60,7 +60,7 @@ end
 if __FILE__ == $PROGRAM_NAME
   iban_registry_file = CSV.read(
     File.expand_path('../../data/IBAN_Registry.txt', __FILE__),
-    col_sep: "\t",
+    col_sep: '\t',
     headers: true
   )
 
