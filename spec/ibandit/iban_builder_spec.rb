@@ -341,6 +341,12 @@ describe Ibandit::IBANBuilder do
         its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
       end
 
+      context 'when the sort code is hyphenated' do
+        before { args[:branch_code] = '20-00-00' }
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+      end
+
       context 'with the bank_code supplied manually' do
         before { Ibandit.bic_finder = nil }
         before { args.merge!(bank_code: 'BARC') }
@@ -394,6 +400,12 @@ describe Ibandit::IBANBuilder do
       end
 
       context 'with valid arguments' do
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
+      end
+
+      context 'with hyphens in the sort code' do
+        before { args[:branch_code] = '93-11-52' }
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
       end
