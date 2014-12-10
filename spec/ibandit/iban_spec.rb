@@ -18,6 +18,18 @@ describe Ibandit::IBAN do
     its(:branch_code) { is_expected.to eq('123456') }
     its(:account_number) { is_expected.to eq('98765432') }
     its(:iban_national_id) { is_expected.to eq('WEST123456') }
+
+    context 'when the IBAN is blank' do
+      let(:iban_code) { '' }
+
+      its(:country_code) { is_expected.to eq('') }
+      its(:check_digits) { is_expected.to eq('') }
+      its(:bank_code) { is_expected.to eq('') }
+      its(:branch_code) { is_expected.to eq('') }
+      its(:account_number) { is_expected.to eq('') }
+      its(:iban_national_id) { is_expected.to eq('') }
+      its(:bban) { is_expected.to eq('') }
+    end
   end
 
   describe '#formatted' do
@@ -72,6 +84,16 @@ describe Ibandit::IBAN do
 
     context 'with invalid characters' do
       let(:iban_code) { 'AA82-EST123456987654' }
+      it { is_expected.to be_nil }
+
+      it 'does not set errors on the IBAN' do
+        iban.valid_check_digits?
+        expect(iban.errors).to_not include(:check_digits)
+      end
+    end
+
+    context 'with an empty IBAN' do
+      let(:iban_code) { '' }
       it { is_expected.to be_nil }
 
       it 'does not set errors on the IBAN' do
