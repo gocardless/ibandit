@@ -81,4 +81,24 @@ describe Ibandit::CheckDigit do
       specify { expect { subject }.to raise_error(/non-numeric character/) }
     end
   end
+
+  describe '.rib' do
+    subject { described_class.rib(bank_code, branch_code, account_number) }
+
+    context 'with some non-numeric characters' do
+      let(:bank_code) { '12BD4' }
+      let(:branch_code) { '367WX' }
+      let(:account_number) { '12345678912' }
+
+      it { is_expected.to eq('20') }
+    end
+
+    context 'with numeric characters' do
+      let(:bank_code) { '12244' }
+      let(:branch_code) { '36767' }
+      let(:account_number) { '12345678912' }
+
+      it { is_expected.to eq('20') }
+    end
+  end
 end
