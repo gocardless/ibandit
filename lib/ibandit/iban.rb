@@ -89,7 +89,7 @@ module Ibandit
     def valid_check_digits?
       return unless valid_characters?
 
-      expected_check_digits = IBANBuilder.iban_check_digits(country_code, bban)
+      expected_check_digits = CheckDigit.iban(country_code, bban)
       if check_digits == expected_check_digits
         true
       else

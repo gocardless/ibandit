@@ -1,6 +1,7 @@
 require 'ibandit/version'
 require 'ibandit/iban'
 require 'ibandit/iban_builder'
+require 'ibandit/check_digit'
 
 module Ibandit
   class << self
