@@ -1,0 +1,14 @@
+---
+ES:
+  :local_check_digit_position: 13
+  :local_check_digit_length: 2
+  :account_number_position: 15
+  :account_number_length: 10
+FR:
+  :local_check_digit_position: 26
+  :local_check_digit_length: 2
+  :account_number_position: 15
+  :account_number_length: 11
+IT:
+  :local_check_digit_position: 5
+  :local_check_digit_length: 1

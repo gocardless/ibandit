@@ -27,7 +27,7 @@ end
 
 def get_iban_structures(iban_structures_file, iban_registry_file)
   bban_formats = iban_registry_file.each_with_object({}) do |line, hash|
-    bban_structure = line['BBAN structure '].strip
+    bban_structure = line['BBAN structure'].strip
     country_code = line['Country code as defined in ISO 3166'].strip
     hash[country_code] = convert_swift_convention(bban_structure)
   end
@@ -55,13 +55,28 @@ def convert_swift_convention(swift_string)
     gsub('c', '[A-Z0-9]')
 end
 
+def merge_structures(structures, overrides)
+  overrides.each_pair do |key, value|
+    if structures.include?(key)
+      structures[key].merge!(value)
+    end
+  end
+
+  structures
+end
+
 # Only parse the files if this file is run as an executable (not required in,
 # as it is in the specs)
 if __FILE__ == $PROGRAM_NAME
-  iban_registry_file = CSV.read(
-    File.expand_path('../../data/IBAN_Registry.txt', __FILE__),
+  iban_registry_string = File.read(
+    File.expand_path('../../data/IBAN_Registry.txt', __FILE__)
+  ).gsub(/\s*\t\s*/, '\t')
+
+  iban_registry_file = CSV.new(
+    iban_registry_string,
     col_sep: '\t',
-    headers: true
+    headers: true,
+    quote_char: '"'
   )
 
   iban_structures_file = File.read(
@@ -73,12 +88,18 @@ if __FILE__ == $PROGRAM_NAME
     iban_registry_file
   )
 
+  structure_overrides = YAML.load_file(
+    File.expand_path('../../data/structure_overrides.yml',
+                    __FILE__)
+  )
+
+  complete_structures = merge_structures(iban_structures, structure_overrides)
   output_file_path = File.expand_path(
     '../../lib/ibandit/structures.yml',
     __FILE__
   )
 
   File.open(output_file_path, 'w') do |f|
-    f.write(iban_structures.to_yaml)
+    f.write(complete_structures.to_yaml)
   end
 end

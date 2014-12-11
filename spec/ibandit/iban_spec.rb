@@ -18,6 +18,7 @@ describe Ibandit::IBAN do
     its(:branch_code) { is_expected.to eq('123456') }
     its(:account_number) { is_expected.to eq('98765432') }
     its(:iban_national_id) { is_expected.to eq('WEST123456') }
+    its(:local_check_digits) { is_expected.to eq('') }
 
     context 'when the IBAN is blank' do
       let(:iban_code) { '' }
@@ -29,6 +30,7 @@ describe Ibandit::IBAN do
       its(:account_number) { is_expected.to eq('') }
       its(:iban_national_id) { is_expected.to eq('') }
       its(:bban) { is_expected.to eq('') }
+      its(:local_check_digits) { is_expected.to eq('') }
     end
   end
 
@@ -188,5 +190,25 @@ describe Ibandit::IBAN do
     specify { expect(iban).to receive(:valid_check_digits?).at_least(1) }
     specify { expect(iban).to receive(:valid_length?).at_least(1) }
     specify { expect(iban).to receive(:valid_format?).at_least(1) }
+  end
+
+  describe '#local_check_digits' do
+    context 'with a French IBAN' do
+      let(:iban_code) { 'FR1234567890123456789012345' }
+
+      its(:local_check_digits) { is_expected.to eq('45') }
+    end
+
+    context 'with a Spanish IBAN' do
+      let(:iban_code) { 'ES1212345678911234567890' }
+
+      its(:local_check_digits) { is_expected.to eq('91') }
+    end
+
+    context 'with an Italian IBAN' do
+      let(:iban_code) { 'IT12A1234567890123456789012' }
+
+      its(:local_check_digits) { is_expected.to eq('A') }
+    end
   end
 end

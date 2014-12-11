@@ -63,6 +63,14 @@ module Ibandit
       national_id.slice(0, structure[:iban_national_id_length])
     end
 
+    def local_check_digits
+      return '' unless structure && structure[:local_check_digit_position]
+
+      iban.slice(structure[:local_check_digit_position] - 1,
+                 structure[:local_check_digit_length]
+      ) || ''
+    end
+
     def bban
       iban[4..-1] || ''
     end
