@@ -6,7 +6,7 @@ module Ibandit
     attr_reader :errors
 
     def self.structures
-      YAML.load_file("#{File.dirname(__FILE__)}/structures.yml")
+      @structures ||= YAML.load_file("#{File.dirname(__FILE__)}/structures.yml")
     end
 
     def initialize(iban)
