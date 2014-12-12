@@ -90,7 +90,7 @@ module Ibandit
       # (account number). Local bank validation is carried out by matching the
       # bank code with the right algorithm key, then applying that bank-specific
       # algorithm
-      opts[:bank_code] + opts[:account_number]
+      opts[:bank_code] + opts[:account_number].rjust(10, '0')
     end
 
     def self.build_ee_bban(opts)
@@ -218,7 +218,11 @@ module Ibandit
       #   Account number: 13 digits
       #
       # Luxembourgian BBANs don't include any BBAN-specific check digits.
-      [opts[:bank_code], opts[:account_number].rjust(13, '0')].join
+      unless opts[:account_number].length == 13
+        raise ArgumentError,
+              'account_number should have 13 digits'
+      end
+      [opts[:bank_code], opts[:account_number]].join
     end
 
     def self.build_lv_bban(opts)
@@ -228,7 +232,11 @@ module Ibandit
       #   either the bank code needs to be supplied, or a bank dropdown
       #
       # Latvian BBANs don't include any BBAN-specific check digits.
-      [opts[:bank_code], opts[:account_number].rjust(13, '0')].join
+      unless opts[:account_number].length == 13
+        raise ArgumentError,
+              'account_number should have 13 digits'
+      end
+      [opts[:bank_code], opts[:account_number]].join
     end
 
     def self.build_ie_bban(opts)
@@ -246,10 +254,15 @@ module Ibandit
               'bank_code is required if a BIC finder is not defined'
       end
 
+      unless opts[:account_number].length == 8
+        raise ArgumentError,
+              'account_number should have 8 digits'
+      end
+
       [
         bank_code.slice(0, 4),
         opts[:branch_code].gsub('-', ''),
-        opts[:account_number].rjust(8, '0')
+        opts[:account_number]
       ].join
     end
 
@@ -334,7 +347,7 @@ module Ibandit
       [
         opts[:bank_code],
         opts[:account_number_prefix].rjust(6, '0'),
-        opts[:account_number]
+        opts[:account_number].rjust(10, '0')
       ].join
     end
 
