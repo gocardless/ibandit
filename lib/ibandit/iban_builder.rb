@@ -30,16 +30,21 @@ module Ibandit
     end
 
     def self.build_be_bban(opts)
-      # Belgian BBANs don't include any BBAN-specific check digits. (The last
-      # two digits of the account number are check digits, but these are
-      # built-in. An implementation of the check digit algorithm is available in
-      # .belgian_check_digits for completeness.)
+      # Local account details format: bbb-aaaaaaa-cc
+      # Local account details name(s): "Rekeningnummer / Numéro de compte"
       #
-      # The first three digits of Belgian account numbers are the bank_code, but
-      # the account number is not considered complete without these threee
-      # numbers and the IBAN structure file includes them in its definition of
-      # the account number. As a result, this method ignores all arguments other
-      # than the account number.
+      # BBAN-specific check digits: none
+      # Other check digits:
+      #   The last two digits of the account number are check digits, but these
+      #   are considered integral to the account number itself. See
+      #   CheckDigit#belgian for details of their calculation.
+      #
+      # Additional info:
+      #   The first three digits of Belgian account numbers are the bank_code,
+      #   but the account number is not considered complete without these three
+      #   numbers and the IBAN structure file includes them in its definition of
+      #   the account number. As a result, this method ignores all arguments
+      #   other than the account number.
       opts[:account_number].gsub('-', '')
     end
 
