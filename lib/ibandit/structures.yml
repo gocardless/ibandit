@@ -184,8 +184,8 @@ ES:
   :bank_code_length: 4
   :branch_code_position: 9
   :branch_code_length: 4
-  :account_number_position: 15
-  :account_number_length: 10
+  :account_number_position: 13
+  :account_number_length: 12
   :total_length: 24
   :iban_national_id_length: 8
   :bban_format: \d{4}\d{4}\d{1}\d{1}\d{10}
@@ -217,7 +217,7 @@ FR:
   :branch_code_position: 10
   :branch_code_length: 5
   :account_number_position: 15
-  :account_number_length: 11
+  :account_number_length: 13
   :total_length: 27
   :iban_national_id_length: 10
   :bban_format: \d{5}\d{5}[A-Z0-9]{11}\d{2}
