@@ -4,6 +4,9 @@ inherit_from: .rubocop_todo.yml
 LineLength:
   Max: 80
 
+ClassLength:
+  Max: 150
+
 # Avoid single-line methods.
 SingleLineMethods:
   AllowIfMethodIsEmpty: true

@@ -189,6 +189,8 @@ ES:
   :total_length: 24
   :iban_national_id_length: 8
   :bban_format: \d{4}\d{4}\d{1}\d{1}\d{10}
+  :local_check_digit_position: 13
+  :local_check_digit_length: 2
 FI:
   :bank_code_position: 5
   :bank_code_length: 6
@@ -219,6 +221,8 @@ FR:
   :total_length: 27
   :iban_national_id_length: 10
   :bban_format: \d{5}\d{5}[A-Z0-9]{11}\d{2}
+  :local_check_digit_position: 26
+  :local_check_digit_length: 2
 GB:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -339,6 +343,8 @@ IT:
   :total_length: 27
   :iban_national_id_length: 10
   :bban_format: '[A-Z]{1}\d{5}\d{5}[A-Z0-9]{12}'
+  :local_check_digit_position: 5
+  :local_check_digit_length: 1
 KW:
   :bank_code_position: 5
   :bank_code_length: 4
