@@ -21,6 +21,10 @@ SingleLineBlockParams:
 Style/SignalException:
   EnforcedStyle: 'only_raise'
 
+# Wants to exclude accents from comments
+Style/AsciiComments:
+  Enabled: false
+
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 20
