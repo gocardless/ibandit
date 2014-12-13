@@ -77,21 +77,34 @@ county combines them:
 `account_number`
 :    The account number for the account
 
+`iban_national_id`
+:    The national ID for the bank / branch as documented by SWIFT
+
 The SWIFT IBAN components are all available as methods on an `IBAN` object:
 
 ```ruby
 iban = Ibandit::IBAN.new("GB82 WEST 1234 5698 7654 32")
 
 iban.country_code              # => "GB"
+iban.check_digits              # => "82"
 iban.bank_code                 # => "WEST"
 iban.branch_code               # => "123456"
 iban.account_number            # => "98765432"
-iban.check_digits              # => "82"
+iban.iban_national_id          # => "123456"
+```
+
+In addition, it is often useful to extract any local check digits from the IBAN.
+These are available through a `local_check_digits` method:
+
+```ruby
+iban = Ibandit::IBAN.new("ES12 1234 5678 9112 3456 7890")
+
+iban.local_check_digits        # => "91"
 ```
 
 ### Initializing Ibandit
 
-The UK and Ireland both use part of the BIC as the `bank_code` in their IBANs. 
+The UK and Ireland both use part of the BIC as the `bank_code` in their IBANs.
 If you wish to construct UK or Irish IBANs you will either need to pass the
 `bank_code` explicitly, or configure Ibandit with a BIC finder:
 
