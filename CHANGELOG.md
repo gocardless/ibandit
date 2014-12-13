@@ -1,3 +1,8 @@
+## 0.0.10 - December 13, 2014
+
+- Update format validations for all IBAN countries. Add local_check_digits
+  accessor method to IBAN.
+
 ## 0.0.5 - December 8, 2014
 
 - Add IBANSTRUCTURE file. All IBAN countries are now supported for validation
