@@ -116,8 +116,8 @@ Ibandit.bic_finder = -> (country_code, national_id) do
   # local national ID, not the "IBAN National ID" referred to in the IBAN Plus
   # file (since that is the `bank_code` and the `branch_code`).
  BankDirectoryPlus.find_by(country_code: country_code,
-                            national_id: national_id).
-                    try(:bic)
+                           national_id: national_id).
+                   try(:bic)
 end
 ```
 
