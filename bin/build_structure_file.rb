@@ -55,12 +55,22 @@ def convert_swift_convention(swift_string)
     gsub('c', '[A-Z0-9]')
 end
 
+def merge_structures(structures, additions)
+  additions.each_pair do |key, value|
+    if structures.include?(key)
+      structures[key].merge!(value)
+    end
+  end
+
+  structures
+end
+
 # Only parse the files if this file is run as an executable (not required in,
 # as it is in the specs)
 if __FILE__ == $PROGRAM_NAME
   iban_registry_file = CSV.read(
     File.expand_path('../../data/IBAN_Registry.txt', __FILE__),
-    col_sep: '\t',
+    col_sep: "\t",
     headers: true
   )
 
@@ -73,12 +83,17 @@ if __FILE__ == $PROGRAM_NAME
     iban_registry_file
   )
 
+  structure_additions = YAML.load_file(
+    File.expand_path('../../data/structure_additions.yml', __FILE__)
+  )
+
+  complete_structures = merge_structures(iban_structures, structure_additions)
   output_file_path = File.expand_path(
     '../../lib/ibandit/structures.yml',
     __FILE__
   )
 
   File.open(output_file_path, 'w') do |f|
-    f.write(iban_structures.to_yaml)
+    f.write(complete_structures.to_yaml)
   end
 end
