@@ -502,5 +502,11 @@ describe Ibandit::IBAN do
 
       its(:local_check_digits) { is_expected.to eq('A') }
     end
+
+    context 'with an Estonian IBAN' do
+      let(:iban_code) { 'EE382200221020145685' }
+
+      its(:local_check_digits) { is_expected.to eq('5') }
+    end
   end
 end

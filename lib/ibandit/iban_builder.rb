@@ -23,23 +23,37 @@ module Ibandit
     ##################################
 
     def self.build_at_bban(opts)
-      # Local account details format: bbbb aaaaaaaaaaa (2 separate fields)
-      #   Bank code: bbbbb [5 digits] - called 'Bankleitzahl' aka 'BLZ'
-      #   Account number: aaaaaaaaaaa [min 4, max 11 digits] - called
-      #   'Kontonummer'. Add leading zeros if < 11 digits.
+      # Local account details format:
+      #   aaaaaaaaaaa bbbbb
+      #   Account number may be 4-11 digits long
       #
-      # Austrian BBANs don't include any BBAN-specific check digits. (Austrian
-      # account numbers have built-in check digits, the checking of which is out
-      # of scope for this gem because the bank-specific rules are not public.)
-      [opts[:bank_code], opts[:account_number].rjust(11, '0')].join
+      # Local account details name(s):
+      #   Bank code: 'Bankleitzahl' or 'BLZ'
+      #   Account number: 'Kontonummer' or 'Kto.-Nr'
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   Austrian account numbers have built-in check digits. The checking
+      #   rules are not public.
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 11 digits.
+      [
+        opts[:bank_code],
+        opts[:account_number].rjust(11, '0')
+      ].join
     end
 
     def self.build_be_bban(opts)
       # Local account details format: bbb-aaaaaaa-cc
-      # Local account details name(s): "Rekeningnummer / Numéro de compte"
-      # All fields are entered in one block, separated by hyphens for clarity
+      #
+      # Local account details name(s):
+      #   Single name for all fields: "Rekeningnummer / Numéro de compte"
+      #   All fields are entered in one block, separated by hyphens for clarity
       #
       # BBAN-specific check digits: none
+      #
       # Other check digits:
       #   The last two digits of the account number are check digits, but these
       #   are considered integral to the account number itself. See
@@ -55,59 +69,89 @@ module Ibandit
     end
 
     def self.build_cy_bban(opts)
-      # Cypriot BBANs don't include any BBAN-specific check digits. (Some
-      # Cypriot banks may be using check digits in their account numbers, but
-      # there's no central source of them.)
+      # Local account details format:
+      #   bbb-sssss aaaaaaaaaaaaaaaa
+      #   Account number may be 7-16 digits long
       #
-      # Cypriot bank and branch codes are often communicated as a single code,
-      # so this method handles being passed them together or separatedly. In
-      # terms of payer input, they should be passed as 2 joined fields.
+      # Local account details name(s):
+      #   Bank code: 'Kodikos Trapezas'
+      #   Branch code: 'Kodikos Katastimatos'
+      #   Account number: 'Arithmos Logariasmou'
       #
-      # Local account details:
-      #   Bank and branch code: bbbbb-sss
-      #     Bank code [b]: 5 digits ('Kodikos Katastimatos')
-      #     Branch code [s]: 3 digits ('Kodikos Trapezas')
-      #   Account number: aaaaaaaaaaaaaaaa [7-16 digits] - inputed separately,
-      #   with leading zeros ('Arithmos Logariasmou')
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   Cypriot BBANs don't include any BBAN-specific check digits. (Some
+      #   Cypriot banks may be using check digits in their account numbers, but
+      #   there's no central source of them.)
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 16 digits.
+      #
+      # Additional info:
+      #   Cypriot bank and branch codes are often communicated as a single code,
+      #   so this method handles being passed them together or separatedly.
       combined_bank_code = opts[:bank_code]
       combined_bank_code += opts[:branch_code] || ''
 
-      [combined_bank_code, opts[:account_number].rjust(16, '0')].join
+      [
+        combined_bank_code,
+        opts[:account_number].rjust(16, '0')
+      ].join
     end
 
     def self.build_de_bban(opts)
-      # Local account details format: bbbbbbbb aaaaaaaaaa (2 separate fields)
-      #   Bank code: bbbbb [8 digits] - called 'Bankleitzahl' aka 'BLZ'
-      #   Account number: aaaaaaaaaaa [1-10 digits] - called 'Kontonummer', with
-      #   leading zeros
+      # Local account details format:
+      #   bbbbbbbb aaaaaaaaaa
+      #   Account number may be 1-10 digits long
       #
-      # There are many exceptions to the way German bank details translate into
-      # an IBAN, detailed into a 200 page document compiled by the German
-      # Bundesbank. This is still to be done.
+      # Local account details name(s):
+      #   Bank code: 'Bankleitzahl' or 'BLZ'
+      #   Account number: 'Kontonummer' or 'Kto.-Nr'
       #
-      # German BBANs don't include any BBAN-specific check digits, and are just
-      # the concatenation of the Bankleitzahl (bank number) and Kontonummer
-      # (account number). Local bank validation is carried out by matching the
-      # bank code with the right algorithm key, then applying that bank-specific
-      # algorithm
-      opts[:bank_code] + opts[:account_number].rjust(10, '0')
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   Local bank validation is carried out by matching the bank code with
+      #   the right algorithm key, then applying that bank-specific algorithm.
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 10 digits.
+      #
+      # Additional info:
+      #   There are many exceptions to the way German bank details translate
+      #   into an IBAN, detailed into a 200 page document compiled by the
+      #   Bundesbank.
+      [
+        opts[:bank_code],
+        opts[:account_number].rjust(10, '0')
+      ].join
     end
 
     def self.build_ee_bban(opts)
       # Local account details format:
-      #   Account number: ssccccccccccccx [up to 14 digits, left zero padded]
-      #   called 'Kontonumber' as a block
-      #     First 2 digits correspond to the bank code
-      #     Next 1-11 digits are the account number per se (add leading zeros)
-      #     Last digit is the domestic check digit
+      #   bbaaaaaaaaaaax
+      #   Account number may be up to 14 characters long
+      #   Bank code is extracted from the first two digits of the account number
+      #   and converted using the rules at
+      #   http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
       #
-      # Estonian BBANs don't include any BBAN-specific check digits. (The last
-      # digit of the account number is a check digit, but this is built-in. An
-      # implementation of the check digit algorithm is available in
-      # .estonian_check_digit for completeness.)
+      # Local account details name(s):
+      #   Account number: 'Kontonumber'
       #
-      # Estonian bank codes are looked up from the account number. See
-      # http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   The last digit of the account number is a check digit, but this is
+      #   built-in. An implementation of the check digit algorithm is available
+      #   in CheckDigit#estonian.
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 10 digits.
+      #
+      # Additional info:
+      #   Estonian national bank details were replaced with IBANs in Feb 2014.
+      #   All Estonian payers should therefore know their IBAN.
       domestic_bank_code = opts[:account_number].gsub(/\A0+/, '').slice(0, 2)
 
       case domestic_bank_code

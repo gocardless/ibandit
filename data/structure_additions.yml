@@ -1,6 +1,9 @@
 ---
 DE:
   :bban_format: \d{8}\d{10}
+EE:
+  :local_check_digit_position: 20
+  :local_check_digit_length: 1
 ES:
   :local_check_digit_position: 13
   :local_check_digit_length: 2

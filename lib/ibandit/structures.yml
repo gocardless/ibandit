@@ -179,6 +179,8 @@ EE:
   :total_length: 20
   :iban_national_id_length: 2
   :bban_format: \d{2}\d{2}\d{11}\d{1}
+  :local_check_digit_position: 20
+  :local_check_digit_length: 1
 ES:
   :bank_code_position: 5
   :bank_code_length: 4
