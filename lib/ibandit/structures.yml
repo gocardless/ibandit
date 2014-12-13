@@ -148,7 +148,7 @@ DE:
   :account_number_length: 10
   :total_length: 22
   :iban_national_id_length: 8
-  :bban_format: \d{8}\d{10};
+  :bban_format: \d{8}\d{10}
 DK:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -200,7 +200,7 @@ FI:
   :account_number_length: 8
   :total_length: 18
   :iban_national_id_length: 3
-  :bban_format: Not i\d use
+  :bban_format: \d{6}\d{7}\d{1}
 FO:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -302,7 +302,7 @@ HU:
   :account_number_length: 17
   :total_length: 28
   :iban_national_id_length: 7
-  :bban_format: '\d{3}\d{4}\d{1}\d{15}\d{1}:'
+  :bban_format: \d{3}\d{4}\d{1}\d{15}\d{1}
 IE:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -664,7 +664,7 @@ QA:
   :account_number_length: 21
   :total_length: 29
   :iban_national_id_length: 4
-  :bban_format: QA\d{2}[A-Z]{4}[A-Z0-9]{21}
+  :bban_format: '[A-Z]{4}[A-Z0-9]{21}'
 XK:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -684,4 +684,4 @@ TL:
   :account_number_length: 16
   :total_length: 23
   :iban_national_id_length: 3
-  :bban_format: \d{3} \d{14} \d{2}
+  :bban_format: \d{3}\d{14}\d{2}
