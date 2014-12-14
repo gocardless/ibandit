@@ -11,6 +11,11 @@ describe Ibandit::IBAN do
     its(:iban) { is_expected.to eq('GB82WEST12345698765432') }
   end
 
+  context 'with nil' do
+    let(:iban_code) { nil }
+    its(:iban) { is_expected.to eq('') }
+  end
+
   describe 'it decomposes the IBAN' do
     its(:country_code) { is_expected.to eq('GB') }
     its(:check_digits) { is_expected.to eq('82') }
