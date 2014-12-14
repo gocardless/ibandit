@@ -1,6 +1,22 @@
 require 'spec_helper'
 
 describe Ibandit::IBANBuilder do
+  shared_examples_for 'allows round trips' do |iban_code|
+    let(:iban) { Ibandit::IBAN.new(iban_code) }
+    let(:args) do
+      {
+        country_code: iban.country_code,
+        account_number: iban.account_number,
+        branch_code: iban.branch_code,
+        bank_code: iban.bank_code
+      }
+    end
+
+    it 'successfully reconstructs the IBAN' do
+      expect(described_class.build(args).iban).to eq(iban.iban)
+    end
+  end
+
   describe '.build' do
     subject(:build) { described_class.build(args) }
     let(:args) { { country_code: 'ES' } }
@@ -30,15 +46,12 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('AT611904300234573201') }
-      end
+      its(:iban) { is_expected.to eq('AT611904300234573201') }
+
+      it_behaves_like 'allows round trips', 'AT61 1904 3002 3457 3201'
 
       context "with an account number that hasn't been zero-padded" do
         before { args[:account_number] = '234573201' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('AT611904300234573201') }
       end
 
@@ -62,25 +75,15 @@ describe Ibandit::IBANBuilder do
     end
 
     context 'with BE as the country_code' do
-      let(:args) do
-        {
-          country_code: 'BE',
-          account_number: '510007547061'
-        }
-      end
+      let(:args) { { country_code: 'BE', account_number: '510007547061' } }
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('BE62510007547061') }
-      end
+      its(:iban) { is_expected.to eq('BE62510007547061') }
+
+      it_behaves_like 'allows round trips', 'BE62 5100 0754 7061'
 
       context 'with dashes' do
         before { args[:account_number] = '510-0075470-61' }
-
-        describe 'it strips the dashes out' do
-          it { is_expected.to be_a(Ibandit::IBAN) }
-          its(:iban) { is_expected.to eq('BE62510007547061') }
-        end
+        its(:iban) { is_expected.to eq('BE62510007547061') }
       end
 
       context 'without an account_number' do
@@ -103,16 +106,18 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('CY17002001280000001200527600') }
-      end
+      its(:iban) { is_expected.to eq('CY17002001280000001200527600') }
+
+      it_behaves_like 'allows round trips', 'CY17 0020 0128 0000 0012 0052 7600'
 
       context "with an account number that hasn't been zero-padded" do
         before { args[:account_number] = '1200527600' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('CY17002001280000001200527600') }
+      end
+
+      context 'without an branch_code' do
+        before { args.delete(:branch_code) }
+        its(:iban) { is_expected.to eq('CY040020000001200527600') }
       end
 
       context 'without an account_number' do
@@ -132,13 +137,6 @@ describe Ibandit::IBANBuilder do
             to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
-
-      context 'without an branch_code' do
-        before { args.delete(:branch_code) }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('CY040020000001200527600') }
-      end
     end
 
     context 'with DE as the country_code' do
@@ -148,10 +146,9 @@ describe Ibandit::IBANBuilder do
           account_number: '0532013000' }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('DE89370400440532013000') }
-      end
+      its(:iban) { is_expected.to eq('DE89370400440532013000') }
+
+      it_behaves_like 'allows round trips', 'DE89 3704 0044 0532 0130 00'
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
@@ -175,15 +172,12 @@ describe Ibandit::IBANBuilder do
     context 'with EE as the country_code' do
       let(:args) { { country_code: 'EE', account_number: '0221020145685' } }
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('EE382200221020145685') }
-      end
+      its(:iban) { is_expected.to eq('EE382200221020145685') }
+
+      it_behaves_like 'allows round trips', 'EE38 2200 2210 2014 5685'
 
       context 'with an account number that needs translating' do
         before { args[:account_number] = '111020145685' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('EE412200111020145685') }
       end
 
@@ -207,17 +201,14 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('ES8023100001180000012345') }
-      end
+      its(:iban) { is_expected.to eq('ES8023100001180000012345') }
+
+      it_behaves_like 'allows round trips', 'ES80 2310 0001 1800 0001 2345'
 
       context 'without a bank_code or branch code' do
-        before do
-          args.delete(:bank_code)
-          args.delete(:branch_code)
-          args[:account_number] = '23100001180000012345'
-        end
+        before { args.delete(:bank_code) }
+        before { args.delete(:branch_code) }
+        before { args[:account_number] = '23100001180000012345' }
 
         its(:iban) { is_expected.to eq('ES8023100001180000012345') }
       end
@@ -237,16 +228,14 @@ describe Ibandit::IBANBuilder do
         { country_code: 'FI', bank_code: '123456', account_number: '785' }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('FI2112345600000785') }
-      end
+      its(:iban) { is_expected.to eq('FI2112345600000785') }
+
+      it_behaves_like 'allows round trips', 'FI21 1234 5600 0007 85'
 
       context 'with a savings bank account_number in traditional format' do
         before { args[:account_number] = '78510' }
         before { args[:bank_code] = '423456' }
 
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('FI3442345670008510') }
       end
 
@@ -279,9 +268,13 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('FR1420041010050500013M02606') }
+      its(:iban) { is_expected.to eq('FR1420041010050500013M02606') }
+
+      it_behaves_like 'allows round trips', 'FR14 2004 1010 0505 0001 3M02 606'
+
+      context 'without the rib key in the account number' do
+        before { args[:account_number] = '0500013M026' }
+        its(:valid?) { is_expected.to be_falsey }
       end
 
       context 'without a bank_code' do
@@ -310,12 +303,6 @@ describe Ibandit::IBANBuilder do
             to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
-
-      context 'without the rib key in the account number' do
-        before { args[:account_number] = '0500013M026' }
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:valid?) { is_expected.to be_falsey }
-      end
     end
 
     context 'with GB as the country_code' do
@@ -326,21 +313,18 @@ describe Ibandit::IBANBuilder do
           account_number: '579135' }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
-      end
+      its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+
+      it_behaves_like 'allows round trips', 'GB07 BARC 2000 0000 5791 35'
 
       context 'when the sort code is hyphenated' do
         before { args[:branch_code] = '20-00-00' }
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
       end
 
       context 'with the bank_code supplied manually' do
         before { Ibandit.bic_finder = nil }
         before { args.merge!(bank_code: 'BARC') }
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
       end
 
@@ -389,21 +373,17 @@ describe Ibandit::IBANBuilder do
           account_number: '12345678' }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
-      end
+      its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
+
+      it_behaves_like 'allows round trips', 'IE29 AIBK 9311 5212 3456 78'
 
       context 'with hyphens in the sort code' do
         before { args[:branch_code] = '93-11-52' }
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
       end
 
       context 'with an explicit bank_code' do
         before { args.merge!(bank_code: 'BANK') }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('IE07BANK93115212345678') }
       end
 
@@ -446,15 +426,12 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('IT60X0542811101000000123456') }
-      end
+      its(:iban) { is_expected.to eq('IT60X0542811101000000123456') }
+
+      it_behaves_like 'allows round trips', 'IT60 X054 2811 1010 0000 0123 456'
 
       context 'with an explicitly passed check digit' do
         before { args[:check_digit] = 'Y' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('IT64Y0542811101000000123456') }
       end
 
@@ -490,15 +467,14 @@ describe Ibandit::IBANBuilder do
       let(:args) do
         {
           country_code: 'LU',
-          account_number: '1234567890123',
-          bank_code: 'BANK'
+          account_number: '9400644750000',
+          bank_code: '001'
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('LU75BANK1234567890123') }
-      end
+      its(:iban) { is_expected.to eq('LU280019400644750000') }
+
+      it_behaves_like 'allows round trips', 'LU28 0019 4006 4475 0000'
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
@@ -528,10 +504,9 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('LV72BANK1234567890123') }
-      end
+      its(:iban) { is_expected.to eq('LV72BANK1234567890123') }
+
+      it_behaves_like 'allows round trips', 'LV72 BANK 1234 5678 9012 3'
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
@@ -562,9 +537,13 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('MC9320041010050500013M02606') }
+      its(:iban) { is_expected.to eq('MC9320041010050500013M02606') }
+
+      it_behaves_like 'allows round trips', 'MC93 2004 1010 0505 0001 3M02 606'
+
+      context 'without the rib key in the account number' do
+        before { args[:account_number] = '0500013M026' }
+        its(:valid?) { is_expected.to be_falsey }
       end
 
       context 'without a bank_code' do
@@ -593,12 +572,6 @@ describe Ibandit::IBANBuilder do
             to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
-
-      context 'without the rib key in the account number' do
-        before { args[:account_number] = '0500013M026' }
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:valid?) { is_expected.to be_falsey }
-      end
     end
 
     context 'with PT as the country_code' do
@@ -611,10 +584,9 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('PT50000200230023843000578') }
-      end
+      its(:iban) { is_expected.to eq('PT50000200230023843000578') }
+
+      it_behaves_like 'allows round trips', 'PT50 0002 0023 0023 8430 0057 8'
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
@@ -653,15 +625,12 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('SI56191000000123438') }
-      end
+      its(:iban) { is_expected.to eq('SI56191000000123438') }
+
+      it_behaves_like 'allows round trips', 'SI56 1910 0000 0123 438'
 
       context 'with an account number that needs padding' do
         before { args[:account_number] = '123438' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('SI56191000000123438') }
       end
 
@@ -694,15 +663,12 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('SK3112000000198742637541') }
-      end
+      its(:iban) { is_expected.to eq('SK3112000000198742637541') }
+
+      it_behaves_like 'allows round trips', 'SK31 1200 0000 1987 4263 7541'
 
       context 'with an account number prefix that needs padding' do
         before { args[:account_number_prefix] = '19' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('SK3112000000198742637541') }
       end
 
@@ -744,10 +710,9 @@ describe Ibandit::IBANBuilder do
         }
       end
 
-      context 'with valid arguments' do
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('SM88X0542811101000000123456') }
-      end
+      its(:iban) { is_expected.to eq('SM88X0542811101000000123456') }
+
+      it_behaves_like 'allows round trips', 'SM88 X054 2811 1010 0000 0123 456'
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
