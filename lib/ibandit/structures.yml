@@ -69,6 +69,8 @@ BE:
   :total_length: 16
   :iban_national_id_length: 3
   :bban_format: \d{3}\d{7}\d{2}
+  :local_check_digit_position: 15
+  :local_check_digit_length: 2
 BG:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -179,6 +181,8 @@ EE:
   :total_length: 20
   :iban_national_id_length: 2
   :bban_format: \d{2}\d{2}\d{11}\d{1}
+  :local_check_digit_position: 20
+  :local_check_digit_length: 1
 ES:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -201,6 +205,8 @@ FI:
   :total_length: 18
   :iban_national_id_length: 3
   :bban_format: \d{6}\d{7}\d{1}
+  :local_check_digit_position: 18
+  :local_check_digit_length: 1
 FO:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -425,6 +431,8 @@ MC:
   :total_length: 27
   :iban_national_id_length: 10
   :bban_format: \d{5}\d{5}[A-Z0-9]{11}\d{2}
+  :local_check_digit_position: 26
+  :local_check_digit_length: 2
 MD:
   :bank_code_position: 5
   :bank_code_length: 2
@@ -545,6 +553,8 @@ PT:
   :total_length: 25
   :iban_national_id_length: 4
   :bban_format: \d{4}\d{4}\d{11}\d{2}
+  :local_check_digit_position: 24
+  :local_check_digit_length: 2
 RO:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -605,6 +615,8 @@ SK:
   :total_length: 24
   :iban_national_id_length: 4
   :bban_format: \d{4}\d{6}\d{10}
+  :local_check_digit_position: 14
+  :local_check_digit_length: 1
 SM:
   :bank_code_position: 6
   :bank_code_length: 5
@@ -615,6 +627,8 @@ SM:
   :total_length: 27
   :iban_national_id_length: 10
   :bban_format: '[A-Z]{1}\d{5}\d{5}[A-Z0-9]{12}'
+  :local_check_digit_position: 5
+  :local_check_digit_length: 1
 TN:
   :bank_code_position: 5
   :bank_code_length: 2

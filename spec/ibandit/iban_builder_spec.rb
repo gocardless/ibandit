@@ -233,22 +233,18 @@ describe Ibandit::IBANBuilder do
     end
 
     context 'with FI as the country_code' do
-      let(:args) { { country_code: 'FI', account_number: '123456-785' } }
+      let(:args) do
+        { country_code: 'FI', bank_code: '123456', account_number: '785' }
+      end
 
       context 'with valid arguments' do
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('FI2112345600000785') }
       end
 
-      context 'with an electronic format account_number' do
-        before { args[:account_number] = '12345600000785' }
-
-        it { is_expected.to be_a(Ibandit::IBAN) }
-        its(:iban) { is_expected.to eq('FI2112345600000785') }
-      end
-
       context 'with a savings bank account_number in traditional format' do
-        before { args[:account_number] = '423456-78510' }
+        before { args[:account_number] = '78510' }
+        before { args[:bank_code] = '423456' }
 
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('FI3442345670008510') }
@@ -260,6 +256,15 @@ describe Ibandit::IBANBuilder do
         it 'raises a helpful error message' do
           expect { build }.
             to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
+
+        it 'raises a helpful error message' do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
         end
       end
     end
@@ -437,13 +442,20 @@ describe Ibandit::IBANBuilder do
           country_code: 'IT',
           bank_code: '05428',
           branch_code: '11101',
-          account_number: '000000123456'
+          account_number: '0000123456'
         }
       end
 
       context 'with valid arguments' do
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('IT60X0542811101000000123456') }
+      end
+
+      context 'with an explicitly passed check digit' do
+        before { args[:check_digit] = 'Y' }
+
+        it { is_expected.to be_a(Ibandit::IBAN) }
+        its(:iban) { is_expected.to eq('IT64Y0542811101000000123456') }
       end
 
       context 'without a bank_code' do
@@ -595,7 +607,7 @@ describe Ibandit::IBANBuilder do
           country_code: 'PT',
           bank_code: '0002',
           branch_code: '0023',
-          account_number: '00238430005'
+          account_number: '0023843000578'
         }
       end
 
@@ -637,7 +649,7 @@ describe Ibandit::IBANBuilder do
         {
           country_code: 'SI',
           bank_code: '19100',
-          account_number: '00001234'
+          account_number: '0000123438'
         }
       end
 
@@ -647,7 +659,7 @@ describe Ibandit::IBANBuilder do
       end
 
       context 'with an account number that needs padding' do
-        before { args[:account_number] = '1234' }
+        before { args[:account_number] = '123438' }
 
         it { is_expected.to be_a(Ibandit::IBAN) }
         its(:iban) { is_expected.to eq('SI56191000000123438') }
