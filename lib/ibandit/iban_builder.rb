@@ -468,12 +468,10 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when 'AT', 'CY', 'DE', 'LU', 'LV', 'SI', 'FI'
+      when 'AT', 'CY', 'DE', 'FI', 'LU', 'LV', 'SI', 'SK'
         %i(bank_code account_number)
       when 'BE', 'EE', 'ES'
         %i(account_number)
-      when 'SK'
-        %i(bank_code account_number_prefix account_number)
       when 'GB', 'IE'
         %i(branch_code account_number)
       else
