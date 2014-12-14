@@ -91,7 +91,7 @@ iban.check_digits              # => "82"
 
 ### Initializing Ibandit
 
-The UK and Ireland both use part of the BIC as the `bank_code` in their IBANs. 
+The UK and Ireland both use part of the BIC as the `bank_code` in their IBANs.
 If you wish to construct UK or Irish IBANs you will either need to pass the
 `bank_code` explicitly, or configure Ibandit with a BIC finder:
 
@@ -159,7 +159,8 @@ iban.iban                     # => "EE412200111020145685"
 # Finland
 iban = Ibandit::IBANBuilder.build(
   country_code: 'FI',
-  account_number: '123456-785'
+  bank_code: '123456'
+  account_number: '785'
 )
 iban.iban                     # => "FI2112345600000785"
 
@@ -168,15 +169,14 @@ iban = Ibandit::IBANBuilder.build(
   country_code: 'FR',
   bank_code: '20041',
   branch_code: '01005',
-  account_number: '0500013M026',
-  rib_key: '06'
+  account_number: '0500013M02606',
 )
 iban.iban                     # => "FR1420041010050500013M02606"
 
 # United Kingdom
 iban = Ibandit::IBANBuilder.build(
   country_code: 'GB',
-  bank_code: 'BARC', # optional if you've configured a BIC finder
+  bank_code: 'BARC', # optional if a BIC finder is configured
   branch_code: '200000',
   account_number: '55779911'
 )
@@ -185,7 +185,7 @@ iban.iban                     # => "GB60BARC20000055779911"
 # Ireland
 iban = Ibandit::IBANBuilder.build(
   country_code: 'IE',
-  bank_code: 'AIBK', # optional if you've configured a BIC finder
+  bank_code: 'AIBK', # optional if a BIC finder is configured
   branch_code: '931152',
   account_number: '12345678'
 )
@@ -230,7 +230,7 @@ iban = Ibandit::IBANBuilder.build(
   country_code: 'PT',
   bank_code: '0002',
   branch_code: '0023',
-  account_number: '00238430005'
+  account_number: '0023843000578'
 )
 iban.iban                     # => "PT50000200230023843000578"
 

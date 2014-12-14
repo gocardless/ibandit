@@ -485,28 +485,49 @@ describe Ibandit::IBAN do
   end
 
   describe '#local_check_digits' do
+    context 'with a Belgian IBAN' do
+      let(:iban_code) { 'BE62510007547061' }
+      its(:local_check_digits) { is_expected.to eq('61') }
+    end
+
     context 'with a French IBAN' do
       let(:iban_code) { 'FR1234567890123456789012345' }
-
       its(:local_check_digits) { is_expected.to eq('45') }
+    end
+
+    context 'with a Monocan IBAN' do
+      let(:iban_code) { 'MC9320052222100112233M44555' }
+      its(:local_check_digits) { is_expected.to eq('55') }
     end
 
     context 'with a Spanish IBAN' do
       let(:iban_code) { 'ES1212345678911234567890' }
-
       its(:local_check_digits) { is_expected.to eq('91') }
     end
 
     context 'with an Italian IBAN' do
       let(:iban_code) { 'IT12A1234567890123456789012' }
-
       its(:local_check_digits) { is_expected.to eq('A') }
     end
 
     context 'with an Estonian IBAN' do
       let(:iban_code) { 'EE382200221020145685' }
-
       its(:local_check_digits) { is_expected.to eq('5') }
+    end
+
+    context 'with an Finnish IBAN' do
+      let(:iban_code) { 'FI2112345600000785' }
+      its(:local_check_digits) { is_expected.to eq('5') }
+    end
+
+    context 'with an Portuguese IBAN' do
+      let(:iban_code) { 'PT50000201231234567890154' }
+      its(:local_check_digits) { is_expected.to eq('54') }
+    end
+
+    context 'with a Slovakian IBAN' do
+      let(:iban_code) { 'SK3112000000198742637541' }
+      its(:local_check_digits) { is_expected.to eq('9') }
     end
   end
 end

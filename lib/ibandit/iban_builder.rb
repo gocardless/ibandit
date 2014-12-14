@@ -81,9 +81,8 @@ module Ibandit
       # BBAN-specific check digits: none
       #
       # Other check digits:
-      #   Cypriot BBANs don't include any BBAN-specific check digits. (Some
-      #   Cypriot banks may be using check digits in their account numbers, but
-      #   there's no central source of them.)
+      #   Some Cypriot banks may be using check digits in their account numbers,
+      #   but there's no central source of them.
       #
       # Padding:
       #   Add leading zeros to account number if < 16 digits.
@@ -132,8 +131,8 @@ module Ibandit
       # Local account details format:
       #   bbaaaaaaaaaaax
       #   Account number may be up to 14 characters long
-      #   Bank code is extracted from the first two digits of the account number
-      #   and converted using the rules at
+      #   Bank code can be found by extracted from the first two digits of the
+      #   account number and converted using the rules at
       #   http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
       #
       # Local account details name(s):
@@ -147,7 +146,7 @@ module Ibandit
       #   in CheckDigit#estonian.
       #
       # Padding:
-      #   Add leading zeros to account number if < 10 digits.
+      #   Add leading zeros to account number if < 14 digits.
       #
       # Additional info:
       #   Estonian national bank details were replaced with IBANs in Feb 2014.
@@ -165,21 +164,27 @@ module Ibandit
 
     def self.build_es_bban(opts)
       # Local account details format:
-      #   Account number (called Código Cuenta Cliente): 20 digits
-      #     bbbb-ssss-xxcccccccccc (usually inputed together)
-      #     First 4 digits: bank code ('Código de entidad')
-      #     Next 4 digits: branch code ('Código de oficina')
-      #     Next 2 digits: local check digits (part of the account nunber),
-      #     called 'Dígitos de control'
-      #     Final 10 digits: bank account number per se ('Número de cuenta')
+      #   bbbb-ssss-xx-aaaaaaaaaa
+      #   Usually not separated, except by spaces or dashes
       #
-      # Spanish account numbers include two check digits, these digits are
-      # part of the bank details shown to customers (the first 2 digits
-      # of the account number). A method for generating these check digits
-      # can be found below: mod_11_check_digit
+      # Local account details name(s):
+      #   Full details (20 digits): Código Cuenta Cliente
+      #   Bank code (first 4 digits): Código de entidad
+      #   Branch code (next 4 digits): Código de oficina
+      #   Check digits (next 2 ditigs): Dígitos de control
+      #   Account number (final 10 digits): Número de cuenta
       #
-      # As Spanish account numbers can be split into three groups of digits
-      # or given as a single 20 digit string, we allow both options.
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   The 2 check digits described above are part of the "account number" as
+      #   defined by SWIFT. See CheckDigit#mod_11 for their generation.
+      #
+      # Padding: None
+      #
+      # Additional info:
+      #   This method supports being passed the component IBAN parts, as defined
+      #   by SWIFT, or a single 20 digit string.
       if opts.include?(:bank_code) && opts.include?(:branch_code)
         [
           opts[:bank_code],
@@ -187,49 +192,60 @@ module Ibandit
           opts[:account_number]
         ].join
       else
-        opts[:account_number]
+        opts[:account_number].gsub('-', '')
       end
     end
 
     def self.build_fi_bban(opts)
-      # Local bank details format: bbbbbb-cccccccx ('Tilinumeron rakenne')
-      #   Bank code [6 digits]
-      #   Account number [1-7 digits plus 1 check digit in last position], with
-      #   leading zeros
-      #   These 2 numbers should be in 2 joined fields separated by a hyphen
+      # Local account details format:
+      #   bbbbbb-aaaaaaax
+      #   Usually two joined fields separated by a hyphen
       #
-      # Finnish BBANs don't include any BBAN-specific check digits. (The last
-      # digit of the account number is a check digit, but this is built-in. An
-      # implementation of the check digit algorithm is available in
-      # .lund_check_digit for completeness.)
+      # Local account details name(s):
+      #   Full details: 'Tilinumeron rakenne'
       #
-      # Finnish account numbers need to be expanded into "electronic format"
-      # if they have been written in "traditional format" (with a dash), and
-      # the expansion method depends on the first character.
-      return opts[:account_number] unless opts[:account_number].scan('-').any?
-
-      account_number = opts[:account_number].gsub('-', '')
-      length = account_number.size
-
-      if %w(4 5 6).include?(account_number[0])
-        account_number[0, 7] + '0' * (14 - length) + account_number[7..-1]
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   The last digit of the account number is a check digit. The check digit
+      #   algorithm is available in CheckDigit#lund.
+      #
+      # Padding:
+      #   Finnish account numbers need to be expanded into "electronic format"
+      #   by adding zero-padding. The expansion method depends on the first
+      #   character of the bank code.
+      if %w(4 5 6).include?(opts[:bank_code][0])
+        [
+          opts[:bank_code],
+          opts[:account_number][0],
+          opts[:account_number][1..-1].rjust(7, '0')
+        ].join
       else
-        account_number[0, 6] + '0' * (14 - length) + account_number[6..-1]
+        opts[:bank_code] + opts[:account_number].rjust(8, '0')
       end
     end
 
     def self.build_fr_bban(opts)
-      # Local bank details format (4 separated fields)
-      #   Bank code ('Code banque'): 5 digits
-      #   Branch code ('Code guichet'): 5 digits
-      #   Account number ('Numéro de compte'): max 11 digits
-      #   RIB key ('Clé RIB'): 2 digits
+      # Local account details format:
+      #   bbbbb-sssss-aaaaaaaaaaa-xx
+      #   4 separated fields
       #
-      # French BBANs include two "rib_key" check digits. These digits are part
-      # of the bank details shown to customers and part of the account number
-      # in the IBAN structure definition. Hence we expect the account_number
-      # below to be 13 digits long = customer_acct_number + rib_key, even though
-      # they should be displayed as 2 separate fields to a payer.
+      # Local account details name(s):
+      #   Bank code (5 digits): 'Code banque'
+      #   Branch code (5 digits): 'Code guichet'
+      #   Account number (max 11 digits): 'Numéro de compte'
+      #   Check digits (2 digits): 'Clé RIB'
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   French BBANs include two "RIB key" check digits. In the SWIFT IBAN
+      #   structure definition these check digits are part of the account
+      #   number, although customers expect to see them as a separate field.
+      #   You should concatenate the account number with the entered check
+      #   digits when using this method.
+      #
+      # Padding: None
       [
         opts[:bank_code],
         opts[:branch_code],
@@ -238,8 +254,26 @@ module Ibandit
     end
 
     def self.build_gb_bban(opts)
-      # UK BBANs include the first four characters of the BIC. This requires a
-      # BIC finder lambda to be defined, or the bank_code to be supplied.
+      # Local account details format:
+      #   ssssss aaaaaaaa
+      #   2 separated fields
+      #
+      # Local account details name(s):
+      #   Branch code: Sort code
+      #   Account number: Account number
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   Local bank validation is carried out on a bank-by-bank basis, and out
+      #   of scope for this gem.
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 8 digits.
+      #
+      # Additional info:
+      #   UK BBANs include the first four characters of the BIC. This requires a
+      #   BIC finder lambda to be defined, or the bank_code to be supplied.
       bank_code = opts[:bank_code] || Ibandit.find_bic('GB', opts[:branch_code])
 
       unless bank_code
@@ -255,42 +289,25 @@ module Ibandit
     end
 
     def self.build_lu_bban(opts)
-      # IBAN is the default since 2002 so there is no need to ask for local bank
-      # details
-      # These obsolete bank details were formatted as follows:
-      #   Bank code: 3 digits
-      #   Account number: 13 digits
-      #
-      # Luxembourgian BBANs don't include any BBAN-specific check digits.
-      unless opts[:account_number].length == 13
-        raise ArgumentError,
-              'account_number should have 13 digits'
-      end
+      # Additional info:
+      #   Luxembourgian national bank details were replaced with IBANs in 2002.
+      #   All Luxembourgian payers should therefore know their IBAN, and are
+      #   unlikely to know how it breaks down. This method is included for
+      #   consistency with the IBAN structure only.
       [opts[:bank_code], opts[:account_number]].join
     end
 
     def self.build_lv_bban(opts)
-      # Local bank details format:
-      #   Account number: 13 digits
-      #   Bank code: 4 digits [this is also the first 4 letters of the BIC]
-      #   either the bank code needs to be supplied, or a bank dropdown
-      #
-      # Latvian BBANs don't include any BBAN-specific check digits.
-      unless opts[:account_number].length == 13
-        raise ArgumentError,
-              'account_number should have 13 digits'
-      end
+      # Additional info:
+      #   Latvian national bank details were replaced with IBANs in 2004.
+      #   All Latvian payers should therefore know their IBAN, and are
+      #   unlikely to know how it breaks down. This method is included for
+      #   consistency with the IBAN structure only.
       [opts[:bank_code], opts[:account_number]].join
     end
 
     def self.build_ie_bban(opts)
-      # Local bank details format:
-      #   Account number: 8 digits
-      #   Sort code: 6 digits
-      #
-      # Irish BBANs include the first four characters of the BIC as the bank
-      # code. This requires a BIC finder lambda to be defined, or the bank code
-      # to be supplied.
+      # Ireland uses the same BBAN construction method as the United Kingdom
       bank_code = opts[:bank_code] || Ibandit.find_bic('IE', opts[:branch_code])
 
       unless bank_code
@@ -298,34 +315,42 @@ module Ibandit
               'bank_code is required if a BIC finder is not defined'
       end
 
-      unless opts[:account_number].length == 8
-        raise ArgumentError,
-              'account_number should have 8 digits'
-      end
-
       [
         bank_code.slice(0, 4),
         opts[:branch_code].gsub('-', ''),
-        opts[:account_number]
+        opts[:account_number].rjust(8, '0')
       ].join
     end
 
     def self.build_it_bban(opts)
-      # Local bank details format: x-bbbbb-sssss-cccccccccccc (4 fields)
-      #   Check digit: 1 digit ('CIN')
-      #   Bank code: 5 digits ('Codice ABI')
-      #   Branch code: 5 digits ('CAB')
-      #   Account number: 12 digits ('Numero di conto')
+      # Local account details format:
+      #   x/bbbbb/sssss/cccccccccccc
+      #   4 fields, separated by slashes
+      #   The check digit is NOT included in the any of the other SWIFT
+      #   elements, so should be passed explicitly or left blank for it to be
+      #   calculated implicitly
       #
-      # Italian BBANs include a single BBAN-specific check digit, calculated
-      # using a bespoke algorithm.
+      # Local bank details name(s):
+      #   Check digit: 'CIN'
+      #   Bank code: 'Codice ABI'
+      #   Branch code: 'CAB'
+      #   Account number: 'Numero di conto'
+      #
+      # BBAN-specific check digits:
+      #   Italian BBANs include a single BBAN-specific check digit, calculated
+      #   using a bespoke algorithm. See CheckDigit#italian.
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 12 digits.
       combined_code = [
         opts[:bank_code],
         opts[:branch_code],
-        opts[:account_number]
+        opts[:account_number].rjust(12, '0')
       ].join
 
-      [CheckDigit.italian(combined_code), combined_code].join
+      check_digit = opts[:check_digit] || CheckDigit.italian(combined_code)
+
+      [check_digit, combined_code].join
     end
 
     def self.build_mc_bban(opts)
@@ -334,65 +359,97 @@ module Ibandit
     end
 
     def self.build_pt_bban(opts)
-      # Local bank details format: bbbbsssscccccccccccxx (in one block)
-      #   Bank code: 4 digits
-      #   Branch code: 4 digits
-      #   Account number: 11 digits
-      #   Local check digits: 2 digits
-      #   All these are contained into one single field called NIB code
+      # Local account details format:
+      #   bbbb.ssss.ccccccccccc.xx
+      #   Usually presented in one block
       #
-      # Portuguese BBANs include two BBAN-specific check digits, calculated using
-      # the same algorithm as the overall IBAN check digits. A side-effect is
-      # that the overall IBAN check digits will therefor always be 50.
-      check_digits = CheckDigit.mod_97_10(opts[:bank_code] +
-                                                       opts[:branch_code] +
-                                                       opts[:account_number])
-
+      # Local account details name(s):
+      #   Full details: Número de Identificaçao Bancária (NIB)
+      #   Bank code: Código de Banco
+      #   Branch code: Código de Balcao
+      #   Account number: Número de conta
+      #   Local check digits: Dígitos de controlo
+      #
+      # BBAN-specific check digits:
+      #   Technically none, but see below
+      #
+      # Other check digits:
+      #   The last two digits of Portuguese account numbers, as defined by
+      #   SWIFT, are check digits, calculated using the same algorithm as the
+      #   overall IBAN check digits (i.e., mod_97_10). However, customers expect
+      #   to see these check digits as a separate field. You should concatenate
+      #   the account number with the entered check digits when using this
+      #   method.
+      #
+      # Additional info:
+      #   A side-effect of Portugal using the same algorithm for its local check
+      #   digits as the overall IBAN check digits is that the overall digits are
+      #   always 50.
       [
         opts[:bank_code],
         opts[:branch_code],
-        opts[:account_number],
-        check_digits
+        opts[:account_number]
       ].join
     end
 
     def self.build_si_bban(opts)
-      # Local bank details format (forming 'Transakcijski račun' together)
-      #   Bank code: 5 digits
-      #     Usually 2 digits for bank code and 3 digits for branch code
-      #     Or 5 digits as a block for a payment institution (starts with 91)
-      #   Account number: 10 digits (incl. last 2 digits as check digits)
+      # Local account details format:
+      #   bbbbb-aaaaaaaaxx
+      #   Two fields, separated by a dash
       #
-      # Slovenian BBANs include two BBAN-specific check digits, calculated using
-      # the same algorithm as the overall IBAN check digits. A side-effect is
-      # that the overall IBAN check digits will therefore always be 56.
-      check_digits = CheckDigit.mod_97_10(
-        opts[:bank_code] + opts[:account_number].rjust(8, '0'))
-
+      # Local account details name(s):
+      #   Full details: Transakcijski račun
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   The last two digits of Slovenian account numbers, as defined by
+      #   SWIFT, are check digits, calculated using the same algorithm as the
+      #   overall IBAN check digits (i.e., mod_97_10).
+      #
+      # Additional info:
+      #   A side-effect of Slovenia using the same algorithm for its local check
+      #   digits as the overall IBAN check digits is that the overall digits are
+      #   always 56.
       [
         opts[:bank_code],
-        opts[:account_number].rjust(8, '0'),
-        check_digits
+        opts[:account_number].rjust(10, '0')
       ].join
     end
 
     def self.build_sk_bban(opts)
-      # Local bank details format:
-      #   Bank account number: pppppp/cccccccccc (separated by slash)
-      #     Account number prefix: 6 digits ('Předčíslí') - optional
-      #     Account number: 2-10 digits ('číslo účtu')
-      #   Bank code: 4 digits ('Kód banky')
+      # Local account details format:
+      #   pppppp-aaaaaaaaaa/bbbb
+      #   Three fields (or two, if prefix and account number are merged)
       #
-      # Slovakian BBANs don't include any BBAN-specific check digits. (There are
-      # two check digits built in to the Slovakian account number, the
-      # implementation for which are available in .slovakian_prefix_check_digit
-      # and .slovakian_basic_check_digit for completeness)
-
-      [
-        opts[:bank_code],
-        opts[:account_number_prefix].rjust(6, '0'),
-        opts[:account_number].rjust(10, '0')
-      ].join
+      # Local account details name(s):
+      #   Account number prefix: Předčíslí
+      #   Account number: číslo účtu
+      #   Bank code: 'Kód banky'
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   The last digits of the account_number_prefix and the account_number
+      #   are check digits. See CheckDigit#slovakian_prefix and
+      #   CheckDigit#slovakian_basic
+      #
+      # Additional info:
+      #   The SWIFT definition of a Slovakian IBAN includes both the account
+      #   number prefix and the account number. This method therefore supports
+      #   passing those fields concatenated.
+      if opts.include?(:account_number_prefix)
+        [
+          opts[:bank_code],
+          opts[:account_number_prefix].rjust(6, '0'),
+          opts[:account_number].rjust(10, '0')
+        ].join
+      else
+        [
+          opts[:bank_code],
+          opts[:account_number].gsub('-', '').rjust(16, '0')
+        ].join
+      end
     end
 
     def self.build_sm_bban(opts)
@@ -411,9 +468,9 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when 'AT', 'CY', 'DE', 'LU', 'LV', 'SI'
+      when 'AT', 'CY', 'DE', 'LU', 'LV', 'SI', 'FI'
         %i(bank_code account_number)
-      when 'BE', 'EE', 'FI', 'ES'
+      when 'BE', 'EE', 'ES'
         %i(account_number)
       when 'SK'
         %i(bank_code account_number_prefix account_number)
