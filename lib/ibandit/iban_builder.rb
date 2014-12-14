@@ -457,6 +457,10 @@ module Ibandit
       build_it_bban(opts)
     end
 
+    ##################
+    # Helper methods #
+    ##################
+
     def self.require_fields(country_code, opts)
       required_fields(country_code).each do |arg|
         next if opts[arg]
