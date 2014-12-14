@@ -31,7 +31,8 @@ whitespace:
 
 ```ruby
 iban = Ibandit::IBAN.new("xq75 B a dCode 666")
-iban.formatted                 # => "XQ75 BADC ODE6 66"
+iban.to_s                      # => "XQ75BADCODE666"
+iban.to_s(:formatted)          # => "XQ75 BADC ODE6 66"
 ```
 
 ### Validating an IBAN

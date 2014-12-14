@@ -14,8 +14,12 @@ module Ibandit
       @errors = {}
     end
 
-    def formatted
-      iban.gsub(/(.{4})/, '\1 ').strip
+    def to_s(format = :compact)
+      case format
+      when :compact then iban
+      when :formatted then formatted
+      else raise ArgumentError, "invalid format '#{format}'"
+      end
     end
 
     ###################
@@ -155,6 +159,10 @@ module Ibandit
 
     def structure
       IBAN.structures[country_code]
+    end
+
+    def formatted
+      iban.gsub(/(.{4})/, '\1 ').strip
     end
   end
 end

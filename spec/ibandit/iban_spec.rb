@@ -39,9 +39,15 @@ describe Ibandit::IBAN do
     end
   end
 
-  describe '#formatted' do
-    subject { iban.formatted }
-    it { is_expected.to eq('GB82 WEST 1234 5698 7654 32') }
+  describe '#to_s' do
+    specify { expect(iban.to_s).to eq('GB82WEST12345698765432') }
+    specify { expect(iban.to_s(:compact)).to eq('GB82WEST12345698765432') }
+
+    it 'returns a prettified string when passed :formatted' do
+      expect(iban.to_s(:formatted)).to eq('GB82 WEST 1234 5698 7654 32')
+    end
+
+    specify { expect { iban.to_s(:russian) }.to raise_error ArgumentError }
   end
 
   ###############
