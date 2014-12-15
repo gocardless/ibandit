@@ -283,7 +283,7 @@ module Ibandit
 
       [
         bank_code.slice(0, 4),
-        opts[:branch_code].gsub('-', ''),
+        opts[:branch_code].gsub(/[-\s]/, ''),
         opts[:account_number].rjust(8, '0')
       ].join
     end
