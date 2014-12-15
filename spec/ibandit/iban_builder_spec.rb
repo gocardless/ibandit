@@ -351,6 +351,16 @@ describe Ibandit::IBANBuilder do
         end
       end
 
+      context 'when the account number is spaced' do
+        before { args[:account_number] = '579 135' }
+        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+      end
+
+      context 'when the account number is hyphenated' do
+        before { args[:account_number] = '5577-9911' }
+        its(:iban) { is_expected.to eq('GB60BARC20000055779911') }
+      end
+
       context "when the BIC can't be found" do
         before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
 
