@@ -57,9 +57,7 @@ end
 
 def merge_structures(structures, additions)
   additions.each_pair do |key, value|
-    if structures.include?(key)
-      structures[key].merge!(value)
-    end
+    structures[key].merge!(value) if structures.include?(key)
   end
 
   structures
