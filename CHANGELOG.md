@@ -1,3 +1,7 @@
+## 0.0.12 - December 16, 2014
+
+- Allow spaced as well as hyphenated UK sort codes
+
 ## 0.0.11 - December 15, 2014
 
 - `IBAN#to_s` returns IBAN string rather than object properties
