@@ -306,7 +306,12 @@ describe Ibandit::IBANBuilder do
     end
 
     context 'with GB as the country_code' do
-      before { Ibandit.bic_finder = ->(_cc, _id) { 'BARC1234XXX' } }
+      let(:bic_finder) { double }
+      before do
+        allow(bic_finder).to receive(:find).with('GB', '200000').
+          and_return('BARCGB22XXX')
+        Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
+      end
       let(:args) do
         { country_code: 'GB',
           branch_code: '200000',
@@ -381,7 +386,12 @@ describe Ibandit::IBANBuilder do
     end
 
     context 'with IE as the country_code' do
-      before { Ibandit.bic_finder = -> (_cc, _id) { 'AIBK1234XXX' } }
+      let(:bic_finder) { double }
+      before do
+        allow(bic_finder).to receive(:find).with('IE', '931152').
+          and_return('AIBK1234XXX')
+        Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
+      end
       let(:args) do
         { country_code: 'IE',
           branch_code: '931152',
@@ -399,7 +409,10 @@ describe Ibandit::IBANBuilder do
 
       context 'with an explicit bank_code' do
         before { args.merge!(bank_code: 'BANK') }
-        its(:iban) { is_expected.to eq('IE07BANK93115212345678') }
+        it "doesn't use the BIC finder" do
+          expect(bic_finder).to_not receive(:find)
+          expect(subject.iban).to eq('IE07BANK93115212345678')
+        end
       end
 
       context 'without a bank_code or BIC finder' do

@@ -274,7 +274,8 @@ module Ibandit
       # Additional info:
       #   UK BBANs include the first four characters of the BIC. This requires a
       #   BIC finder lambda to be defined, or the bank_code to be supplied.
-      bank_code = opts[:bank_code] || Ibandit.find_bic('GB', opts[:branch_code])
+      branch_code = opts[:branch_code].gsub(/[-\s]/, '')
+      bank_code = opts[:bank_code] || Ibandit.find_bic('GB', branch_code)
 
       unless bank_code
         raise ArgumentError,
@@ -283,7 +284,7 @@ module Ibandit
 
       [
         bank_code.slice(0, 4),
-        opts[:branch_code].gsub(/[-\s]/, ''),
+        branch_code,
         opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
       ].join
     end
@@ -308,7 +309,8 @@ module Ibandit
 
     def self.build_ie_bban(opts)
       # Ireland uses the same BBAN construction method as the United Kingdom
-      bank_code = opts[:bank_code] || Ibandit.find_bic('IE', opts[:branch_code])
+      branch_code = opts[:branch_code].gsub(/[-\s]/, '')
+      bank_code = opts[:bank_code] || Ibandit.find_bic('IE', branch_code)
 
       unless bank_code
         raise ArgumentError,
@@ -317,7 +319,7 @@ module Ibandit
 
       [
         bank_code.slice(0, 4),
-        opts[:branch_code].gsub('-', ''),
+        branch_code,
         opts[:account_number].rjust(8, '0')
       ].join
     end
