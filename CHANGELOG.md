@@ -1,3 +1,7 @@
+## 0.0.13 - December 17, 2014
+
+- Send cleaned (de-space/hyphenated) sort codes to the BIC finder lambda
+
 ## 0.0.12 - December 16, 2014
 
 - Allow spaced as well as hyphenated UK sort codes
