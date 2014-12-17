@@ -373,8 +373,8 @@ module Ibandit
       # BBAN-specific check digits: none
       #
       # Other check digits:
-      #   A modulus 11 check can be applied to Dutch IBANs, with the weights
-      #   [10, 9, 8, 7, 6, 5, 4, 3, 2, 1].
+      #   A modulus 11 check can be applied to Dutch IBANs. See CheckDigit#dutch
+      #   for an implementation.
       #
       # Padding:
       #   Add leading zeros to account number if < 10 digits.
