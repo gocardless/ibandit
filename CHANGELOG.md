@@ -1,3 +1,7 @@
+## 0.0.14 - December 17, 2014
+
+- Add the Netherlands to IBANBuilder, and rename CheckDigit.mod_11
+
 ## 0.0.13 - December 17, 2014
 
 - Send cleaned (de-space/hyphenated) sort codes to the BIC finder lambda
