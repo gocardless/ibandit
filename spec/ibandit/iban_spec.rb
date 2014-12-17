@@ -540,5 +540,10 @@ describe Ibandit::IBAN do
       let(:iban_code) { 'SK3112000000198742637541' }
       its(:local_check_digits) { is_expected.to eq('9') }
     end
+
+    context 'with a Dutch IBAN' do
+      let(:iban_code) { 'NL91ABNA0417164300' }
+      its(:local_check_digits) { is_expected.to eq('0') }
+    end
   end
 end

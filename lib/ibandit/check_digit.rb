@@ -107,6 +107,21 @@ module Ibandit
     end
 
     # Currently unused in this gem. This method calculates the last digit
+    # of a Dutch account number when given the first nine digits.
+    def self.dutch(string)
+      scaled_values = string.reverse.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise ArgumentError, "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * (index + 2)
+      end
+
+      result = 11 - scaled_values.inject(:+) % 11
+      result < 10 ? result.to_s : (11 - result).to_s
+    end
+
+    # Currently unused in this gem. This method calculates the last digit
     # of a Finnish account number when given the initial digits (in electronic
     # format).
     def self.lund(string)

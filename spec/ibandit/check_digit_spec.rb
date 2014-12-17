@@ -58,6 +58,23 @@ describe Ibandit::CheckDigit do
     end
   end
 
+  describe '.dutch' do
+    subject { described_class.dutch(account_number) }
+
+    let(:account_number) { '041716430' }
+    it { is_expected.to eq('0') }
+
+    context 'with another account number (double checking!)' do
+      let(:account_number) { '030006526' }
+      it { is_expected.to eq('4') }
+    end
+
+    context 'with a non-numeric character' do
+      let(:account_number) { '1BAD2014' }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
   describe '.slovakian_prefix' do
     subject { described_class.slovakian_prefix(account_number) }
 

@@ -503,6 +503,8 @@ NL:
   :total_length: 18
   :iban_national_id_length: 4
   :bban_format: '[A-Z]{4}\d{10}'
+  :local_check_digit_position: 18
+  :local_check_digit_length: 1
 'NO':
   :bank_code_position: 5
   :bank_code_length: 4

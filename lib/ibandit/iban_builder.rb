@@ -1,7 +1,7 @@
 module Ibandit
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LU LV MC PT SI
-                                 SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LU LV MC NL PT
+                                 SI SK SM).freeze
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -343,7 +343,7 @@ module Ibandit
       #   using a bespoke algorithm. See CheckDigit#italian.
       #
       # Padding:
-      #   Add leading zeros to account number if < 12 digits.
+      #   Add leading zeros to account number if < 10 digits.
       combined_code = [
         opts[:bank_code],
         opts[:branch_code],
@@ -358,6 +358,30 @@ module Ibandit
     def self.build_mc_bban(opts)
       # Monaco uses the same BBAN construction method as France
       build_fr_bban(opts)
+    end
+
+    def self.build_nl_bban(opts)
+      # Local account details format:
+      #   aaaaaaaaaa
+      #   1 field for account number only
+      #   In theory the bank code can be looked up from the account number, but
+      #   we don't currently have a way of doing so.
+      #
+      # Local bank details name(s):
+      #   Account number: 'Rekeningnummer'
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   A modulus 11 check can be applied to Dutch IBANs. See CheckDigit#dutch
+      #   for an implementation.
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 10 digits.
+      [
+        opts[:bank_code],
+        opts[:account_number].rjust(10, '0')
+      ].join
     end
 
     def self.build_pt_bban(opts)
@@ -474,7 +498,7 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when 'AT', 'CY', 'DE', 'FI', 'LU', 'LV', 'SI', 'SK'
+      when 'AT', 'CY', 'DE', 'FI', 'LU', 'LV', 'NL', 'SI', 'SK'
         %i(bank_code account_number)
       when 'BE', 'EE', 'ES'
         %i(account_number)
