@@ -239,6 +239,14 @@ iban = Ibandit::IBANBuilder.build(
 )
 iban.iban                     # => "MC9320041010050500013M02606"
 
+# The Netherlands
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'NL',
+  account_number: '0417164300',
+  bank_code: 'ABNA'
+)
+iban.iban                     # => "NL91ABNA0417164300"
+
 # Portugal
 iban = Ibandit::IBANBuilder.build(
   country_code: 'PT',
@@ -291,4 +299,4 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "SM88X0542811101000000123456"
 ```
 
-Support for Greece, Malta, and The Netherlands is coming soon.
+Support for Greece and Malta is coming soon.

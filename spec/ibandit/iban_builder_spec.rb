@@ -602,6 +602,43 @@ describe Ibandit::IBANBuilder do
       end
     end
 
+    context 'with NL as the country_code' do
+      let(:args) do
+        {
+          country_code: 'NL',
+          account_number: '0417164300',
+          bank_code: 'ABNA'
+        }
+      end
+
+      its(:iban) { is_expected.to eq('NL91ABNA0417164300') }
+
+      it_behaves_like 'allows round trips', 'NL91 ABNA 0417 1643 00'
+
+      context "with an account number that hasn't been zero-padded" do
+        before { args[:account_number] = '417164300' }
+        its(:iban) { is_expected.to eq('NL91ABNA0417164300') }
+      end
+
+      context 'without an account_number' do
+        before { args.delete(:account_number) }
+
+        it 'raises a helpful error message' do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context 'without an bank_code' do
+        before { args.delete(:bank_code) }
+
+        it 'raises a helpful error message' do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+    end
+
     context 'with PT as the country_code' do
       let(:args) do
         {
