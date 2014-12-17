@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Ibandit::CheckDigit do
-  describe '.mod_11' do
-    subject { described_class.mod_11(account_number) }
+  describe '.spanish' do
+    subject { described_class.spanish(account_number) }
 
     context 'sequence that should give a check digit of 0' do
       let(:account_number) { '12345678' }
