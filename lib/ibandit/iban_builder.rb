@@ -178,7 +178,7 @@ module Ibandit
       #
       # Other check digits:
       #   The 2 check digits described above are part of the "account number" as
-      #   defined by SWIFT. See CheckDigit#mod_11 for their generation.
+      #   defined by SWIFT. See CheckDigit#spanish for their generation.
       #
       # Padding: None
       #

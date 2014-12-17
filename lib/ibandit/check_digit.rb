@@ -1,18 +1,5 @@
 module Ibandit
   module CheckDigit
-    # Currently unused in this gem. This method calculates a mod 11
-    # check digit from the string of digits passed in. These check
-    # digits are used in the 1st and 2nd digits of local Spanish
-    # account numbers.
-    def self.mod_11(string)
-      raise ArgumentError, 'String must be numeric' unless /^\d+$/ =~ string
-      scaled_values = string.chars.map.with_index do |digit, index|
-        Integer(digit) * (2**index % 11)
-      end
-      result = 11 - scaled_values.inject(:+) % 11
-      result < 10 ? result.to_s : (11 - result).to_s
-    end
-
     def self.mod_97_10(string)
       chars = string + '00'
       digits = chars.bytes.map do |byte|
@@ -24,6 +11,19 @@ module Ibandit
       end
       remainder = digits.join.to_i % 97
       format('%02d', 98 - remainder)
+    end
+
+    # Currently unused in this gem. This method calculates a mod 11
+    # check digit from the string of digits passed in. These check
+    # digits are used in the 1st and 2nd digits of local Spanish
+    # account numbers.
+    def self.spanish(string)
+      raise ArgumentError, 'String must be numeric' unless /^\d+$/ =~ string
+      scaled_values = string.chars.map.with_index do |digit, index|
+        Integer(digit) * (2**index % 11)
+      end
+      result = 11 - scaled_values.inject(:+) % 11
+      result < 10 ? result.to_s : (11 - result).to_s
     end
 
     def self.italian(string)
