@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataexport filedate="20141128" filetype="full" product="ibanstructure">
+<dataexport filedate="20150425" filetype="full" product="ibanstructure">
   <ibanstructure>
     <tag>IS</tag>
     <modification_flag>U</modification_flag>
@@ -324,7 +324,7 @@
     <bank_identifier_length>4</bank_identifier_length>
     <branch_identifier_position>9</branch_identifier_position>
     <branch_identifier_length>4</branch_identifier_length>
-    <iban_national_id_length>8</iban_national_id_length>
+    <iban_national_id_length>4</iban_national_id_length>
     <account_number_position>13</account_number_position>
     <account_number_length>12</account_number_length>
     <iban_total_length>24</iban_total_length>

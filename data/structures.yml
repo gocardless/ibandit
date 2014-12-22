@@ -233,7 +233,7 @@ ES:
   :account_number_position: 13
   :account_number_length: 12
   :total_length: 24
-  :iban_national_id_length: 8
+  :iban_national_id_length: 4
   :bban_format: \d{4}\d{4}\d{1}\d{1}\d{10}
   :bank_code_format: \d{4}
   :branch_code_format: \d{4}
