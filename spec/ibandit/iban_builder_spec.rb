@@ -306,14 +306,9 @@ describe Ibandit::IBANBuilder do
     end
 
     context 'with GB as the country_code' do
-      let(:bic_finder) { double }
-      before do
-        allow(bic_finder).to receive(:find).with('GB', '200000').
-          and_return('BARCGB22XXX')
-        Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
-      end
       let(:args) do
         { country_code: 'GB',
+          bank_code: 'BARC',
           branch_code: '200000',
           account_number: '579135' }
       end
@@ -332,8 +327,17 @@ describe Ibandit::IBANBuilder do
         its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
       end
 
+      context 'when the account number is spaced' do
+        before { args[:account_number] = '579 135' }
+        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+      end
+
+      context 'when the account number is hyphenated' do
+        before { args[:account_number] = '5577-9911' }
+        its(:iban) { is_expected.to eq('GB60BARC20000055779911') }
+      end
+
       context 'with the bank_code supplied manually' do
-        before { Ibandit.bic_finder = nil }
         before { args.merge!(bank_code: 'BARC') }
         its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
       end
@@ -356,44 +360,56 @@ describe Ibandit::IBANBuilder do
         end
       end
 
-      context 'when the account number is spaced' do
-        before { args[:account_number] = '579 135' }
-        its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
-      end
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
 
-      context 'when the account number is hyphenated' do
-        before { args[:account_number] = '5577-9911' }
-        its(:iban) { is_expected.to eq('GB60BARC20000055779911') }
-      end
+        context 'when a bic_finder is not defined' do
+          specify do
+            expect { build }.
+              to raise_error(ArgumentError, /bank_code is a required field/)
+          end
+        end
 
-      context "when the BIC can't be found" do
-        before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
+        context 'with a bic_finder' do
+          let(:bic_finder) { double }
+          before do
+            allow(bic_finder).to receive(:find).with('GB', '200000').
+              and_return('BARCGB22XXX')
+            Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
+          end
+          after { Ibandit.bic_finder = nil }
 
-        specify do
-          expect { build }.
-            to raise_error(ArgumentError, /bank_code is required/)
+          its(:iban) { is_expected.to eq('GB07BARC20000000579135') }
+
+          context "when the BIC can't be found" do
+            before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
+
+            specify do
+              expect { build }.to raise_error(RuntimeError, /failed to find/)
+            end
+          end
         end
       end
 
-      context 'when no BIC finder or manual BIC is available' do
-        before { Ibandit.bic_finder = nil }
+      context 'with both a bank_code and a bic_finder' do
+        let(:bic_finder) { double }
+        before do
+          allow(bic_finder).to receive(:find).with('GB', '200000').
+            and_return('BANKGB22XXX')
+          Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
+        end
+        after { Ibandit.bic_finder = nil }
 
-        specify do
-          expect { build }.
-            to raise_error(NotImplementedError, /BIC finder is not defined/)
+        it 'uses the explicitly provided bank_code' do
+          expect(subject.iban).to eq('GB07BARC20000000579135')
         end
       end
     end
 
     context 'with IE as the country_code' do
-      let(:bic_finder) { double }
-      before do
-        allow(bic_finder).to receive(:find).with('IE', '931152').
-          and_return('AIBK1234XXX')
-        Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
-      end
       let(:args) do
         { country_code: 'IE',
+          bank_code: 'AIBK',
           branch_code: '931152',
           account_number: '12345678' }
       end
@@ -405,24 +421,6 @@ describe Ibandit::IBANBuilder do
       context 'with hyphens in the sort code' do
         before { args[:branch_code] = '93-11-52' }
         its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
-      end
-
-      context 'with an explicit bank_code' do
-        before { args.merge!(bank_code: 'BANK') }
-        it "doesn't use the BIC finder" do
-          expect(bic_finder).to_not receive(:find)
-          expect(subject.iban).to eq('IE07BANK93115212345678')
-        end
-      end
-
-      context 'without a bank_code or BIC finder' do
-        before { Ibandit.bic_finder = nil }
-        before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { build }.
-            to raise_error(NotImplementedError, /BIC finder is not defined/)
-        end
       end
 
       context 'without a branch_code' do
@@ -440,6 +438,51 @@ describe Ibandit::IBANBuilder do
         it 'raises a helpful error message' do
           expect { build }.
             to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
+
+        context 'when a bic_finder is not defined' do
+          specify do
+            expect { build }.
+              to raise_error(ArgumentError, /bank_code is a required field/)
+          end
+        end
+
+        context 'with a bic_finder' do
+          let(:bic_finder) { double }
+          before do
+            allow(bic_finder).to receive(:find).with('IE', '931152').
+              and_return('AIBK1234XXX')
+            Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
+          end
+          after { Ibandit.bic_finder = nil }
+
+          its(:iban) { is_expected.to eq('IE29AIBK93115212345678') }
+
+          context "when the BIC can't be found" do
+            before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
+
+            specify do
+              expect { build }.to raise_error(RuntimeError, /failed to find/)
+            end
+          end
+        end
+      end
+
+      context 'with both a bank_code and a bic_finder' do
+        let(:bic_finder) { double }
+        before do
+          allow(bic_finder).to receive(:find).with('IE', '931152').
+            and_return('BANK1234XXX')
+          Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
+        end
+        after { Ibandit.bic_finder = nil }
+
+        it 'uses the explicitly provided bank_code' do
+          expect(subject.iban).to eq('IE29AIBK93115212345678')
         end
       end
     end

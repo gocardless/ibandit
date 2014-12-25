@@ -26,11 +26,7 @@ class Report
 end
 
 def get_iban_structures(iban_structures_file, iban_registry_file)
-  bban_formats = iban_registry_file.each_with_object({}) do |line, hash|
-    bban_structure = line['BBAN structure '].strip
-    country_code = line['Country code as defined in ISO 3166'].strip
-    hash[country_code] = convert_swift_convention(bban_structure)
-  end
+  bban_formats = get_bban_formats(iban_registry_file)
 
   report = Report.parse(iban_structures_file)
   report.countries.each_with_object({}) do |country, hash|
@@ -45,6 +41,14 @@ def get_iban_structures(iban_structures_file, iban_registry_file)
       iban_national_id_length: country.iban_national_id_length.to_i,
       bban_format: bban_formats[country.country_code]
     }
+  end
+end
+
+def get_bban_formats(iban_registry_file)
+  iban_registry_file.each_with_object({}) do |line, hash|
+    bban_structure = line['BBAN structure '].strip
+    country_code = line['Country code as defined in ISO 3166'].strip
+    hash[country_code] = convert_swift_convention(bban_structure)
   end
 end
 

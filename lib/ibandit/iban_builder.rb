@@ -89,7 +89,7 @@ module Ibandit
       #
       # Additional info:
       #   Cypriot bank and branch codes are often communicated as a single code,
-      #   so this method handles being passed them together or separatedly.
+      #   so this method handles being passed them together or separately.
       combined_bank_code = opts[:bank_code]
       combined_bank_code += opts[:branch_code] || ''
 
@@ -274,16 +274,20 @@ module Ibandit
       # Additional info:
       #   UK BBANs include the first four characters of the BIC. This requires a
       #   BIC finder lambda to be defined, or the bank_code to be supplied.
+      #
+      # TODO: Raise an Ibandit::BicNotFoundError here
       branch_code = opts[:branch_code].gsub(/[-\s]/, '')
-      bank_code = opts[:bank_code] || Ibandit.find_bic('GB', branch_code)
 
-      unless bank_code
-        raise ArgumentError,
-              'bank_code is required if a BIC finder is not defined'
+      if opts[:bank_code]
+        bank_code = opts[:bank_code]
+      else
+        bic = Ibandit.find_bic('GB', branch_code)
+        raise 'BIC finder failed to find a BIC.' if bic.nil?
+        bank_code = bic.slice(0, 4)
       end
 
       [
-        bank_code.slice(0, 4),
+        bank_code,
         branch_code,
         opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
       ].join
@@ -309,18 +313,22 @@ module Ibandit
 
     def self.build_ie_bban(opts)
       # Ireland uses the same BBAN construction method as the United Kingdom
+      #
+      # TODO: Raise an Ibandit::BicNotFoundError here
       branch_code = opts[:branch_code].gsub(/[-\s]/, '')
-      bank_code = opts[:bank_code] || Ibandit.find_bic('IE', branch_code)
 
-      unless bank_code
-        raise ArgumentError,
-              'bank_code is required if a BIC finder is not defined'
+      if opts[:bank_code]
+        bank_code = opts[:bank_code]
+      else
+        bic = Ibandit.find_bic('IE', branch_code)
+        raise 'BIC finder failed to find a BIC.' if bic.nil?
+        bank_code = bic.slice(0, 4)
       end
 
       [
-        bank_code.slice(0, 4),
+        bank_code,
         branch_code,
-        opts[:account_number].rjust(8, '0')
+        opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
       ].join
     end
 
@@ -503,7 +511,9 @@ module Ibandit
       when 'BE', 'EE', 'ES'
         %i(account_number)
       when 'GB', 'IE'
-        %i(branch_code account_number)
+        if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
+        else %i(branch_code account_number)
+        end
       else
         %i(bank_code branch_code account_number)
       end

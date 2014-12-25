@@ -1,5 +1,12 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  Include:
+    - config.ru
+    - Rakefile
+  Exclude:
+    - .*/**/*
+
 # Limit lines to 80 characters.
 LineLength:
   Max: 80
