@@ -37,7 +37,7 @@ Style/AsciiComments:
 
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 20
+  Max: 25
 
 Style/DotPosition:
   EnforcedStyle: 'trailing'

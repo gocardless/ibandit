@@ -6,7 +6,9 @@ module Ibandit
         case byte
         when 48..57 then byte.chr           # 0..9
         when 65..90 then (byte - 55).to_s   # A..Z
-        else raise ArgumentError, "Unexpected byte '#{byte}'"
+        else
+          raise InvalidCharacterError,
+                "Unexpected non-alphanumeric character '#{char}'"
         end
       end
       remainder = digits.join.to_i % 97
@@ -18,8 +20,11 @@ module Ibandit
     # digits are used in the 1st and 2nd digits of local Spanish
     # account numbers.
     def self.spanish(string)
-      raise ArgumentError, 'String must be numeric' unless /^\d+$/ =~ string
       scaled_values = string.chars.map.with_index do |digit, index|
+        unless digit.to_i.to_s == digit
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{digit}'"
+        end
         Integer(digit) * (2**index % 11)
       end
       result = 11 - scaled_values.inject(:+) % 11
@@ -43,7 +48,9 @@ module Ibandit
           case char.ord
           when 48..57 then char.to_i         # 0..9
           when 65..90 then char.ord - 65     # A..Z
-          else raise ArgumentError, "Unexpected byte '#{char}' in IBAN code"
+          else
+            raise InvalidCharacterError,
+                  "Unexpected non-alphanumeric character '#{char}'"
           end
         end
       end
@@ -65,7 +72,8 @@ module Ibandit
 
       scaled_values = string.reverse.chars.map.with_index do |char, index|
         unless char.to_i.to_s == char
-          raise ArgumentError, "Unexpected non-numeric character '#{char}'"
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
         end
 
         char.to_i * weights[index % weights.size]
@@ -81,7 +89,8 @@ module Ibandit
 
       scaled_values = string.chars.map.with_index do |char, index|
         unless char.to_i.to_s == char
-          raise ArgumentError, "Unexpected non-numeric character '#{char}'"
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
         end
 
         char.to_i * weights[index]
@@ -97,7 +106,8 @@ module Ibandit
 
       scaled_values = string.chars.map.with_index do |char, index|
         unless char.to_i.to_s == char
-          raise ArgumentError, "Unexpected non-numeric character '#{char}'"
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
         end
 
         char.to_i * weights[index]
@@ -111,7 +121,8 @@ module Ibandit
     def self.dutch(string)
       scaled_values = string.reverse.chars.map.with_index do |char, index|
         unless char.to_i.to_s == char
-          raise ArgumentError, "Unexpected non-numeric character '#{char}'"
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
         end
 
         char.to_i * (index + 2)
@@ -129,7 +140,8 @@ module Ibandit
 
       scaled_values = string.reverse.chars.map.with_index do |char, index|
         unless char.to_i.to_s == char
-          raise ArgumentError, "Unexpected non-numeric character '#{char}'"
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
         end
 
         scaled_value = char.to_i * weights[index % weights.size]
@@ -162,7 +174,7 @@ module Ibandit
 
       string.chars.map do |character|
         unless rib_mapping[character]
-          raise ArgumentError, "Unexpected byte '#{character}' in RIB"
+          raise InvalidCharacterError, "Unexpected byte '#{character}' in RIB"
         end
         rib_mapping[character]
       end.join.to_i

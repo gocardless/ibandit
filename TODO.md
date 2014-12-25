@@ -4,6 +4,4 @@
 
 - Specs for IBANSTRUCTURE parser
 
-- Rethink how bad input is handled
-
 - Open source

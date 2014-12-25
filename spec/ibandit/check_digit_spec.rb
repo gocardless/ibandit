@@ -17,7 +17,7 @@ describe Ibandit::CheckDigit do
     context 'with a non-numeric character' do
       let(:account_number) { '000001234A' }
       it 'raises an error' do
-        expect { subject }.to raise_error(ArgumentError)
+        expect { subject }.to raise_error(Ibandit::InvalidCharacterError)
       end
     end
   end

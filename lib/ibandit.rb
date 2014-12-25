@@ -1,4 +1,5 @@
 require 'ibandit/version'
+require 'ibandit/errors'
 require 'ibandit/iban'
 require 'ibandit/iban_builder'
 require 'ibandit/check_digit'
