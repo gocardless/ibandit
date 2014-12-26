@@ -33,7 +33,7 @@ describe Ibandit::IBANBuilder do
       let(:args) { { country_code: 'FU' } }
 
       it 'raises a helpful error message' do
-        expect { build }.to raise_error(ArgumentError, /Don't know how/)
+        expect { build }.to raise_error(Ibandit::UnsupportedCountryError)
       end
     end
 
@@ -384,8 +384,8 @@ describe Ibandit::IBANBuilder do
           context "when the BIC can't be found" do
             before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
 
-            specify do
-              expect { build }.to raise_error(RuntimeError, /failed to find/)
+            it 'raises an Ibandit::BicNotFoundError' do
+              expect { build }.to raise_error(Ibandit::BicNotFoundError)
             end
           end
         end
@@ -465,8 +465,8 @@ describe Ibandit::IBANBuilder do
           context "when the BIC can't be found" do
             before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
 
-            specify do
-              expect { build }.to raise_error(RuntimeError, /failed to find/)
+            it 'raises an Ibandit::BicNotFoundError' do
+              expect { build }.to raise_error(Ibandit::BicNotFoundError)
             end
           end
         end

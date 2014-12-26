@@ -10,7 +10,7 @@ module Ibandit
         raise ArgumentError, 'You must provide a country_code'
       elsif !SUPPORTED_COUNTRY_CODES.include?(country_code)
         msg = "Don't know how to build an IBAN for country code #{country_code}"
-        raise ArgumentError, msg
+        raise UnsupportedCountryError, msg
       else
         require_fields(country_code, opts)
         bban = send(:"build_#{country_code.downcase}_bban", opts)
@@ -274,15 +274,13 @@ module Ibandit
       # Additional info:
       #   UK BBANs include the first four characters of the BIC. This requires a
       #   BIC finder lambda to be defined, or the bank_code to be supplied.
-      #
-      # TODO: Raise an Ibandit::BicNotFoundError here
       branch_code = opts[:branch_code].gsub(/[-\s]/, '')
 
       if opts[:bank_code]
         bank_code = opts[:bank_code]
       else
         bic = Ibandit.find_bic('GB', branch_code)
-        raise 'BIC finder failed to find a BIC.' if bic.nil?
+        raise BicNotFoundError, 'BIC finder failed to find a BIC.' if bic.nil?
         bank_code = bic.slice(0, 4)
       end
 
@@ -313,15 +311,13 @@ module Ibandit
 
     def self.build_ie_bban(opts)
       # Ireland uses the same BBAN construction method as the United Kingdom
-      #
-      # TODO: Raise an Ibandit::BicNotFoundError here
       branch_code = opts[:branch_code].gsub(/[-\s]/, '')
 
       if opts[:bank_code]
         bank_code = opts[:bank_code]
       else
         bic = Ibandit.find_bic('IE', branch_code)
-        raise 'BIC finder failed to find a BIC.' if bic.nil?
+        raise BicNotFoundError, 'BIC finder failed to find a BIC.' if bic.nil?
         bank_code = bic.slice(0, 4)
       end
 
