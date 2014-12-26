@@ -1,3 +1,7 @@
+## 0.0.15 - December 26, 2014
+
+- Raise namespaced errors
+
 ## 0.0.14 - December 17, 2014
 
 - Add the Netherlands to IBANBuilder, and rename CheckDigit.mod_11
