@@ -111,8 +111,8 @@ module Ibandit
         true
       else
         @errors[:check_digits] = 'Check digits failed modulus check. ' \
-                                 "Expected #{check_digits}, received " \
-                                 "#{expected_check_digits}"
+                                 "Expected '#{expected_check_digits}', " \
+                                 "received '#{check_digits}'"
         false
       end
     end
