@@ -92,7 +92,7 @@ iban.check_digits              # => "82"
 iban.bank_code                 # => "WEST"
 iban.branch_code               # => "123456"
 iban.account_number            # => "98765432"
-iban.iban_national_id          # => "123456"
+iban.iban_national_id          # => "WEST123456"
 ```
 
 In addition, it is often useful to extract any local check digits from the IBAN.
