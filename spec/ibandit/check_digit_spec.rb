@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Ibandit::CheckDigit do
+  describe '.mod_97_10' do
+    subject { described_class.mod_97_10(account_number) }
+
+    context 'with a non-numeric character' do
+      let(:account_number) { 'hhhh' }
+      specify { expect { subject }.to raise_error(/non-alphanumeric/) }
+    end
+  end
+
   describe '.spanish' do
     subject { described_class.spanish(account_number) }
 
