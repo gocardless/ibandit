@@ -8,7 +8,7 @@ module Ibandit
         when 65..90 then (byte - 55).to_s   # A..Z
         else
           raise InvalidCharacterError,
-                "Unexpected non-alphanumeric character '#{char}'"
+                "Unexpected non-alphanumeric character '#{byte.chr}'"
         end
       end
       remainder = digits.join.to_i % 97
