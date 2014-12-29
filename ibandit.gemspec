@@ -8,13 +8,17 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'nokogiri',        '~> 1.6'
 
   gem.authors = ['Grey Baker']
-  gem.description = 'Construct, deconstruct, and validate IBANs'
+  gem.description = 'Ibandit is a Ruby library for manipulating and ' \
+                    'validating IBANs. It allows you to construct an IBAN ' \
+                    'from national banking details; deconstruct an IBAN into ' \
+                    'national banking details; and validate an IBAN\'s check ' \
+                    'digits and format.'
   gem.email = ['grey@gocardless.com']
   gem.files = `git ls-files`.split("\n")
   gem.homepage = 'https://github.com/gocardless/ibandit'
   gem.licenses = ['MIT']
   gem.name = 'ibandit'
   gem.require_paths = ['lib']
-  gem.summary = 'Ruby library for manipulating and validating IBANs'
+  gem.summary = 'Convert national banking details into IBANs, and vice-versa.'
   gem.version = Ibandit::VERSION.dup
 end

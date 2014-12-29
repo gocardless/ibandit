@@ -1,3 +1,7 @@
+## 0.1.0 - December 29, 2014
+
+- Initial public release
+
 ## 0.0.16 - December 29, 2014
 
 - Fix error handling in Modulus 97-10 check digit calculation
