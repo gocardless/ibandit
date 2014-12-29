@@ -1,3 +1,7 @@
+## 0.0.16 - December 29, 2014
+
+- Fix error handling in Modulus 97-10 check digit calculation
+
 ## 0.0.15 - December 26, 2014
 
 - Raise namespaced errors
