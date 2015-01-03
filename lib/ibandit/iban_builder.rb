@@ -65,7 +65,7 @@ module Ibandit
       #   numbers and the IBAN structure file includes them in its definition of
       #   the account number. As a result, this method ignores all arguments
       #   other than the account number.
-      opts[:account_number].gsub('-', '')
+      opts[:account_number].tr('-', '')
     end
 
     def self.build_cy_bban(opts)
@@ -192,7 +192,7 @@ module Ibandit
           opts[:account_number]
         ].join
       else
-        opts[:account_number].gsub('-', '')
+        opts[:account_number].tr('-', '')
       end
     end
 
@@ -477,7 +477,7 @@ module Ibandit
       else
         [
           opts[:bank_code],
-          opts[:account_number].gsub('-', '').rjust(16, '0')
+          opts[:account_number].tr('-', '').rjust(16, '0')
         ].join
       end
     end

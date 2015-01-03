@@ -54,9 +54,9 @@ end
 
 def convert_swift_convention(swift_string)
   swift_string.gsub(/(\d+)!([nac])/, '\2{\1}').
-    gsub('n', '\d').
-    gsub('a', '[A-Z]').
-    gsub('c', '[A-Z0-9]')
+    tr('n', '\d').
+    tr('a', '[A-Z]').
+    tr('c', '[A-Z0-9]')
 end
 
 def merge_structures(structures, additions)
