@@ -301,3 +301,11 @@ iban.iban                     # => "SM88X0542811101000000123456"
 ```
 
 Support for Greece and Malta is coming soon.
+
+## Other libraries
+
+Another gem, [iban-tools](https://github.com/alphasights/iban-tools), also
+exists and is an excellent choice if you only require basic IBAN validation.
+We built Ibandit because iban-tools doesn't provide a comprehensive, consistent
+interface for the construction and deconstruction of IBANs into national
+details.
