@@ -1,4 +1,5 @@
-# Ibandit
+Ibandit [![Build Status](https://travis-ci.org/gocardless/ibandit.svg?branch=master)](https://travis-ci.org/gocardless/ibandit)
+=======
 
 Ibandit is a Ruby library for manipulating and validating
 [IBANs](http://en.wikipedia.org/wiki/International_Bank_Account_Number). It
