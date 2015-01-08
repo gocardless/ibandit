@@ -1,3 +1,7 @@
+## 0.1.1 - January 8, 2014
+
+- Add zero-padding to CheckDigit.spanish
+
 ## 0.1.0 - December 29, 2014
 
 - Initial public release
