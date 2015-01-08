@@ -20,7 +20,8 @@ module Ibandit
     # digits are used in the 1st and 2nd digits of local Spanish
     # account numbers.
     def self.spanish(string)
-      scaled_values = string.chars.map.with_index do |digit, index|
+      padded_string = string.rjust(10, '0')
+      scaled_values = padded_string.chars.map.with_index do |digit, index|
         unless digit.to_i.to_s == digit
           raise InvalidCharacterError,
                 "Unexpected non-numeric character '#{digit}'"

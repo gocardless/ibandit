@@ -29,6 +29,14 @@ describe Ibandit::CheckDigit do
         expect { subject }.to raise_error(Ibandit::InvalidCharacterError)
       end
     end
+
+    context 'with a string that is fewer than 10 characters' do
+      let(:account_number) { '20386010' }
+
+      it 'zero-pads the string to get the correct check digit' do
+        expect(subject).to eq('5')
+      end
+    end
   end
 
   describe '.lund' do
