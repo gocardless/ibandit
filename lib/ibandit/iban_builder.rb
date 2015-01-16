@@ -120,10 +120,12 @@ module Ibandit
       # Additional info:
       #   There are many exceptions to the way German bank details translate
       #   into an IBAN, detailed into a 200 page document compiled by the
-      #   Bundesbank.
+      #   Bundesbank, and handled by the GermanDetailsConverter class.
+      converted_details = GermanDetailsConverter.convert(opts)
+
       [
-        opts[:bank_code],
-        opts[:account_number].rjust(10, '0')
+        converted_details[:bank_code],
+        converted_details[:account_number].rjust(10, '0')
       ].join
     end
 

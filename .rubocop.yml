@@ -12,7 +12,7 @@ LineLength:
   Max: 80
 
 ClassLength:
-  Max: 150
+  Max: 200
 
 # Avoid single-line methods.
 SingleLineMethods:
