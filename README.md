@@ -28,14 +28,15 @@ gem install ibandit
 ### Creating IBANs
 
 All functionality is based around `IBAN` objects. To create one, simply pass a
-string to `Ibandit::IBAN.new`. Note that you don't need to worry about case and
-whitespace:
+string to `Ibandit::IBAN.new`:
 
 ```ruby
 iban = Ibandit::IBAN.new("xq75 B a dCode 666")
 iban.to_s                      # => "XQ75BADCODE666"
 iban.to_s(:formatted)          # => "XQ75 BADC ODE6 66"
 ```
+
+Alternatively, you can [create an IBAN from national banking details](#creating-an-iban-from-national-banking-details)
 
 ### Validating an IBAN
 
