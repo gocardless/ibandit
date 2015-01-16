@@ -6,7 +6,9 @@ module Ibandit
     attr_reader :errors
 
     def self.structures
-      @structures ||= YAML.load_file("#{File.dirname(__FILE__)}/structures.yml")
+      @structures ||= YAML.load_file(
+        File.expand_path('../../../data/structures.yml', __FILE__)
+      )
     end
 
     def initialize(iban)
@@ -36,6 +38,7 @@ module Ibandit
 
     def bank_code
       return '' unless structure
+
       iban.slice(
         structure[:bank_code_position] - 1,
         structure[:bank_code_length]
