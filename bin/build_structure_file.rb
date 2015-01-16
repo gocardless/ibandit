@@ -54,9 +54,9 @@ end
 
 def convert_swift_convention(swift_string)
   swift_string.gsub(/(\d+)!([nac])/, '\2{\1}').
-    tr('n', '\d').
-    tr('a', '[A-Z]').
-    tr('c', '[A-Z0-9]')
+    gsub('n', '\d').
+    gsub('a', '[A-Z]').
+    gsub('c', '[A-Z0-9]')
 end
 
 def merge_structures(structures, additions)
@@ -71,13 +71,13 @@ end
 # as it is in the specs)
 if __FILE__ == $PROGRAM_NAME
   iban_registry_file = CSV.read(
-    File.expand_path('../../data/IBAN_Registry.txt', __FILE__),
+    File.expand_path('../../data/raw/IBAN_Registry.txt', __FILE__),
     col_sep: "\t",
     headers: true
   )
 
   iban_structures_file = File.read(
-    File.expand_path('../../data/IBANSTRUCTURE.xml', __FILE__)
+    File.expand_path('../../data/raw/IBANSTRUCTURE.xml', __FILE__)
   )
 
   iban_structures = get_iban_structures(
@@ -86,12 +86,12 @@ if __FILE__ == $PROGRAM_NAME
   )
 
   structure_additions = YAML.load_file(
-    File.expand_path('../../data/structure_additions.yml', __FILE__)
+    File.expand_path('../../data/raw/structure_additions.yml', __FILE__)
   )
 
   complete_structures = merge_structures(iban_structures, structure_additions)
   output_file_path = File.expand_path(
-    '../../lib/ibandit/structures.yml',
+    '../../data/structures.yml',
     __FILE__
   )
 
