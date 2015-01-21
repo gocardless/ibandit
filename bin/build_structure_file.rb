@@ -2,7 +2,6 @@
 
 # Script for parsing the IBAN registry (IBAN_Registry.txt) and IBAN structures
 # (IBANSTRUCTURE.xml) files from SWIFT.
-#
 require 'csv'
 require 'yaml'
 require 'sax-machine'
@@ -90,12 +89,11 @@ if __FILE__ == $PROGRAM_NAME
   )
 
   complete_structures = merge_structures(iban_structures, structure_additions)
+
   output_file_path = File.expand_path(
     '../../data/structures.yml',
     __FILE__
   )
 
-  File.open(output_file_path, 'w') do |f|
-    f.write(complete_structures.to_yaml)
-  end
+  File.open(output_file_path, 'w') { |f| f.write(complete_structures.to_yaml) }
 end

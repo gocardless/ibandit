@@ -1,0 +1,425 @@
+[
+  {
+    "convertor": "000000",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "000100",
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "000200",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "1111111611" },
+      { "bank_code": "10010010", "account_number" : "1111111861" }
+    ]
+  },
+  {
+    "convertor": "000300",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "6161604670" }
+    ]
+  },
+  {
+    "convertor": "000400",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "97097" , "converted_account_number": "0013044150"}
+    ]
+  },
+  {
+    "convertor": "000503",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "0994567890" },
+      { "bank_code": "58580074", "account_number" : "1234567890" },
+      { "bank_code": "30040000", "account_number" : "999", "converted_account_number": "0123799900" }
+    ],
+    "invalid": [
+      { "bank_code": "58580074", "account_number" : "0998000000" }
+    ]
+  },
+  {
+    "convertor": "000600",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "1111111", "converted_account_number": "0020228888" }
+    ]
+  },
+  {
+    "convertor": "000700",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "111", "converted_account_number": "0000001115" }
+    ]
+  },
+  {
+    "convertor": "000800",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "50020200" }
+    ]
+  },
+  {
+    "convertor": "000900",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1116232594", "converted_account_number": "3047232594", "converted_bank_code": "68351557" },
+      { "bank_code": "10010010", "account_number" : "0016005845", "converted_bank_code": "68351557" }
+    ]
+  },
+  {
+    "convertor": "001001",
+    "valid": [
+      { "bank_code": "50050222", "account_number" : "1234567890", "converted_bank_code": "50050201" },
+      { "bank_code": "50050201", "account_number" : "2000", "converted_account_number": "0000222000" },
+      { "bank_code": "50050201", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "001100",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "47800", "converted_account_number": "0000047803" }
+    ]
+  },
+  {
+    "convertor": "001201",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "50050000" }
+    ]
+  },
+  {
+    "convertor": "001301",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "30050000" }
+    ]
+  },
+  {
+    "convertor": "001400",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "30060601" }
+    ]
+  },
+  {
+    "convertor": "001501",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "94", "converted_account_number": "3008888018" }
+    ]
+  },
+  {
+    "convertor": "001600",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "300000", "converted_account_number": "0018128012" }
+    ]
+  },
+  {
+    "convertor": "001700",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "100", "converted_account_number": "2009090013" }
+    ]
+  },
+  {
+    "convertor": "001800",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "556", "converted_account_number": "0120440110" }
+    ]
+  },
+  {
+    "convertor": "001900",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "50120383" }
+    ]
+  },
+  {
+    "convertor": "002002",
+    "valid": [
+      { "bank_code": "50070010", "account_number" : "9999", "converted_account_number": "92777202" },
+      { "bank_code": "50070010", "account_number" : "12345", "converted_account_number": "1234500" },
+      { "bank_code": "50070010", "account_number" : "123456", "converted_account_number": "12345600" },
+      { "bank_code": "50070010", "account_number" : "1265982", "converted_account_number": "126598200" },
+      { "bank_code": "50070010", "account_number" : "3700246" },
+      { "bank_code": "50070010", "account_number" : "12345678" },
+      { "bank_code": "50070010", "account_number" : "123456789" }
+    ],
+    "invalid": [
+      { "bank_code": "50070010", "account_number" : "0000001234", "converted_account_number": "92777202" },
+      { "bank_code": "50070010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "002101",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "36020030" }
+    ]
+  },
+  {
+    "convertor": "002200",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "1111111", "converted_account_number": "2222200000" }
+    ]
+  },
+  {
+    "convertor": "002300",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "700", "converted_account_number": "1000700800" }
+    ]
+  },
+  {
+    "convertor": "002400",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "345", "converted_account_number": "0000017345" }
+    ]
+  },
+  {
+    "convertor": "002500",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "60050101" }
+    ]
+  },
+  {
+    "convertor": "002600",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "002700",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "002800",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "25050180" }
+    ]
+  },
+  {
+    "convertor": "002900",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "1230567890", "converted_account_number": "0123567890" }
+    ]
+  },
+  {
+    "convertor": "003000",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "003200",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "3470567890" },
+      { "bank_code": "70020001", "account_number" : "3180567890", "converted_bank_code": "70020270" },
+      { "bank_code": "10010010", "account_number" : "318056" }
+    ],
+    "invalid": [
+      { "bank_code": "50070010", "account_number" : "800000000" }
+    ]
+  },
+  {
+    "convertor": "003301",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "800000000" },
+      { "bank_code": "10010010", "account_number" : "3470567890" },
+      { "bank_code": "70020001", "account_number" : "3180567890", "converted_bank_code": "70020270" },
+      { "bank_code": "10010010", "account_number" : "318056" },
+      { "bank_code": "10010010", "account_number" : "22222", "converted_account_number": "5803435253" }
+    ]
+  },
+  {
+    "convertor": "003400",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "3470567890" },
+      { "bank_code": "70020001", "account_number" : "3180567890", "converted_bank_code": "70020270" },
+      { "bank_code": "70020001", "account_number" : "318056" },
+      { "bank_code": "10010010", "account_number" : "502", "converted_account_number": "4340118001" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "800000000" }
+    ]
+  },
+  {
+    "convertor": "003501",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "3470567890" },
+      { "bank_code": "70020001", "account_number" : "3180567890", "converted_bank_code": "70020270" },
+      { "bank_code": "70020001", "account_number" : "318056" },
+      { "bank_code": "10010010", "account_number" : "9696", "converted_account_number": "1490196966" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "800000000" }
+    ]
+  },
+  {
+    "convertor": "003600",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "300000", "converted_bank_code": "20050000", "converted_account_number": "300000000" },
+      { "bank_code": "70020001", "account_number" : "300000000", "converted_bank_code": "20050000" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "900004" }
+    ]
+  },
+  {
+    "convertor": "003700",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "30010700" }
+    ]
+  },
+  {
+    "convertor": "003800",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "28590075" }
+    ]
+  },
+  {
+    "convertor": "003900",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "28020050" }
+    ]
+  },
+  {
+    "convertor": "004001",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "68052328" }
+    ]
+  },
+  {
+    "convertor": "004100",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "50060400", "converted_account_number": "0000011404" }
+    ]
+  },
+  {
+    "convertor": "004200",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "0050462000" },
+      { "bank_code": "70020001", "account_number" : "0040402000" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "504620001" },
+      { "bank_code": "10010010", "account_number" : "0040400000" },
+      { "bank_code": "10010010", "account_number" : "0040412000" }
+    ]
+  },
+  {
+    "convertor": "004301",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "66650085" }
+    ]
+  },
+  {
+    "convertor": "004400",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "202", "converted_account_number": "0002282022" }
+    ]
+  },
+  {
+    "convertor": "004501",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "004600",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "31010833" }
+    ]
+  },
+  {
+    "convertor": "004700",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567", "converted_account_number": "0001234567" },
+      { "bank_code": "10010010", "account_number" : "12345678", "converted_account_number": "1234567800" }
+    ]
+  },
+  {
+    "convertor": "004800",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "36010200" }
+    ]
+  },
+  {
+    "convertor": "004900",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "912345", "converted_account_number": "9123450000" },
+      { "bank_code": "10010010", "account_number" : "812345" },
+      { "bank_code": "10010010", "account_number" : "36", "converted_account_number": "0002310113" }
+    ]
+  },
+  {
+    "convertor": "005000",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "28550000" }
+    ]
+  },
+  {
+    "convertor": "005100",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "502", "converted_account_number": "0001108884" }
+    ]
+  },
+  {
+    "convertor": "005200",
+    "valid": [
+      { "bank_code": "67220020", "account_number" : "5308810000", "converted_bank_code": "60050101", "converted_account_number": "0002659600" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" }
+    ]
+  },
+  {
+    "convertor": "005300",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "60050000", "account_number" : "3080", "converted_bank_code": "60050101", "converted_account_number": "0002009906" }
+    ]
+  },
+  {
+    "convertor": "005401",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890" },
+      { "bank_code": "10010010", "account_number" : "484848", "converted_account_number": "0000484849" }
+    ]
+  },
+  {
+    "convertor": "005500",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "25410200" }
+    ]
+  },
+  {
+    "convertor": "005600",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "66666", "converted_account_number": "1299807801" }
+    ],
+    "invalid": [
+      { "bank_code": "23010111", "account_number" : "0123456789", "converted_bank_code": "25410200" }
+    ]
+  },
+  {
+    "convertor": "005700",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "1234567890", "converted_bank_code": "66010200" }
+    ]
+  }
+]
