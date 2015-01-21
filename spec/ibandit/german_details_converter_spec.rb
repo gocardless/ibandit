@@ -15,20 +15,20 @@ describe Ibandit::GermanDetailsConverter do
             and_call_original
         end
 
-        convertor.fetch('valid', []).each do |pair|
-          context "bank code: #{pair['bank_code']} account number " \
-            "#{pair['account_number']}" do
+        convertor.fetch('valid', []).each do |tuple|
+          context "bank code: #{tuple['bank_code']} account number " \
+            "#{tuple['account_number']}" do
             let(:bank_code) do
-              pair['bank_code']
+              tuple['bank_code']
             end
             let(:account_number) do
-              pair['account_number']
+              tuple['account_number']
             end
             let(:converted_bank_code) do
-              pair['converted_bank_code'] || bank_code
+              tuple['converted_bank_code'] || bank_code
             end
             let(:converted_account_number) do
-              pair['converted_account_number'] || account_number
+              tuple['converted_account_number'] || account_number
             end
             it do
               is_expected.to eq(
@@ -38,11 +38,11 @@ describe Ibandit::GermanDetailsConverter do
           end
         end
 
-        convertor.fetch('invalid', []).each do |pair|
-          context "bank code: #{pair['bank_code']} account number " \
-            "#{pair['account_number']}" do
-            let(:bank_code) { pair['bank_code'] || '00000000' }
-            let(:account_number) { pair['account_number'] }
+        convertor.fetch('invalid', []).each do |tuple|
+          context "bank code: #{tuple['bank_code']} account number " \
+            "#{tuple['account_number']}" do
+            let(:bank_code) { tuple['bank_code'] || '00000000' }
+            let(:account_number) { tuple['account_number'] }
             it 'raises UnsupportedAccountDetails' do
               expect { subject }.
                 to raise_error(Ibandit::UnsupportedAccountDetails)
