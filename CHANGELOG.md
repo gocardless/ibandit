@@ -1,3 +1,8 @@
+## 0.2.0 - January 27, 2014
+
+- Add GermanDetailsConverter
+
+
 ## 0.1.1 - January 8, 2014
 
 - Add zero-padding to CheckDigit.spanish
