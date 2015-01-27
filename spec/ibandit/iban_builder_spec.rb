@@ -167,6 +167,13 @@ describe Ibandit::IBANBuilder do
             to raise_error(ArgumentError, /account_number is a required field/)
         end
       end
+
+      context 'with a pseudo account number' do
+        before { args[:bank_code] = '37080040' }
+        before { args[:account_number] = '111' }
+
+        its(:iban) { is_expected.to eq('DE69370800400215022000') }
+      end
     end
 
     context 'with EE as the country_code' do
