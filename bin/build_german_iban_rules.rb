@@ -8,7 +8,6 @@ BLZ_FIELDS = {
   bank_code:           { position: 0, length: 8 },
   primary_record:      { position: 8, length: 1 },
   check_digit_rule:    { position: 150, length: 2 },
-  follow_on_bank_code: { position: 160, length: 8 },
   iban_rule:           { position: 168, length: 6 }
 }.freeze
 
