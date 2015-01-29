@@ -541,6 +541,38 @@ describe Ibandit::IBANBuilder do
       end
     end
 
+    context 'with LT as the country_code' do
+      let(:args) do
+        {
+          country_code: 'LT',
+          account_number: '11101001000',
+          bank_code: '10000'
+        }
+      end
+
+      its(:iban) { is_expected.to eq('LT121000011101001000') }
+
+      it_behaves_like 'allows round trips', 'LT12 1000 0111 0100 1000'
+
+      context 'without an account_number' do
+        before { args.delete(:account_number) }
+
+        it 'raises a helpful error message' do
+          expect { build }.
+            to raise_error(ArgumentError, /account_number is a required field/)
+        end
+      end
+
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
+
+        it 'raises a helpful error message' do
+          expect { build }.
+            to raise_error(ArgumentError, /bank_code is a required field/)
+        end
+      end
+    end
+
     context 'with LU as the country_code' do
       let(:args) do
         {
