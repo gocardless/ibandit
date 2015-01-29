@@ -1,7 +1,7 @@
 module Ibandit
   module IBANBuilder
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LU LV MC NL PT
-                                 SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LT LU LV MC NL
+                                 PT SI SK SM).freeze
 
     def self.build(opts)
       country_code = opts.delete(:country_code)
@@ -293,6 +293,29 @@ module Ibandit
       ].join
     end
 
+    def self.build_lt_bban(opts)
+      # Local account details format:
+      #   sssss aaaaaaaaaaa
+      #   2 separated fields
+      #
+      # Local account details name(s):
+      #   Bank code: Banko kodas
+      #   Account number: Sąskaitos numeris
+      #
+      # BBAN-specific check digits: none
+      #
+      # Other check digits:
+      #   The account number contains a check digit calculated using
+      #   LST ISO 13616
+      #
+      # Padding:
+      #   Add leading zeros to account number if < 11 digits.
+      [
+        opts[:bank_code],
+        opts[:account_number].rjust(11, '0')
+      ].join
+    end
+
     def self.build_lu_bban(opts)
       # Additional info:
       #   Luxembourgian national bank details were replaced with IBANs in 2002.
@@ -504,7 +527,7 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when 'AT', 'CY', 'DE', 'FI', 'LU', 'LV', 'NL', 'SI', 'SK'
+      when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'SI', 'SK'
         %i(bank_code account_number)
       when 'BE', 'EE', 'ES'
         %i(account_number)
