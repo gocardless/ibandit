@@ -225,6 +225,14 @@ iban = Ibandit::IBANBuilder.build(
 )
 iban.iban                     # => "LV72BANK1234567890123"
 
+# Lithuania
+iban = Ibandit::IBANBuilder.build(
+  country_code: 'LT',
+  account_number: '11101001000',
+  bank_code: '10000'
+)
+iban.iban                     # => "LT1000011101001000"
+
 # Luxembourg
 iban = Ibandit::IBANBuilder.build(
   country_code: 'LU',
