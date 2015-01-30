@@ -1,3 +1,7 @@
+## 0.2.1 - January 30, 2014
+
+- Add Lithuania to IBANBuilder
+
 ## 0.2.0 - January 27, 2014
 
 - Add GermanDetailsConverter
