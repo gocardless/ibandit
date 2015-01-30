@@ -294,26 +294,12 @@ module Ibandit
     end
 
     def self.build_lt_bban(opts)
-      # Local account details format:
-      #   sssss aaaaaaaaaaa
-      #   2 separated fields
-      #
-      # Local account details name(s):
-      #   Bank code: Banko kodas
-      #   Account number: Sąskaitos numeris
-      #
-      # BBAN-specific check digits: none
-      #
-      # Other check digits:
-      #   The account number contains a check digit calculated using
-      #   LST ISO 13616
-      #
-      # Padding:
-      #   Add leading zeros to account number if < 11 digits.
-      [
-        opts[:bank_code],
-        opts[:account_number].rjust(11, '0')
-      ].join
+      # Additional info:
+      #   Lithuanian national bank details were replaced with IBANs in 2004.
+      #   All Lithuanian payers should therefore know their IBAN, and are
+      #   unlikely to know how it breaks down. This method is included for
+      #   consistency with the IBAN structure only.
+      [opts[:bank_code], opts[:account_number]].join
     end
 
     def self.build_lu_bban(opts)
