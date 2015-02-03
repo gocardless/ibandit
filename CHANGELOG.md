@@ -1,13 +1,20 @@
-## 0.2.1 - January 30, 2014
+## 0.3.0.pre - February 3, 2015
+
+- Separate IBAN splitting into IBANSplitter
+- Move IBANBuilder interface into main IBAN class by overloading its constructor
+- Move validation of local details input out of IBANBuilder into IBAN
+- Split `IBAN.valid_length?` into individual checks on the length of bank code, branch code, and account number
+
+## 0.2.1 - January 30, 2015
 
 - Add Lithuania to IBANBuilder
 
-## 0.2.0 - January 27, 2014
+## 0.2.0 - January 27, 2015
 
 - Add GermanDetailsConverter
 
 
-## 0.1.1 - January 8, 2014
+## 0.1.1 - January 8, 2015
 
 - Add zero-padding to CheckDigit.spanish
 

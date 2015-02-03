@@ -4,17 +4,16 @@ module Ibandit
                                  PT SI SK SM).freeze
 
     def self.build(opts)
-      country_code = opts.delete(:country_code)
+      country_code = opts[:country_code]
 
       if country_code.nil?
-        raise ArgumentError, 'You must provide a country_code'
+        return opts
       elsif !SUPPORTED_COUNTRY_CODES.include?(country_code)
-        msg = "Don't know how to build an IBAN for country code #{country_code}"
-        raise UnsupportedCountryError, msg
+        return opts
       else
-        require_fields(country_code, opts)
-        bban = send(:"build_#{country_code.downcase}_bban", opts)
-        build_iban(country_code, bban)
+        return opts unless has_required_fields?(country_code, opts)
+        bban_info = send(:"build_#{country_code.downcase}_bban_info", opts)
+        build_iban_parts(country_code, bban_info)
       end
     end
 
@@ -22,7 +21,7 @@ module Ibandit
     # Country-specific BBAN creation #
     ##################################
 
-    def self.build_at_bban(opts)
+    def self.build_at_bban_info(opts)
       # Local account details format:
       #   aaaaaaaaaaa bbbbb
       #   Account number may be 4-11 digits long
@@ -39,13 +38,17 @@ module Ibandit
       #
       # Padding:
       #   Add leading zeros to account number if < 11 digits.
-      [
-        opts[:bank_code],
-        opts[:account_number].rjust(11, '0')
-      ].join
+      bank_code      = opts[:bank_code]
+      account_number = opts[:account_number].rjust(11, '0')
+
+      {
+        bban:           bank_code + account_number,
+        bank_code:      bank_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_be_bban(opts)
+    def self.build_be_bban_info(opts)
       # Local account details format: bbb-aaaaaaa-cc
       #
       # Local account details name(s):
@@ -65,10 +68,15 @@ module Ibandit
       #   numbers and the IBAN structure file includes them in its definition of
       #   the account number. As a result, this method ignores all arguments
       #   other than the account number.
-      opts[:account_number].tr('-', '')
+      account_number = opts[:account_number].tr('-', '')
+
+      {
+        bban:           account_number,
+        account_number: account_number
+      }
     end
 
-    def self.build_cy_bban(opts)
+    def self.build_cy_bban_info(opts)
       # Local account details format:
       #   bbb-sssss aaaaaaaaaaaaaaaa
       #   Account number may be 7-16 digits long
@@ -90,16 +98,26 @@ module Ibandit
       # Additional info:
       #   Cypriot bank and branch codes are often communicated as a single code,
       #   so this method handles being passed them together or separately.
-      combined_bank_code = opts[:bank_code]
-      combined_bank_code += opts[:branch_code] || ''
+      cleaned_bank_code = opts[:bank_code].gsub(/[-\s]/, '')
 
-      [
-        combined_bank_code,
-        opts[:account_number].rjust(16, '0')
-      ].join
+      bank_code      = cleaned_bank_code.slice(0, 3)
+      branch_code    =
+        if opts.include?(:branch_code)
+          opts[:branch_code]
+        elsif cleaned_bank_code.length > 3
+          cleaned_bank_code[3..-1]
+        end
+      account_number = opts[:account_number].rjust(16, '0')
+
+      {
+        bban:           [bank_code, branch_code, account_number].compact.join,
+        bank_code:      bank_code,
+        branch_code:    branch_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_de_bban(opts)
+    def self.build_de_bban_info(opts)
       # Local account details format:
       #   bbbbbbbb aaaaaaaaaa
       #   Account number may be 1-10 digits long
@@ -123,13 +141,17 @@ module Ibandit
       #   Bundesbank, and handled by the GermanDetailsConverter class.
       converted_details = GermanDetailsConverter.convert(opts)
 
-      [
-        converted_details[:bank_code],
-        converted_details[:account_number].rjust(10, '0')
-      ].join
+      bank_code      = converted_details[:bank_code]
+      account_number = converted_details[:account_number].rjust(10, '0')
+
+      {
+        bban:           bank_code + account_number,
+        bank_code:      bank_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_ee_bban(opts)
+    def self.build_ee_bban_info(opts)
       # Local account details format:
       #   bbaaaaaaaaaaax
       #   Account number may be up to 14 characters long
@@ -155,16 +177,23 @@ module Ibandit
       #   All Estonian payers should therefore know their IBAN.
       domestic_bank_code = opts[:account_number].gsub(/\A0+/, '').slice(0, 2)
 
-      case domestic_bank_code
-      when '11' then iban_bank_code = '22'
-      when '93' then iban_bank_code = '00'
-      else iban_bank_code = domestic_bank_code
-      end
+      iban_bank_code =
+        case domestic_bank_code
+        when '11' then '22'
+        when '93' then '00'
+        else domestic_bank_code
+        end
 
-      iban_bank_code + opts[:account_number].rjust(14, '0')
+      account_number = opts[:account_number].rjust(14, '0')
+
+      {
+        bban:           iban_bank_code + account_number,
+        bank_code:      iban_bank_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_es_bban(opts)
+    def self.build_es_bban_info(opts)
       # Local account details format:
       #   bbbb-ssss-xx-aaaaaaaaaa
       #   Usually not separated, except by spaces or dashes
@@ -188,17 +217,26 @@ module Ibandit
       #   This method supports being passed the component IBAN parts, as defined
       #   by SWIFT, or a single 20 digit string.
       if opts.include?(:bank_code) && opts.include?(:branch_code)
-        [
-          opts[:bank_code],
-          opts[:branch_code],
-          opts[:account_number]
-        ].join
+        bank_code   = opts[:bank_code]
+        branch_code = opts[:branch_code]
+        account_number = opts[:account_number]
       else
-        opts[:account_number].tr('-', '')
+        cleaned_account_number = opts[:account_number].tr('-', '')
+
+        bank_code      = cleaned_account_number.slice(0, 4)
+        branch_code    = cleaned_account_number.slice(4, 4)
+        account_number = cleaned_account_number[8..-1]
       end
+
+      {
+        bban:           bank_code + branch_code + account_number,
+        bank_code:      bank_code,
+        branch_code:    branch_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_fi_bban(opts)
+    def self.build_fi_bban_info(opts)
       # Local account details format:
       #   bbbbbb-aaaaaaax
       #   Usually two joined fields separated by a hyphen
@@ -216,18 +254,24 @@ module Ibandit
       #   Finnish account numbers need to be expanded into "electronic format"
       #   by adding zero-padding. The expansion method depends on the first
       #   character of the bank code.
-      if %w(4 5 6).include?(opts[:bank_code][0])
-        [
-          opts[:bank_code],
-          opts[:account_number][0],
-          opts[:account_number][1..-1].rjust(7, '0')
-        ].join
-      else
-        opts[:bank_code] + opts[:account_number].rjust(8, '0')
-      end
+      account_number =
+        if %w(4 5 6).include?(opts[:bank_code][0])
+          [
+            opts[:account_number][0],
+            opts[:account_number][1..-1].rjust(7, '0')
+          ].join
+        else
+          opts[:account_number].rjust(8, '0')
+        end
+
+      {
+        bban:           opts[:bank_code] + account_number,
+        bank_code:      opts[:bank_code],
+        account_number: account_number
+      }
     end
 
-    def self.build_fr_bban(opts)
+    def self.build_fr_bban_info(opts)
       # Local account details format:
       #   bbbbb-sssss-aaaaaaaaaaa-xx
       #   4 separated fields
@@ -248,14 +292,15 @@ module Ibandit
       #   digits when using this method.
       #
       # Padding: None
-      [
-        opts[:bank_code],
-        opts[:branch_code],
-        opts[:account_number]
-      ].join
+      {
+        bban:           opts[:bank_code] + opts[:branch_code] + opts[:account_number],
+        bank_code:      opts[:bank_code],
+        branch_code:    opts[:branch_code],
+        account_number: opts[:account_number]
+      }
     end
 
-    def self.build_gb_bban(opts)
+    def self.build_gb_bban_info(opts)
       # Local account details format:
       #   ssssss aaaaaaaa
       #   2 separated fields
@@ -282,45 +327,47 @@ module Ibandit
         bank_code = opts[:bank_code]
       else
         bic = Ibandit.find_bic('GB', branch_code)
-        raise BicNotFoundError, 'BIC finder failed to find a BIC.' if bic.nil?
-        bank_code = bic.slice(0, 4)
+        bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      [
-        bank_code,
-        branch_code,
-        opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
-      ].join
+      account_number = opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
+
+      {
+        bban:           [bank_code, branch_code, account_number].join,
+        bank_code:      bank_code,
+        branch_code:    branch_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_lt_bban(opts)
+    def self.build_lt_bban_info(opts)
       # Additional info:
       #   Lithuanian national bank details were replaced with IBANs in 2004.
       #   All Lithuanian payers should therefore know their IBAN, and are
       #   unlikely to know how it breaks down. This method is included for
       #   consistency with the IBAN structure only.
-      [opts[:bank_code], opts[:account_number]].join
+      opts.merge(bban: opts[:bank_code] + opts[:account_number])
     end
 
-    def self.build_lu_bban(opts)
+    def self.build_lu_bban_info(opts)
       # Additional info:
       #   Luxembourgian national bank details were replaced with IBANs in 2002.
       #   All Luxembourgian payers should therefore know their IBAN, and are
       #   unlikely to know how it breaks down. This method is included for
       #   consistency with the IBAN structure only.
-      [opts[:bank_code], opts[:account_number]].join
+      opts.merge(bban: opts[:bank_code] + opts[:account_number])
     end
 
-    def self.build_lv_bban(opts)
+    def self.build_lv_bban_info(opts)
       # Additional info:
       #   Latvian national bank details were replaced with IBANs in 2004.
       #   All Latvian payers should therefore know their IBAN, and are
       #   unlikely to know how it breaks down. This method is included for
       #   consistency with the IBAN structure only.
-      [opts[:bank_code], opts[:account_number]].join
+      opts.merge(bban: opts[:bank_code] + opts[:account_number])
     end
 
-    def self.build_ie_bban(opts)
+    def self.build_ie_bban_info(opts)
       # Ireland uses the same BBAN construction method as the United Kingdom
       branch_code = opts[:branch_code].gsub(/[-\s]/, '')
 
@@ -328,18 +375,20 @@ module Ibandit
         bank_code = opts[:bank_code]
       else
         bic = Ibandit.find_bic('IE', branch_code)
-        raise BicNotFoundError, 'BIC finder failed to find a BIC.' if bic.nil?
-        bank_code = bic.slice(0, 4)
+        bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      [
-        bank_code,
-        branch_code,
-        opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
-      ].join
+      account_number = opts[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
+
+      {
+        bban:           [bank_code, branch_code, account_number].join,
+        bank_code:      bank_code,
+        branch_code:    branch_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_it_bban(opts)
+    def self.build_it_bban_info(opts)
       # Local account details format:
       #   x/bbbbb/sssss/cccccccccccc
       #   4 fields, separated by slashes
@@ -359,23 +408,28 @@ module Ibandit
       #
       # Padding:
       #   Add leading zeros to account number if < 10 digits.
-      combined_code = [
-        opts[:bank_code],
-        opts[:branch_code],
-        opts[:account_number].rjust(12, '0')
-      ].join
+      bank_code      = opts[:bank_code]
+      branch_code    = opts[:branch_code]
+      account_number = opts[:account_number].rjust(12, '0')
 
-      check_digit = opts[:check_digit] || CheckDigit.italian(combined_code)
+      partial_bban = bank_code + branch_code + account_number
 
-      [check_digit, combined_code].join
+      check_digit = opts[:check_digit] || CheckDigit.italian(partial_bban)
+
+      {
+        bban:           check_digit + partial_bban,
+        bank_code:      bank_code,
+        branch_code:    branch_code,
+        account_number: account_number
+      }
     end
 
-    def self.build_mc_bban(opts)
+    def self.build_mc_bban_info(opts)
       # Monaco uses the same BBAN construction method as France
-      build_fr_bban(opts)
+      build_fr_bban_info(opts)
     end
 
-    def self.build_nl_bban(opts)
+    def self.build_nl_bban_info(opts)
       # Local account details format:
       #   aaaaaaaaaa
       #   1 field for account number only
@@ -393,13 +447,16 @@ module Ibandit
       #
       # Padding:
       #   Add leading zeros to account number if < 10 digits.
-      [
-        opts[:bank_code],
-        opts[:account_number].rjust(10, '0')
-      ].join
+      account_number = opts[:account_number].rjust(10, '0')
+
+      {
+        bban:           opts[:bank_code] + account_number,
+        bank_code:      opts[:bank_code],
+        account_number: account_number
+      }
     end
 
-    def self.build_pt_bban(opts)
+    def self.build_pt_bban_info(opts)
       # Local account details format:
       #   bbbb.ssss.ccccccccccc.xx
       #   Usually presented in one block
@@ -426,14 +483,14 @@ module Ibandit
       #   A side-effect of Portugal using the same algorithm for its local check
       #   digits as the overall IBAN check digits is that the overall digits are
       #   always 50.
-      [
+      opts.merge(bban: [
         opts[:bank_code],
         opts[:branch_code],
         opts[:account_number]
-      ].join
+      ].join)
     end
 
-    def self.build_si_bban(opts)
+    def self.build_si_bban_info(opts)
       # Local account details format:
       #   bbbbb-aaaaaaaaxx
       #   Two fields, separated by a dash
@@ -452,13 +509,16 @@ module Ibandit
       #   A side-effect of Slovenia using the same algorithm for its local check
       #   digits as the overall IBAN check digits is that the overall digits are
       #   always 56.
-      [
-        opts[:bank_code],
-        opts[:account_number].rjust(10, '0')
-      ].join
+      account_number = opts[:account_number].rjust(10, '0')
+
+      {
+        bban:           opts[:bank_code] + account_number,
+        bank_code:      opts[:bank_code],
+        account_number: account_number
+      }
     end
 
-    def self.build_sk_bban(opts)
+    def self.build_sk_bban_info(opts)
       # Local account details format:
       #   pppppp-aaaaaaaaaa/bbbb
       #   Three fields (or two, if prefix and account number are merged)
@@ -479,36 +539,34 @@ module Ibandit
       #   The SWIFT definition of a Slovakian IBAN includes both the account
       #   number prefix and the account number. This method therefore supports
       #   passing those fields concatenated.
-      if opts.include?(:account_number_prefix)
-        [
-          opts[:bank_code],
-          opts[:account_number_prefix].rjust(6, '0'),
-          opts[:account_number].rjust(10, '0')
-        ].join
-      else
-        [
-          opts[:bank_code],
+      account_number =
+        if opts.include?(:account_number_prefix)
+          [
+            opts[:account_number_prefix].rjust(6, '0'),
+            opts[:account_number].rjust(10, '0')
+          ].join
+        else
           opts[:account_number].tr('-', '').rjust(16, '0')
-        ].join
-      end
+        end
+
+      {
+        bban:           opts[:bank_code] + account_number,
+        bank_code:      opts[:bank_code],
+        account_number: account_number
+      }
     end
 
-    def self.build_sm_bban(opts)
+    def self.build_sm_bban_info(opts)
       # San Marino uses the same BBAN construction method as Italy
-      build_it_bban(opts)
+      build_it_bban_info(opts)
     end
 
     ##################
     # Helper methods #
     ##################
 
-    def self.require_fields(country_code, opts)
-      required_fields(country_code).each do |arg|
-        next if opts[arg]
-
-        msg = "#{arg} is a required field when building an #{country_code} IBAN"
-        raise ArgumentError, msg
-      end
+    def self.has_required_fields?(country_code, opts)
+      required_fields(country_code).all? { |argument| opts[argument] }
     end
 
     def self.required_fields(country_code)
@@ -526,14 +584,17 @@ module Ibandit
       end
     end
 
-    def self.build_iban(country_code, bban)
-      iban = [
-        country_code,
-        CheckDigit.iban(country_code, bban),
-        bban
-      ].join
+    def self.build_iban_parts(country_code, bban_info)
+      check_digits = CheckDigit.iban(country_code, bban_info[:bban])
 
-      IBAN.new(iban)
+      {
+        iban:           country_code + check_digits + bban_info[:bban],
+        country_code:   country_code,
+        check_digits:   check_digits,
+        bank_code:      bban_info[:bank_code],
+        branch_code:    bban_info[:branch_code],
+        account_number: bban_info[:account_number]
+      }
     end
   end
 end

@@ -2,65 +2,34 @@ require 'yaml'
 
 module Ibandit
   class IBAN
-    attr_reader :iban
-    attr_reader :errors
+    attr_reader :country_code, :check_digits, :bank_code, :branch_code, :account_number,
+                :iban, :errors
 
-    def self.structures
-      @structures ||= YAML.load_file(
-        File.expand_path('../../../data/structures.yml', __FILE__)
-      )
-    end
+    def initialize(string_or_hash)
+      if string_or_hash.is_a?(Hash)
+        iban_parts = IBANBuilder.build(string_or_hash)
+      elsif string_or_hash.nil? || string_or_hash.is_a?(String)
+        iban_parts = IBANSplitter.new(string_or_hash).parts
+      else
+        raise TypeError, "Must pass an IBAN as a string, or hash of local details"
+      end
 
-    def initialize(iban)
-      @iban = iban.to_s.gsub(/\s+/, '').upcase
+      @iban           = iban_parts[:iban] || ''
+      @country_code   = iban_parts[:country_code] || ''
+      @check_digits   = iban_parts[:check_digits] || ''
+      @bank_code      = iban_parts[:bank_code] || ''
+      @branch_code    = iban_parts[:branch_code] || ''
+      @account_number = iban_parts[:account_number] || ''
+
       @errors = {}
     end
 
     def to_s(format = :compact)
       case format
-      when :compact then iban
+      when :compact   then iban
       when :formatted then formatted
       else raise ArgumentError, "invalid format '#{format}'"
       end
-    end
-
-    ###################
-    # Component parts #
-    ###################
-
-    def country_code
-      iban[0, 2]
-    end
-
-    def check_digits
-      iban[2, 2] || ''
-    end
-
-    def bank_code
-      return '' unless structure
-
-      iban.slice(
-        structure[:bank_code_position] - 1,
-        structure[:bank_code_length]
-      ) || ''
-    end
-
-    def branch_code
-      return '' unless structure && structure[:branch_code_length] > 0
-
-      iban.slice(
-        structure[:branch_code_position] - 1,
-        structure[:branch_code_length]
-      ) || ''
-    end
-
-    def account_number
-      return '' unless structure
-
-      iban.slice(
-        structure[:account_number_position] - 1,
-        structure[:account_number_length]
-      ) || ''
     end
 
     def iban_national_id
@@ -91,13 +60,15 @@ module Ibandit
         valid_country_code?,
         valid_characters?,
         valid_check_digits?,
-        valid_length?,
+        valid_bank_code_length?,
+        valid_branch_code_length?,
+        valid_account_number_length?,
         valid_format?
       ].all?
     end
 
     def valid_country_code?
-      if IBAN.structures.key?(country_code)
+      if Ibandit.structures.key?(country_code)
         true
       else
         @errors[:country_code] = "'#{country_code}' is not a valid " \
@@ -120,17 +91,56 @@ module Ibandit
       end
     end
 
-    def valid_length?
+    def valid_bank_code_length?
       return unless valid_country_code?
 
-      if iban.size == structure[:total_length]
-        true
-      else
-        @errors[:length] = "Length doesn't match SWIFT specification " \
-                           "(expected #{structure[:total_length]} " \
-                           "characters, received #{iban.size})"
-        false
+      if bank_code.nil?
+        @errors[:bank_code] = 'is required'
+        return false
       end
+
+      return true if bank_code.length == structure[:bank_code_length]
+
+      @errors[:bank_code] = "is the wrong length: must be " \
+                            "#{structure[:bank_code_length]}, not #{bank_code.length}"
+      false
+    end
+
+    def valid_branch_code_length?
+      return unless valid_country_code?
+
+      if branch_code.length == 0 && structure[:branch_code_length] > 0
+        @errors[:branch_code] = 'is required'
+        return false
+      end
+
+      if branch_code.length > 0 && structure[:branch_code_length] == 0
+        @errors[:branch_code] = "is not used in #{country_code}"
+        return false
+      end
+
+      return true if branch_code.length == structure[:branch_code_length]
+
+      @errors[:branch_code] = "is the wrong length: must be " \
+                              "#{structure[:branch_code_length]}, not " \
+                              "#{branch_code.length}"
+      false
+    end
+
+    def valid_account_number_length?
+      return unless valid_country_code?
+
+      if account_number.nil?
+        @errors[:account_number] = 'is required'
+        return false
+      end
+
+      return true if account_number.length == structure[:account_number_length]
+
+      @errors[:account_number] = "is the wrong length: must be " \
+                                 "#{structure[:account_number_length]}, not "\
+                                 "#{account_number.length}"
+      false
     end
 
     def valid_characters?
@@ -161,7 +171,7 @@ module Ibandit
     private
 
     def structure
-      IBAN.structures[country_code]
+      Ibandit.structures[country_code]
     end
 
     def formatted
