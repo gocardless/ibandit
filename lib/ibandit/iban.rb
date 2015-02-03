@@ -2,24 +2,17 @@ require 'yaml'
 
 module Ibandit
   class IBAN
-    attr_reader :country_code, :check_digits, :bank_code, :branch_code, :account_number,
-                :iban, :errors
+    attr_reader :errors
 
     def initialize(string_or_hash)
-      if string_or_hash.is_a?(Hash)
-        iban_parts = IBANBuilder.build(string_or_hash)
-      elsif string_or_hash.nil? || string_or_hash.is_a?(String)
-        iban_parts = IBANSplitter.new(string_or_hash).parts
-      else
-        raise TypeError, "Must pass an IBAN as a string, or hash of local details"
-      end
-
-      @iban           = iban_parts[:iban] || ''
-      @country_code   = iban_parts[:country_code] || ''
-      @check_digits   = iban_parts[:check_digits] || ''
-      @bank_code      = iban_parts[:bank_code] || ''
-      @branch_code    = iban_parts[:branch_code] || ''
-      @account_number = iban_parts[:account_number] || ''
+      @iban_parts =
+        if string_or_hash.is_a?(Hash)
+          IBANBuilder.build(string_or_hash)
+        elsif string_or_hash.nil? || string_or_hash.is_a?(String)
+          IBANSplitter.new(string_or_hash).parts
+        else
+          raise TypeError, 'Must pass an IBAN string, or hash of local details'
+        end
 
       @errors = {}
     end
@@ -31,6 +24,9 @@ module Ibandit
       else raise ArgumentError, "invalid format '#{format}'"
       end
     end
+
+    %i(country_code check_digits bank_code branch_code account_number iban).
+      each { |part| define_method(part) { @iban_parts[part] || '' } }
 
     def iban_national_id
       return '' unless structure
@@ -101,8 +97,9 @@ module Ibandit
 
       return true if bank_code.length == structure[:bank_code_length]
 
-      @errors[:bank_code] = "is the wrong length: must be " \
-                            "#{structure[:bank_code_length]}, not #{bank_code.length}"
+      @errors[:bank_code] = 'is the wrong length: must be ' \
+                            "#{structure[:bank_code_length]}, not " \
+                            "#{bank_code.length}"
       false
     end
 
@@ -121,7 +118,7 @@ module Ibandit
 
       return true if branch_code.length == structure[:branch_code_length]
 
-      @errors[:branch_code] = "is the wrong length: must be " \
+      @errors[:branch_code] = 'is the wrong length: must be ' \
                               "#{structure[:branch_code_length]}, not " \
                               "#{branch_code.length}"
       false
@@ -137,7 +134,7 @@ module Ibandit
 
       return true if account_number.length == structure[:account_number_length]
 
-      @errors[:account_number] = "is the wrong length: must be " \
+      @errors[:account_number] = 'is the wrong length: must be ' \
                                  "#{structure[:account_number_length]}, not "\
                                  "#{account_number.length}"
       false

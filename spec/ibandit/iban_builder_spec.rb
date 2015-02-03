@@ -80,7 +80,7 @@ describe Ibandit::IBANBuilder do
       context 'with dashes' do
         before { args[:account_number] = '510-0075470-61' }
         its([:iban]) { is_expected.to eq('BE62510007547061') }
-        its([:account_number]) { is_expected.to eq('510007547061')}
+        its([:account_number]) { is_expected.to eq('510007547061') }
       end
 
       context 'without an account_number' do

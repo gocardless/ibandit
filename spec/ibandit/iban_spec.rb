@@ -255,8 +255,12 @@ describe Ibandit::IBAN do
       specify { expect(iban).to receive(:valid_characters?).at_least(1) }
       specify { expect(iban).to receive(:valid_check_digits?).at_least(1) }
       specify { expect(iban).to receive(:valid_bank_code_length?).at_least(1) }
-      specify { expect(iban).to receive(:valid_branch_code_length?).at_least(1) }
-      specify { expect(iban).to receive(:valid_account_number_length?).at_least(1) }
+      specify do
+        expect(iban).to receive(:valid_branch_code_length?).at_least(1)
+      end
+      specify do
+        expect(iban).to receive(:valid_account_number_length?).at_least(1)
+      end
       specify { expect(iban).to receive(:valid_format?).at_least(1) }
     end
 

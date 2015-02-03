@@ -11,7 +11,7 @@ module Ibandit
       elsif !SUPPORTED_COUNTRY_CODES.include?(country_code)
         return opts
       else
-        return opts unless has_required_fields?(country_code, opts)
+        return opts unless fields_for?(country_code, opts)
         bban_info = send(:"build_#{country_code.downcase}_bban_info", opts)
         build_iban_parts(country_code, bban_info)
       end
@@ -293,9 +293,9 @@ module Ibandit
       #
       # Padding: None
       {
-        bban:           opts[:bank_code] + opts[:branch_code] + opts[:account_number],
-        bank_code:      opts[:bank_code],
-        branch_code:    opts[:branch_code],
+        bban: opts[:bank_code] + opts[:branch_code] + opts[:account_number],
+        bank_code: opts[:bank_code],
+        branch_code: opts[:branch_code],
         account_number: opts[:account_number]
       }
     end
@@ -565,7 +565,7 @@ module Ibandit
     # Helper methods #
     ##################
 
-    def self.has_required_fields?(country_code, opts)
+    def self.fields_for?(country_code, opts)
       required_fields(country_code).all? { |argument| opts[argument] }
     end
 
