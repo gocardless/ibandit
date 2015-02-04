@@ -4,6 +4,7 @@ require 'ibandit/iban'
 require 'ibandit/german_details_converter'
 require 'ibandit/iban_splitter'
 require 'ibandit/iban_assembler'
+require 'ibandit/local_details_cleaner'
 require 'ibandit/check_digit'
 
 module Ibandit
