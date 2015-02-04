@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Ibandit::IBANSplitter do
-  subject(:parts) { described_class.new(iban_code).parts }
+  subject(:split) { described_class.split(iban_code) }
 
   context 'with a valid IBAN' do
     let(:iban_code) { 'GB82WEST12345698765432' }

@@ -196,7 +196,7 @@ module Ibandit
     end
 
     def extract_local_details_from_iban!
-      local_details = IBANSplitter.new(@iban).parts
+      local_details = IBANSplitter.split(@iban)
 
       @country_code   = local_details[:country_code]
       @check_digits   = local_details[:check_digits]

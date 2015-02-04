@@ -1,18 +1,13 @@
 module Ibandit
-  class IBANSplitter
-    attr_reader :iban
+  module IBANSplitter
 
-    def initialize(iban)
-      @iban = iban
-    end
-
-    def parts
+    def self.split(iban)
       {
-        country_code:   country_code,
-        check_digits:   check_digits,
-        bank_code:      bank_code,
-        branch_code:    branch_code,
-        account_number: account_number
+        country_code:   country_code_from(iban),
+        check_digits:   check_digits_from(iban),
+        bank_code:      bank_code_from(iban),
+        branch_code:    branch_code_from(iban),
+        account_number: account_number_from(iban)
       }
     end
 
@@ -20,53 +15,53 @@ module Ibandit
     # Component parts #
     ###################
 
-    private
-
-    def country_code
+    def self.country_code_from(iban)
       return if iban.nil? || iban.empty?
 
       iban.slice(0, 2)
     end
 
-    def check_digits
-      return unless decomposable?
+    def self.check_digits_from(iban)
+      return unless decomposable?(iban)
 
       iban.slice(2, 2)
     end
 
-    def bank_code
-      return unless decomposable?
+    def self.bank_code_from(iban)
+      return unless decomposable?(iban)
 
       iban.slice(
-        structure[:bank_code_position] - 1,
-        structure[:bank_code_length]
+        structure(iban)[:bank_code_position] - 1,
+        structure(iban)[:bank_code_length]
       )
     end
 
-    def branch_code
-      return unless decomposable? && structure[:branch_code_length] > 0
+    def self.branch_code_from(iban)
+      unless decomposable?(iban) && structure(iban)[:branch_code_length] > 0
+        return
+      end
 
       iban.slice(
-        structure[:branch_code_position] - 1,
-        structure[:branch_code_length]
+        structure(iban)[:branch_code_position] - 1,
+        structure(iban)[:branch_code_length]
       )
     end
 
-    def account_number
-      return unless decomposable?
+    def self.account_number_from(iban)
+      return unless decomposable?(iban)
 
       iban.slice(
-        structure[:account_number_position] - 1,
-        structure[:account_number_length]
+        structure(iban)[:account_number_position] - 1,
+        structure(iban)[:account_number_length]
       )
     end
 
-    def decomposable?
-      structure && iban.length == structure[:total_length]
+    def self.decomposable?(iban)
+      structure(iban) && iban.length == structure(iban)[:total_length]
     end
 
-    def structure
-      Ibandit.structures[country_code]
+    def self.structure(iban)
+      Ibandit.structures[country_code_from(iban)]
     end
   end
 end

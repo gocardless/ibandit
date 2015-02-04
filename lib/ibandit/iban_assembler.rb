@@ -528,13 +528,11 @@ module Ibandit
     end
 
     def self.assemble_iban(country_code, bban)
-      iban = [
+      [
         country_code,
         CheckDigit.iban(country_code, bban),
         bban
       ].join
-
-      iban
     end
   end
 end
