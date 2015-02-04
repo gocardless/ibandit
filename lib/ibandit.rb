@@ -2,6 +2,7 @@ require 'ibandit/version'
 require 'ibandit/errors'
 require 'ibandit/iban'
 require 'ibandit/german_details_converter'
+require 'ibandit/iban_splitter'
 require 'ibandit/iban_assembler'
 require 'ibandit/check_digit'
 

@@ -2,12 +2,13 @@ require 'yaml'
 
 module Ibandit
   class IBAN
-    attr_reader :iban
-    attr_reader :errors
+    attr_reader :errors, :iban,  :country_code, :check_digits, :bank_code,
+                :branch_code, :account_number
 
     def initialize(argument)
       if argument.is_a?(String)
         @iban = argument.to_s.gsub(/\s+/, '').upcase
+        extract_local_details_from_iban!
       elsif argument.is_a?(Hash)
         build_iban_from_local_details(argument)
       else
@@ -29,47 +30,8 @@ module Ibandit
     # Component parts #
     ###################
 
-    def country_code
-      return @country_code if @country_code
-      iban.slice(0, 2) unless iban.nil? || iban.empty?
-    end
-
-    def check_digits
-      iban.slice(2, 2) if can_be_decomposed?
-    end
-
-    def bank_code
-      return @bank_code if @bank_code
-      return unless structure && !iban.nil?
-
-      iban.slice(
-        structure[:bank_code_position] - 1,
-        structure[:bank_code_length]
-      )
-    end
-
-    def branch_code
-      return @branch_code if @branch_code
-      return unless can_be_decomposed? && structure[:branch_code_length] > 0
-
-      iban.slice(
-        structure[:branch_code_position] - 1,
-        structure[:branch_code_length]
-      )
-    end
-
-    def account_number
-      return @account_number if @account_number
-      return unless can_be_decomposed?
-
-      iban.slice(
-        structure[:account_number_position] - 1,
-        structure[:account_number_length]
-      )
-    end
-
     def iban_national_id
-      return unless can_be_decomposed?
+      return unless decomposable?
 
       national_id = bank_code.to_s
       national_id += branch_code.to_s
@@ -77,7 +39,7 @@ module Ibandit
     end
 
     def local_check_digits
-      return unless can_be_decomposed? && structure[:local_check_digit_position]
+      return unless decomposable? && structure[:local_check_digit_position]
 
       iban.slice(
         structure[:local_check_digit_position] - 1,
@@ -117,7 +79,7 @@ module Ibandit
     end
 
     def valid_check_digits?
-      return unless can_be_decomposed? && valid_characters?
+      return unless decomposable? && valid_characters?
 
       expected_check_digits = CheckDigit.iban(country_code, bban)
       if check_digits == expected_check_digits
@@ -219,18 +181,28 @@ module Ibandit
 
     private
 
-    def can_be_decomposed?
-      valid_length?
+    def decomposable?
+      [iban, country_code, bank_code, account_number].none?(&:nil?)
     end
 
     def build_iban_from_local_details(details_hash)
       local_details = details_hash.dup
 
+      @country_code   = local_details[:country_code]
       @account_number = local_details[:account_number]
       @branch_code    = local_details[:branch_code]
       @bank_code      = local_details[:bank_code]
-      @country_code   = local_details[:country_code]
       @iban           = IBANAssembler.assemble(local_details)
+    end
+
+    def extract_local_details_from_iban!
+      local_details = IBANSplitter.split(@iban)
+
+      @country_code   = local_details[:country_code]
+      @check_digits   = local_details[:check_digits]
+      @bank_code      = local_details[:bank_code]
+      @branch_code    = local_details[:branch_code]
+      @account_number = local_details[:account_number]
     end
 
     def structure
