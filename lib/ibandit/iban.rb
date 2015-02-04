@@ -230,7 +230,7 @@ module Ibandit
       @branch_code    = local_details[:branch_code]
       @bank_code      = local_details[:bank_code]
       @country_code   = local_details[:country_code]
-      @iban           = IBANBuilder.build(local_details).iban
+      @iban           = IBANAssembler.assemble(local_details)
     end
 
     def structure
