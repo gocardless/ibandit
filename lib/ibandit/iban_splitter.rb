@@ -1,6 +1,5 @@
 module Ibandit
   module IBANSplitter
-
     def self.split(iban)
       {
         country_code:   country_code_from(iban),
