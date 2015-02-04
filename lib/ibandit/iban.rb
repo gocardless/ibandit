@@ -186,7 +186,7 @@ module Ibandit
     end
 
     def build_iban_from_local_details(details_hash)
-      local_details = LocalDetailsCleaner.clean(details_hash)
+      local_details = LocalDetailsCleaner.clean(details_hash.dup)
 
       @country_code   = local_details[:country_code]
       @account_number = local_details[:account_number]

@@ -65,7 +65,7 @@ describe Ibandit::IBAN do
       its(:country_code) { is_expected.to eq(arg[:country_code]) }
       its(:bank_code) { is_expected.to eq(arg[:bank_code]) }
       its(:branch_code) { is_expected.to eq(arg[:branch_code]) }
-      its(:account_number) { is_expected.to eq('00005678') }
+      its(:account_number) { is_expected.to eq(arg[:account_number]) }
     end
   end
 
