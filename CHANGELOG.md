@@ -1,9 +1,9 @@
 ## 0.3.0.pre - February 3, 2015
 
-- Separate IBAN splitting into IBANSplitter
 - Move IBANBuilder interface into main IBAN class by overloading its constructor
 - Move validation of local details input out of IBANBuilder into IBAN
 - Split `IBAN.valid_length?` into individual checks on the length of bank code, branch code, and account number
+- Return `nil` for fields which aren't present, rather than an empty string
 
 ## 0.2.1 - January 30, 2015
 

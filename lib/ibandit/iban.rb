@@ -2,17 +2,17 @@ require 'yaml'
 
 module Ibandit
   class IBAN
+    attr_reader :iban
     attr_reader :errors
 
-    def initialize(string_or_hash)
-      @iban_parts =
-        if string_or_hash.is_a?(Hash)
-          IBANBuilder.build(string_or_hash)
-        elsif string_or_hash.nil? || string_or_hash.is_a?(String)
-          IBANSplitter.new(string_or_hash).parts
-        else
-          raise TypeError, 'Must pass an IBAN string, or hash of local details'
-        end
+    def initialize(argument)
+      if argument.is_a?(String)
+        @iban = argument.to_s.gsub(/\s+/, '').upcase
+      elsif argument.is_a?(Hash)
+        build_iban_from_local_details(argument)
+      else
+        raise TypeError, 'Must pass an IBAN string or hash of local details'
+      end
 
       @errors = {}
     end
@@ -25,26 +25,68 @@ module Ibandit
       end
     end
 
-    %i(country_code check_digits bank_code branch_code account_number iban).
-      each { |part| define_method(part) { @iban_parts[part] || '' } }
+    ###################
+    # Component parts #
+    ###################
+
+    def country_code
+      return @country_code if @country_code
+      iban.slice(0, 2) unless iban.nil? || iban.empty?
+    end
+
+    def check_digits
+      iban.slice(2, 2) if can_be_decomposed?
+    end
+
+    def bank_code
+      return @bank_code if @bank_code
+      return unless structure && !iban.nil?
+
+      iban.slice(
+        structure[:bank_code_position] - 1,
+        structure[:bank_code_length]
+      )
+    end
+
+    def branch_code
+      return @branch_code if @branch_code
+      return unless can_be_decomposed? && structure[:branch_code_length] > 0
+
+      iban.slice(
+        structure[:branch_code_position] - 1,
+        structure[:branch_code_length]
+      )
+    end
+
+    def account_number
+      return @account_number if @account_number
+      return unless can_be_decomposed?
+
+      iban.slice(
+        structure[:account_number_position] - 1,
+        structure[:account_number_length]
+      )
+    end
 
     def iban_national_id
-      return '' unless structure
+      return unless can_be_decomposed?
 
-      national_id = branch_code.nil? ? bank_code : bank_code + branch_code
+      national_id = bank_code.to_s
+      national_id += branch_code.to_s
       national_id.slice(0, structure[:iban_national_id_length])
     end
 
     def local_check_digits
-      return '' unless structure && structure[:local_check_digit_position]
+      return unless can_be_decomposed? && structure[:local_check_digit_position]
 
-      iban.slice(structure[:local_check_digit_position] - 1,
-                 structure[:local_check_digit_length]
-      ) || ''
+      iban.slice(
+        structure[:local_check_digit_position] - 1,
+        structure[:local_check_digit_length]
+      )
     end
 
     def bban
-      iban[4..-1] || ''
+      iban[4..-1] unless iban.nil?
     end
 
     ###############
@@ -56,6 +98,7 @@ module Ibandit
         valid_country_code?,
         valid_characters?,
         valid_check_digits?,
+        valid_length?,
         valid_bank_code_length?,
         valid_branch_code_length?,
         valid_account_number_length?,
@@ -74,7 +117,7 @@ module Ibandit
     end
 
     def valid_check_digits?
-      return unless valid_country_code? && valid_characters?
+      return unless can_be_decomposed? && valid_characters?
 
       expected_check_digits = CheckDigit.iban(country_code, bban)
       if check_digits == expected_check_digits
@@ -87,10 +130,23 @@ module Ibandit
       end
     end
 
+    def valid_length?
+      return unless valid_country_code? && !iban.nil?
+
+      if iban.length == structure[:total_length]
+        true
+      else
+        @errors[:length] = "Length doesn't match SWIFT specification " \
+                           "(expected #{structure[:total_length]} " \
+                           "characters, received #{iban.size})"
+        false
+      end
+    end
+
     def valid_bank_code_length?
       return unless valid_country_code?
 
-      if bank_code.nil?
+      if bank_code.nil? || bank_code.length == 0
         @errors[:bank_code] = 'is required'
         return false
       end
@@ -105,22 +161,17 @@ module Ibandit
 
     def valid_branch_code_length?
       return unless valid_country_code?
+      return true if branch_code.to_s.length == structure[:branch_code_length]
 
-      if branch_code.length == 0 && structure[:branch_code_length] > 0
-        @errors[:branch_code] = 'is required'
-        return false
-      end
-
-      if branch_code.length > 0 && structure[:branch_code_length] == 0
+      if structure[:branch_code_length] == 0
         @errors[:branch_code] = "is not used in #{country_code}"
-        return false
+      elsif branch_code.nil? || branch_code.length == 0
+        @errors[:branch_code] = 'is required'
+      else
+        @errors[:branch_code] = 'is the wrong length: must be ' \
+                                "#{structure[:branch_code_length]}, not " \
+                                "#{branch_code.length}"
       end
-
-      return true if branch_code.length == structure[:branch_code_length]
-
-      @errors[:branch_code] = 'is the wrong length: must be ' \
-                              "#{structure[:branch_code_length]}, not " \
-                              "#{branch_code.length}"
       false
     end
 
@@ -141,6 +192,7 @@ module Ibandit
     end
 
     def valid_characters?
+      return if iban.nil?
       if iban.scan(/[^A-Z0-9]/).any?
         @errors[:characters] = 'Non-alphanumeric characters found: ' \
                                "#{iban.scan(/[^A-Z\d]/).join(' ')}"
@@ -166,6 +218,20 @@ module Ibandit
     ###################
 
     private
+
+    def can_be_decomposed?
+      valid_length?
+    end
+
+    def build_iban_from_local_details(details_hash)
+      local_details = details_hash.dup
+
+      @account_number = local_details[:account_number]
+      @branch_code    = local_details[:branch_code]
+      @bank_code      = local_details[:bank_code]
+      @country_code   = local_details[:country_code]
+      @iban           = IBANBuilder.build(local_details).iban
+    end
 
     def structure
       Ibandit.structures[country_code]

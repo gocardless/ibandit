@@ -56,11 +56,12 @@ iban.errors                    # => { country_code: "'XQ' is not a valid..." }
 
 The following error keys may be set:
 - `country_code`
-- `check_digits`
-- `characters`
 - `bank_code`
 - `branch_code`
 - `account_number`
+- `check_digits`
+- `characters`
+- `length`
 - `format`
 
 ### Deconstructing an IBAN into national banking details
@@ -137,179 +138,179 @@ To build an IBAN from local details:
 
 ```ruby
 # Austria
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'AT',
   account_number: '234573201',
   bank_code: '19043'
 )
-iban.to_s(:formatted)         # => "AT61 1904 3002 3457 3201"
+iban.iban                     # => "AT611904300234573201"
 
 # Belgium
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'BE',
   account_number: '510-0075470-61'
 )
-iban.to_s(:formatted)         # => "BE62 5100 0754 7061"
+iban.iban                     # => "BE62510007547061"
 
 # Cyprus
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'CY',
   account_number: '1200527600',
   bank_code: '002',
   branch_code: '00128'
 )
-iban.to_s(:formatted)         # => "CY17 0020 0128 0000 0012 0052 7600"
+iban.iban                     # => "CY17002001280000001200527600"
 
 # Germany
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'DE',
   bank_code: '37040044',
   account_number: '0532013000'
 )
-iban.to_s(:formatted)         # => "DE89 3704 0044 0532 0130 00"
+iban.iban                     # => "DE89370400440532013000"
 
 # Estonia
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'EE',
   account_number: '111020145685'
 )
-iban.to_s(:formatted)         # => "EE41 2200 1110 2014 5685"
+iban.iban                     # => "EE412200111020145685"
 
 # Finland
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'FI',
   bank_code: '123456'
   account_number: '785'
 )
-iban.to_s(:formatted)         # => "FI21 1234 5600 0007 85"
+iban.iban                     # => "FI2112345600000785"
 
 # France
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'FR',
   bank_code: '20041',
   branch_code: '01005',
   account_number: '0500013M02606',
 )
-iban.to_s(:formatted)         # => "FR14 2004 1010 0505 0001 3M02 606"
+iban.iban                     # => "FR1420041010050500013M02606"
 
 # United Kingdom
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'GB',
   bank_code: 'BARC', # optional if a BIC finder is configured
   branch_code: '200000',
   account_number: '55779911'
 )
-iban.to_s(:formatted)         # => "GB60 BARC 2000 0055 7799 11"
+iban.iban                     # => "GB60BARC20000055779911"
 
 # Ireland
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'IE',
   bank_code: 'AIBK', # optional if a BIC finder is configured
   branch_code: '931152',
   account_number: '12345678'
 )
-iban.to_s(:formatted)         # => "IE29 AIBK 9311 5212 3456 78"
+iban.iban                     # => "IE29AIBK93115212345678"
 
 # Italy
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'IT',
   bank_code: '05428',
   branch_code: '11101',
   account_number: '000000123456'
 )
-iban.to_s(:formatted)         # => "IT60 X054 2811 1010 0000 0123 456"
+iban.iban                     # => "IT60X0542811101000000123456"
 
 # Latvia
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'LV',
   account_number: '1234567890123',
   bank_code: 'BANK'
 )
-iban.to_s(:formatted)         # => "LV72 BANK 1234 5678 9012 3"
+iban.iban                     # => "LV72BANK1234567890123"
 
 # Lithuania
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'LT',
   account_number: '11101001000',
   bank_code: '10000'
 )
-iban.to_s(:formatted)         # => "LT10 0001 1101 0010 00"
+iban.iban                     # => "LT1000011101001000"
 
 # Luxembourg
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'LU',
   account_number: '1234567890123',
   bank_code: 'BANK'
 )
-iban.to_s(:formatted)         # => "LU75 BANK 1234 5678 9012 3"
+iban.iban                     # => "LU75BANK1234567890123"
 
 # Monaco
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'MC',
   bank_code: '20041',
   branch_code: '01005',
   account_number: '0500013M026'
 )
-iban.to_s(:formatted)         # => "MC93 2004 1010 0505 0001 3M02 606"
+iban.iban                     # => "MC9320041010050500013M02606"
 
 # The Netherlands
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'NL',
   account_number: '0417164300',
   bank_code: 'ABNA'
 )
-iban.to_s(:formatted)         # => "NL91 ABNA 0417 1643 00"
+iban.iban                     # => "NL91ABNA0417164300"
 
 # Portugal
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'PT',
   bank_code: '0002',
   branch_code: '0023',
   account_number: '0023843000578'
 )
-iban.to_s(:formatted)         # => "PT50 0002 0023 0023 8430 0057 8"
+iban.iban                     # => "PT50000200230023843000578"
 
 # Slovakia
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'SK',
   bank_code: '1200',
   account_number_prefix: '19',
   account_number: '8742637541'
 )
-iban.to_s(:formatted)         # => "SK31 1200 0000 1987 4263 7541"
+iban.iban                     # => "SK3112000000198742637541"
 
 # Slovenia
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'SI',
   bank_code: '19100',
   account_number: '1234'
 )
-iban.to_s(:formatted)         # => "SI56 1910 0000 0123 438"
+iban.iban                     # => "SI56191000000123438"
 
 # Spain
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'ES',
   bank_code: '2310',
   branch_code: '0001',
   account_number: '180000012345'
 )
-iban.to_s(:formatted)         # => "ES80 2310 0001 1800 0001 2345"
+iban.iban                     # => "ES8023100001180000012345"
 
 # Spain with 20 digit account number
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'ES',
   account_number: '23100001180000012345'
 )
-iban.to_s(:formatted)         # => "ES80 2310 0001 1800 0001 2345"
+iban.iban                     # => "ES8023100001180000012345"
 
 # San Marino
-iban = Ibandit::IBAN.new(
+iban = Ibandit::IBANBuilder.build(
   country_code: 'SM',
   bank_code: '05428',
   branch_code: '11101',
   account_number: '000000123456'
 )
-iban.to_s(:formatted)         # => "SM88 X054 2811 10100 0000 1234 56"
+iban.iban                     # => "SM88X0542811101000000123456"
 ```
 
 Support for Greece and Malta is coming soon.
