@@ -36,6 +36,11 @@ describe Ibandit::LocalDetailsCleaner do
       its([:account_number]) { is_expected.to eq('00234573201') }
     end
 
+    context 'with an account number under 4 digits' do
+      let(:account_number) { '123' }
+      its([:account_number]) { is_expected.to eq('123') }
+    end
+
     context 'with a long account number' do
       let(:account_number) { '234573201999' }
       it { is_expected.to eq(local_details) }
@@ -92,6 +97,11 @@ describe Ibandit::LocalDetailsCleaner do
       its([:account_number]) { is_expected.to eq('0000001200527600') }
     end
 
+    context 'with a too-short account number' do
+      let(:account_number) { '123456' }
+      its([:account_number]) { is_expected.to eq(account_number) }
+    end
+
     context 'with a long account number' do
       let(:account_number) { '00000001200527600' }
       it { is_expected.to eq(local_details) }
@@ -132,6 +142,11 @@ describe Ibandit::LocalDetailsCleaner do
       it { is_expected.to eq(local_details) }
     end
 
+    context 'with an excessively short account number' do
+      let(:account_number) { '666' }
+      its([:account_number]) { is_expected.to eq(account_number) }
+    end
+
     context 'with a pseudo account number' do
       let(:bank_code) { '37080040' }
       let(:account_number) { '111' }
@@ -170,7 +185,7 @@ describe Ibandit::LocalDetailsCleaner do
     context 'with bank and branch codes in the account number' do
       let(:bank_code) { nil }
       let(:branch_code) { nil }
-      let(:account_number) { '23100001180000012345' }
+      let(:account_number) { '2310-0001-18-0000012345' }
 
       its([:bank_code]) { is_expected.to eq('2310') }
       its([:branch_code]) { is_expected.to eq('0001') }
@@ -268,6 +283,11 @@ describe Ibandit::LocalDetailsCleaner do
       its([:account_number]) { is_expected.to eq('00579135') }
     end
 
+    context 'with a too-short account number' do
+      let(:account_number) { '5678' }
+      its([:account_number]) { is_expected.to eq(account_number) }
+    end
+
     context 'with the account number spaced' do
       let(:account_number) { '5577 9911' }
       its([:account_number]) { is_expected.to eq('55779911') }
@@ -335,6 +355,11 @@ describe Ibandit::LocalDetailsCleaner do
     context 'with a short account number' do
       let(:account_number) { '579135' }
       its([:account_number]) { is_expected.to eq('00579135') }
+    end
+
+    context 'with a too-short account number' do
+      let(:account_number) { '5678' }
+      its([:account_number]) { is_expected.to eq(account_number) }
     end
 
     context 'with the account number spaced' do

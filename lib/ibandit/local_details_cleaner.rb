@@ -45,6 +45,7 @@ module Ibandit
     ##########################
 
     def self.clean_at_details(local_details)
+      return {} unless local_details[:account_number].length >= 4
       {
         bank_code: local_details[:bank_code],
         account_number: local_details[:account_number].rjust(11, '0')
@@ -65,7 +66,12 @@ module Ibandit
         elsif cleaned_bank_code.length > 3
           cleaned_bank_code[3..-1]
         end
-      account_number = local_details[:account_number].rjust(16, '0')
+      account_number =
+        if local_details[:account_number].length >= 7
+          local_details[:account_number].rjust(16, '0')
+        else
+          local_details[:account_number]
+        end
 
       {
         bank_code:      bank_code,
@@ -76,6 +82,8 @@ module Ibandit
 
     def self.clean_de_details(local_details)
       converted_details = GermanDetailsConverter.convert(local_details)
+
+      return {} unless converted_details[:account_number].length >= 4
 
       {
         bank_code:      converted_details[:bank_code],
@@ -154,8 +162,8 @@ module Ibandit
         bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      account_number =
-        local_details[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
+      account_number = local_details[:account_number].gsub(/[-\s]/, '')
+      account_number = account_number.rjust(8, '0') if account_number.length > 5
 
       {
         bank_code:      bank_code,
@@ -186,8 +194,8 @@ module Ibandit
         bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      account_number =
-        local_details[:account_number].gsub(/[-\s]/, '').rjust(8, '0')
+      account_number = local_details[:account_number].gsub(/[-\s]/, '')
+      account_number = account_number.rjust(8, '0') if account_number.length > 5
 
       {
         bank_code:      bank_code,
