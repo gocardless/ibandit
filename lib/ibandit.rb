@@ -13,5 +13,11 @@ module Ibandit
       raise NotImplementedError, 'BIC finder is not defined' unless @bic_finder
       @bic_finder.call(country_code, national_id)
     end
+
+    def structures
+      @structures ||= YAML.load_file(
+        File.expand_path('../../data/structures.yml', __FILE__)
+      )
+    end
   end
 end

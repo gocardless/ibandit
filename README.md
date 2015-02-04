@@ -56,6 +56,9 @@ iban.errors                    # => { country_code: "'XQ' is not a valid..." }
 
 The following error keys may be set:
 - `country_code`
+- `bank_code`
+- `branch_code`
+- `account_number`
 - `check_digits`
 - `characters`
 - `length`

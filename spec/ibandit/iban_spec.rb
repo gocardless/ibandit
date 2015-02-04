@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Ibandit::IBAN do
-  subject(:iban) { described_class.new(iban_code) }
+  subject(:iban) { described_class.new(arg) }
+  let(:arg) { iban_code }
   let(:iban_code) { 'GB82WEST12345698765432' }
 
   its(:iban) { is_expected.to eq(iban_code) }
@@ -12,8 +13,21 @@ describe Ibandit::IBAN do
   end
 
   context 'with nil' do
-    let(:iban_code) { nil }
-    its(:iban) { is_expected.to eq('') }
+    let(:arg) { nil }
+    specify { expect { iban }.to raise_error(TypeError) }
+  end
+
+  context 'with local details' do
+    let(:arg) do
+      {
+        country_code: 'GB',
+        bank_code: 'WEST',
+        branch_code: '123456',
+        account_number: '98765432'
+      }
+    end
+
+    its(:iban) { is_expected.to eq('GB82WEST12345698765432') }
   end
 
   describe 'it decomposes the IBAN' do
@@ -23,19 +37,35 @@ describe Ibandit::IBAN do
     its(:branch_code) { is_expected.to eq('123456') }
     its(:account_number) { is_expected.to eq('98765432') }
     its(:iban_national_id) { is_expected.to eq('WEST123456') }
-    its(:local_check_digits) { is_expected.to eq('') }
+    its(:local_check_digits) { is_expected.to be_nil }
 
     context 'when the IBAN is blank' do
       let(:iban_code) { '' }
 
-      its(:country_code) { is_expected.to eq('') }
-      its(:check_digits) { is_expected.to eq('') }
-      its(:bank_code) { is_expected.to eq('') }
-      its(:branch_code) { is_expected.to eq('') }
-      its(:account_number) { is_expected.to eq('') }
-      its(:iban_national_id) { is_expected.to eq('') }
-      its(:bban) { is_expected.to eq('') }
-      its(:local_check_digits) { is_expected.to eq('') }
+      its(:country_code) { is_expected.to be_nil }
+      its(:check_digits) { is_expected.to be_nil }
+      its(:bank_code) { is_expected.to be_nil }
+      its(:branch_code) { is_expected.to be_nil }
+      its(:account_number) { is_expected.to be_nil }
+      its(:iban_national_id) { is_expected.to be_nil }
+      its(:bban) { is_expected.to be_nil }
+      its(:local_check_digits) { is_expected.to be_nil }
+    end
+
+    context 'when the IBAN was created with local details' do
+      let(:arg) do
+        {
+          country_code: 'GB',
+          bank_code: 'WES',
+          branch_code: '1234',
+          account_number: '5678'
+        }
+      end
+
+      its(:country_code) { is_expected.to eq(arg[:country_code]) }
+      its(:bank_code) { is_expected.to eq(arg[:bank_code]) }
+      its(:branch_code) { is_expected.to eq(arg[:branch_code]) }
+      its(:account_number) { is_expected.to eq(arg[:account_number]) }
     end
   end
 
@@ -120,7 +150,6 @@ describe Ibandit::IBAN do
     subject { iban.valid_length? }
 
     context 'with valid details' do
-      let(:iban_code) { 'GB82WEST12345698765432' }
       it { is_expected.to eq(true) }
     end
 
@@ -141,6 +170,100 @@ describe Ibandit::IBAN do
       it 'does not set errors on the IBAN' do
         iban.valid_length?
         expect(iban.errors).to_not include(:length)
+      end
+    end
+  end
+
+  describe '#valid_bank_code_length?' do
+    subject { iban.valid_bank_code_length? }
+
+    context 'with valid details' do
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with invalid details' do
+      before { allow(iban).to receive(:bank_code).and_return('WES') }
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_bank_code_length?
+        expect(iban.errors).to include(:bank_code)
+      end
+    end
+
+    context 'with an invalid country_code' do
+      before { allow(iban).to receive(:country_code).and_return('AA') }
+      it { is_expected.to be_nil }
+
+      it 'does not set errors on the IBAN' do
+        iban.valid_bank_code_length?
+        expect(iban.errors).to_not include(:bank_code)
+      end
+    end
+  end
+
+  describe '#valid_branch_code_length?' do
+    subject { iban.valid_branch_code_length? }
+
+    context 'with valid details' do
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with invalid details' do
+      before { allow(iban).to receive(:branch_code).and_return('12345') }
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_branch_code_length?
+        expect(iban.errors).to include(:branch_code)
+      end
+    end
+
+    context 'without a branch code' do
+      before { allow(iban).to receive(:branch_code).and_return(nil) }
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_branch_code_length?
+        expect(iban.errors).to include(:branch_code)
+      end
+    end
+
+    context 'with an invalid country_code' do
+      before { allow(iban).to receive(:country_code).and_return('AA') }
+      it { is_expected.to be_nil }
+
+      it 'does not set errors on the IBAN' do
+        iban.valid_branch_code_length?
+        expect(iban.errors).to_not include(:branch_code)
+      end
+    end
+  end
+
+  describe '#valid_account_number_length?' do
+    subject { iban.valid_account_number_length? }
+
+    context 'with valid details' do
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with an invalid account_number' do
+      before { allow(iban).to receive(:account_number).and_return('1234567') }
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_account_number_length?
+        expect(iban.errors).to include(:account_number)
+      end
+    end
+
+    context 'with an invalid country_code' do
+      before { allow(iban).to receive(:country_code).and_return('AA') }
+      it { is_expected.to be_nil }
+
+      it 'does not set errors on the IBAN' do
+        iban.valid_account_number_length?
+        expect(iban.errors).to_not include(:account_number)
       end
     end
   end
@@ -201,7 +324,16 @@ describe Ibandit::IBAN do
       specify { expect(iban).to receive(:valid_characters?).at_least(1) }
       specify { expect(iban).to receive(:valid_check_digits?).at_least(1) }
       specify { expect(iban).to receive(:valid_length?).at_least(1) }
+      specify { expect(iban).to receive(:valid_bank_code_length?).at_least(1) }
       specify { expect(iban).to receive(:valid_format?).at_least(1) }
+
+      it 'validates the branch code length' do
+        expect(iban).to receive(:valid_branch_code_length?).at_least(1)
+      end
+
+      it 'validates the account number length' do
+        expect(iban).to receive(:valid_account_number_length?).at_least(1)
+      end
     end
 
     context 'for a valid Albanian IBAN' do
