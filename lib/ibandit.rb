@@ -3,6 +3,7 @@ require 'ibandit/errors'
 require 'ibandit/iban'
 require 'ibandit/german_details_converter'
 require 'ibandit/iban_builder'
+require 'ibandit/iban_splitter'
 require 'ibandit/check_digit'
 
 module Ibandit
