@@ -192,7 +192,7 @@ module Ibandit
       @account_number = local_details[:account_number]
       @branch_code    = local_details[:branch_code]
       @bank_code      = local_details[:bank_code]
-      @iban           = IBANBuilder.build(local_details).iban
+      @iban           = IBANAssembler.assemble(local_details)
     end
 
     def extract_local_details_from_iban!
