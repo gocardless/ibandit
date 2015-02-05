@@ -115,9 +115,8 @@ module Ibandit
 
       return true if bank_code.length == structure[:bank_code_length]
 
-      @errors[:bank_code] = 'is the wrong length: must be ' \
-                            "#{structure[:bank_code_length]}, not " \
-                            "#{bank_code.length}"
+      @errors[:bank_code] = 'is the wrong length (should be ' \
+                            "#{structure[:bank_code_length]} characters)"
       false
     end
 
@@ -130,9 +129,8 @@ module Ibandit
       elsif branch_code.nil? || branch_code.length == 0
         @errors[:branch_code] = 'is required'
       else
-        @errors[:branch_code] = 'is the wrong length: must be ' \
-                                "#{structure[:branch_code_length]}, not " \
-                                "#{branch_code.length}"
+        @errors[:branch_code] = 'is the wrong length (should be ' \
+                                "#{structure[:branch_code_length]} characters)"
       end
       false
     end
@@ -147,9 +145,9 @@ module Ibandit
 
       return true if account_number.length == structure[:account_number_length]
 
-      @errors[:account_number] = 'is the wrong length: must be ' \
-                                 "#{structure[:account_number_length]}, not "\
-                                 "#{account_number.length}"
+      @errors[:account_number] = 'is the wrong length (should be ' \
+                                 "#{structure[:account_number_length]} " \
+                                 'characters)'
       false
     end
 
