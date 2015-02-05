@@ -186,12 +186,12 @@ module Ibandit
     end
 
     def build_iban_from_local_details(details_hash)
-      local_details = LocalDetailsCleaner.clean(details_hash.dup)
+      local_details = LocalDetailsCleaner.clean(details_hash)
 
-      @country_code   = local_details[:country_code]
-      @account_number = local_details[:account_number]
-      @branch_code    = local_details[:branch_code]
-      @bank_code      = local_details[:bank_code]
+      @country_code   = local_details[:country_code].dup
+      @account_number = local_details[:account_number].dup
+      @branch_code    = local_details[:branch_code].dup
+      @bank_code      = local_details[:bank_code].dup
       @iban           = IBANAssembler.assemble(local_details)
       @check_digits   = @iban.slice(2, 2) unless @iban.nil?
     end
