@@ -72,12 +72,13 @@ module Ibandit
 
     def self.required_fields?(local_details)
       country_code = local_details[:country_code]
-      supplied = local_details.keys.select { |key| local_details[key] }.sort
-      supplied.delete(:country_code)
-      required = required_fields(country_code).sort
-      allowed = allowed_fields(country_code).sort
 
-      required.all? { |key| supplied.include?(key) } &&
+      supplied = local_details.keys.select { |key| local_details[key] }
+      supplied.delete(:country_code)
+
+      allowed = allowed_fields(country_code)
+
+      required_fields(country_code).all? { |key| supplied.include?(key) } &&
         supplied.all? { |key| allowed.include?(key) }
     end
 
@@ -87,10 +88,6 @@ module Ibandit
         %i(bank_code account_number)
       when 'BE'
         %i(account_number)
-      when 'GB', 'IE'
-        if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
-        else %i(branch_code account_number)
-        end
       else
         %i(bank_code branch_code account_number)
       end
@@ -102,6 +99,7 @@ module Ibandit
       when 'BE' then %i(bank_code account_number)
       when 'CY' then %i(bank_code branch_code account_number)
       when 'IT' then %i(bank_code branch_code account_number check_digit)
+      when 'SK' then %i(bank_code account_number account_number_prefix)
       else required_fields(country_code)
       end
     end
