@@ -188,10 +188,10 @@ module Ibandit
     def build_iban_from_local_details(details_hash)
       local_details = LocalDetailsCleaner.clean(details_hash)
 
-      @country_code   = local_details[:country_code].dup
-      @account_number = local_details[:account_number].dup
-      @branch_code    = local_details[:branch_code].dup
-      @bank_code      = local_details[:bank_code].dup
+      @country_code   = try_dup(local_details[:country_code])
+      @account_number = try_dup(local_details[:account_number])
+      @branch_code    = try_dup(local_details[:branch_code])
+      @bank_code      = try_dup(local_details[:bank_code])
       @iban           = IBANAssembler.assemble(local_details)
       @check_digits   = @iban.slice(2, 2) unless @iban.nil?
     end
@@ -204,6 +204,12 @@ module Ibandit
       @bank_code      = local_details[:bank_code]
       @branch_code    = local_details[:branch_code]
       @account_number = local_details[:account_number]
+    end
+
+    def try_dup(thing)
+      thing.dup
+    rescue TypeError
+      thing
     end
 
     def structure

@@ -30,6 +30,19 @@ describe Ibandit::IBAN do
     its(:iban) { is_expected.to eq('GB82WEST12345698765432') }
   end
 
+  context 'with nil local details' do
+    let(:arg) do
+      {
+        country_code: nil,
+        bank_code: nil,
+        branch_code: nil,
+        account_number: nil
+      }
+    end
+
+    it { is_expected.to_not be_valid }
+  end
+
   describe 'it decomposes the IBAN' do
     its(:country_code) { is_expected.to eq('GB') }
     its(:check_digits) { is_expected.to eq('82') }
