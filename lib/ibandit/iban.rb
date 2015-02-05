@@ -64,7 +64,10 @@ module Ibandit
         valid_bank_code_length?,
         valid_branch_code_length?,
         valid_account_number_length?,
-        valid_format?
+        valid_format?,
+        valid_bank_code_format?,
+        valid_branch_code_format?,
+        valid_account_number_format?
       ].all?
     end
 
@@ -169,6 +172,40 @@ module Ibandit
         true
       else
         @errors[:format] = "Unexpected format for a #{country_code} IBAN."
+        false
+      end
+    end
+
+    def valid_bank_code_format?
+      return unless valid_bank_code_length?
+
+      if bank_code =~ Regexp.new(structure[:bank_code_format])
+        true
+      else
+        @errors[:bank_code] = 'is invalid'
+        false
+      end
+    end
+
+    def valid_branch_code_format?
+      return unless valid_branch_code_length?
+      return true unless structure[:branch_code_format]
+
+      if branch_code =~ Regexp.new(structure[:branch_code_format])
+        true
+      else
+        @errors[:branch_code] = 'is invalid'
+        false
+      end
+    end
+
+    def valid_account_number_format?
+      return unless valid_account_number_length?
+
+      if account_number =~ Regexp.new(structure[:account_number_format])
+        true
+      else
+        @errors[:account_number] = 'is invalid'
         false
       end
     end
