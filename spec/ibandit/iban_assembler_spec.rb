@@ -255,6 +255,11 @@ describe Ibandit::IBANAssembler do
         before { args.delete(:bank_code) }
         it { is_expected.to be_nil }
       end
+
+      context 'with a non-numeric branch code' do
+        before { args[:branch_code] = 'abc123' }
+        it { is_expected.to be_nil }
+      end
     end
 
     context 'with IE as the country_code' do

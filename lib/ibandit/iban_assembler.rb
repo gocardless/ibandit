@@ -110,6 +110,8 @@ module Ibandit
         CheckDigit.iban(country_code, bban),
         bban
       ].join
+    rescue InvalidCharacterError
+      nil
     end
   end
 end
