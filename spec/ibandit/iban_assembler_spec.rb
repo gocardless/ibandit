@@ -9,7 +9,7 @@ describe Ibandit::IBANAssembler do
         account_number: iban.account_number,
         branch_code:    iban.branch_code,
         bank_code:      iban.bank_code
-      }
+      }.reject { |_key, value| value.nil? }
     end
 
     it 'successfully reconstructs the IBAN' do
