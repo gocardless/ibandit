@@ -37,21 +37,57 @@ def get_iban_structures(iban_structures_file, iban_registry_file)
       account_number_position: country.account_number_position.to_i,
       account_number_length: country.account_number_length.to_i,
       total_length: country.total_length.to_i,
-      iban_national_id_length: country.iban_national_id_length.to_i,
-      bban_format: bban_formats[country.country_code]
-    }
+      iban_national_id_length: country.iban_national_id_length.to_i
+    }.merge(bban_formats[country.country_code])
   end
 end
 
 def get_bban_formats(iban_registry_file)
   iban_registry_file.each_with_object({}) do |line, hash|
     bban_structure = line['BBAN structure '].strip
+
+    bank_code_structure, branch_code_structure =
+      if line['Bank identifier length']
+        line['Bank identifier length'].split(/, Branch identifier length:? /)
+      else
+        ['', nil]
+      end
+
     country_code = line['Country code as defined in ISO 3166'].strip
-    hash[country_code] = convert_swift_convention(bban_structure)
+    hash[country_code] = convert_swift_convention(bban_structure,
+                                                  bank_code_structure,
+                                                  branch_code_structure)
   end
 end
 
-def convert_swift_convention(swift_string)
+# IBAN Registry has BBAN format (which seems to be accurate), and Bank
+# identifier length, which contains something roughly like the format for the
+# bank code and usually the branch code where applicable. This is a best attempt
+# to convert those from weird SWIFT-talk into regexes, and then work out the
+# account number format regex by taking the bank and branch code regexes off
+# the front of the BBAN format.
+#
+# This works about 70% of the time, the rest are overridden in
+# structure_additions.yml
+def convert_swift_convention(bban, bank, branch)
+  bban_regex = iban_registry_to_regex(bban)
+  bank_regex = iban_registry_to_regex(bank)
+  branch_regex = branch.nil? ? nil : iban_registry_to_regex(branch)
+
+  non_account_number_regex = [bank_regex, branch_regex].join
+  account_number_start = (bban_regex.index(non_account_number_regex) || 0) +
+                         non_account_number_regex.length
+  account_number_regex = bban_regex[account_number_start..-1]
+
+  {
+    bban_format:           bban_regex,
+    bank_code_format:      bank_regex,
+    branch_code_format:    branch_regex,
+    account_number_format: account_number_regex
+  }.reject { |_, value| value.nil? }
+end
+
+def iban_registry_to_regex(swift_string)
   swift_string.gsub(/(\d+)!([nac])/, '\2{\1}').
     gsub('n', '\d').
     gsub('a', '[A-Z]').

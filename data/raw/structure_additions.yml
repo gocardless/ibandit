@@ -1,10 +1,23 @@
 ---
+AL:
+  :bank_code_format: \d{3}
+  :branch_code_format: \d{5}
+BR:
+  :bank_code_format: \d{8}
+  :branch_code_format: \d{5}
+  :account_number_format: '\d{10}[A-Z]{1}[A-Z0-9]{1}'
 BE:
   :local_check_digit_position: 15
   :local_check_digit_length: 2
+BH:
+  :bank_code_format: '[A-Z]{4}'
+  :account_number_format: '[A-Z0-9]{14}'
 DE:
   :bban_format: \d{8}\d{10}
+  :account_number_format: \d{10}
 EE:
+  :bank_code_format: '[1-9][0-9]'
+  :account_number_format: \d{2}\d{11}\d{1}
   :local_check_digit_position: 20
   :local_check_digit_length: 1
 ES:
@@ -12,31 +25,61 @@ ES:
   :local_check_digit_length: 2
 FI:
   :bban_format: \d{6}\d{7}\d{1}
+  :bank_code_format: \d{6}
+  :account_number_format: \d{7}\d{1}
   :local_check_digit_position: 18
   :local_check_digit_length: 1
 FR:
+  :branch_code_format: \d{5}
+  :account_number_format: '[A-Z0-9]{11}\d{2}'
   :local_check_digit_position: 26
   :local_check_digit_length: 2
+GB:
+  :branch_code_format: \d{6}
+  :account_number_format: \d{8}
 HU:
   :bban_format: \d{3}\d{4}\d{1}\d{15}\d{1}
+  :account_number_format: \d{1}\d{15}\d{1}
 IT:
   :local_check_digit_position: 5
   :local_check_digit_length: 1
+LB:
+  :bban_format: \d{4}[A-Z0-9]{20}
+  :bank_code_format: \d{4}
+  :account_number_format: '[A-Z0-9]{14}'
 MC:
   :local_check_digit_position: 26
   :local_check_digit_length: 2
+MU:
+  :bban_format: '[A-Z]{4}\d{2}\d{2}\d{12}\d{3}[A-Z]{3}'
+  :bank_code_format: '[A-Z]{4}\d{2}'
+  :branch_code_format: \d{2}
+  :account_number_format: '\d{12}\d{3}[A-Z]{3}'
 NL:
   :local_check_digit_position: 18
   :local_check_digit_length: 1
 PT:
+  :branch_code_format: \d{4}
+  :account_number_format: \d{11}\d{2}
   :local_check_digit_position: 24
   :local_check_digit_length: 2
 QA:
   :bban_format: '[A-Z]{4}[A-Z0-9]{21}'
+  :bank_code_format: '[A-Z]{4}'
+  :account_number_format: '[A-Z0-9]{21}'
+SA:
+  :bank_code_format: \d{2}
+  :account_number_format: '[A-Z0-9]{18}'
+SI:
+  :bank_code_format: \d{5}
+  :account_number_format: \d{8}\d{2}
 SK:
   :local_check_digit_position: 14
   :local_check_digit_length: 1
 SM:
+  :bank_code_format: \d{5}
+  :branch_code_format: \d{5}
+  :account_number_format: '[A-Z0-9]{12}'
   :local_check_digit_position: 5
   :local_check_digit_length: 1
 TL:

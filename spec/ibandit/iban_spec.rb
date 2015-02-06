@@ -335,6 +335,127 @@ describe Ibandit::IBAN do
     end
   end
 
+  describe '#valid_bank_code_format?' do
+    subject { iban.valid_bank_code_format? }
+
+    context 'GB numeric bank code' do
+      let(:arg) do
+        {
+          country_code: 'GB',
+          bank_code: '1234',
+          branch_code: '200000',
+          account_number: '55779911'
+        }
+      end
+
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_bank_code_format?
+        expect(iban.errors).to include(:bank_code)
+      end
+    end
+
+    context 'with an invalid country code' do
+      let(:iban_code) { 'AA821234BANK121234567B' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'with a wrong-length bank code' do
+      let(:arg) do
+        {
+          country_code: 'FR',
+          bank_code: '1234',
+          branch_code: '12345',
+          account_number: '123456789123'
+        }
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#valid_branch_code_format?' do
+    subject { iban.valid_branch_code_format? }
+
+    context 'IT non-numeric branch code' do
+      let(:arg) do
+        {
+          country_code: 'IT',
+          bank_code: '12345',
+          branch_code: 'ABCDE',
+          account_number: '123456789012'
+        }
+      end
+
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_branch_code_format?
+        expect(iban.errors).to include(:branch_code)
+      end
+    end
+
+    context 'with an invalid country code' do
+      let(:iban_code) { 'AA821234BANK121234567B' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'with a wrong-length branch code' do
+      let(:arg) do
+        {
+          country_code: 'PT',
+          bank_code: '1234',
+          branch_code: 'ABC',
+          account_number: '123456789123'
+        }
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#valid_account_number_format?' do
+    subject { iban.valid_account_number_format? }
+
+    context 'DE non-numeric account number' do
+      let(:arg) do
+        {
+          country_code: 'DE',
+          bank_code: '12345678',
+          account_number: '55779911AA'
+        }
+      end
+
+      it { is_expected.to eq(false) }
+
+      it 'sets errors on the IBAN' do
+        iban.valid_account_number_format?
+        expect(iban.errors).to include(:account_number)
+      end
+    end
+
+    context 'with an invalid country code' do
+      let(:iban_code) { 'AA821234BANK121234567B' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'with a wrong-length account number' do
+      let(:arg) do
+        {
+          country_code: 'NL',
+          bank_code: 'ABCD',
+          account_number: nil
+        }
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#valid?' do
     describe 'validations called' do
       after { iban.valid? }
@@ -345,6 +466,7 @@ describe Ibandit::IBAN do
       specify { expect(iban).to receive(:valid_length?).at_least(1) }
       specify { expect(iban).to receive(:valid_bank_code_length?).at_least(1) }
       specify { expect(iban).to receive(:valid_format?).at_least(1) }
+      specify { expect(iban).to receive(:valid_bank_code_format?).at_least(1) }
 
       it 'validates the branch code length' do
         expect(iban).to receive(:valid_branch_code_length?).at_least(1)
@@ -352,6 +474,14 @@ describe Ibandit::IBAN do
 
       it 'validates the account number length' do
         expect(iban).to receive(:valid_account_number_length?).at_least(1)
+      end
+
+      it 'validates the branch code format' do
+        expect(iban).to receive(:valid_branch_code_format?).at_least(1)
+      end
+
+      it 'validates the account number format' do
+        expect(iban).to receive(:valid_account_number_format?).at_least(1)
       end
     end
 
