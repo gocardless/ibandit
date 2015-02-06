@@ -115,9 +115,8 @@ module Ibandit
 
       return true if bank_code.length == structure[:bank_code_length]
 
-      @errors[:bank_code] = 'is the wrong length: must be ' \
-                            "#{structure[:bank_code_length]}, not " \
-                            "#{bank_code.length}"
+      @errors[:bank_code] = 'is the wrong length (should be ' \
+                            "#{structure[:bank_code_length]} characters)"
       false
     end
 
@@ -130,9 +129,8 @@ module Ibandit
       elsif branch_code.nil? || branch_code.length == 0
         @errors[:branch_code] = 'is required'
       else
-        @errors[:branch_code] = 'is the wrong length: must be ' \
-                                "#{structure[:branch_code_length]}, not " \
-                                "#{branch_code.length}"
+        @errors[:branch_code] = 'is the wrong length (should be ' \
+                                "#{structure[:branch_code_length]} characters)"
       end
       false
     end
@@ -147,9 +145,9 @@ module Ibandit
 
       return true if account_number.length == structure[:account_number_length]
 
-      @errors[:account_number] = 'is the wrong length: must be ' \
-                                 "#{structure[:account_number_length]}, not "\
-                                 "#{account_number.length}"
+      @errors[:account_number] = 'is the wrong length (should be ' \
+                                 "#{structure[:account_number_length]} " \
+                                 'characters)'
       false
     end
 
@@ -186,13 +184,14 @@ module Ibandit
     end
 
     def build_iban_from_local_details(details_hash)
-      local_details = details_hash.dup
+      local_details = LocalDetailsCleaner.clean(details_hash)
 
-      @country_code   = local_details[:country_code]
-      @account_number = local_details[:account_number]
-      @branch_code    = local_details[:branch_code]
-      @bank_code      = local_details[:bank_code]
+      @country_code   = try_dup(local_details[:country_code])
+      @account_number = try_dup(local_details[:account_number])
+      @branch_code    = try_dup(local_details[:branch_code])
+      @bank_code      = try_dup(local_details[:bank_code])
       @iban           = IBANAssembler.assemble(local_details)
+      @check_digits   = @iban.slice(2, 2) unless @iban.nil?
     end
 
     def extract_local_details_from_iban!
@@ -203,6 +202,12 @@ module Ibandit
       @bank_code      = local_details[:bank_code]
       @branch_code    = local_details[:branch_code]
       @account_number = local_details[:account_number]
+    end
+
+    def try_dup(object)
+      object.dup
+    rescue TypeError
+      object
     end
 
     def structure

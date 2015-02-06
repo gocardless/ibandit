@@ -210,6 +210,14 @@ describe Ibandit::LocalDetailsCleaner do
       its([:account_number]) { is_expected.to eq('00000785') }
     end
 
+    context 'with a savings bank account_number in traditional format' do
+      let(:account_number) { '78510' }
+      let(:bank_code) { '423456' }
+
+      its([:bank_code]) { is_expected.to eq(bank_code) }
+      its([:account_number]) { is_expected.to eq('70008510') }
+    end
+
     context 'without an account number' do
       let(:account_number) { nil }
       it { is_expected.to eq(local_details) }

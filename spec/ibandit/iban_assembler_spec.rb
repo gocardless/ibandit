@@ -9,7 +9,7 @@ describe Ibandit::IBANAssembler do
         account_number: iban.account_number,
         branch_code:    iban.branch_code,
         bank_code:      iban.bank_code
-      }
+      }.reject { |_key, value| value.nil? }
     end
 
     it 'successfully reconstructs the IBAN' do
@@ -23,19 +23,12 @@ describe Ibandit::IBANAssembler do
 
     context 'without a country_code' do
       let(:args) { { bank_code: 1 } }
-
-      it 'raises a helpful error message' do
-        expect { assemble }.
-          to raise_error(ArgumentError, /provide a country_code/)
-      end
+      it { is_expected.to be_nil }
     end
 
     context 'with an unsupported country_code' do
       let(:args) { { country_code: 'FU' } }
-
-      it 'raises a helpful error message' do
-        expect { assemble }.to raise_error(Ibandit::UnsupportedCountryError)
-      end
+      it { is_expected.to be_nil }
     end
 
     context 'with AT as the country_code' do
@@ -51,27 +44,14 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'AT61 1904 3002 3457 3201'
 
-      context "with an account number that hasn't been zero-padded" do
-        before { args[:account_number] = '234573201' }
-        it { is_expected.to eq('AT611904300234573201') }
-      end
-
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -82,18 +62,9 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'BE62 5100 0754 7061'
 
-      context 'with dashes' do
-        before { args[:account_number] = '510-0075470-61' }
-        it { is_expected.to eq('BE62510007547061') }
-      end
-
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -111,11 +82,6 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'CY17 0020 0128 0000 0012 0052 7600'
 
-      context "with an account number that hasn't been zero-padded" do
-        before { args[:account_number] = '1200527600' }
-        it { is_expected.to eq('CY17002001280000001200527600') }
-      end
-
       context 'without an branch_code' do
         before { args.delete(:branch_code) }
         it { is_expected.to eq('CY040020000001200527600') }
@@ -123,20 +89,12 @@ describe Ibandit::IBANAssembler do
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -153,49 +111,31 @@ describe Ibandit::IBANAssembler do
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        specify do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        specify do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
-      end
-
-      context 'with a pseudo account number' do
-        before { args[:bank_code] = '37080040' }
-        before { args[:account_number] = '111' }
-
-        it { is_expected.to eq('DE69370800400215022000') }
+        it { is_expected.to be_nil }
       end
     end
 
     context 'with EE as the country_code' do
-      let(:args) { { country_code: 'EE', account_number: '0221020145685' } }
+      let(:args) do
+        {
+          country_code: 'EE',
+          bank_code: '22',
+          account_number: '00221020145685'
+        }
+      end
 
       it { is_expected.to eq('EE382200221020145685') }
 
       it_behaves_like 'allows round trips', 'EE38 2200 2210 2014 5685'
 
-      context 'with an account number that needs translating' do
-        before { args[:account_number] = '111020145685' }
-        it { is_expected.to eq('EE412200111020145685') }
-      end
-
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -218,51 +158,32 @@ describe Ibandit::IBANAssembler do
         before { args.delete(:branch_code) }
         before { args[:account_number] = '23100001180000012345' }
 
-        it { is_expected.to eq('ES8023100001180000012345') }
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
     context 'with FI as the country_code' do
       let(:args) do
-        { country_code: 'FI', bank_code: '123456', account_number: '785' }
+        { country_code: 'FI', bank_code: '123456', account_number: '00000785' }
       end
 
       it { is_expected.to eq('FI2112345600000785') }
 
       it_behaves_like 'allows round trips', 'FI21 1234 5600 0007 85'
 
-      context 'with a savings bank account_number in traditional format' do
-        before { args[:account_number] = '78510' }
-        before { args[:bank_code] = '423456' }
-
-        it { is_expected.to eq('FI3442345670008510') }
-      end
-
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -287,63 +208,33 @@ describe Ibandit::IBANAssembler do
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
     context 'with GB as the country_code' do
       let(:args) do
-        { country_code: 'GB',
+        {
+          country_code: 'GB',
           bank_code: 'BARC',
           branch_code: '200000',
-          account_number: '579135' }
+          account_number: '00579135'
+        }
       end
 
       it { is_expected.to eq('GB07BARC20000000579135') }
 
       it_behaves_like 'allows round trips', 'GB07 BARC 2000 0000 5791 35'
-
-      context 'when the sort code is hyphenated' do
-        before { args[:branch_code] = '20-00-00' }
-        it { is_expected.to eq('GB07BARC20000000579135') }
-      end
-
-      context 'when the sort code is spaced' do
-        before { args[:branch_code] = '20 00 00' }
-        it { is_expected.to eq('GB07BARC20000000579135') }
-      end
-
-      context 'when the account number is spaced' do
-        before { args[:account_number] = '579 135' }
-        it { is_expected.to eq('GB07BARC20000000579135') }
-      end
-
-      context 'when the account number is hyphenated' do
-        before { args[:account_number] = '5577-9911' }
-        it { is_expected.to eq('GB60BARC20000055779911') }
-      end
 
       context 'with the bank_code supplied manually' do
         before { args.merge!(bank_code: 'BARC') }
@@ -352,65 +243,22 @@ describe Ibandit::IBANAssembler do
 
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        specify do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        specify do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        context 'when a bic_finder is not defined' do
-          specify do
-            expect { assemble }.
-              to raise_error(ArgumentError, /bank_code is a required field/)
-          end
-        end
-
-        context 'with a bic_finder' do
-          let(:bic_finder) { double }
-          before do
-            allow(bic_finder).to receive(:find).with('GB', '200000').
-              and_return('BARCGB22XXX')
-            Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
-          end
-          after { Ibandit.bic_finder = nil }
-
-          it { is_expected.to eq('GB07BARC20000000579135') }
-
-          context "when the BIC can't be found" do
-            before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
-
-            it 'raises an Ibandit::BicNotFoundError' do
-              expect { assemble }.to raise_error(Ibandit::BicNotFoundError)
-            end
-          end
-        end
+        it { is_expected.to be_nil }
       end
 
-      context 'with both a bank_code and a bic_finder' do
-        let(:bic_finder) { double }
-        before do
-          allow(bic_finder).to receive(:find).with('GB', '200000').
-            and_return('BANKGB22XXX')
-          Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
-        end
-        after { Ibandit.bic_finder = nil }
-
-        it 'uses the explicitly provided bank_code' do
-          is_expected.to eq('GB07BARC20000000579135')
-        end
+      context 'with a non-numeric branch code' do
+        before { args[:branch_code] = 'abc123' }
+        it { is_expected.to be_nil }
       end
     end
 
@@ -426,72 +274,19 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'IE29 AIBK 9311 5212 3456 78'
 
-      context 'with hyphens in the sort code' do
-        before { args[:branch_code] = '93-11-52' }
-        it { is_expected.to eq('IE29AIBK93115212345678') }
-      end
-
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        context 'when a bic_finder is not defined' do
-          specify do
-            expect { assemble }.
-              to raise_error(ArgumentError, /bank_code is a required field/)
-          end
-        end
-
-        context 'with a bic_finder' do
-          let(:bic_finder) { double }
-          before do
-            allow(bic_finder).to receive(:find).with('IE', '931152').
-              and_return('AIBK1234XXX')
-            Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
-          end
-          after { Ibandit.bic_finder = nil }
-
-          it { is_expected.to eq('IE29AIBK93115212345678') }
-
-          context "when the BIC can't be found" do
-            before { Ibandit.bic_finder = ->(_cc, _id) { nil } }
-
-            it 'raises an Ibandit::BicNotFoundError' do
-              expect { assemble }.to raise_error(Ibandit::BicNotFoundError)
-            end
-          end
-        end
-      end
-
-      context 'with both a bank_code and a bic_finder' do
-        let(:bic_finder) { double }
-        before do
-          allow(bic_finder).to receive(:find).with('IE', '931152').
-            and_return('BANK1234XXX')
-          Ibandit.bic_finder = ->(cc, id) { bic_finder.find(cc, id) }
-        end
-        after { Ibandit.bic_finder = nil }
-
-        it 'uses the explicitly provided bank_code' do
-          is_expected.to eq('IE29AIBK93115212345678')
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -501,7 +296,7 @@ describe Ibandit::IBANAssembler do
           country_code: 'IT',
           bank_code: '05428',
           branch_code: '11101',
-          account_number: '0000123456'
+          account_number: '000000123456'
         }
       end
 
@@ -516,29 +311,17 @@ describe Ibandit::IBANAssembler do
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -557,20 +340,12 @@ describe Ibandit::IBANAssembler do
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -589,20 +364,12 @@ describe Ibandit::IBANAssembler do
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -621,20 +388,12 @@ describe Ibandit::IBANAssembler do
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -659,29 +418,17 @@ describe Ibandit::IBANAssembler do
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -698,27 +445,14 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'NL91 ABNA 0417 1643 00'
 
-      context "with an account number that hasn't been zero-padded" do
-        before { args[:account_number] = '417164300' }
-        it { is_expected.to eq('NL91ABNA0417164300') }
-      end
-
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -738,29 +472,17 @@ describe Ibandit::IBANAssembler do
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -777,27 +499,14 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'SI56 1910 0000 0123 438'
 
-      context 'with an account number that needs padding' do
-        before { args[:account_number] = '123438' }
-        it { is_expected.to eq('SI56191000000123438') }
-      end
-
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -806,8 +515,7 @@ describe Ibandit::IBANAssembler do
         {
           country_code: 'SK',
           bank_code: '1200',
-          account_number_prefix: '000019',
-          account_number: '8742637541'
+          account_number: '0000198742637541'
         }
       end
 
@@ -815,36 +523,14 @@ describe Ibandit::IBANAssembler do
 
       it_behaves_like 'allows round trips', 'SK31 1200 0000 1987 4263 7541'
 
-      context 'with an account number prefix that needs padding' do
-        before { args[:account_number_prefix] = '19' }
-        it { is_expected.to eq('SK3112000000198742637541') }
-      end
-
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
-      end
-
-      context 'without an account_number_prefix' do
-        before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
 
@@ -864,29 +550,17 @@ describe Ibandit::IBANAssembler do
 
       context 'without a bank_code' do
         before { args.delete(:bank_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /bank_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without a branch_code' do
         before { args.delete(:branch_code) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /branch_code is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
-
-        it 'raises a helpful error message' do
-          expect { assemble }.
-            to raise_error(ArgumentError, /account_number is a required field/)
-        end
+        it { is_expected.to be_nil }
       end
     end
   end

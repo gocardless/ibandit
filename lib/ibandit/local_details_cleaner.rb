@@ -45,9 +45,11 @@ module Ibandit
     ##########################
 
     def self.clean_at_details(local_details)
+      # Account number may be 4-11 digits long.
+      # Add leading zeros to account number if < 11 digits.
       return {} unless local_details[:account_number].length >= 4
       {
-        bank_code: local_details[:bank_code],
+        bank_code:      local_details[:bank_code],
         account_number: local_details[:account_number].rjust(11, '0')
       }
     end
@@ -57,6 +59,8 @@ module Ibandit
     end
 
     def self.clean_cy_details(local_details)
+      # Account number may be 7-16 digits long.
+      # Add leading zeros to account number if < 16 digits.
       cleaned_bank_code = local_details[:bank_code].gsub(/[-\s]/, '')
 
       bank_code      = cleaned_bank_code.slice(0, 3)
@@ -81,6 +85,12 @@ module Ibandit
     end
 
     def self.clean_de_details(local_details)
+      # Account number may be up to 10 digits long.
+      # Add leading zeros to account number if < 10 digits.
+      #
+      # There are many exceptions to the way German bank details translate
+      # into an IBAN, detailed into a 200 page document compiled by the
+      # Bundesbank, and handled by the GermanDetailsConverter class.
       converted_details = GermanDetailsConverter.convert(local_details)
 
       return {} unless converted_details[:account_number].length >= 4
@@ -92,6 +102,12 @@ module Ibandit
     end
 
     def self.clean_ee_details(local_details)
+      # Account number may be up to 14 characters long.
+      # Add leading zeros to account number if < 14 digits.
+      #
+      # Bank code can be found by extracted from the first two digits of the
+      # account number and converted using the rules at
+      # http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
       domestic_bank_code =
         local_details[:account_number].gsub(/\A0+/, '').slice(0, 2)
 
@@ -108,6 +124,8 @@ module Ibandit
     end
 
     def self.clean_es_details(local_details)
+      # This method supports being passed the component IBAN parts, as defined
+      # by SWIFT, or a single 20 digit string.
       if local_details[:bank_code] && local_details[:branch_code]
         bank_code      = local_details[:bank_code]
         branch_code    = local_details[:branch_code]
@@ -128,6 +146,9 @@ module Ibandit
     end
 
     def self.clean_fi_details(local_details)
+      #   Finnish account numbers need to be expanded into "electronic format"
+      #   by adding zero-padding. The expansion method depends on the first
+      #   character of the bank code.
       account_number =
         if %w(4 5 6).include?(local_details[:bank_code][0])
           [
@@ -153,6 +174,8 @@ module Ibandit
     end
 
     def self.clean_gb_details(local_details)
+      # Account number may be 6-8 digits
+      # Add leading zeros to account number if < 8 digits.
       branch_code = local_details[:branch_code].gsub(/[-\s]/, '')
 
       if local_details[:bank_code]
@@ -173,18 +196,22 @@ module Ibandit
     end
 
     def self.clean_lt_details(local_details)
+      # Lithuanian national bank details were replaced with IBANs in 2004.
       local_details
     end
 
     def self.clean_lu_details(local_details)
+      # Luxembourgian national bank details were replaced with IBANs in 2002.
       local_details
     end
 
     def self.clean_lv_details(local_details)
+      # Latvian national bank details were replaced with IBANs in 2004.
       local_details
     end
 
     def self.clean_ie_details(local_details)
+      # Ireland uses the same local details as the United Kingdom
       branch_code = local_details[:branch_code].gsub(/[-\s]/, '')
 
       if local_details[:bank_code]
@@ -205,6 +232,7 @@ module Ibandit
     end
 
     def self.clean_it_details(local_details)
+      # Add leading zeros to account number if < 12 digits.
       {
         bank_code:      local_details[:bank_code],
         branch_code:    local_details[:branch_code],
@@ -213,10 +241,12 @@ module Ibandit
     end
 
     def self.clean_mc_details(local_details)
+      # Monaco uses the same local details method as France
       clean_fr_details(local_details)
     end
 
     def self.clean_nl_details(local_details)
+      # Add leading zeros to account number if < 10 digits.
       {
         bank_code:      local_details[:bank_code],
         account_number: local_details[:account_number].rjust(10, '0')
@@ -228,6 +258,7 @@ module Ibandit
     end
 
     def self.clean_si_details(local_details)
+      # Add leading zeros to account number if < 10 digits.
       {
         bank_code:      local_details[:bank_code],
         account_number: local_details[:account_number].rjust(10, '0')
@@ -235,6 +266,9 @@ module Ibandit
     end
 
     def self.clean_sk_details(local_details)
+      #   The SWIFT definition of a Slovakian IBAN includes both the account
+      #   number prefix and the account number. This method therefore supports
+      #   passing those fields concatenated.
       account_number =
         if local_details.include?(:account_number_prefix)
           [
@@ -252,6 +286,7 @@ module Ibandit
     end
 
     def self.clean_sm_details(local_details)
+      # San Marino uses the same local details method as France
       clean_it_details(local_details)
     end
   end
