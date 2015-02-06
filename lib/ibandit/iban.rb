@@ -204,10 +204,10 @@ module Ibandit
       @account_number = local_details[:account_number]
     end
 
-    def try_dup(thing)
-      thing.dup
+    def try_dup(object)
+      object.dup
     rescue TypeError
-      thing
+      object
     end
 
     def structure

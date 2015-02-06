@@ -67,10 +67,10 @@ module Ibandit
 
     def self.can_assemble?(local_details)
       SUPPORTED_COUNTRY_CODES.include?(local_details[:country_code]) &&
-        required_fields?(local_details)
+        valid_arguments?(local_details)
     end
 
-    def self.required_fields?(local_details)
+    def self.valid_arguments?(local_details)
       country_code = local_details[:country_code]
 
       supplied = local_details.keys.select { |key| local_details[key] }
