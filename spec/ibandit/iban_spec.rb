@@ -91,6 +91,12 @@ describe Ibandit::IBAN do
     end
 
     specify { expect { iban.to_s(:russian) }.to raise_error ArgumentError }
+
+    context 'with the IBAN is nil' do
+      let(:arg) { { country_code: 'GB' } }
+      its(:to_s) { is_expected.to_not be_nil }
+      specify { expect(iban.to_s(:formatted)).to be_empty }
+    end
   end
 
   ###############
