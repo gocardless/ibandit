@@ -20,7 +20,7 @@ module Ibandit
 
     def to_s(format = :compact)
       case format
-      when :compact   then iban
+      when :compact   then iban.to_s
       when :formatted then formatted
       else raise ArgumentError, "invalid format '#{format}'"
       end
@@ -215,7 +215,7 @@ module Ibandit
     end
 
     def formatted
-      iban.gsub(/(.{4})/, '\1 ').strip
+      iban.to_s.gsub(/(.{4})/, '\1 ').strip
     end
   end
 end
