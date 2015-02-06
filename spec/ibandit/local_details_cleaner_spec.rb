@@ -71,10 +71,13 @@ describe Ibandit::LocalDetailsCleaner do
     let(:country_code) { 'BE' }
     let(:account_number) { '510007547061' }
 
-    it { is_expected.to eq(local_details) }
+    its([:country_code]) { is_expected.to eq(country_code) }
+    its([:account_number]) { is_expected.to eq(account_number) }
+    its([:bank_code]) { is_expected.to eq('510') }
 
     context 'with dashes' do
       let(:account_number) { '510-0075470-61' }
+      its([:bank_code]) { is_expected.to eq('510') }
       its([:account_number]) { is_expected.to eq('510007547061') }
     end
 

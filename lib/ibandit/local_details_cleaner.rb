@@ -55,7 +55,12 @@ module Ibandit
     end
 
     def self.clean_be_details(local_details)
-      { account_number: local_details[:account_number].tr('-', '') }
+      account_number = local_details[:account_number].tr('-', '')
+
+      {
+        bank_code:      local_details[:bank_code] || account_number.slice(0, 3),
+        account_number: account_number
+      }
     end
 
     def self.clean_cy_details(local_details)
