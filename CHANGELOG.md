@@ -1,4 +1,4 @@
-## 0.3.0.pre - February 3, 2015
+## 0.3.0 - February 6, 2015
 
 - Move IBANBuilder interface into main IBAN class by overloading its constructor
 - Move validation of local details input out of IBANBuilder into IBAN
