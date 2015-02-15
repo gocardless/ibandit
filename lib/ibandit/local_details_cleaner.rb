@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LT LU LV MC NL
-                                 PT SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LT LU LV MC MT
+                                 NL PT SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -31,7 +31,7 @@ module Ibandit
         %i(bank_code account_number)
       when 'BE', 'EE', 'ES'
         %i(account_number)
-      when 'GB', 'IE'
+      when 'GB', 'IE', 'MT'
         if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
         else %i(branch_code account_number)
         end
@@ -200,21 +200,6 @@ module Ibandit
       }
     end
 
-    def self.clean_lt_details(local_details)
-      # Lithuanian national bank details were replaced with IBANs in 2004.
-      local_details
-    end
-
-    def self.clean_lu_details(local_details)
-      # Luxembourgian national bank details were replaced with IBANs in 2002.
-      local_details
-    end
-
-    def self.clean_lv_details(local_details)
-      # Latvian national bank details were replaced with IBANs in 2004.
-      local_details
-    end
-
     def self.clean_ie_details(local_details)
       # Ireland uses the same local details as the United Kingdom
       branch_code = local_details[:branch_code].gsub(/[-\s]/, '')
@@ -245,9 +230,45 @@ module Ibandit
       }
     end
 
+    def self.clean_lt_details(local_details)
+      # Lithuanian national bank details were replaced with IBANs in 2004.
+      local_details
+    end
+
+    def self.clean_lu_details(local_details)
+      # Luxembourgian national bank details were replaced with IBANs in 2002.
+      local_details
+    end
+
+    def self.clean_lv_details(local_details)
+      # Latvian national bank details were replaced with IBANs in 2004.
+      local_details
+    end
+
     def self.clean_mc_details(local_details)
       # Monaco uses the same local details method as France
       clean_fr_details(local_details)
+    end
+
+    def self.clean_mt_details(local_details)
+      # Add leading zeros to account number if < 18 digits.
+      branch_code = local_details[:branch_code]
+
+      if local_details[:bank_code]
+        bank_code = local_details[:bank_code]
+      else
+        bic = Ibandit.find_bic('MT', branch_code)
+        bank_code = bic.nil? ? nil : bic.slice(0, 4)
+      end
+
+      account_number = local_details[:account_number].gsub(/[-\s]/, '')
+      account_number = account_number.rjust(18, '0')
+
+      {
+        bank_code:      bank_code,
+        branch_code:    branch_code,
+        account_number: account_number
+      }
     end
 
     def self.clean_nl_details(local_details)
