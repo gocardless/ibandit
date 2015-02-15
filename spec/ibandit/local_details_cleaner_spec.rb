@@ -546,6 +546,60 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context 'Malta' do
+    let(:country_code) { 'MT' }
+    let(:bank_code) { 'MMEB' }
+    let(:branch_code) { '44093' }
+    let(:account_number) { '000000009027293051' }
+
+    it { is_expected.to eq(local_details) }
+
+    context 'with the account number spaced' do
+      let(:account_number) { '9027 2930 51' }
+      its([:account_number]) { is_expected.to eq('000000009027293051') }
+    end
+
+    context 'with the account number hyphenated' do
+      let(:account_number) { '9027-2930-51' }
+      its([:account_number]) { is_expected.to eq('000000009027293051') }
+    end
+
+    context 'without a branch code' do
+      let(:branch_code) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+
+    context 'without a bank code' do
+      let(:bank_code) { nil }
+      it { is_expected.to eq(local_details) }
+
+      context 'with a BIC finder set' do
+        let(:bic_finder) { double }
+        before do
+          allow(bic_finder).to receive(:call).with('MT', '44093').
+            and_return('MMEBMTMTXXX')
+          Ibandit.bic_finder = bic_finder
+        end
+        after { Ibandit.bic_finder = nil }
+
+        its([:bank_code]) { is_expected.to eq('MMEB') }
+      end
+    end
+
+    context 'with a bank code and BIC finder set' do
+      let(:bank_code) { 'OVERRIDE' }
+      let(:bic_finder) { double }
+      before do
+        allow(bic_finder).to receive(:call).with('MT', '44093').
+          and_return('MMEBMTMTXXX')
+        Ibandit.bic_finder = bic_finder
+      end
+      after { Ibandit.bic_finder = nil }
+
+      its([:bank_code]) { is_expected.to eq('OVERRIDE') }
+    end
+  end
+
   context 'Netherlands' do
     let(:country_code) { 'NL' }
     let(:bank_code) { 'ABNA' }

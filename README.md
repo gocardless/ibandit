@@ -138,7 +138,7 @@ To build an IBAN from local details:
 
 ```ruby
 # Austria
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'AT',
   account_number: '234573201',
   bank_code: '19043'
@@ -146,14 +146,14 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "AT611904300234573201"
 
 # Belgium
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'BE',
   account_number: '510-0075470-61'
 )
 iban.iban                     # => "BE62510007547061"
 
 # Cyprus
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'CY',
   account_number: '1200527600',
   bank_code: '002',
@@ -162,7 +162,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "CY17002001280000001200527600"
 
 # Germany
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'DE',
   bank_code: '37040044',
   account_number: '0532013000'
@@ -170,14 +170,14 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "DE89370400440532013000"
 
 # Estonia
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'EE',
   account_number: '111020145685'
 )
 iban.iban                     # => "EE412200111020145685"
 
 # Finland
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'FI',
   bank_code: '123456'
   account_number: '785'
@@ -185,7 +185,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "FI2112345600000785"
 
 # France
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'FR',
   bank_code: '20041',
   branch_code: '01005',
@@ -194,7 +194,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "FR1420041010050500013M02606"
 
 # United Kingdom
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'GB',
   bank_code: 'BARC', # optional if a BIC finder is configured
   branch_code: '200000',
@@ -203,7 +203,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "GB60BARC20000055779911"
 
 # Ireland
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'IE',
   bank_code: 'AIBK', # optional if a BIC finder is configured
   branch_code: '931152',
@@ -212,7 +212,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "IE29AIBK93115212345678"
 
 # Italy
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'IT',
   bank_code: '05428',
   branch_code: '11101',
@@ -221,7 +221,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "IT60X0542811101000000123456"
 
 # Latvia
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'LV',
   account_number: '1234567890123',
   bank_code: 'BANK'
@@ -229,7 +229,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "LV72BANK1234567890123"
 
 # Lithuania
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'LT',
   account_number: '11101001000',
   bank_code: '10000'
@@ -237,7 +237,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "LT1000011101001000"
 
 # Luxembourg
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'LU',
   account_number: '1234567890123',
   bank_code: 'BANK'
@@ -245,7 +245,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "LU75BANK1234567890123"
 
 # Monaco
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'MC',
   bank_code: '20041',
   branch_code: '01005',
@@ -253,8 +253,17 @@ iban = Ibandit::IBANBuilder.build(
 )
 iban.iban                     # => "MC9320041010050500013M02606"
 
+# Malta
+iban = Ibandit::IBAN.new(
+  country_code: 'MT',
+  bank_code: 'MMEB', # optional if a BIC finder is configured
+  branch_code: '44093',
+  account_number: '9027293051'
+)
+iban.iban                     # => "MT98MMEB44093000000009027293051"
+
 # The Netherlands
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'NL',
   account_number: '0417164300',
   bank_code: 'ABNA'
@@ -262,7 +271,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "NL91ABNA0417164300"
 
 # Portugal
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'PT',
   bank_code: '0002',
   branch_code: '0023',
@@ -271,7 +280,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "PT50000200230023843000578"
 
 # Slovakia
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'SK',
   bank_code: '1200',
   account_number_prefix: '19',
@@ -280,7 +289,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "SK3112000000198742637541"
 
 # Slovenia
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'SI',
   bank_code: '19100',
   account_number: '1234'
@@ -288,7 +297,7 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "SI56191000000123438"
 
 # Spain
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'ES',
   bank_code: '2310',
   branch_code: '0001',
@@ -297,14 +306,14 @@ iban = Ibandit::IBANBuilder.build(
 iban.iban                     # => "ES8023100001180000012345"
 
 # Spain with 20 digit account number
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'ES',
   account_number: '23100001180000012345'
 )
 iban.iban                     # => "ES8023100001180000012345"
 
 # San Marino
-iban = Ibandit::IBANBuilder.build(
+iban = Ibandit::IBAN.new(
   country_code: 'SM',
   bank_code: '05428',
   branch_code: '11101',
