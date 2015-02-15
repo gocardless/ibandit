@@ -1,3 +1,7 @@
+## 0.3.1 - February 14, 2015
+
+- Add Malta to LocalDetailsCleaner and IBANAssembler
+
 ## 0.3.0 - February 6, 2015
 
 - Move IBANBuilder interface into main IBAN class by overloading its constructor
@@ -12,7 +16,6 @@
 ## 0.2.0 - January 27, 2015
 
 - Add GermanDetailsConverter
-
 
 ## 0.1.1 - January 8, 2015
 
