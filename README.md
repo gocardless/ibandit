@@ -64,6 +64,27 @@ The following error keys may be set:
 - `length`
 - `format`
 
+Ibandit will also apply local modulus checks if you set a modulus checker:
+
+```ruby
+module ModulusChecker
+  def self.valid_bank_code?(iban_string)
+    some_codes
+  end
+  
+  def self.valid_account_number?(iban_string)
+    some_codes
+  end
+end
+
+Ibandit.modulus_checker = ModulusChecker
+```
+
+Both the `valid_bank_code?` and `valid_account_number?` methods will receive the plain-text IBAN.
+`valid_bank_code?` should return true unless it is known that the bank/branch code in this IBAN are
+invalid in the country specified. `valid_account_number?` should return true unless it is known that
+the account number in this IBAN cannot be valid due to local modulus checking rules.
+
 ### Deconstructing an IBAN into national banking details
 
 SWIFT define the following components for IBANs, and publish details of how each

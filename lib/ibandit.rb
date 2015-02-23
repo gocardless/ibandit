@@ -9,7 +9,7 @@ require 'ibandit/check_digit'
 
 module Ibandit
   class << self
-    attr_accessor :bic_finder
+    attr_accessor :bic_finder, :modulus_checker
 
     def find_bic(country_code, national_id)
       raise NotImplementedError, 'BIC finder is not defined' unless @bic_finder
