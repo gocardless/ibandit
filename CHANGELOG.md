@@ -1,3 +1,7 @@
+## 0.3.2 - February 24, 2015
+
+- Allow for injection of a modulus checker
+
 ## 0.3.1 - February 14, 2015
 
 - Add Malta to LocalDetailsCleaner and IBANAssembler
