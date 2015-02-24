@@ -67,7 +67,8 @@ module Ibandit
         valid_format?,
         valid_bank_code_format?,
         valid_branch_code_format?,
-        valid_account_number_format?
+        valid_account_number_format?,
+        valid_local_modulus_check?
       ].all?
     end
 
@@ -210,6 +211,13 @@ module Ibandit
       end
     end
 
+    def valid_local_modulus_check?
+      return unless valid_format?
+      return true unless Ibandit.modulus_checker
+
+      valid_modulus_check_bank_code? && valid_modulus_check_account_number?
+    end
+
     ###################
     # Private methods #
     ###################
@@ -253,6 +261,29 @@ module Ibandit
 
     def formatted
       iban.to_s.gsub(/(.{4})/, '\1 ').strip
+    end
+
+    def valid_modulus_check_bank_code?
+      return true if Ibandit.modulus_checker.valid_bank_code?(iban.to_s)
+
+      @errors[modulus_check_bank_code_field] = 'is invalid'
+      false
+    end
+
+    def valid_modulus_check_account_number?
+      return true if Ibandit.modulus_checker.valid_account_number?(iban.to_s)
+
+      @errors[:account_number] = 'is invalid'
+      false
+    end
+
+    def modulus_check_bank_code_field
+      if LocalDetailsCleaner.required_fields(country_code).
+         include?(:branch_code)
+        :branch_code
+      else
+        :bank_code
+      end
     end
   end
 end

@@ -456,6 +456,51 @@ describe Ibandit::IBAN do
     end
   end
 
+  describe '#valid_local_modulus_check?' do
+    subject(:valid_local_modulus_check?) { iban.valid_local_modulus_check? }
+
+    context 'without a modulus checker defined' do
+      it { is_expected.to be(true) }
+    end
+
+    context 'with a modulus checker defined' do
+      before do
+        Ibandit.modulus_checker = double(
+          valid_bank_code?: valid_bank_code,
+          valid_account_number?: valid_account_number)
+      end
+      after { Ibandit.modulus_checker = nil }
+      before { iban.valid_local_modulus_check? }
+
+      context 'with an invalid bank code' do
+        let(:iban_code) { 'AT611904300234573201' }
+        let(:valid_bank_code) { false }
+        let(:valid_account_number) { true }
+
+        it { is_expected.to be(false) }
+        specify { expect(iban.errors).to include(bank_code: 'is invalid') }
+
+        context 'when the bank code is not required' do
+          let(:iban_code) { 'GB60BARC20000055779911' }
+          before { Ibandit.bic_finder = double(call: 'BARCGB22XXX') }
+          after { Ibandit.bic_finder = nil }
+          before { iban.valid_local_modulus_check? }
+
+          it { is_expected.to be(false) }
+          specify { expect(iban.errors).to include(branch_code: 'is invalid') }
+        end
+      end
+
+      context 'with an invalid account number' do
+        let(:valid_bank_code) { true }
+        let(:valid_account_number) { false }
+
+        it { is_expected.to be(false) }
+        specify { expect(iban.errors).to include(account_number: 'is invalid') }
+      end
+    end
+  end
+
   describe '#valid?' do
     describe 'validations called' do
       after { iban.valid? }
@@ -482,6 +527,10 @@ describe Ibandit::IBAN do
 
       it 'validates the account number format' do
         expect(iban).to receive(:valid_account_number_format?).at_least(1)
+      end
+
+      it 'runs local modulus checks' do
+        expect(iban).to receive(:valid_local_modulus_check?).at_least(1)
       end
     end
 
