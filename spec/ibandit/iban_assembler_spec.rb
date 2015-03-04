@@ -262,6 +262,36 @@ describe Ibandit::IBANAssembler do
       end
     end
 
+    context 'with GR as the country_code' do
+      let(:args) do
+        {
+          country_code: 'GR',
+          bank_code: '011',
+          branch_code: '0125',
+          account_number: '0000000012300695'
+        }
+      end
+
+      it { is_expected.to eq('GR1601101250000000012300695') }
+
+      it_behaves_like 'allows round trips', 'GR16 0110 1250 0000 0001 2300 695'
+
+      context 'without an account_number' do
+        before { args.delete(:account_number) }
+        it { is_expected.to be_nil }
+      end
+
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
+        it { is_expected.to be_nil }
+      end
+
+      context 'without a branch_code' do
+        before { args.delete(:branch_code) }
+        it { is_expected.to be_nil }
+      end
+    end
+
     context 'with IE as the country_code' do
       let(:args) do
         { country_code: 'IE',

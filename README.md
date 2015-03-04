@@ -71,7 +71,7 @@ module ModulusChecker
   def self.valid_bank_code?(iban_string)
     some_codes
   end
-  
+
   def self.valid_account_number?(iban_string)
     some_codes
   end
@@ -223,6 +223,15 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "GB60BARC20000055779911"
 
+# Greece
+iban = Ibandit::IBAN.new(
+  country_code: 'GR',
+  bank_code: '011',
+  branch_code: '0125',
+  account_number: '0000000012300695'
+)
+iban.iban                     # => "GR16011012500000000012300695"
+
 # Ireland
 iban = Ibandit::IBAN.new(
   country_code: 'IE',
@@ -342,8 +351,6 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "SM88X0542811101000000123456"
 ```
-
-Support for Greece and Malta is coming soon.
 
 ## Other libraries
 

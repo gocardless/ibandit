@@ -1,7 +1,7 @@
 module Ibandit
   module IBANAssembler
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LT LU LV MC MT
-                                 NL PT SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB GR IE IT LT LU LV MC
+                                 MT NL PT SI SK SM).freeze
 
     EXCEPTION_COUNTRY_CODES = %w(IT SM BE).freeze
 

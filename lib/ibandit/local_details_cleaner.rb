@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB IE IT LT LU LV MC MT
-                                 NL PT SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB GR IE IT LT LU LV MC
+                                 MT NL PT SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -198,6 +198,12 @@ module Ibandit
         branch_code:    branch_code,
         account_number: account_number
       }
+    end
+
+    def self.clean_gr_details(local_details)
+      # Greek IBANs construction is idiosyncratic to the individual banks, and
+      # no central specification is published.
+      local_details
     end
 
     def self.clean_ie_details(local_details)
