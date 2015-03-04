@@ -1,3 +1,7 @@
+## 0.3.3 - March 4, 2015
+
+- Add Greece to LocalDetailsCleaner and IBANAssembler
+
 ## 0.3.2 - February 24, 2015
 
 - Allow for injection of a modulus checker
