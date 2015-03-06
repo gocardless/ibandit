@@ -1,3 +1,7 @@
+## 0.3.4 - March 6, 2015
+
+- Update BLZ data
+
 ## 0.3.3 - March 4, 2015
 
 - Add Greece to LocalDetailsCleaner and IBANAssembler
