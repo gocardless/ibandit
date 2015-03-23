@@ -1,12 +1,12 @@
 fr:
   ibandit:
-    invalid_country_code: "'%{country_code} n'est pas le ISO 3166-1 IBAN country code"
-    invalid_check_digits: "Les check digits failed un modulus check. Expected '%{expected_check_digits}', received '%{check_digits}'"
-    invalid_length: "Length doesn't match le SWIFT specification (expected %{expected_length} characters, received %{length})"
-    is_required: "est required"
-    wrong_length: "est le wrong length (should be %{expected} characters)"
-    not_used_in_country: "n'est pas used en %{country_code}"
-    non_alphanumeric_characters: "Non-alphanumerique characters found: %{characters}"
-    invalid_format: "Unexpected format for le %{country_code} IBAN."
-    is_invalid: "est invalid"
+    invalid_country_code: "'%{country_code} n'est pas le code pays ISO 3166-1 de l'IBAN"
+    invalid_check_digits: "Les chiffres de vérification ont échoué les tests de modulo. '%{expected_check_digits}' attendu, '%{check_digits}' reçu"
+    invalid_length: "La longueur ne correspond pas aux spécifications SWIFT (%{expected_length} caractères attendus, %{length} reçus)"
+    is_required: "est requis"
+    wrong_length: "n'a pas la bonne longueur (doit avoir %{expected} caractères)"
+    not_used_in_country: "n'est pas utilisé en %{country_code}"
+    non_alphanumeric_characters: "Caractères non alphanumériques présents : %{characters}"
+    invalid_format: "Format inconnu pour l'IBAN %{country_code}."
+    is_invalid: "est invalide"
 
