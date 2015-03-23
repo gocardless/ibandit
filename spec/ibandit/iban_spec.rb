@@ -478,11 +478,11 @@ describe Ibandit::IBAN do
         let(:valid_account_number) { true }
 
         it { is_expected.to be(false) }
-        context "locale en", locale: :en do
+        context 'locale en', locale: :en do
           specify { expect(iban.errors).to include(bank_code: 'is invalid') }
         end
 
-        context "locale fr", locale: :fr do
+        context 'locale fr', locale: :fr do
           specify { expect(iban.errors).to include(bank_code: 'est invalid') }
         end
 
@@ -493,12 +493,16 @@ describe Ibandit::IBAN do
           before { iban.valid_local_modulus_check? }
 
           it { is_expected.to be(false) }
-          context "locale en", locale: :en do
-            specify { expect(iban.errors).to include(branch_code: 'is invalid') }
+          context 'locale en', locale: :en do
+            specify do
+              expect(iban.errors).to include(branch_code: 'is invalid')
+            end
           end
 
-          context "locale fr", locale: :fr do
-            specify { expect(iban.errors).to include(branch_code: 'est invalid') }
+          context 'locale fr', locale: :fr do
+            specify do
+              expect(iban.errors).to include(branch_code: 'est invalid')
+            end
           end
         end
       end
@@ -508,12 +512,16 @@ describe Ibandit::IBAN do
         let(:valid_account_number) { false }
 
         it { is_expected.to be(false) }
-        context "locale en", locale: :en do
-          specify { expect(iban.errors).to include(account_number: 'is invalid') }
+        context 'locale en', locale: :en do
+          specify do
+            expect(iban.errors).to include(account_number: 'is invalid')
+          end
         end
 
-        context "locale fr", locale: :fr do
-          specify { expect(iban.errors).to include(account_number: 'est invalid') }
+        context 'locale fr', locale: :fr do
+          specify do
+            expect(iban.errors).to include(account_number: 'est invalid')
+          end
         end
       end
     end

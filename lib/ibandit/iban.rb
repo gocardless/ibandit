@@ -103,9 +103,10 @@ module Ibandit
       if iban.length == structure[:total_length]
         true
       else
-        @errors[:length] = Ibandit.translate(:invalid_length,
-                                             expected_length: structure[:total_length],
-                                             length: iban.size)
+        @errors[:length] =
+          Ibandit.translate(:invalid_length,
+                            expected_length: structure[:total_length],
+                            length: iban.size)
         false
       end
     end
@@ -120,8 +121,8 @@ module Ibandit
 
       return true if bank_code.length == structure[:bank_code_length]
 
-      @errors[:bank_code] = Ibandit.translate(:wrong_length,
-                                              expected: structure[:bank_code_length])
+      @errors[:bank_code] =
+        Ibandit.translate(:wrong_length, expected: structure[:bank_code_length])
       false
     end
 
@@ -136,7 +137,8 @@ module Ibandit
         @errors[:branch_code] = Ibandit.translate(:is_required)
       else
         @errors[:branch_code] =
-          Ibandit.translate(:wrong_length, expected: structure[:branch_code_length])
+          Ibandit.translate(:wrong_length,
+                            expected: structure[:branch_code_length])
       end
       false
     end
@@ -152,7 +154,8 @@ module Ibandit
       return true if account_number.length == structure[:account_number_length]
 
       @errors[:account_number] =
-        Ibandit.translate(:wrong_length, expected: structure[:account_number_length])
+        Ibandit.translate(:wrong_length,
+                          expected: structure[:account_number_length])
       false
     end
 
@@ -174,7 +177,8 @@ module Ibandit
       if bban =~ Regexp.new(structure[:bban_format])
         true
       else
-        @errors[:format] = Ibandit.translate(:invalid_format, country_code: country_code)
+        @errors[:format] = Ibandit.translate(:invalid_format,
+                                             country_code: country_code)
         false
       end
     end
