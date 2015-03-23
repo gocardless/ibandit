@@ -1,3 +1,7 @@
+# 0.3.5 - March 23, 2015
+
+- Use I18n for internationalised validation messages (patch by [@isaacseymour](https://github.com/isaacseymour))
+
 ## 0.3.4 - March 6, 2015
 
 - Update BLZ data
