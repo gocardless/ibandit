@@ -478,7 +478,13 @@ describe Ibandit::IBAN do
         let(:valid_account_number) { true }
 
         it { is_expected.to be(false) }
-        specify { expect(iban.errors).to include(bank_code: 'is invalid') }
+        context "locale en", locale: :en do
+          specify { expect(iban.errors).to include(bank_code: 'is invalid') }
+        end
+
+        context "locale fr", locale: :fr do
+          specify { expect(iban.errors).to include(bank_code: 'est invalid') }
+        end
 
         context 'when the bank code is not required' do
           let(:iban_code) { 'GB60BARC20000055779911' }
@@ -487,7 +493,13 @@ describe Ibandit::IBAN do
           before { iban.valid_local_modulus_check? }
 
           it { is_expected.to be(false) }
-          specify { expect(iban.errors).to include(branch_code: 'is invalid') }
+          context "locale en", locale: :en do
+            specify { expect(iban.errors).to include(branch_code: 'is invalid') }
+          end
+
+          context "locale fr", locale: :fr do
+            specify { expect(iban.errors).to include(branch_code: 'est invalid') }
+          end
         end
       end
 
@@ -496,7 +508,13 @@ describe Ibandit::IBAN do
         let(:valid_account_number) { false }
 
         it { is_expected.to be(false) }
-        specify { expect(iban.errors).to include(account_number: 'is invalid') }
+        context "locale en", locale: :en do
+          specify { expect(iban.errors).to include(account_number: 'is invalid') }
+        end
+
+        context "locale fr", locale: :fr do
+          specify { expect(iban.errors).to include(account_number: 'est invalid') }
+        end
       end
     end
   end
