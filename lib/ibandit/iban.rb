@@ -76,8 +76,8 @@ module Ibandit
       if Ibandit.structures.key?(country_code)
         true
       else
-        @errors[:country_code] = "'#{country_code}' is not a valid " \
-                                 'ISO 3166-1 IBAN country code'
+        @errors[:country_code] = Ibandit.translate(:invalid_country_code,
+                                                   country_code: country_code)
         false
       end
     end
@@ -89,9 +89,10 @@ module Ibandit
       if check_digits == expected_check_digits
         true
       else
-        @errors[:check_digits] = 'Check digits failed modulus check. ' \
-                                 "Expected '#{expected_check_digits}', " \
-                                 "received '#{check_digits}'"
+        @errors[:check_digits] =
+          Ibandit.translate(:invalid_check_digits,
+                            expected_check_digits: expected_check_digits,
+                            check_digits: check_digits)
         false
       end
     end
@@ -102,9 +103,10 @@ module Ibandit
       if iban.length == structure[:total_length]
         true
       else
-        @errors[:length] = "Length doesn't match SWIFT specification " \
-                           "(expected #{structure[:total_length]} " \
-                           "characters, received #{iban.size})"
+        @errors[:length] =
+          Ibandit.translate(:invalid_length,
+                            expected_length: structure[:total_length],
+                            length: iban.size)
         false
       end
     end
@@ -113,14 +115,14 @@ module Ibandit
       return unless valid_country_code?
 
       if bank_code.nil? || bank_code.length == 0
-        @errors[:bank_code] = 'is required'
+        @errors[:bank_code] = Ibandit.translate(:is_required)
         return false
       end
 
       return true if bank_code.length == structure[:bank_code_length]
 
-      @errors[:bank_code] = 'is the wrong length (should be ' \
-                            "#{structure[:bank_code_length]} characters)"
+      @errors[:bank_code] =
+        Ibandit.translate(:wrong_length, expected: structure[:bank_code_length])
       false
     end
 
@@ -129,12 +131,14 @@ module Ibandit
       return true if branch_code.to_s.length == structure[:branch_code_length]
 
       if structure[:branch_code_length] == 0
-        @errors[:branch_code] = "is not used in #{country_code}"
+        @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
+                                                  country_code: country_code)
       elsif branch_code.nil? || branch_code.length == 0
-        @errors[:branch_code] = 'is required'
+        @errors[:branch_code] = Ibandit.translate(:is_required)
       else
-        @errors[:branch_code] = 'is the wrong length (should be ' \
-                                "#{structure[:branch_code_length]} characters)"
+        @errors[:branch_code] =
+          Ibandit.translate(:wrong_length,
+                            expected: structure[:branch_code_length])
       end
       false
     end
@@ -143,23 +147,24 @@ module Ibandit
       return unless valid_country_code?
 
       if account_number.nil?
-        @errors[:account_number] = 'is required'
+        @errors[:account_number] = Ibandit.translate(:is_required)
         return false
       end
 
       return true if account_number.length == structure[:account_number_length]
 
-      @errors[:account_number] = 'is the wrong length (should be ' \
-                                 "#{structure[:account_number_length]} " \
-                                 'characters)'
+      @errors[:account_number] =
+        Ibandit.translate(:wrong_length,
+                          expected: structure[:account_number_length])
       false
     end
 
     def valid_characters?
       return if iban.nil?
       if iban.scan(/[^A-Z0-9]/).any?
-        @errors[:characters] = 'Non-alphanumeric characters found: ' \
-                               "#{iban.scan(/[^A-Z\d]/).join(' ')}"
+        @errors[:characters] =
+          Ibandit.translate(:non_alphanumeric_characters,
+                            characters: iban.scan(/[^A-Z\d]/).join(' '))
         false
       else
         true
@@ -172,7 +177,8 @@ module Ibandit
       if bban =~ Regexp.new(structure[:bban_format])
         true
       else
-        @errors[:format] = "Unexpected format for a #{country_code} IBAN."
+        @errors[:format] = Ibandit.translate(:invalid_format,
+                                             country_code: country_code)
         false
       end
     end
@@ -183,7 +189,7 @@ module Ibandit
       if bank_code =~ Regexp.new(structure[:bank_code_format])
         true
       else
-        @errors[:bank_code] = 'is invalid'
+        @errors[:bank_code] = Ibandit.translate(:is_invalid)
         false
       end
     end
@@ -195,7 +201,7 @@ module Ibandit
       if branch_code =~ Regexp.new(structure[:branch_code_format])
         true
       else
-        @errors[:branch_code] = 'is invalid'
+        @errors[:branch_code] = Ibandit.translate(:is_invalid)
         false
       end
     end
@@ -206,7 +212,7 @@ module Ibandit
       if account_number =~ Regexp.new(structure[:account_number_format])
         true
       else
-        @errors[:account_number] = 'is invalid'
+        @errors[:account_number] = Ibandit.translate(:is_invalid)
         false
       end
     end
@@ -266,14 +272,14 @@ module Ibandit
     def valid_modulus_check_bank_code?
       return true if Ibandit.modulus_checker.valid_bank_code?(iban.to_s)
 
-      @errors[modulus_check_bank_code_field] = 'is invalid'
+      @errors[modulus_check_bank_code_field] = Ibandit.translate(:is_invalid)
       false
     end
 
     def valid_modulus_check_account_number?
       return true if Ibandit.modulus_checker.valid_account_number?(iban.to_s)
 
-      @errors[:account_number] = 'is invalid'
+      @errors[:account_number] = Ibandit.translate(:is_invalid)
       false
     end
 

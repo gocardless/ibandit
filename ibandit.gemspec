@@ -7,6 +7,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'sax-machine',     '~> 1.1'
   gem.add_development_dependency 'nokogiri',        '~> 1.6'
 
+  gem.add_runtime_dependency 'i18n', '~> 0.7.0'
+
   gem.authors = ['Grey Baker']
   gem.description = 'Ibandit is a Ruby library for manipulating and ' \
                     'validating IBANs. It allows you to construct an IBAN ' \

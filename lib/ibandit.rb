@@ -1,3 +1,4 @@
+require 'i18n'
 require 'ibandit/version'
 require 'ibandit/errors'
 require 'ibandit/iban'
@@ -6,6 +7,8 @@ require 'ibandit/iban_splitter'
 require 'ibandit/iban_assembler'
 require 'ibandit/local_details_cleaner'
 require 'ibandit/check_digit'
+
+I18n.load_path += Dir['config/locale/*.yml']
 
 module Ibandit
   class << self
@@ -20,6 +23,10 @@ module Ibandit
       @structures ||= YAML.load_file(
         File.expand_path('../../data/structures.yml', __FILE__)
       )
+    end
+
+    def translate(key, options = {})
+      I18n.translate(key, { scope: [:ibandit] }.merge(options))
     end
   end
 end
