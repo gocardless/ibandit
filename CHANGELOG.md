@@ -1,4 +1,8 @@
-# 0.3.5 - March 23, 2015
+## 0.3.6 - March 23, 2015
+
+- Fix the load path for I18n
+
+## 0.3.5 - March 23, 2015
 
 - Use I18n for internationalised validation messages (patch by [@isaacseymour](https://github.com/isaacseymour))
 
