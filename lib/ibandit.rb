@@ -8,7 +8,7 @@ require 'ibandit/iban_assembler'
 require 'ibandit/local_details_cleaner'
 require 'ibandit/check_digit'
 
-I18n.load_path += Dir[File.expand_path('../../config/locale/*.{rb,yml}',
+I18n.load_path += Dir[File.expand_path('../../config/locales/*.{rb,yml}',
                                        __FILE__)]
 
 module Ibandit
