@@ -1,0 +1,11 @@
+de:
+  ibandit:
+    is_required: 'muss ausgefüllt werden'
+    wrong_length: 'hat die falsche Länge (muss genau %{expected} Zeichen haben)'
+    is_invalid: 'ist nicht gültig'
+    invalid_country_code: "'%{country_code}' ist keine gültige IBAN Länderkennung"
+    invalid_check_digits: "Die Prüfzahlen sind inkorrekt. Erwartet wurde '%{expected_check_digits}', tatsächlich erhalten '%{check_digits}'."
+    invalid_length: "Die Länge stimmt nicht mit der SWIFT Spezifikation überein (erwartet wurden %{expected_length} Zeichen, tatsächlich erhalten %{length})"
+    not_used_in_country: "wird in %{country_code} nicht benutzt"
+    non_alphanumeric_characters: "Nicht-alphanumerische Zeichen gefunden: %{characters}"
+    invalid_format: "Unerwartetes Format für eine %{country_code} IBAN."

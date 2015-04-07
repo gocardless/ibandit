@@ -18,3 +18,7 @@ end
 RSpec.shared_context 'locale fr', locale: :fr do
   around { |example| I18n.with_locale(:fr) { example.run } }
 end
+
+RSpec.shared_context 'locale de', locale: :de do
+  around { |example| I18n.with_locale(:de) { example.run } }
+end
