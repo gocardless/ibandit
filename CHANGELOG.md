@@ -1,3 +1,7 @@
+## 0.3.7 - April 7, 2015
+
+- Add German translation by [@georg911](https://github.com/georg911)
+
 ## 0.3.6 - March 23, 2015
 
 - Fix the load path for I18n
