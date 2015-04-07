@@ -123,6 +123,15 @@ describe Ibandit::IBAN do
                                      'country code')
         end
       end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_country_code?
+          expect(iban.errors).
+            to include(country_code: "'AA' ist keine gültige IBAN " \
+                                     'Länderkennung')
+        end
+      end
     end
   end
 
@@ -159,6 +168,16 @@ describe Ibandit::IBAN do
             to include(check_digits: 'Les chiffres de vérification ont ' \
                                      "échoué les tests de modulo. '82' " \
                                      "attendu, '12' reçu.")
+        end
+      end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_check_digits?
+          expect(iban.errors).
+            to include(check_digits: 'Die Prüfzahlen sind inkorrekt. ' \
+                                     "Erwartet wurde '82', tatsächlich " \
+                                     "erhalten '12'.")
         end
       end
     end
@@ -213,6 +232,16 @@ describe Ibandit::IBAN do
                                'attendus, 20 reçus)')
         end
       end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_length?
+          expect(iban.errors).
+            to include(length: 'Die Länge stimmt nicht mit der SWIFT ' \
+                               'Spezifikation überein (erwartet wurden 22 ' \
+                               'Zeichen, tatsächlich erhalten 20)')
+        end
+      end
     end
 
     context 'with an invalid country_code' do
@@ -252,6 +281,15 @@ describe Ibandit::IBAN do
           expect(iban.errors).
             to include(bank_code: "n'a pas la bonne longueur (doit avoir 4 " \
                                   'caractères)')
+        end
+      end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_bank_code_length?
+          expect(iban.errors).
+            to include(bank_code: 'hat die falsche Länge (muss genau 4 ' \
+                                  'Zeichen haben)')
         end
       end
     end
@@ -295,6 +333,15 @@ describe Ibandit::IBAN do
                                     'caractères)')
         end
       end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_branch_code_length?
+          expect(iban.errors).
+            to include(branch_code: 'hat die falsche Länge (muss genau 6 ' \
+                                    'Zeichen haben)')
+        end
+      end
     end
 
     context 'without a branch code' do
@@ -312,6 +359,13 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_branch_code_length?
           expect(iban.errors).to include(branch_code: 'est requis')
+        end
+      end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_branch_code_length?
+          expect(iban.errors).to include(branch_code: 'muss ausgefüllt werden')
         end
       end
     end
@@ -355,6 +409,15 @@ describe Ibandit::IBAN do
                                        'avoir 8 caractères)')
         end
       end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_account_number_length?
+          expect(iban.errors).
+            to include(account_number: 'hat die falsche Länge (muss genau ' \
+                                       '8 Zeichen haben)')
+        end
+      end
     end
 
     context 'with an invalid country_code' do
@@ -396,6 +459,14 @@ describe Ibandit::IBAN do
                                    ': -')
         end
       end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_characters?
+          expect(iban.errors).
+            to include(characters: 'Nicht-alphanumerische Zeichen gefunden: -')
+        end
+      end
     end
   end
 
@@ -424,6 +495,14 @@ describe Ibandit::IBAN do
           iban.valid_format?
           expect(iban.errors).
             to include(format: "Format inconnu pour l'IBAN GB.")
+        end
+      end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_format?
+          expect(iban.errors).
+            to include(format: 'Unerwartetes Format für eine GB IBAN.')
         end
       end
     end
@@ -465,6 +544,13 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_bank_code_format?
           expect(iban.errors).to include(bank_code: 'est invalide')
+        end
+      end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_bank_code_format?
+          expect(iban.errors).to include(bank_code: 'ist nicht gültig')
         end
       end
     end
@@ -517,6 +603,13 @@ describe Ibandit::IBAN do
           expect(iban.errors).to include(branch_code: 'est invalide')
         end
       end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_branch_code_format?
+          expect(iban.errors).to include(branch_code: 'ist nicht gültig')
+        end
+      end
     end
 
     context 'with an invalid country code' do
@@ -564,6 +657,13 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_account_number_format?
           expect(iban.errors).to include(account_number: 'est invalide')
+        end
+      end
+
+      context 'locale de', locale: :de do
+        it 'sets errors on the IBAN' do
+          iban.valid_account_number_format?
+          expect(iban.errors).to include(account_number: 'ist nicht gültig')
         end
       end
     end
@@ -617,6 +717,12 @@ describe Ibandit::IBAN do
           specify { expect(iban.errors).to include(bank_code: 'est invalide') }
         end
 
+        context 'locale de', locale: :de do
+          specify do
+            expect(iban.errors).to include(bank_code: 'ist nicht gültig')
+          end
+        end
+
         context 'when the bank code is not required' do
           let(:iban_code) { 'GB60BARC20000055779911' }
           before { Ibandit.bic_finder = double(call: 'BARCGB22XXX') }
@@ -633,6 +739,12 @@ describe Ibandit::IBAN do
           context 'locale fr', locale: :fr do
             specify do
               expect(iban.errors).to include(branch_code: 'est invalide')
+            end
+          end
+
+          context 'locale de', locale: :de do
+            specify do
+              expect(iban.errors).to include(branch_code: 'ist nicht gültig')
             end
           end
         end
@@ -652,6 +764,12 @@ describe Ibandit::IBAN do
         context 'locale fr', locale: :fr do
           specify do
             expect(iban.errors).to include(account_number: 'est invalide')
+          end
+        end
+
+        context 'locale de', locale: :de do
+          specify do
+            expect(iban.errors).to include(account_number: 'ist nicht gültig')
           end
         end
       end
