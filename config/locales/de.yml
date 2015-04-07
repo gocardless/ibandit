@@ -1,0 +1,5 @@
+de:
+  ibandit:
+    is_required: 'muss ausgefüllt werden'
+    wrong_length: 'hat die falsche Länge (muss genau %{expected} Zeichen haben)'
+    is_invalid: 'ist nicht gültig'
