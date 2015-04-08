@@ -1,3 +1,7 @@
+## 0.3.8 - April 8, 2015
+
+- Add Portuguese translation by [@nlopes](https://github.com/nlopes)
+
 ## 0.3.7 - April 7, 2015
 
 - Add German translation by [@georg911](https://github.com/georg911)
