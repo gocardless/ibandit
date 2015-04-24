@@ -1,3 +1,8 @@
+## 0.4.0 - April 24, 2015
+
+- Update length of national ID for Spain from 8 characters to 4, in line with
+  SWIFT change
+
 ## 0.3.8 - April 8, 2015
 
 - Add Portuguese translation by [@nlopes](https://github.com/nlopes)
