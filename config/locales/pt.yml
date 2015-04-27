@@ -9,5 +9,3 @@ pt:
     non_alphanumeric_characters: "Caracteres não alfanuméricos encontrados: %{characters}"
     invalid_format: "Formato errado para um IBAN %{country_code}."
     is_invalid: "é inválido"
-
-
