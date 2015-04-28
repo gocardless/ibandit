@@ -1,3 +1,7 @@
+## 0.4.1 - April 28, 2015
+
+- Add Spanish translation by [@alan](https://github.com/alan), [@sinjo](https://github.com/sinjo) and Jess Milligan
+
 ## 0.4.0 - April 24, 2015
 
 - Update length of national ID for Spain from 8 characters to 4, in line with
