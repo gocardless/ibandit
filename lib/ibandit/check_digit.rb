@@ -63,7 +63,8 @@ module Ibandit
     # of a Belgian account number when given the first ten digits.
     def self.belgian(string)
       remainder = string.to_i % 97
-      format('%02d', remainder)
+      return format('%02d', remainder) unless remainder.zero?
+      "97"
     end
 
     # Currently unused in this gem. This method calculates the last digit
