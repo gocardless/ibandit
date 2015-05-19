@@ -64,7 +64,7 @@ module Ibandit
     def self.belgian(string)
       remainder = string.to_i % 97
       return format('%02d', remainder) unless remainder.zero?
-      "97"
+      '97'
     end
 
     # Currently unused in this gem. This method calculates the last digit
