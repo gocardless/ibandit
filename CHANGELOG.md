@@ -1,3 +1,7 @@
+## 0.4.2 - May 19, 2015
+
+- Bug fix for `CheckDigit.belgian` by [@isaacseymour](https://github.com/isaacseymour)
+
 ## 0.4.1 - April 28, 2015
 
 - Add Spanish translation by [@alan](https://github.com/alan), [@sinjo](https://github.com/sinjo) and Jess Milligan
