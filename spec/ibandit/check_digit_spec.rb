@@ -39,6 +39,18 @@ describe Ibandit::CheckDigit do
     end
   end
 
+  describe '.belgian' do
+    subject { described_class.belgian(account_number) }
+
+    let(:account_number) { '5100075470' }
+    it { is_expected.to eq('61') }
+
+    context 'with an account number which is a factor of 97' do
+      let(:account_number) { '1030343409' }
+      it { is_expected.to eq('97') }
+    end
+  end
+
   describe '.lund' do
     subject { described_class.lund(account_number) }
 
