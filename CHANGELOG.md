@@ -1,3 +1,7 @@
+## 0.4.3 - May 20, 2015
+
+- Add Italian translation
+
 ## 0.4.2 - May 19, 2015
 
 - Bug fix for `CheckDigit.belgian` by [@isaacseymour](https://github.com/isaacseymour)
