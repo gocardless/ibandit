@@ -214,7 +214,9 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_check_digits?
           expect(iban.errors).
-            to include(check_digits: 'la cifra di controllo non ha superato il controllo del modulo. Previsto '82', ricevuto '12')
+            to include(check_digits: 'la cifra di controllo non ha superato ' \
+                                     "il controllo del modulo. Previsto '82'" \
+                                     ", ricevuto '12'.")
         end
       end
     end
@@ -303,7 +305,8 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_length?
           expect(iban.errors).
-            to include(length: 'La lunghezza non corrisponde ai requisiti SWIFT (Previsti 22 caratteri, ricevuti 20')
+            to include(length: 'La lunghezza non corrisponde ai requisiti ' \
+                               'SWIFT (Previsti 22 caratteri, ricevuti 20)')
         end
       end
     end
@@ -379,7 +382,8 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_bank_code_length?
           expect(iban.errors).
-            to include(bank_code: 'è della lunghezza sbagliata (dovrebbe essere di 4 caratteri)')
+            to include(bank_code: 'è della lunghezza sbagliata (dovrebbe ' \
+                                  'essere di 4 caratteri)')
         end
       end
     end
@@ -455,7 +459,8 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_branch_code_length?
           expect(iban.errors).
-            to include(branch_code: 'è della lunghezza sbagliata (dovrebbe essere di 6 caratteri)')
+            to include(branch_code: 'è della lunghezza sbagliata (dovrebbe ' \
+                                    'essere di 6 caratteri)')
         end
       end
     end
@@ -578,7 +583,8 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_account_number_length?
           expect(iban.errors).
-            to include(account_number: 'è della lunghezza sbagliata (dovrebbe essere di 8 caratteri)')
+            to include(account_number: 'è della lunghezza sbagliata ' \
+                                       '(dovrebbe essere di 8 caratteri)')
         end
       end
     end
@@ -653,7 +659,8 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_characters?
           expect(iban.errors).
-            to include(characters: 'Un carattere non-alfanumerico è stato trovato: -')
+            to include(characters: 'Un carattere non-alfanumerico è stato ' \
+                                   'trovato: -')
         end
       end
     end
@@ -715,7 +722,7 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_format?
           expect(iban.errors).
-            to include(format: 'non è usato in GB')
+            to include(format: 'Formato non atteso per un IBAN GB.')
         end
       end
     end
@@ -939,7 +946,7 @@ describe Ibandit::IBAN do
       context 'locale it', locale: :it do
         it 'sets errors on the IBAN' do
           iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: 'non è valido)
+          expect(iban.errors).to include(account_number: 'non è valido')
         end
       end
     end
