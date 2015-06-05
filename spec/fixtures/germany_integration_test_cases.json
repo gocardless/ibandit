@@ -9,7 +9,7 @@
     "convertor": "000100",
     "invalid": [
       { "bank_code": "50040033", "account_number" : "930125007" },
-      { "bank_code": "10050005", "account_number" : "1" }
+      { "bank_code": "10060198", "account_number" : "1" }
     ]
   },
   {
