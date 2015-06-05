@@ -1,3 +1,7 @@
+## 0.4.4 - June 5, 2015
+
+- Update BLZ data
+
 ## 0.4.3 - May 20, 2015
 
 - Add Italian translation
