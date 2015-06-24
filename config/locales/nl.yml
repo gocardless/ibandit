@@ -1,11 +1,11 @@
-en:
+nl:
   ibandit:
     invalid_country_code: "'%{country_code}' is not a valid ISO 3166-1 IBAN country code"
     invalid_check_digits: "Check digits failed modulus check. Expected '%{expected_check_digits}', received '%{check_digits}'."
-    invalid_length: "Length doesn't match SWIFT specification (expected %{expected_length} characters, received %{length})"
+    invalid_length: "Lengte komt niet overeen met SWIFT-specificatie (verwachte %{expected_length} karakters, ontvangen %{length})"
     is_required: "moet opgegeven zijn"
     wrong_length: "heeft onjuiste lengte (moet %{expected} tekens lang zijn)"
-    not_used_in_country: "is not used in %{country_code}"
-    non_alphanumeric_characters: "Non-alphanumeric characters found: %{characters}"
+    not_used_in_country: "niet gebruikelijk in %{country_code}"
+    non_alphanumeric_characters: "Niet-alfanumerieke tekens gevonden: %{characters}"
     invalid_format: "Unexpected format for a %{country_code} IBAN."
     is_invalid: "is ongeldig"
