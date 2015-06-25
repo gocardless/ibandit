@@ -143,9 +143,11 @@ describe Ibandit::IBAN do
       end
 
       context 'locale nl', locale: :nl do
-        pending 'sets errors on the IBAN' do
+        it 'sets errors on the IBAN' do
           iban.valid_country_code?
-          expect(iban.errors).to include(country_code: '???')
+          expect(iban.errors).
+            to include(country_code: "'AA' is geen geldig ISO 3166-1 IBAN " \
+                                     'landcode')
         end
       end
     end
@@ -228,9 +230,11 @@ describe Ibandit::IBAN do
       end
 
       context 'locale nl', locale: :nl do
-        pending 'sets errors on the IBAN' do
+        it 'sets errors on the IBAN' do
           iban.valid_check_digits?
-          expect(iban.errors).to include(check_digits: '???')
+          expect(iban.errors).
+            to include(check_digits: 'Controlegetal mislukte modulus check. ' \
+                                     "Verwachte '82', ontvangen '12'.")
         end
       end
     end
@@ -796,7 +800,7 @@ describe Ibandit::IBAN do
         it 'sets errors on the IBAN' do
           iban.valid_format?
           expect(iban.errors).
-            to include(format: 'Unexpected format for a GB IBAN.')
+            to include(format: 'Onverwachte formaat voor een GB IBAN.')
         end
       end
     end
