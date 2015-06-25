@@ -1,3 +1,7 @@
+## 0.4.5 - June 25, 2015
+
+- Add Dutch translation
+
 ## 0.4.4 - June 5, 2015
 
 - Update BLZ data
