@@ -156,6 +156,12 @@ describe Ibandit::LocalDetailsCleaner do
       its([:bank_code]) { is_expected.to eq(bank_code) }
       its([:account_number]) { is_expected.to eq('0215022000') }
     end
+
+    context 'with unsupported account details' do
+      let(:account_number) { '7955791111' }
+      let(:bank_code) { '20000000' }
+      it { is_expected.to eq(local_details) }
+    end
   end
 
   context 'Estonia' do
