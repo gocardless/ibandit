@@ -68,7 +68,8 @@ module Ibandit
         valid_bank_code_format?,
         valid_branch_code_format?,
         valid_account_number_format?,
-        valid_local_modulus_check?
+        valid_local_modulus_check?,
+        supports_iban_determination?
       ].all?
     end
 
@@ -222,6 +223,23 @@ module Ibandit
       return true unless Ibandit.modulus_checker
 
       valid_modulus_check_bank_code? && valid_modulus_check_account_number?
+    end
+
+    def supports_iban_determination?
+      return unless valid_format?
+      return true unless country_code == 'DE'
+
+      begin
+        GermanDetailsConverter.convert(
+          country_code: country_code,
+          bank_code: bank_code,
+          account_number: account_number
+        )
+        true
+      rescue UnsupportedAccountDetails
+        @errors[:account_number] = Ibandit.translate(:is_invalid)
+        false
+      end
     end
 
     ###################

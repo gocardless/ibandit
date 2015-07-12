@@ -1220,6 +1220,29 @@ describe Ibandit::IBAN do
         end
       end
     end
+
+    describe 'supports_iban_determination?' do
+      subject(:valid_local_modulus_check?) { iban.supports_iban_determination? }
+
+      context 'with unsupported account details' do
+        let(:arg) do
+          {
+            country_code: 'DE',
+            bank_code: '20000000',
+            account_number: '7955791111'
+          }
+        end
+
+        it { is_expected.to eq(false) }
+
+        context 'locale de', locale: :de do
+          it 'sets errors on the IBAN' do
+            iban.supports_iban_determination?
+            expect(iban.errors).to include(account_number: 'ist nicht gültig')
+          end
+        end
+      end
+    end
   end
 
   describe '#valid?' do
