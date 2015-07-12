@@ -12,7 +12,8 @@ allows you to:
 Ibandit also provides helper methods for validating some countries' local
 account details.
 
-The gem is kept up to date using the IBAN structure file from SWIFT.
+The gem is kept up to date using the IBAN structure file from SWIFT and the
+Bankleitzahl file from the Deutsche Bundesbank.
 
 ## Usage
 
