@@ -1,3 +1,8 @@
+## 0.5.0 - July 12, 2015
+
+- Add an error for unsupported German bank details, and stop raising whilst
+  cleaning them
+
 ## 0.4.5 - June 25, 2015
 
 - Add Dutch translation
