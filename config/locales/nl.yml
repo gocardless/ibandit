@@ -9,3 +9,4 @@ nl:
     non_alphanumeric_characters: "Niet-alfanumerieke tekens gevonden: %{characters}"
     invalid_format: "Onverwachte formaat voor een %{country_code} IBAN."
     is_invalid: "is ongeldig"
+    does_not_support_payments: "ondersteunt geen betalingen"

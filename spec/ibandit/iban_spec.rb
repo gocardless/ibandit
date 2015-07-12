@@ -1235,10 +1235,59 @@ describe Ibandit::IBAN do
 
         it { is_expected.to eq(false) }
 
-        context 'locale de', locale: :de do
-          it 'sets errors on the IBAN' do
+        context 'locale en', locale: :en do
+          specify do
             iban.supports_iban_determination?
-            expect(iban.errors).to include(account_number: 'ist nicht gültig')
+            expect(iban.errors).
+              to include(account_number: 'does not support payments')
+          end
+        end
+
+        context 'locale fr', locale: :fr do
+          specify do
+            iban.supports_iban_determination?
+            expect(iban.errors).
+              to include(account_number: 'ne supporte pas les paiements')
+          end
+        end
+
+        context 'locale de', locale: :de do
+          specify do
+            iban.supports_iban_determination?
+            expect(iban.errors).
+              to include(account_number: 'nicht Zahlungsverkehr unterstützt')
+          end
+        end
+
+        context 'locale pt', locale: :pt do
+          specify do
+            iban.supports_iban_determination?
+            expect(iban.errors).
+              to include(account_number: 'não suporta pagamentos')
+          end
+        end
+
+        context 'locale es', locale: :es do
+          specify do
+            iban.supports_iban_determination?
+            expect(iban.errors).
+              to include(account_number: 'no admite pagos')
+          end
+        end
+
+        context 'locale it', locale: :it do
+          specify do
+            iban.supports_iban_determination?
+            expect(iban.errors).
+              to include(account_number: 'non supporta pagamenti')
+          end
+        end
+
+        context 'locale nl', locale: :nl do
+          specify do
+            iban.supports_iban_determination?
+            expect(iban.errors).
+              to include(account_number: 'ondersteunt geen betalingen')
           end
         end
       end

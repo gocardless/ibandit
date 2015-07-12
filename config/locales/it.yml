@@ -9,3 +9,4 @@ it:
     non_alphanumeric_characters: "Un carattere non-alfanumerico è stato trovato: %{characters}"
     invalid_format: "Formato non atteso per un IBAN %{country_code}."
     is_invalid: "non è valido"
+    does_not_support_payments: "non supporta pagamenti"

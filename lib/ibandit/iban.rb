@@ -237,7 +237,7 @@ module Ibandit
         )
         true
       rescue UnsupportedAccountDetails
-        @errors[:account_number] = Ibandit.translate(:is_invalid)
+        @errors[:account_number] = Ibandit.translate(:does_not_support_payments)
         false
       end
     end
