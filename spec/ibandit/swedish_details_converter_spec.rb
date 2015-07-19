@@ -41,8 +41,7 @@ describe Ibandit::SwedishDetailsConverter do
       let(:account_number) { '1281-1' }
 
       its([:bank_code]) { is_expected.to eq('120') }
-      # TODO: Decide whether we should be zero-padding here or not
-      its([:account_number]) { is_expected.to eq('00000012810000001') }
+      its([:account_number]) { is_expected.to eq('00000000000012811') }
     end
   end
 
@@ -106,6 +105,13 @@ describe Ibandit::SwedishDetailsConverter do
 
       its([:bank_code]) { is_expected.to eq('600') }
       its([:account_number]) { is_expected.to eq('00000000219161038') }
+    end
+
+    context 'that only has an 8 digit serial number' do
+      let(:account_number) { '6240-21916103' }
+
+      its([:bank_code]) { is_expected.to eq('600') }
+      its([:account_number]) { is_expected.to eq('00000000021916103') }
     end
   end
 

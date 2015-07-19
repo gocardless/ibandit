@@ -7,24 +7,25 @@ module Ibandit
       bank_info = bank_info_for(cleaned_account_number.slice(0, 4))
 
       if bank_info.nil?
-        return {
-          bank_code: nil,
-          account_number: cleaned_account_number.rjust(17, '0')
-        }
+        return { bank_code: nil,
+                 account_number: cleaned_account_number.rjust(17, '0') }
       end
 
       clearing_code_length = bank_info.fetch(:clearing_code_length)
+      serial_number_length = bank_info.fetch(:serial_number_length)
 
       clearing_code = cleaned_account_number.slice(0, clearing_code_length)
-      local_account_number = cleaned_account_number[clearing_code_length..-1]
+      serial_number = cleaned_account_number[clearing_code_length..-1]
+
+      if bank_info.fetch(:zerofill_serial_number)
+        serial_number = serial_number.rjust(serial_number_length, '0')
+      end
 
       iban_account_number =
-        if bank_info.fetch(:type) == 1
-          (clearing_code + local_account_number.rjust(7, '0')).rjust(17, '0')
-        elsif bank_info[:zerofill]
-          (clearing_code + local_account_number.rjust(10, '0')).rjust(17, '0')
+        if bank_info.fetch(:include_clearing_code)
+          (clearing_code + serial_number).rjust(17, '0')
         else
-          local_account_number.rjust(17, '0')
+          serial_number.rjust(17, '0')
         end
 
       {
