@@ -310,6 +310,15 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "PT50000200230023843000578"
 
+# San Marino
+iban = Ibandit::IBAN.new(
+  country_code: 'SM',
+  bank_code: '05428',
+  branch_code: '11101',
+  account_number: '000000123456'
+)
+iban.iban                     # => "SM88X0542811101000000123456"
+
 # Slovakia
 iban = Ibandit::IBAN.new(
   country_code: 'SK',
@@ -343,14 +352,12 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "ES8023100001180000012345"
 
-# San Marino
+# Sweden
 iban = Ibandit::IBAN.new(
-  country_code: 'SM',
-  bank_code: '05428',
-  branch_code: '11101',
-  account_number: '000000123456'
+  country_code: 'SE',
+  account_number: '7507-1211203'
 )
-iban.iban                     # => "SM88X0542811101000000123456"
+iban.iban                     # => "SE2680000000075071211203"
 ```
 
 ## Other libraries

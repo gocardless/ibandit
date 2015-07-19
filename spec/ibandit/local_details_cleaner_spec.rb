@@ -682,6 +682,27 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context 'Sweden' do
+    let(:country_code) { 'SE' }
+    let(:bank_code) { '501' }
+    let(:account_number) { '5013-1007270' }
+
+    its([:bank_code]) { is_expected.to eq('501') }
+    its([:account_number]) { is_expected.to eq('00000050131007270') }
+
+    context 'without an account number' do
+      let(:account_number) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+
+    context 'without a bank code' do
+      let(:bank_code) { nil }
+
+      its([:bank_code]) { is_expected.to eq('500') }
+      its([:account_number]) { is_expected.to eq('00000050131007270') }
+    end
+  end
+
   context 'Slovenia' do
     let(:country_code) { 'SI' }
     let(:bank_code) { '19100' }

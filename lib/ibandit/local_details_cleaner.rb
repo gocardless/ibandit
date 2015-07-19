@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
     SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB GR IE IT LT LU LV MC
-                                 MT NL PT SI SK SM).freeze
+                                 MT NL PT SE SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -29,7 +29,7 @@ module Ibandit
       case country_code
       when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'SI', 'SK'
         %i(bank_code account_number)
-      when 'BE', 'EE', 'ES'
+      when 'BE', 'EE', 'ES', 'SE'
         %i(account_number)
       when 'GB', 'IE', 'MT'
         if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
@@ -292,6 +292,18 @@ module Ibandit
 
     def self.clean_pt_details(local_details)
       local_details
+    end
+
+    def self.clean_se_details(local_details)
+      converted_details =
+        SwedishDetailsConverter.convert(local_details[:account_number])
+
+      bank_code = local_details[:bank_code] || converted_details[:bank_code]
+
+      {
+        bank_code:      bank_code,
+        account_number: converted_details[:account_number]
+      }
     end
 
     def self.clean_si_details(local_details)
