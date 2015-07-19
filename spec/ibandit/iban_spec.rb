@@ -1325,6 +1325,19 @@ describe Ibandit::IBAN do
       it 'runs local modulus checks' do
         expect(iban).to receive(:valid_local_modulus_check?).at_least(1)
       end
+
+      context 'for an invalid IBAN' do
+        let(:arg) do
+          {
+            country_code: 'SE',
+            account_number: '00010105250093407'
+          }
+        end
+
+        it 'short circuits as soon as it finds an error' do
+          expect(iban).to receive(:valid_format?).never
+        end
+      end
     end
 
     context 'for a valid Albanian IBAN' do

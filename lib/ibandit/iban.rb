@@ -57,20 +57,20 @@ module Ibandit
 
     def valid?
       [
-        valid_country_code?,
-        valid_characters?,
-        valid_check_digits?,
-        valid_length?,
-        valid_bank_code_length?,
-        valid_branch_code_length?,
-        valid_account_number_length?,
-        valid_format?,
-        valid_bank_code_format?,
-        valid_branch_code_format?,
-        valid_account_number_format?,
-        valid_local_modulus_check?,
-        supports_iban_determination?
-      ].all?
+        -> { valid_country_code? },
+        -> { valid_characters? },
+        -> { valid_check_digits? },
+        -> { valid_length? },
+        -> { valid_bank_code_length? },
+        -> { valid_branch_code_length? },
+        -> { valid_account_number_length? },
+        -> { valid_format? },
+        -> { valid_bank_code_format? },
+        -> { valid_branch_code_format? },
+        -> { valid_account_number_format? },
+        -> { valid_local_modulus_check? },
+        -> { supports_iban_determination? }
+      ].all?(&:call)
     end
 
     def valid_country_code?
