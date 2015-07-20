@@ -1222,7 +1222,7 @@ describe Ibandit::IBAN do
     end
 
     describe 'supports_iban_determination?' do
-      subject(:valid_local_modulus_check?) { iban.supports_iban_determination? }
+      subject { iban.supports_iban_determination? }
 
       context 'with unsupported account details' do
         let(:arg) do
@@ -1292,6 +1292,68 @@ describe Ibandit::IBAN do
         end
       end
     end
+
+    describe 'valid_swedish_details?' do
+      subject { iban.valid_swedish_details? }
+
+      context 'with an account number that is too long' do
+        let(:arg) do
+          {
+            country_code: 'SE',
+            bank_code: '500',
+            account_number: '00000543910240391'
+          }
+        end
+
+        it { is_expected.to eq(false) }
+
+        context 'locale en', locale: :en do
+          specify do
+            iban.valid_swedish_details?
+            expect(iban.errors).to eq(account_number: 'is invalid')
+          end
+        end
+      end
+
+      context "with an account number that doesn't have a bank code" do
+        let(:arg) do
+          {
+            country_code: 'SE',
+            bank_code: nil,
+            account_number: '00000000000010011'
+          }
+        end
+
+        it { is_expected.to eq(false) }
+
+        context 'locale en', locale: :en do
+          specify do
+            iban.valid?
+            expect(iban.errors).to include(account_number: 'is invalid')
+            expect(iban.errors).to_not include(:bank_code)
+          end
+        end
+      end
+
+      context 'with a bad bank code' do
+        let(:arg) do
+          {
+            country_code: 'SE',
+            bank_code: '902',
+            account_number: '00000054391024039'
+          }
+        end
+
+        it { is_expected.to eq(false) }
+
+        context 'locale en', locale: :en do
+          specify do
+            iban.valid_swedish_details?
+            expect(iban.errors).to eq(bank_code: 'is invalid')
+          end
+        end
+      end
+    end
   end
 
   describe '#valid?' do
@@ -1324,6 +1386,10 @@ describe Ibandit::IBAN do
 
       it 'runs local modulus checks' do
         expect(iban).to receive(:valid_local_modulus_check?).at_least(1)
+      end
+
+      it 'runs country specific checks' do
+        expect(iban).to receive(:passes_country_specific_checks?).at_least(1)
       end
     end
 

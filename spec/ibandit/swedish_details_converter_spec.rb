@@ -1,124 +1,237 @@
 require 'spec_helper'
 
 describe Ibandit::SwedishDetailsConverter do
-  subject(:converted) { described_class.convert(account_number) }
+  describe '.convert' do
+    subject { described_class.convert(account_number) }
 
-  context 'with a type-1 account number' do
-    let(:account_number) { '12810105723' }
-
-    its([:bank_code]) { is_expected.to eq('120') }
-    its([:account_number]) { is_expected.to eq('00000012810105723') }
-
-    context 'that includes hyphens' do
-      let(:account_number) { '1281-0105723' }
+    context 'with a type-1 account number' do
+      let(:account_number) { '12810105723' }
 
       its([:bank_code]) { is_expected.to eq('120') }
       its([:account_number]) { is_expected.to eq('00000012810105723') }
+
+      context 'that includes hyphens' do
+        let(:account_number) { '1281-0105723' }
+
+        its([:bank_code]) { is_expected.to eq('120') }
+        its([:account_number]) { is_expected.to eq('00000012810105723') }
+      end
+
+      context 'that includes spaces' do
+        let(:account_number) { '1281 0105723' }
+
+        its([:bank_code]) { is_expected.to eq('120') }
+        its([:account_number]) { is_expected.to eq('00000012810105723') }
+      end
+
+      context 'that includes full stops' do
+        let(:account_number) { '1281.010.572.3' }
+
+        its([:bank_code]) { is_expected.to eq('120') }
+        its([:account_number]) { is_expected.to eq('00000012810105723') }
+      end
+
+      context 'that has been zero-padded' do
+        let(:account_number) { '000012810105723' }
+
+        its([:bank_code]) { is_expected.to eq('120') }
+        its([:account_number]) { is_expected.to eq('00000012810105723') }
+      end
+
+      context 'that needs the account number part to be zero-padded' do
+        let(:account_number) { '1281-1' }
+
+        its([:bank_code]) { is_expected.to eq('120') }
+        its([:account_number]) { is_expected.to eq('00000000000012811') }
+      end
+
+      context 'from SEB' do
+        let(:account_number) { '5439-10 240 39' }
+
+        its([:bank_code]) { is_expected.to eq('500') }
+        its([:account_number]) { is_expected.to eq('00000054391024039') }
+      end
     end
 
-    context 'that includes spaces' do
-      let(:account_number) { '1281 0105723' }
+    context "with a clearing code that doesn't match any banks" do
+      let(:account_number) { '1001-1' }
 
-      its([:bank_code]) { is_expected.to eq('120') }
-      its([:account_number]) { is_expected.to eq('00000012810105723') }
+      its([:bank_code]) { is_expected.to eq(nil) }
+      its([:account_number]) { is_expected.to eq('00000000000010011') }
     end
 
-    context 'that includes full stops' do
-      let(:account_number) { '1281.010.572.3' }
-
-      its([:bank_code]) { is_expected.to eq('120') }
-      its([:account_number]) { is_expected.to eq('00000012810105723') }
-    end
-
-    context 'that has been zero-padded' do
-      let(:account_number) { '000012810105723' }
-
-      its([:bank_code]) { is_expected.to eq('120') }
-      its([:account_number]) { is_expected.to eq('00000012810105723') }
-    end
-
-    context 'that needs the account number part to be zero-padded' do
-      let(:account_number) { '1281-1' }
-
-      its([:bank_code]) { is_expected.to eq('120') }
-      its([:account_number]) { is_expected.to eq('00000000000012811') }
-    end
-  end
-
-  context "with a clearing code that doesn't match any banks" do
-    let(:account_number) { '1001-1' }
-
-    its([:bank_code]) { is_expected.to eq(nil) }
-    its([:account_number]) { is_expected.to eq('00000000000010011') }
-  end
-
-  context 'with a Swedbank clearing code' do
-    let(:account_number) { '7507-1211203' }
-
-    its([:bank_code]) { is_expected.to eq('800') }
-    its([:account_number]) { is_expected.to eq('00000075071211203') }
-
-    context 'in the 8000s range' do
-      let(:account_number) { '8327-9 33395390-9' }
+    context 'with a Swedbank clearing code' do
+      let(:account_number) { '7507-1211203' }
 
       its([:bank_code]) { is_expected.to eq('800') }
-      its([:account_number]) { is_expected.to eq('00832790333953909') }
+      its([:account_number]) { is_expected.to eq('00000075071211203') }
+
+      context 'in the 8000s range' do
+        let(:account_number) { '8327-9 33395390-9' }
+
+        its([:bank_code]) { is_expected.to eq('800') }
+        its([:account_number]) { is_expected.to eq('00832790333953909') }
+      end
+
+      context 'another in the 8000s range' do
+        let(:account_number) { '8201-6 914357963-0' }
+
+        its([:bank_code]) { is_expected.to eq('800') }
+        its([:account_number]) { is_expected.to eq('00820169143579630') }
+      end
     end
 
-    context 'another in the 8000s range' do
-      let(:account_number) { '8201-6 914357963-0' }
+    context 'with a Sparbanken Öresund clearing code' do
+      let(:account_number) { '9300-35299478' }
 
-      its([:bank_code]) { is_expected.to eq('800') }
-      its([:account_number]) { is_expected.to eq('00820169143579630') }
+      its([:bank_code]) { is_expected.to eq('930') }
+      its([:account_number]) { is_expected.to eq('00000000035299478') }
+
+      context 'with clearing number 9330 or above' do
+        let(:account_number) { '9330-5930160535' }
+
+        its([:bank_code]) { is_expected.to eq('933') }
+        its([:account_number]) { is_expected.to eq('00000005930160535') }
+      end
     end
-  end
 
-  context 'with a Sparbanken Öresund clearing code' do
-    let(:account_number) { '9300-35299478' }
+    context 'with a Sparbanken Syd clearing code' do
+      let(:account_number) { '9570-5250093407' }
 
-    its([:bank_code]) { is_expected.to eq('930') }
-    its([:account_number]) { is_expected.to eq('00000000035299478') }
-
-    context 'with clearing number 9330 or above' do
-      let(:account_number) { '9330-5930160535' }
-
-      its([:bank_code]) { is_expected.to eq('933') }
-      its([:account_number]) { is_expected.to eq('00000005930160535') }
+      its([:bank_code]) { is_expected.to eq('957') }
+      its([:account_number]) { is_expected.to eq('00000005250093407') }
     end
-  end
 
-  context 'with a Sparbanken Syd clearing code' do
-    let(:account_number) { '9570-5250093407' }
-
-    its([:bank_code]) { is_expected.to eq('957') }
-    its([:account_number]) { is_expected.to eq('00000005250093407') }
-  end
-
-  context 'with a Handelsbanken clearing code' do
-    let(:account_number) { '6000-806967498' }
-
-    its([:bank_code]) { is_expected.to eq('600') }
-    its([:account_number]) { is_expected.to eq('00000000806967498') }
-
-    context 'that has clearing code 6240' do
-      let(:account_number) { '6240-219161038' }
+    context 'with a Handelsbanken clearing code' do
+      let(:account_number) { '6000-806967498' }
 
       its([:bank_code]) { is_expected.to eq('600') }
-      its([:account_number]) { is_expected.to eq('00000000219161038') }
+      its([:account_number]) { is_expected.to eq('00000000806967498') }
+
+      context 'that has clearing code 6240' do
+        let(:account_number) { '6240-219161038' }
+
+        its([:bank_code]) { is_expected.to eq('600') }
+        its([:account_number]) { is_expected.to eq('00000000219161038') }
+      end
+
+      context 'that only has an 8 digit serial number' do
+        let(:account_number) { '6240-21916103' }
+
+        its([:bank_code]) { is_expected.to eq('600') }
+        its([:account_number]) { is_expected.to eq('00000000021916103') }
+      end
     end
 
-    context 'that only has an 8 digit serial number' do
-      let(:account_number) { '6240-21916103' }
+    context 'with a Nordea PlusGirot clearing code' do
+      let(:account_number) { '9960-3401258276' }
 
-      its([:bank_code]) { is_expected.to eq('600') }
-      its([:account_number]) { is_expected.to eq('00000000021916103') }
+      its([:bank_code]) { is_expected.to eq('950') }
+      its([:account_number]) { is_expected.to eq('00099603401258276') }
     end
   end
 
-  context 'with a Nordea PlusGirot clearing code' do
-    let(:account_number) { '9960-3401258276' }
+  describe '.valid_length?' do
+    subject do
+      described_class.valid_length?(bank_code: bank_code,
+                                    account_number: account_number)
+    end
 
-    its([:bank_code]) { is_expected.to eq('950') }
-    its([:account_number]) { is_expected.to eq('00099603401258276') }
+    context 'without a bank code' do
+      let(:account_number) { '12810105723' }
+      let(:bank_code) { nil }
+      it { is_expected.to eq(nil) }
+    end
+
+    context 'with an impossible bank code' do
+      let(:account_number) { '12810105723' }
+      let(:bank_code) { '500' }
+      it { is_expected.to eq(nil) }
+    end
+
+    context 'with a normal type-1 account number' do
+      let(:account_number) { '00000054391024039' }
+      let(:bank_code) { '500' }
+      it { is_expected.to eq(true) }
+
+      context 'that has a 6 digit serial number' do
+        let(:account_number) { '00000005439102403' }
+        let(:bank_code) { '500' }
+        it { is_expected.to eq(false) }
+      end
+
+      context 'that has an 8 digit serial number' do
+        let(:account_number) { '00000543910240391' }
+        let(:bank_code) { '500' }
+        it { is_expected.to eq(false) }
+      end
+    end
+
+    context 'without a Danske bank account' do
+      let(:account_number) { '12810105723' }
+      let(:bank_code) { '120' }
+      it { is_expected.to eq(true) }
+
+      context 'that has an 8 digit serial number' do
+        let(:account_number) { '00000128101057231' }
+        let(:bank_code) { '120' }
+        it { is_expected.to eq(false) }
+      end
+
+      context 'that has a 6 digit serial number' do
+        let(:account_number) { '00000001281010572' }
+        let(:bank_code) { '120' }
+        # This passes because it could be a 10 digit account number from the
+        # clearing code range 9180-9189.
+        it { is_expected.to eq(true) }
+      end
+    end
+
+    context 'with a Handelsbanken account number' do
+      let(:bank_code) { '600' }
+      let(:account_number) { '00000000219161038' }
+      it { is_expected.to eq(true) }
+
+      context 'that is only 8 characters long' do
+        let(:account_number) { '00000000021916103' }
+        it { is_expected.to eq(true) }
+      end
+
+      context 'that is 10 characters long' do
+        let(:account_number) { '00000002191610381' }
+        it { is_expected.to eq(false) }
+      end
+    end
+
+    context 'without a Nordea PlusGirot account number' do
+      let(:bank_code) { '950' }
+      let(:account_number) { '00099603401258276' }
+      it { is_expected.to eq(true) }
+    end
+  end
+
+  describe '.valid_bank_code?' do
+    subject do
+      described_class.valid_bank_code?(bank_code: bank_code,
+                                       account_number: account_number)
+    end
+
+    context 'without a bank code' do
+      let(:account_number) { '12810105723' }
+      let(:bank_code) { nil }
+      it { is_expected.to eq(false) }
+    end
+
+    context 'with an impossible bank code' do
+      let(:account_number) { '12810105723' }
+      let(:bank_code) { '500' }
+      it { is_expected.to eq(false) }
+    end
+
+    context 'with a possible bank code' do
+      let(:account_number) { '12810105723' }
+      let(:bank_code) { '120' }
+      it { is_expected.to eq(true) }
+    end
   end
 end

@@ -34,10 +34,60 @@ module Ibandit
       }
     end
 
+    def self.valid_bank_code?(bank_code: bank_code,
+                              account_number: account_number)
+      possible_bank_infos = possible_bank_info_for(
+        bank_code: bank_code, account_number: account_number
+      )
+
+      possible_bank_infos.any?
+    end
+
+    def self.valid_length?(bank_code: bank_code, account_number: account_number)
+      return unless valid_bank_code?(
+        bank_code: bank_code, account_number: account_number
+      )
+
+      cleaned_account_number = account_number.gsub(/\A0+/, '')
+
+      possible_bank_infos = possible_bank_info_for(
+        bank_code: bank_code, account_number: account_number
+      )
+
+      possible_bank_infos.any? do |bank|
+        length = bank.fetch(:serial_number_length)
+        length += bank[:clearing_code_length] if bank[:include_clearing_code]
+
+        if bank[:zerofill_serial_number] && !bank[:include_clearing_code]
+          serial_number_length = bank.fetch(:serial_number_length)
+          cleaned_account_number =
+            cleaned_account_number.rjust(serial_number_length, '0')
+        end
+
+        cleaned_account_number.length == length
+      end
+    end
+
+    private
+
     def self.bank_info_for(clearing_code)
       bank_info_table.find { |bank| bank[:range].include?(clearing_code.to_i) }
     end
     private_class_method :bank_info_for
+
+    def self.possible_bank_info_for(bank_code: bank_code,
+                                    account_number: account_number)
+      clearing_number = account_number.gsub(/\A0+/, '').slice(0, 4).to_i
+
+      possible_bank_infos = bank_info_table.select do |bank|
+        bank.fetch(:bank_code).to_s == bank_code
+      end
+
+      possible_bank_infos.select do |bank|
+        !bank[:include_clearing_code] || bank[:range].include?(clearing_number)
+      end
+    end
+    private_class_method :possible_bank_info_for
 
     def self.bank_info_table
       @swedish_bank_lookup ||=

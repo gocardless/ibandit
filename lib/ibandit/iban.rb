@@ -69,7 +69,7 @@ module Ibandit
         valid_branch_code_format?,
         valid_account_number_format?,
         valid_local_modulus_check?,
-        supports_iban_determination?
+        passes_country_specific_checks?
       ].all?
     end
 
@@ -225,6 +225,16 @@ module Ibandit
       valid_modulus_check_bank_code? && valid_modulus_check_account_number?
     end
 
+    def passes_country_specific_checks?
+      return unless valid_country_code?
+
+      case country_code
+      when 'DE' then supports_iban_determination?
+      when 'SE' then valid_swedish_details?
+      else true
+      end
+    end
+
     def supports_iban_determination?
       return unless valid_format?
       return true unless country_code == 'DE'
@@ -240,6 +250,26 @@ module Ibandit
         @errors[:account_number] = Ibandit.translate(:does_not_support_payments)
         false
       end
+    end
+
+    def valid_swedish_details?
+      return true unless country_code == 'SE'
+
+      bank_details = { bank_code: bank_code, account_number: account_number }
+
+      unless SwedishDetailsConverter.valid_bank_code?(bank_details)
+        bank_code_field = bank_code.nil? ? :account_number : :bank_code
+        @errors[bank_code_field] = Ibandit.translate(:is_invalid)
+        @errors.delete(:bank_code) if bank_code.nil?
+        return false
+      end
+
+      unless SwedishDetailsConverter.valid_length?(bank_details)
+        @errors[:account_number] = Ibandit.translate(:is_invalid)
+        return false
+      end
+
+      true
     end
 
     ###################
