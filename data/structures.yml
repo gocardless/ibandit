@@ -633,6 +633,8 @@ NL:
   :bban_format: \d{4}\d{6}\d{1}
   :bank_code_format: \d{4}
   :account_number_format: \d{6}\d{1}
+  :local_check_digit_position: 15
+  :local_check_digit_length: 1
 PK:
   :bank_code_position: 5
   :bank_code_length: 4

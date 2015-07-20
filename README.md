@@ -301,6 +301,21 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "NL91ABNA0417164300"
 
+# Norway
+iban = Ibandit::IBAN.new(
+  country_code: 'NO',
+  account_number: '1117947',
+  bank_code: '8601'
+)
+iban.iban                     # => "NO9386011117947"
+
+# Norway with 11 digit account number
+iban = Ibandit::IBAN.new(
+  country_code: 'NO',
+  account_number: '8601.1117947',
+)
+iban.iban                     # => "NO9386011117947"
+
 # Portugal
 iban = Ibandit::IBAN.new(
   country_code: 'PT',
