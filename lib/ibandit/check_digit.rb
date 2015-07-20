@@ -135,6 +135,28 @@ module Ibandit
     end
 
     # Currently unused in this gem. This method calculates the last digit
+    # of a Norwegian account number when given the initial digits.
+    def self.norwegian(string)
+      weights = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]
+
+      scaled_values = string.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * weights[index % weights.size]
+      end
+
+      if scaled_values[4] == 0 && scaled_values[5] == 0
+        scaled_values = scaled_values[6..-1]
+      end
+
+      result = 11 - scaled_values.inject(:+) % 11
+      result < 10 ? result.to_s : '0'
+    end
+
+    # Currently unused in this gem. This method calculates the last digit
     # of a Finnish account number when given the initial digits (in electronic
     # format).
     def self.lund(string)
