@@ -1,3 +1,7 @@
+## 0.6.0 - July 20, 2015
+
+- Add support for Sweden
+
 ## 0.5.0 - July 12, 2015
 
 - Add an error for unsupported German bank details, and stop raising whilst
