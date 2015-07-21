@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE EE ES FI FR GB GR IE IT LT LU LV MC
-                                 MT NL NO PT SE SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE DK EE ES FI FR GB GR IE IT LT LU LV
+                                 MC MT NL NO PT SE SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -29,7 +29,7 @@ module Ibandit
       case country_code
       when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'SI', 'SK'
         %i(bank_code account_number)
-      when 'BE', 'EE', 'ES', 'SE', 'NO'
+      when 'BE', 'EE', 'ES', 'SE', 'NO', 'DK'
         %i(account_number)
       when 'GB', 'IE', 'MT'
         if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
@@ -108,6 +108,22 @@ module Ibandit
       {
         bank_code:      converted_details[:bank_code],
         account_number: converted_details[:account_number].rjust(10, '0')
+      }
+    end
+
+    def self.clean_dk_details(local_details)
+      # This method supports being passed the component IBAN parts, as defined
+      # by SWIFT, or a single traditional-format string split by a '-'.
+      if local_details[:bank_code]
+        bank_code      = local_details[:bank_code].rjust(4, '0')
+        account_number = local_details[:account_number].rjust(10, '0')
+      else
+        bank_code, account_number = local_details[:account_number].split('-', 2)
+      end
+
+      {
+        bank_code:      bank_code.rjust(4, '0'),
+        account_number: account_number.rjust(10, '0')
       }
     end
 
