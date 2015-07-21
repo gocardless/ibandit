@@ -58,6 +58,9 @@ MU:
 NL:
   :local_check_digit_position: 18
   :local_check_digit_length: 1
+'NO':
+  :local_check_digit_position: 15
+  :local_check_digit_length: 1
 PT:
   :branch_code_format: \d{4}
   :account_number_format: \d{11}\d{2}

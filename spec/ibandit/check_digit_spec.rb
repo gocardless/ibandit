@@ -104,6 +104,28 @@ describe Ibandit::CheckDigit do
     end
   end
 
+  describe '.norwegian' do
+    subject { described_class.norwegian(account_number) }
+
+    let(:account_number) { '8601111794' }
+    it { is_expected.to eq('7') }
+
+    context 'with another account number (double checking!)' do
+      let(:account_number) { '8601549472' }
+      it { is_expected.to eq('9') }
+    end
+
+    context 'with a third account number (triple checking!)' do
+      let(:account_number) { '3000501790' }
+      it { is_expected.to eq('0') }
+    end
+
+    context 'with a non-numeric character' do
+      let(:account_number) { '1BAD2014' }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
   describe '.slovakian_prefix' do
     subject { described_class.slovakian_prefix(account_number) }
 
