@@ -1,3 +1,7 @@
+## 0.6.1 - July 21, 2015
+
+- Add Norway to LocalDetailsCleaner and IBANAssembler
+
 ## 0.6.0 - July 20, 2015
 
 - Add support for Sweden
