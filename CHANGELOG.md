@@ -1,3 +1,7 @@
+## 0.6.2 - July 21, 2015
+
+- Add Denmark to LocalDetailsCleaner and IBANAssembler
+
 ## 0.6.1 - July 21, 2015
 
 - Add Norway to LocalDetailsCleaner and IBANAssembler
