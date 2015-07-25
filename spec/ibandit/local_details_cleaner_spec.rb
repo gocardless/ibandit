@@ -175,7 +175,7 @@ describe Ibandit::LocalDetailsCleaner do
     context 'with bank and branch codes in the account number' do
       let(:bank_code) { nil }
       let(:branch_code) { nil }
-      let(:account_number) { '345-3179681' }
+      let(:account_number) { '345-317-9681' }
 
       its([:bank_code]) { is_expected.to eq('0345') }
       its([:account_number]) { is_expected.to eq('0003179681') }

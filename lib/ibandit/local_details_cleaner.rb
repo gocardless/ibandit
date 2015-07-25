@@ -123,7 +123,7 @@ module Ibandit
 
       {
         bank_code:      bank_code.rjust(4, '0'),
-        account_number: account_number.rjust(10, '0')
+        account_number: account_number.gsub('-', '').rjust(10, '0')
       }
     end
 
