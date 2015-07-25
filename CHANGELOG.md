@@ -1,3 +1,7 @@
+## 0.6.3 - July 25, 2015
+
+- Strip out additional '-' characters from Danish account numbers
+
 ## 0.6.2 - July 21, 2015
 
 - Add Denmark to LocalDetailsCleaner and IBANAssembler
