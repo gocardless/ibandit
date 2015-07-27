@@ -315,6 +315,13 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "NO9386011117947"
 
+# Poland
+iban = Ibandit::IBAN.new(
+  country_code: 'PL',
+  account_number: '60102010260000042270201111',
+)
+iban.iban                     # => "PL60102010260000042270201111"
+
 # Portugal
 iban = Ibandit::IBAN.new(
   country_code: 'PT',
