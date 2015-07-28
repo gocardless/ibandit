@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Add Poland to LocalDetailsCleaner and IBANAssembler
+- Add Iceland to LocalDetailsCleaner and IBANAssembler
 
 ## 0.6.3 - July 25, 2015
 
