@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE DK EE ES FI FR GB GR IE IT LT LU LV
-                                 MC MT NL NO PL PT SE SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE DK EE ES FI FR GB GR IE IS IT LT LU
+                                 LV MC MT NL NO PL PT SE SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -29,7 +29,7 @@ module Ibandit
       case country_code
       when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'SI', 'SK'
         %i(bank_code account_number)
-      when 'BE', 'DK', 'EE', 'ES', 'SE', 'NO', 'PL'
+      when 'BE', 'DK', 'EE', 'ES', 'SE', 'NO', 'PL', 'IS'
         %i(account_number)
       when 'GB', 'IE', 'MT'
         if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
@@ -248,6 +248,23 @@ module Ibandit
       }
     end
 
+    def self.clean_is_details(local_details)
+      if local_details[:bank_code]
+        bank_code = local_details[:bank_code]
+        parts = local_details[:account_number].split('-')
+      elsif local_details[:account_number].include?('-')
+        bank_code, *parts = local_details[:account_number].split('-')
+      else
+        bank_code = local_details[:account_number].slice(0, 4)
+        parts = Array(local_details[:account_number][4..-1])
+      end
+
+      {
+        bank_code:      bank_code.rjust(4, '0'),
+        account_number: pad_is_account_number(parts)
+      }
+    end
+
     def self.clean_it_details(local_details)
       # Add leading zeros to account number if < 12 digits.
       {
@@ -392,5 +409,17 @@ module Ibandit
       # San Marino uses the same local details method as France
       clean_it_details(local_details)
     end
+
+    def self.pad_is_account_number(parts)
+      hufo           = parts[0].nil? ? '' : parts[0].rjust(2, '0')
+      reikningsnumer = parts[1].nil? ? '' : parts[1].rjust(6, '0')
+      ken_1          = parts[2].nil? ? '' : parts[2].rjust(6, '0')
+      ken_2          = parts[3].nil? ? '' : parts[3].rjust(4, '0')
+
+      kennitala      = ken_1.empty? ? '' : (ken_1 + ken_2).rjust(10, '0')
+
+      hufo + reikningsnumer + kennitala
+    end
+    private_class_method :pad_is_account_number
   end
 end
