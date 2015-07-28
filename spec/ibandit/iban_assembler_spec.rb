@@ -68,6 +68,31 @@ describe Ibandit::IBANAssembler do
       end
     end
 
+    context 'with BG as the country_code' do
+      let(:args) do
+        {
+          country_code: 'BG',
+          account_number: '1020345678',
+          bank_code: 'BNBG',
+          branch_code: '9661'
+        }
+      end
+
+      it { is_expected.to eq('BG80BNBG96611020345678') }
+
+      it_behaves_like 'allows round trips', 'BG80 BNBG 9661 1020 3456 78'
+
+      context 'without an account_number' do
+        before { args.delete(:account_number) }
+        it { is_expected.to be_nil }
+      end
+
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
+        it { is_expected.to be_nil }
+      end
+    end
+
     context 'with CY as the country_code' do
       let(:args) do
         {
@@ -648,6 +673,30 @@ describe Ibandit::IBANAssembler do
 
       context 'without an account_number' do
         before { args.delete(:account_number) }
+        it { is_expected.to be_nil }
+      end
+    end
+
+    context 'with RO as the country_code' do
+      let(:args) do
+        {
+          country_code: 'RO',
+          account_number: '1B31007593840000',
+          bank_code: 'AAAA'
+        }
+      end
+
+      it { is_expected.to eq('RO49AAAA1B31007593840000') }
+
+      it_behaves_like 'allows round trips', 'RO49 AAAA 1B31 0075 9384 0000'
+
+      context 'without an account_number' do
+        before { args.delete(:account_number) }
+        it { is_expected.to be_nil }
+      end
+
+      context 'without a bank_code' do
+        before { args.delete(:bank_code) }
         it { is_expected.to be_nil }
       end
     end

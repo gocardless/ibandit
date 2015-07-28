@@ -87,6 +87,30 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context 'Bulgaria' do
+    let(:country_code) { 'BG' }
+    let(:bank_code) { 'BNBG' }
+    let(:branch_code) { '9661' }
+    let(:account_number) { '1020345678' }
+
+    it { is_expected.to eq(local_details) }
+
+    context 'without an account number' do
+      let(:account_number) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+
+    context 'without a branch code' do
+      let(:branch_code) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+
+    context 'without a bank code' do
+      let(:bank_code) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+  end
+
   context 'Cyprus' do
     let(:country_code) { 'CY' }
     let(:account_number) { '0000001200527600' }
@@ -791,6 +815,24 @@ describe Ibandit::LocalDetailsCleaner do
 
     context 'without an account number' do
       let(:account_number) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+  end
+
+  context 'Romania' do
+    let(:country_code) { 'RO' }
+    let(:bank_code) { 'AAAA' }
+    let(:account_number) { '1B31007593840000' }
+
+    it { is_expected.to eq(local_details) }
+
+    context 'without an account number' do
+      let(:account_number) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+
+    context 'without a bank code' do
+      let(:bank_code) { nil }
       it { is_expected.to eq(local_details) }
     end
   end

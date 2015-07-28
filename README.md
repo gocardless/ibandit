@@ -174,6 +174,15 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "BE62510007547061"
 
+# Bulgaria
+iban = Ibandit::IBAN.new(
+  country_code: 'BG',
+  bank_code: 'BNBG',
+  branch_code: '9661'
+  account_number: '1020345678'
+)
+iban.iban                     # => "BG80BNBG96611020345678"
+
 # Cyprus
 iban = Ibandit::IBAN.new(
   country_code: 'CY',
@@ -338,6 +347,14 @@ iban = Ibandit::IBAN.new(
   account_number: '0023843000578'
 )
 iban.iban                     # => "PT50000200230023843000578"
+
+# Romania
+iban = Ibandit::IBAN.new(
+  country_code: 'RO',
+  bank_code: 'AAAA',
+  account_number: '1B31007593840000'
+)
+iban.iban                     # => "RO49AAAA1B31007593840000"
 
 # San Marino
 iban = Ibandit::IBAN.new(
