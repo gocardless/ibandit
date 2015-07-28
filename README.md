@@ -249,6 +249,14 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "IE29AIBK93115212345678"
 
+# Iceland
+iban = Ibandit::IBAN.new(
+  country_code: 'IS',
+  bank_code: '1175'
+  account_number: '26-19530-670269-6399'
+)
+iban.iban                     # => "IS501175260195306702696399"
+
 # Italy
 iban = Ibandit::IBAN.new(
   country_code: 'IT',

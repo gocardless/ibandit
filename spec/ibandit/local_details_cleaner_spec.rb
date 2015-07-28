@@ -472,6 +472,52 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context 'Iceland' do
+    let(:country_code) { 'IS' }
+    let(:bank_code) { '311' }
+    let(:account_number) { '26-2468-460697-2049' }
+
+    its([:bank_code]) { is_expected.to eq('0311') }
+    its([:account_number]) { is_expected.to eq('260024684606972049') }
+
+    context 'with bank code in the account number' do
+      let(:bank_code) { nil }
+      let(:account_number) { '311-26-2468-460697-2049' }
+
+      its([:bank_code]) { is_expected.to eq('0311') }
+      its([:account_number]) { is_expected.to eq('260024684606972049') }
+
+      context 'and no hyphens' do
+        let(:account_number) { '0311260024684606972049' }
+
+        its([:bank_code]) { is_expected.to eq('0311') }
+        its([:account_number]) { is_expected.to eq('260024684606972049') }
+      end
+    end
+
+    context 'with no hyphen in the kennitala' do
+      let(:account_number) { '26-2468-4606972049' }
+
+      its([:account_number]) { is_expected.to eq('260024684606972049') }
+    end
+
+    context 'with a short kennitala' do
+      let(:account_number) { '26-2468-60697-2049' }
+
+      its([:account_number]) { is_expected.to eq('260024680606972049') }
+
+      context 'without a hyphen' do
+        let(:account_number) { '26-2468-606972049' }
+        its([:account_number]) { is_expected.to eq('260024680606972049') }
+      end
+    end
+
+    context 'without an account number' do
+      let(:account_number) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+  end
+
   context 'Italy' do
     let(:country_code) { 'IT' }
     let(:bank_code) { '05428' }
