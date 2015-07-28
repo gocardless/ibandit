@@ -40,6 +40,9 @@ GB:
 HU:
   :bban_format: \d{3}\d{4}\d{1}\d{15}\d{1}
   :account_number_format: \d{1}\d{15}\d{1}
+IS:
+  :local_check_digit_position: 25
+  :local_check_digit_length: 1
 IT:
   :local_check_digit_position: 5
   :local_check_digit_length: 1

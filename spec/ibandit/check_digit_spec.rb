@@ -104,6 +104,28 @@ describe Ibandit::CheckDigit do
     end
   end
 
+  describe '.icelandic' do
+    subject { described_class.icelandic(kennitala) }
+
+    let(:kennitala) { '52121206' }
+    it { is_expected.to eq('3') }
+
+    context 'with another kennitala (double checking!)' do
+      let(:kennitala) { '42027802' }
+      it { is_expected.to eq('0') }
+    end
+
+    context 'with a third kennitala (triple checking!)' do
+      let(:kennitala) { '12017433' }
+      it { is_expected.to eq('9') }
+    end
+
+    context 'with a non-numeric character' do
+      let(:kennitala) { '1BAD2014' }
+      specify { expect { subject }.to raise_error(/non-numeric character/) }
+    end
+  end
+
   describe '.norwegian' do
     subject { described_class.norwegian(account_number) }
 

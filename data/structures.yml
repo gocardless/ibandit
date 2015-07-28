@@ -418,6 +418,8 @@ IS:
   :bban_format: \d{4}\d{2}\d{6}\d{10}
   :bank_code_format: \d{4}
   :account_number_format: \d{2}\d{6}\d{10}
+  :local_check_digit_position: 25
+  :local_check_digit_length: 1
 IT:
   :bank_code_position: 6
   :bank_code_length: 5
