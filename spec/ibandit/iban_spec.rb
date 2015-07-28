@@ -1725,6 +1725,16 @@ describe Ibandit::IBAN do
       its(:local_check_digits) { is_expected.to eq('54') }
     end
 
+    context 'with a Norwegian IBAN' do
+      let(:iban_code) { 'NO9386011117947' }
+      its(:local_check_digits) { is_expected.to eq('7') }
+    end
+
+    context 'with an Icelandic IBAN' do
+      let(:iban_code) { 'IS250311260024684606972049' }
+      its(:local_check_digits) { is_expected.to eq('4') }
+    end
+
     context 'with a Slovakian IBAN' do
       let(:iban_code) { 'SK3112000000198742637541' }
       its(:local_check_digits) { is_expected.to eq('9') }
