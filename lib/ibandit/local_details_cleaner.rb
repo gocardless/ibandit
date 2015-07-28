@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
     SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE DK EE ES FI FR GB GR IE IT LT LU LV
-                                 MC MT NL NO PT SE SI SK SM).freeze
+                                 MC MT NL NO PL PT SE SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -29,7 +29,7 @@ module Ibandit
       case country_code
       when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'SI', 'SK'
         %i(bank_code account_number)
-      when 'BE', 'EE', 'ES', 'SE', 'NO', 'DK'
+      when 'BE', 'DK', 'EE', 'ES', 'SE', 'NO', 'PL'
         %i(account_number)
       when 'GB', 'IE', 'MT'
         if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
@@ -317,6 +317,25 @@ module Ibandit
 
         bank_code      = cleaned_acct_number.slice(0, 4)
         account_number = cleaned_acct_number[4..-1]
+      end
+
+      {
+        bank_code:      bank_code,
+        account_number: account_number
+      }
+    end
+
+    def self.clean_pl_details(local_details)
+      # This method supports being passed the component IBAN parts, as defined
+      # by SWIFT, or a single 26 digit string.
+      if local_details[:bank_code]
+        bank_code      = local_details[:bank_code]
+        account_number = local_details[:account_number]
+      else
+        cleaned_acct_number = local_details[:account_number].gsub(/[\s]/, '')
+
+        bank_code      = cleaned_acct_number.slice(2, 8)
+        account_number = cleaned_acct_number[10..-1]
       end
 
       {
