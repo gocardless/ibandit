@@ -1,7 +1,7 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE CY DE DK EE ES FI FR GB GR IE IS IT LT LU
-                                 LV MC MT NL NO PL PT SE SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY DE DK EE ES FI FR GB GR IE IS IT LT
+                                 LU LV MC MT NL NO PL PT RO SE SI SK SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -27,7 +27,7 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'SI', 'SK'
+      when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'RO', 'SI', 'SK'
         %i(bank_code account_number)
       when 'BE', 'DK', 'EE', 'ES', 'SE', 'NO', 'PL', 'IS'
         %i(account_number)
@@ -61,6 +61,11 @@ module Ibandit
         bank_code:      local_details[:bank_code] || account_number.slice(0, 3),
         account_number: account_number
       }
+    end
+
+    def self.clean_bg_details(local_details)
+      # Bulgarian national bank details were replaced with IBANs in 2006.
+      local_details
     end
 
     def self.clean_cy_details(local_details)
@@ -362,6 +367,11 @@ module Ibandit
     end
 
     def self.clean_pt_details(local_details)
+      local_details
+    end
+
+    def self.clean_ro_details(local_details)
+      # Romanian national bank details were replaced with IBANs in 2004.
       local_details
     end
 
