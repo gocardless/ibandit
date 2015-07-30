@@ -84,6 +84,24 @@ module Ibandit
       (scaled_values.inject(:+) % 10).to_s
     end
 
+    # Currently unused in this gem. This method calculates the last digit
+    # of a Hungarian account number when given the initial digits.
+    def self.hungarian(string)
+      weights = [9, 7, 3, 1]
+
+      scaled_values = string.chars.map.with_index do |char, index|
+        unless char.to_i.to_s == char
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
+        end
+
+        char.to_i * weights[index % weights.size]
+      end
+
+      result = 10 - scaled_values.inject(:+) % 10
+      result < 10 ? result.to_s : '0'
+    end
+
     # Currently unused in this gem. This method calculates the penultimate digit
     # of an Icelandic kennitala (included in the account number) when given the
     # first 8 digits.
