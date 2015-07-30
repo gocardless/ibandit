@@ -249,6 +249,13 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "GR16011012500000000012300695"
 
+# Hungary
+iban = Ibandit::IBAN.new(
+  country_code: 'HU',
+  account_number: '11773016-11111018'
+)
+iban.iban                     # => "HU42117730161111101800000000"
+
 # Ireland
 iban = Ibandit::IBAN.new(
   country_code: 'IE',

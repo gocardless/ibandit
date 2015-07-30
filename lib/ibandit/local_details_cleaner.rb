@@ -1,7 +1,8 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY DE DK EE ES FI FR GB GR IE IS IT LT
-                                 LU LV MC MT NL NO PL PT RO SE SI SK SM).freeze
+    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY DE DK EE ES FI FR GB GR HU IE IS IT
+                                 LT LU LV MC MT NL NO PL PT RO SE SI SK
+                                 SM).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
@@ -29,7 +30,7 @@ module Ibandit
       case country_code
       when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'RO', 'SI', 'SK'
         %i(bank_code account_number)
-      when 'BE', 'DK', 'EE', 'ES', 'SE', 'NO', 'PL', 'IS'
+      when 'BE', 'DK', 'EE', 'ES', 'HU', 'IS', 'NO', 'PL', 'SE'
         %i(account_number)
       when 'GB', 'IE', 'MT'
         if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
@@ -230,6 +231,32 @@ module Ibandit
       # Greek IBANs construction is idiosyncratic to the individual banks, and
       # no central specification is published.
       local_details
+    end
+
+    def self.clean_hu_details(local_details)
+      # This method supports being passed the component IBAN parts, as defined
+      # by SWIFT, or a single 16 or 24 digit string.
+      if local_details[:bank_code] || local_details[:branch_code]
+        return local_details
+      end
+
+      cleaned_acct_number = local_details[:account_number].gsub(/[-\s]/, '')
+
+      case cleaned_acct_number.length
+      when 16
+        {
+          bank_code:      cleaned_acct_number.slice(0, 3),
+          branch_code:    cleaned_acct_number.slice(3, 4),
+          account_number: cleaned_acct_number.slice(7, 9).ljust(17, '0')
+        }
+      when 24
+        {
+          bank_code:      cleaned_acct_number.slice(0, 3),
+          branch_code:    cleaned_acct_number.slice(3, 4),
+          account_number: cleaned_acct_number.slice(7, 17)
+        }
+      else local_details
+      end
     end
 
     def self.clean_ie_details(local_details)
