@@ -183,6 +183,13 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "BG80BNBG96611020345678"
 
+# Croatia
+iban = Ibandit::IBAN.new(
+  country_code: 'HR',
+  account_number: '1001005-1863000160',
+)
+iban.iban                     # => "HR1210010051863000160"
+
 # Cyprus
 iban = Ibandit::IBAN.new(
   country_code: 'CY',
@@ -192,13 +199,14 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "CY17002001280000001200527600"
 
-# Germany
+# Czech republic
 iban = Ibandit::IBAN.new(
-  country_code: 'DE',
-  bank_code: '37040044',
-  account_number: '0532013000'
+  country_code: 'CZ',
+  bank_code: '0800',
+  account_number_prefix: '19',
+  account_number: '2000145399'
 )
-iban.iban                     # => "DE89370400440532013000"
+iban.iban                     # => "CZ6508000000192000145399"
 
 # Denmark
 iban = Ibandit::IBAN.new(
@@ -231,14 +239,13 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "FR1420041010050500013M02606"
 
-# United Kingdom
+# Germany
 iban = Ibandit::IBAN.new(
-  country_code: 'GB',
-  bank_code: 'BARC', # optional if a BIC finder is configured
-  branch_code: '200000',
-  account_number: '55779911'
+  country_code: 'DE',
+  bank_code: '37040044',
+  account_number: '0532013000'
 )
-iban.iban                     # => "GB60BARC20000055779911"
+iban.iban                     # => "DE89370400440532013000"
 
 # Greece
 iban = Ibandit::IBAN.new(
@@ -392,15 +399,6 @@ iban.iban                     # => "SI56191000000123438"
 # Spain
 iban = Ibandit::IBAN.new(
   country_code: 'ES',
-  bank_code: '2310',
-  branch_code: '0001',
-  account_number: '180000012345'
-)
-iban.iban                     # => "ES8023100001180000012345"
-
-# Spain with 20 digit account number
-iban = Ibandit::IBAN.new(
-  country_code: 'ES',
   account_number: '23100001180000012345'
 )
 iban.iban                     # => "ES8023100001180000012345"
@@ -411,6 +409,15 @@ iban = Ibandit::IBAN.new(
   account_number: '7507-1211203'
 )
 iban.iban                     # => "SE2680000000075071211203"
+
+# United Kingdom
+iban = Ibandit::IBAN.new(
+  country_code: 'GB',
+  bank_code: 'BARC', # optional if a BIC finder is configured
+  branch_code: '200000',
+  account_number: '55779911'
+)
+iban.iban                     # => "GB60BARC20000055779911"
 ```
 
 ## Other libraries
