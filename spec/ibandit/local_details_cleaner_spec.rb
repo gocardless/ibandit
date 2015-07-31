@@ -152,6 +152,37 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context 'Czech Republic' do
+    let(:country_code) { 'CZ' }
+    let(:bank_code) { '0800' }
+    let(:account_number) { '0000192000145399' }
+
+    it { is_expected.to eq(local_details) }
+
+    context 'with an account number prefix' do
+      let(:prefix) { '000019' }
+      let(:account_number) { '2000145399' }
+      before { local_details.merge!(account_number_prefix: prefix) }
+
+      its([:account_number]) { is_expected.to eq('0000192000145399') }
+
+      context 'which needs zero-padding' do
+        let(:prefix) { '19' }
+        its([:account_number]) { is_expected.to eq('0000192000145399') }
+      end
+    end
+
+    context 'without a bank code' do
+      let(:bank_code) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+
+    context 'without an account number' do
+      let(:account_number) { nil }
+      it { is_expected.to eq(local_details) }
+    end
+  end
+
   context 'Germany' do
     let(:country_code) { 'DE' }
     let(:bank_code) { '37040044' }

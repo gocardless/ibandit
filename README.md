@@ -199,6 +199,15 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "CY17002001280000001200527600"
 
+# Czech republic
+iban = Ibandit::IBAN.new(
+  country_code: 'CZ',
+  bank_code: '0800',
+  account_number_prefix: '19',
+  account_number: '2000145399'
+)
+iban.iban                     # => "CZ6508000000192000145399"
+
 # Denmark
 iban = Ibandit::IBAN.new(
   country_code: 'DK',
@@ -388,15 +397,6 @@ iban = Ibandit::IBAN.new(
 iban.iban                     # => "SI56191000000123438"
 
 # Spain
-iban = Ibandit::IBAN.new(
-  country_code: 'ES',
-  bank_code: '2310',
-  branch_code: '0001',
-  account_number: '180000012345'
-)
-iban.iban                     # => "ES8023100001180000012345"
-
-# Spain with 20 digit account number
 iban = Ibandit::IBAN.new(
   country_code: 'ES',
   account_number: '23100001180000012345'

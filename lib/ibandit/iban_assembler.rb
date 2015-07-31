@@ -1,7 +1,7 @@
 module Ibandit
   module IBANAssembler
-    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY DE DK EE ES FI FR GB GR HR HU IE IS
-                                 IT LT LU LV MC MT NL NO PL PT RO SE SI SK
+    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY CZ DE DK EE ES FI FR GB GR HR HU IE
+                                 IS IT LT LU LV MC MT NL NO PL PT RO SE SI SK
                                  SM).freeze
 
     EXCEPTION_COUNTRY_CODES = %w(IT SM BE).freeze
@@ -85,7 +85,7 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when *%w(AT CY DE DK EE FI HR IS LT LU LV NL NO PL RO SE SI SK)
+      when *%w(AT CY CZ DE DK EE FI HR IS LT LU LV NL NO PL RO SE SI SK)
         %i(bank_code account_number)
       when 'BE'
         %i(account_number)
@@ -100,7 +100,7 @@ module Ibandit
       when 'BE' then %i(bank_code account_number)
       when 'CY' then %i(bank_code branch_code account_number)
       when 'IT' then %i(bank_code branch_code account_number check_digit)
-      when 'SK' then %i(bank_code account_number account_number_prefix)
+      when 'CZ', 'SK' then %i(bank_code account_number account_number_prefix)
       else required_fields(country_code)
       end
     end
