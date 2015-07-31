@@ -199,7 +199,7 @@ iban = Ibandit::IBAN.new(
 )
 iban.iban                     # => "CY17002001280000001200527600"
 
-# Czech republic
+# Czech Republic
 iban = Ibandit::IBAN.new(
   country_code: 'CZ',
   bank_code: '0800',
