@@ -102,6 +102,23 @@ module Ibandit
       result < 10 ? result.to_s : '0'
     end
 
+    # Currently unused in this gem. This method calculates the last digit
+    # of a Croatian account number when given the initial digits.
+    def self.croatian(string)
+      calculation =  string.chars.map.reduce(10) do |total, char|
+        unless char.to_i.to_s == char
+          raise InvalidCharacterError,
+                "Unexpected non-numeric character '#{char}'"
+        end
+
+        calc = (char.to_i + total) % 10
+        calc = calc == 0 ? 10 : calc
+        (calc * 2) % 11
+      end
+
+      ((11 - calculation) % 10).to_s
+    end
+
     # Currently unused in this gem. This method calculates the penultimate digit
     # of an Icelandic kennitala (included in the account number) when given the
     # first 8 digits.
