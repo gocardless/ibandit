@@ -1,4 +1,4 @@
-## Unreleased
+## 0.6.6 - July 31, 2015
 - Add Croatia to LocalDetailsCleaner and IBANAssembler
 - Add Czech Republic to LocalDetailsCleaner and IBANAssembler
 
