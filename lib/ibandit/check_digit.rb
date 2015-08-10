@@ -213,7 +213,7 @@ module Ibandit
     # Currently unused in this gem. This method calculates the last digit
     # of a Finnish account number when given the initial digits (in electronic
     # format).
-    def self.lund(string)
+    def self.luhn(string)
       weights = [2, 1]
 
       scaled_values = string.reverse.chars.map.with_index do |char, index|

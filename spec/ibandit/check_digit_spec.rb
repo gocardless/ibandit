@@ -51,8 +51,8 @@ describe Ibandit::CheckDigit do
     end
   end
 
-  describe '.lund' do
-    subject { described_class.lund(account_number) }
+  describe '.luhn' do
+    subject { described_class.luhn(account_number) }
 
     let(:account_number) { '1200300002088' }
     it { is_expected.to eq('3') }
