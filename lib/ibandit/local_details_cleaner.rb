@@ -7,6 +7,8 @@ module Ibandit
     def self.clean(local_details)
       country_code = local_details[:country_code]
 
+      local_details = swift_details_for(local_details).merge(local_details)
+
       return local_details unless can_clean?(country_code, local_details)
 
       local_details.merge(
@@ -477,5 +479,14 @@ module Ibandit
       hufo + reikningsnumer + kennitala
     end
     private_class_method :pad_is_account_number
+
+    def self.swift_details_for(local_details)
+      {
+        swift_bank_code:      local_details[:bank_code],
+        swift_branch_code:    local_details[:branch_code],
+        swift_account_number: local_details[:account_number]
+      }
+    end
+    private_class_method :swift_details_for
   end
 end

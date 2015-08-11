@@ -49,6 +49,9 @@ describe Ibandit::IBAN do
     its(:bank_code) { is_expected.to eq('WEST') }
     its(:branch_code) { is_expected.to eq('123456') }
     its(:account_number) { is_expected.to eq('98765432') }
+    its(:swift_bank_code) { is_expected.to eq('WEST') }
+    its(:swift_branch_code) { is_expected.to eq('123456') }
+    its(:swift_account_number) { is_expected.to eq('98765432') }
     its(:iban_national_id) { is_expected.to eq('WEST123456') }
     its(:local_check_digits) { is_expected.to be_nil }
 
@@ -79,6 +82,9 @@ describe Ibandit::IBAN do
       its(:bank_code) { is_expected.to eq(arg[:bank_code]) }
       its(:branch_code) { is_expected.to eq(arg[:branch_code]) }
       its(:account_number) { is_expected.to eq(arg[:account_number]) }
+      its(:swift_bank_code) { is_expected.to eq(arg[:bank_code]) }
+      its(:swift_branch_code) { is_expected.to eq(arg[:branch_code]) }
+      its(:swift_account_number) { is_expected.to eq(arg[:account_number]) }
     end
   end
 
@@ -358,7 +364,7 @@ describe Ibandit::IBAN do
     end
 
     context 'with invalid details' do
-      before { allow(iban).to receive(:bank_code).and_return('WES') }
+      before { allow(iban).to receive(:swift_bank_code).and_return('WES') }
       it { is_expected.to eq(false) }
 
       context 'locale en', locale: :en do
@@ -444,7 +450,7 @@ describe Ibandit::IBAN do
     end
 
     context 'with invalid details' do
-      before { allow(iban).to receive(:branch_code).and_return('12345') }
+      before { allow(iban).to receive(:swift_branch_code).and_return('12345') }
       it { is_expected.to eq(false) }
 
       context 'locale en', locale: :en do
@@ -512,7 +518,7 @@ describe Ibandit::IBAN do
     end
 
     context 'without a branch code' do
-      before { allow(iban).to receive(:branch_code).and_return(nil) }
+      before { allow(iban).to receive(:swift_branch_code).and_return(nil) }
       it { is_expected.to eq(false) }
 
       context 'locale en', locale: :en do
@@ -584,7 +590,9 @@ describe Ibandit::IBAN do
     end
 
     context 'with an invalid account_number' do
-      before { allow(iban).to receive(:account_number).and_return('1234567') }
+      before do
+        allow(iban).to receive(:swift_account_number).and_return('1234567')
+      end
       it { is_expected.to eq(false) }
 
       context 'locale en', locale: :en do
