@@ -34,8 +34,7 @@ module Ibandit
       }
     end
 
-    def self.valid_bank_code?(bank_code: bank_code,
-                              account_number: account_number)
+    def self.valid_bank_code?(bank_code: nil, account_number: nil)
       possible_bank_infos = possible_bank_info_for(
         bank_code: bank_code, account_number: account_number
       )
@@ -43,7 +42,7 @@ module Ibandit
       possible_bank_infos.any?
     end
 
-    def self.valid_length?(bank_code: bank_code, account_number: account_number)
+    def self.valid_length?(bank_code: nil, account_number: nil)
       return unless valid_bank_code?(
         bank_code: bank_code, account_number: account_number
       )
@@ -75,8 +74,7 @@ module Ibandit
     end
     private_class_method :bank_info_for
 
-    def self.possible_bank_info_for(bank_code: bank_code,
-                                    account_number: account_number)
+    def self.possible_bank_info_for(bank_code: nil, account_number: nil)
       clearing_number = account_number.gsub(/\A0+/, '').slice(0, 4).to_i
 
       possible_bank_infos = bank_info_table.select do |bank|
