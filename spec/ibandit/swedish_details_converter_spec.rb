@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Ibandit::SwedishDetailsConverter do
+  subject(:converter) { described_class.new(account_number) }
+
   describe '.convert' do
-    subject { described_class.convert(account_number) }
+    subject { converter.convert }
 
     context 'with a type-1 account number' do
       let(:account_number) { '12810105723' }
