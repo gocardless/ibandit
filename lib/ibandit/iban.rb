@@ -2,8 +2,8 @@ require 'yaml'
 
 module Ibandit
   class IBAN
-    attr_reader :errors, :iban,  :country_code, :check_digits, :bank_code,
-                :branch_code, :account_number
+    attr_reader :errors, :iban, :country_code, :check_digits, :swift_bank_code,
+                :swift_branch_code, :swift_account_number
 
     def initialize(argument)
       if argument.is_a?(String)
@@ -30,11 +30,23 @@ module Ibandit
     # Component parts #
     ###################
 
+    def bank_code
+      @bank_code || @swift_bank_code
+    end
+
+    def branch_code
+      @branch_code || @swift_branch_code
+    end
+
+    def account_number
+      @account_number || @swift_account_number
+    end
+
     def iban_national_id
       return unless decomposable?
 
-      national_id = bank_code.to_s
-      national_id += branch_code.to_s
+      national_id = swift_bank_code.to_s
+      national_id += swift_branch_code.to_s
       national_id.slice(0, structure[:iban_national_id_length])
     end
 
@@ -115,12 +127,12 @@ module Ibandit
     def valid_bank_code_length?
       return unless valid_country_code?
 
-      if bank_code.nil? || bank_code.length == 0
+      if swift_bank_code.nil? || swift_bank_code.length == 0
         @errors[:bank_code] = Ibandit.translate(:is_required)
         return false
       end
 
-      return true if bank_code.length == structure[:bank_code_length]
+      return true if swift_bank_code.length == structure[:bank_code_length]
 
       @errors[:bank_code] =
         Ibandit.translate(:wrong_length, expected: structure[:bank_code_length])
@@ -129,12 +141,14 @@ module Ibandit
 
     def valid_branch_code_length?
       return unless valid_country_code?
-      return true if branch_code.to_s.length == structure[:branch_code_length]
+      if swift_branch_code.to_s.length == structure[:branch_code_length]
+        return true
+      end
 
       if structure[:branch_code_length] == 0
         @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
                                                   country_code: country_code)
-      elsif branch_code.nil? || branch_code.length == 0
+      elsif swift_branch_code.nil? || swift_branch_code.length == 0
         @errors[:branch_code] = Ibandit.translate(:is_required)
       else
         @errors[:branch_code] =
@@ -147,12 +161,14 @@ module Ibandit
     def valid_account_number_length?
       return unless valid_country_code?
 
-      if account_number.nil?
+      if swift_account_number.nil?
         @errors[:account_number] = Ibandit.translate(:is_required)
         return false
       end
 
-      return true if account_number.length == structure[:account_number_length]
+      if swift_account_number.length == structure[:account_number_length]
+        return true
+      end
 
       @errors[:account_number] =
         Ibandit.translate(:wrong_length,
@@ -187,7 +203,7 @@ module Ibandit
     def valid_bank_code_format?
       return unless valid_bank_code_length?
 
-      if bank_code =~ Regexp.new(structure[:bank_code_format])
+      if swift_bank_code =~ Regexp.new(structure[:bank_code_format])
         true
       else
         @errors[:bank_code] = Ibandit.translate(:is_invalid)
@@ -199,7 +215,7 @@ module Ibandit
       return unless valid_branch_code_length?
       return true unless structure[:branch_code_format]
 
-      if branch_code =~ Regexp.new(structure[:branch_code_format])
+      if swift_branch_code =~ Regexp.new(structure[:branch_code_format])
         true
       else
         @errors[:branch_code] = Ibandit.translate(:is_invalid)
@@ -210,7 +226,7 @@ module Ibandit
     def valid_account_number_format?
       return unless valid_account_number_length?
 
-      if account_number =~ Regexp.new(structure[:account_number_format])
+      if swift_account_number =~ Regexp.new(structure[:account_number_format])
         true
       else
         @errors[:account_number] = Ibandit.translate(:is_invalid)
@@ -242,8 +258,8 @@ module Ibandit
       begin
         GermanDetailsConverter.convert(
           country_code: country_code,
-          bank_code: bank_code,
-          account_number: account_number
+          bank_code: swift_bank_code,
+          account_number: swift_account_number
         )
         true
       rescue UnsupportedAccountDetails
@@ -255,7 +271,10 @@ module Ibandit
     def valid_swedish_details?
       return true unless country_code == 'SE'
 
-      bank_details = { bank_code: bank_code, account_number: account_number }
+      bank_details = {
+        bank_code: swift_bank_code,
+        account_number: swift_account_number
+      }
 
       unless SwedishDetailsConverter.valid_bank_code?(bank_details)
         bank_code_field = bank_code.nil? ? :account_number : :bank_code
@@ -279,28 +298,33 @@ module Ibandit
     private
 
     def decomposable?
-      [iban, country_code, bank_code, account_number].none?(&:nil?)
+      [iban, country_code, swift_bank_code, swift_account_number].none?(&:nil?)
     end
 
     def build_iban_from_local_details(details_hash)
       local_details = LocalDetailsCleaner.clean(details_hash)
 
-      @country_code   = try_dup(local_details[:country_code])
-      @account_number = try_dup(local_details[:account_number])
-      @branch_code    = try_dup(local_details[:branch_code])
-      @bank_code      = try_dup(local_details[:bank_code])
-      @iban           = IBANAssembler.assemble(local_details)
-      @check_digits   = @iban.slice(2, 2) unless @iban.nil?
+      @country_code         = try_dup(local_details[:country_code])
+      @account_number       = try_dup(local_details[:account_number])
+      @branch_code          = try_dup(local_details[:branch_code])
+      @bank_code            = try_dup(local_details[:bank_code])
+
+      @swift_account_number = try_dup(local_details[:swift_account_number])
+      @swift_branch_code    = try_dup(local_details[:swift_branch_code])
+      @swift_bank_code      = try_dup(local_details[:swift_bank_code])
+
+      @iban                 = IBANAssembler.assemble(swift_details)
+      @check_digits         = @iban.slice(2, 2) unless @iban.nil?
     end
 
     def extract_local_details_from_iban!
       local_details = IBANSplitter.split(@iban)
 
-      @country_code   = local_details[:country_code]
-      @check_digits   = local_details[:check_digits]
-      @bank_code      = local_details[:bank_code]
-      @branch_code    = local_details[:branch_code]
-      @account_number = local_details[:account_number]
+      @country_code         = local_details[:country_code]
+      @check_digits         = local_details[:check_digits]
+      @swift_bank_code      = local_details[:bank_code]
+      @swift_branch_code    = local_details[:branch_code]
+      @swift_account_number = local_details[:account_number]
     end
 
     def try_dup(object)
@@ -338,6 +362,15 @@ module Ibandit
       else
         :bank_code
       end
+    end
+
+    def swift_details
+      {
+        country_code: @country_code,
+        account_number: @swift_account_number,
+        branch_code: @swift_branch_code,
+        bank_code: @swift_bank_code
+      }
     end
   end
 end

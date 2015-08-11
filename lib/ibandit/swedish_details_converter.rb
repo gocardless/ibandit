@@ -7,8 +7,8 @@ module Ibandit
       bank_info = bank_info_for(cleaned_account_number.slice(0, 4))
 
       if bank_info.nil?
-        return { bank_code: nil,
-                 account_number: cleaned_account_number.rjust(17, '0') }
+        return { swift_bank_code: nil,
+                 swift_account_number: cleaned_account_number.rjust(17, '0') }
       end
 
       clearing_code_length = bank_info.fetch(:clearing_code_length)
@@ -21,16 +21,14 @@ module Ibandit
         serial_number = serial_number.rjust(serial_number_length, '0')
       end
 
-      iban_account_number =
-        if bank_info.fetch(:include_clearing_code)
-          (clearing_code + serial_number).rjust(17, '0')
-        else
-          serial_number.rjust(17, '0')
-        end
-
+      swift_account_number = build_swift_account_number(bank_info,
+                                                        clearing_code,
+                                                        serial_number)
       {
-        bank_code: bank_info.fetch(:bank_code).to_s,
-        account_number: iban_account_number
+        account_number: serial_number,
+        branch_code: clearing_code,
+        swift_bank_code: bank_info.fetch(:bank_code).to_s,
+        swift_account_number: swift_account_number
       }
     end
 
@@ -97,5 +95,14 @@ module Ibandit
         end
     end
     private_class_method :bank_info_table
+
+    def self.build_swift_account_number(bank_info, clearing_code, serial_number)
+      if bank_info.fetch(:include_clearing_code)
+        (clearing_code + serial_number).rjust(17, '0')
+      else
+        serial_number.rjust(17, '0')
+      end
+    end
+    private_class_method :build_swift_account_number
   end
 end

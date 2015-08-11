@@ -97,13 +97,13 @@ county combines them:
 `check_digits`
 :    Two digits calculated using part of the ISO/IEC 7064:2003 standard
 
-`bank_code`
+`swift_bank_code`
 :    The SWIFT identifier for the bank to which the IBAN refers
 
-`branch_code`
+`swift_branch_code`
 :    The SWIFT identifer for the branch to which the IBAN refers (not used in all countries)
 
-`account_number`
+`swift_account_number`
 :    The account number for the account
 
 `iban_national_id`
@@ -116,9 +116,9 @@ iban = Ibandit::IBAN.new("GB82 WEST 1234 5698 7654 32")
 
 iban.country_code              # => "GB"
 iban.check_digits              # => "82"
-iban.bank_code                 # => "WEST"
-iban.branch_code               # => "123456"
-iban.account_number            # => "98765432"
+iban.swift_bank_code           # => "WEST"
+iban.swift_branch_code         # => "123456"
+iban.swift_account_number      # => "98765432"
 iban.iban_national_id          # => "WEST123456"
 ```
 
@@ -129,6 +129,23 @@ These are available through a `local_check_digits` method:
 iban = Ibandit::IBAN.new("ES12 1234 5678 9112 3456 7890")
 
 iban.local_check_digits        # => "91"
+```
+
+In some countries, the SWIFT-defined details differ from the local details that
+customers are familiar with.  For this reason, there are also `bank_code`,
+`branch_code` and `account_number` methods on an `IBAN` object.  At present,
+these only differ from the `swift_` equivalents for Swedish bank accounts.
+
+```ruby
+iban = Ibandit::IBAN.new(
+  country_code: 'SE',
+  account_number: '7507-1211203'
+)
+iban.swift_account_number      # => "75071211203"
+iban.account_number            # => "1211203"
+
+iban.swift_branch_code         # => nil
+iban.branch_code               # => "7507"
 ```
 
 ### Initializing Ibandit
