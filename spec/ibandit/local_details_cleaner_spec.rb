@@ -955,19 +955,22 @@ describe Ibandit::LocalDetailsCleaner do
     let(:bank_code) { '501' }
     let(:account_number) { '5013-1007270' }
 
-    its([:bank_code]) { is_expected.to eq('501') }
-    its([:account_number]) { is_expected.to eq('00000050131007270') }
+    its([:account_number]) { is_expected.to eq('1007270') }
+    its([:branch_code]) { is_expected.to eq('5013') }
+    its([:swift_bank_code]) { is_expected.to eq('501') }
+    its([:swift_account_number]) { is_expected.to eq('00000050131007270') }
 
     context 'without an account number' do
       let(:account_number) { nil }
-      it { is_expected.to eq(local_details_with_swift) }
+      it { is_expected.to eq(local_details) }
     end
 
     context 'without a bank code' do
       let(:bank_code) { nil }
 
-      its([:bank_code]) { is_expected.to eq('500') }
-      its([:account_number]) { is_expected.to eq('00000050131007270') }
+      its([:swift_bank_code]) { is_expected.to eq('500') }
+      its([:account_number]) { is_expected.to eq('1007270') }
+      its([:swift_account_number]) { is_expected.to eq('00000050131007270') }
     end
   end
 

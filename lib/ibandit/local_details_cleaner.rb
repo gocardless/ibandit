@@ -3,11 +3,14 @@ module Ibandit
     SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY CZ DE DK EE ES FI FR GB GR HR HU IE
                                  IS IT LT LU LV MC MT NL NO PL PT RO SE SI SK
                                  SM).freeze
+    EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES = %w(SE).freeze
 
     def self.clean(local_details)
       country_code = local_details[:country_code]
 
-      local_details = swift_details_for(local_details).merge(local_details)
+      unless explicit_swift_details?(country_code)
+        local_details = swift_details_for(local_details).merge(local_details)
+      end
 
       return local_details unless can_clean?(country_code, local_details)
 
@@ -22,6 +25,10 @@ module Ibandit
     def self.can_clean?(country_code, local_details)
       SUPPORTED_COUNTRY_CODES.include?(country_code) &&
         fields_for?(country_code, local_details)
+    end
+
+    def self.explicit_swift_details?(country_code)
+      EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES.include?(country_code)
     end
 
     def self.fields_for?(country_code, opts)
@@ -442,11 +449,14 @@ module Ibandit
       converted_details =
         SwedishDetailsConverter.convert(local_details[:account_number])
 
-      bank_code = local_details[:bank_code] || converted_details[:bank_code]
+      bank_code = local_details[:bank_code] ||
+                  converted_details[:swift_bank_code]
 
       {
-        bank_code:      bank_code,
-        account_number: converted_details[:account_number]
+        account_number:       converted_details[:account_number],
+        branch_code:          converted_details[:branch_code],
+        swift_bank_code:      bank_code,
+        swift_account_number: converted_details[:swift_account_number]
       }
     end
 
