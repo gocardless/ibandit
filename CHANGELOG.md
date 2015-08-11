@@ -1,5 +1,5 @@
-## Unreleased
-- Rename `CheckDigit.lund` to `CheckDigit.luhn`
+## 0.7.0 - August 11, 2015
+- Remove all unused `CheckDigit` methods
 
 ## 0.6.6 - July 31, 2015
 - Add Croatia to LocalDetailsCleaner and IBANAssembler
