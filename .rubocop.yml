@@ -39,5 +39,9 @@ Style/AsciiComments:
 Metrics/MethodLength:
   Max: 25
 
+# Configuration parameters: CountComments.
+Metrics/ModuleLength:
+  Max: 400
+
 Style/DotPosition:
   EnforcedStyle: 'trailing'
