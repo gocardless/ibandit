@@ -1,10 +1,5 @@
 module Ibandit
   module LocalDetailsCleaner
-    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY CZ DE DK EE ES FI FR GB GR HR HU IE
-                                 IS IT LT LU LV MC MT NL NO PL PT RO SE SI SK
-                                 SM).freeze
-    EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES = %w(SE).freeze
-
     def self.clean(local_details)
       country_code = local_details[:country_code]
 
@@ -23,12 +18,12 @@ module Ibandit
     ###########
 
     def self.can_clean?(country_code, local_details)
-      SUPPORTED_COUNTRY_CODES.include?(country_code) &&
+      Constants::SUPPORTED_COUNTRY_CODES.include?(country_code) &&
         fields_for?(country_code, local_details)
     end
 
     def self.explicit_swift_details?(country_code)
-      EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES.include?(country_code)
+      Constants::EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES.include?(country_code)
     end
 
     def self.fields_for?(country_code, opts)

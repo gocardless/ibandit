@@ -1,6 +1,7 @@
 require 'i18n'
 require 'ibandit/version'
 require 'ibandit/errors'
+require 'ibandit/constants'
 require 'ibandit/iban'
 require 'ibandit/german_details_converter'
 require 'ibandit/swedish_details_converter'
