@@ -1,6 +1,7 @@
 module Ibandit
   class SwedishDetailsConverter
-    def initialize(account_number)
+    def initialize(branch_code: nil, account_number: nil)
+      @branch_code = branch_code
       @account_number = account_number
     end
 
@@ -21,14 +22,35 @@ module Ibandit
     private
 
     def cleaned_account_number
-      @cleaned_account_number ||= @account_number.
-                                  gsub(/[-.\s]/, '').
-                                  gsub(/\A0+/, '')
+      # Don't trim leading zeroes if the account number we are given is a
+      # serial number (i.e. if the clearing code is separate).
+      @cleaned_account_number ||= if @branch_code.nil?
+                                    clean_account_number(@account_number)
+                                  else
+                                    remove_bad_chars(@account_number)
+                                  end
+    end
+
+    def cleaned_branch_code
+      @cleaned_branch_code ||= remove_bad_chars(@branch_code)
+    end
+
+    def remove_bad_chars(number)
+      return if number.nil?
+      number.gsub(/[-.\s]/, '')
+    end
+
+    def clean_account_number(number)
+      return if number.nil?
+      remove_bad_chars(number).gsub(/\A0+/, '')
     end
 
     def bank_info
-      @bank_info ||= self.class.bank_info_for(
-        cleaned_account_number.slice(0, 4))
+      @bank_info ||= self.class.bank_info_for(bank_info_key)
+    end
+
+    def bank_info_key
+      (cleaned_branch_code || cleaned_account_number).slice(0, 4)
     end
 
     def clearing_code_length
@@ -40,11 +62,17 @@ module Ibandit
     end
 
     def clearing_code
-      cleaned_account_number.slice(0, clearing_code_length)
+      cleaned_branch_code ||
+        cleaned_account_number.slice(0, clearing_code_length)
     end
 
     def serial_number
-      serial_number = cleaned_account_number[clearing_code_length..-1]
+      serial_number = if @branch_code.nil?
+                        cleaned_account_number[clearing_code_length..-1]
+                      else
+                        cleaned_account_number
+                      end
+
       return serial_number unless bank_info.fetch(:zerofill_serial_number)
 
       serial_number.rjust(serial_number_length, '0')
