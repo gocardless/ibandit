@@ -1,9 +1,5 @@
 module Ibandit
   module IBANAssembler
-    SUPPORTED_COUNTRY_CODES = %w(AT BE BG CY CZ DE DK EE ES FI FR GB GR HR HU IE
-                                 IS IT LT LU LV MC MT NL NO PL PT RO SE SI SK
-                                 SM).freeze
-
     EXCEPTION_COUNTRY_CODES = %w(IT SM BE).freeze
 
     def self.assemble(local_details)
@@ -67,8 +63,11 @@ module Ibandit
     ##################
 
     def self.can_assemble?(local_details)
-      SUPPORTED_COUNTRY_CODES.include?(local_details[:country_code]) &&
-        valid_arguments?(local_details)
+      supported_country_code?(local_details) && valid_arguments?(local_details)
+    end
+
+    def self.supported_country_code?(local_details)
+      Constants::SUPPORTED_COUNTRY_CODES.include?(local_details[:country_code])
     end
 
     def self.valid_arguments?(local_details)

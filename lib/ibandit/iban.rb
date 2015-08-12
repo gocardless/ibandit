@@ -2,13 +2,14 @@ require 'yaml'
 
 module Ibandit
   class IBAN
-    attr_reader :errors, :iban, :country_code, :check_digits, :swift_bank_code,
+    attr_reader :errors, :iban, :country_code, :check_digits, :bank_code,
+                :branch_code, :account_number, :swift_bank_code,
                 :swift_branch_code, :swift_account_number
 
     def initialize(argument)
       if argument.is_a?(String)
         @iban = argument.to_s.gsub(/\s+/, '').upcase
-        extract_local_details_from_iban!
+        extract_swift_details_from_iban!
       elsif argument.is_a?(Hash)
         build_iban_from_local_details(argument)
       else
@@ -29,18 +30,6 @@ module Ibandit
     ###################
     # Component parts #
     ###################
-
-    def bank_code
-      @bank_code || @swift_bank_code
-    end
-
-    def branch_code
-      @branch_code || @swift_branch_code
-    end
-
-    def account_number
-      @account_number || @swift_account_number
-    end
 
     def iban_national_id
       return unless decomposable?
@@ -317,14 +306,22 @@ module Ibandit
       @check_digits         = @iban.slice(2, 2) unless @iban.nil?
     end
 
-    def extract_local_details_from_iban!
-      local_details = IBANSplitter.split(@iban)
+    def extract_swift_details_from_iban!
+      swift_details = IBANSplitter.split(@iban)
 
-      @country_code         = local_details[:country_code]
-      @check_digits         = local_details[:check_digits]
-      @swift_bank_code      = local_details[:bank_code]
-      @swift_branch_code    = local_details[:branch_code]
-      @swift_account_number = local_details[:account_number]
+      @country_code         = swift_details[:country_code]
+      @check_digits         = swift_details[:check_digits]
+
+      @swift_bank_code      = swift_details[:bank_code]
+      @swift_branch_code    = swift_details[:branch_code]
+      @swift_account_number = swift_details[:account_number]
+
+      return if Constants::EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES.
+                include?(@country_code)
+
+      @bank_code      = swift_details[:bank_code]
+      @branch_code    = swift_details[:branch_code]
+      @account_number = swift_details[:account_number]
     end
 
     def try_dup(object)

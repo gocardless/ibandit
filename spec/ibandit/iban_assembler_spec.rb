@@ -6,9 +6,9 @@ describe Ibandit::IBANAssembler do
     let(:args) do
       {
         country_code:   iban.country_code,
-        account_number: iban.account_number,
-        branch_code:    iban.branch_code,
-        bank_code:      iban.bank_code
+        account_number: iban.swift_account_number,
+        branch_code:    iban.swift_branch_code,
+        bank_code:      iban.swift_bank_code
       }.reject { |_key, value| value.nil? }
     end
 

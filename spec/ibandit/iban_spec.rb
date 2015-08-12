@@ -68,6 +68,21 @@ describe Ibandit::IBAN do
       its(:local_check_digits) { is_expected.to be_nil }
     end
 
+    context 'when local details are not available' do
+      let(:iban_code) { 'SE2680000000075071211203' }
+
+      its(:country_code) { is_expected.to eq('SE') }
+      its(:check_digits) { is_expected.to eq('26') }
+      its(:bank_code) { is_expected.to be_nil }
+      its(:branch_code) { is_expected.to be_nil }
+      its(:account_number) { is_expected.to be_nil }
+      its(:swift_bank_code) { is_expected.to eq('800') }
+      its(:swift_branch_code) { is_expected.to be_nil }
+      its(:swift_account_number) { is_expected.to eq('00000075071211203') }
+      its(:iban_national_id) { is_expected.to eq('800') }
+      its(:local_check_digits) { is_expected.to be_nil }
+    end
+
     context 'when the IBAN was created with local details' do
       let(:arg) do
         {
