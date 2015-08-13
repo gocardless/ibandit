@@ -441,8 +441,10 @@ module Ibandit
     end
 
     def self.clean_se_details(local_details)
-      converted_details =
-        SwedishDetailsConverter.convert(local_details[:account_number])
+      converted_details = SwedishDetailsConverter.new(
+        branch_code: local_details[:branch_code],
+        account_number: local_details[:account_number]
+      ).convert
 
       bank_code = local_details[:bank_code] ||
                   converted_details[:swift_bank_code]

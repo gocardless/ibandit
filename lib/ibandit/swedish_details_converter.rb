@@ -1,35 +1,89 @@
 module Ibandit
-  module SwedishDetailsConverter
-    def self.convert(account_number)
-      cleaned_account_number =
-        account_number.gsub(/[-.\s]/, '').gsub(/\A0+/, '')
+  class SwedishDetailsConverter
+    def initialize(branch_code: nil, account_number: nil)
+      @branch_code = branch_code
+      @account_number = account_number
+    end
 
-      bank_info = bank_info_for(cleaned_account_number.slice(0, 4))
-
+    def convert
       if bank_info.nil?
         return { swift_bank_code: nil,
                  swift_account_number: cleaned_account_number.rjust(17, '0') }
       end
 
-      clearing_code_length = bank_info.fetch(:clearing_code_length)
-      serial_number_length = bank_info.fetch(:serial_number_length)
-
-      clearing_code = cleaned_account_number.slice(0, clearing_code_length)
-      serial_number = cleaned_account_number[clearing_code_length..-1]
-
-      if bank_info.fetch(:zerofill_serial_number)
-        serial_number = serial_number.rjust(serial_number_length, '0')
-      end
-
-      swift_account_number = build_swift_account_number(bank_info,
-                                                        clearing_code,
-                                                        serial_number)
       {
         account_number: serial_number,
         branch_code: clearing_code,
         swift_bank_code: bank_info.fetch(:bank_code).to_s,
         swift_account_number: swift_account_number
       }
+    end
+
+    private
+
+    def cleaned_account_number
+      # Don't trim leading zeroes if the account number we are given is a
+      # serial number (i.e. if the clearing code is separate).
+      @cleaned_account_number ||= if @branch_code.nil?
+                                    clean_account_number(@account_number)
+                                  else
+                                    remove_bad_chars(@account_number)
+                                  end
+    end
+
+    def cleaned_branch_code
+      @cleaned_branch_code ||= remove_bad_chars(@branch_code)
+    end
+
+    def remove_bad_chars(number)
+      return if number.nil?
+      number.gsub(/[-.\s]/, '')
+    end
+
+    def clean_account_number(number)
+      return if number.nil?
+      remove_bad_chars(number).gsub(/\A0+/, '')
+    end
+
+    def bank_info
+      @bank_info ||= self.class.bank_info_for(bank_info_key)
+    end
+
+    def bank_info_key
+      (cleaned_branch_code || cleaned_account_number).slice(0, 4)
+    end
+
+    def clearing_code_length
+      bank_info.fetch(:clearing_code_length)
+    end
+
+    def serial_number_length
+      bank_info.fetch(:serial_number_length)
+    end
+
+    def clearing_code
+      cleaned_branch_code ||
+        cleaned_account_number.slice(0, clearing_code_length)
+    end
+
+    def serial_number
+      serial_number = if @branch_code.nil?
+                        cleaned_account_number[clearing_code_length..-1]
+                      else
+                        cleaned_account_number
+                      end
+
+      return serial_number unless bank_info.fetch(:zerofill_serial_number)
+
+      serial_number.rjust(serial_number_length, '0')
+    end
+
+    def swift_account_number
+      if bank_info.fetch(:include_clearing_code)
+        (clearing_code + serial_number).rjust(17, '0')
+      else
+        serial_number.rjust(17, '0')
+      end
     end
 
     def self.valid_bank_code?(bank_code: nil, account_number: nil)
@@ -65,12 +119,9 @@ module Ibandit
       end
     end
 
-    private
-
     def self.bank_info_for(clearing_code)
       bank_info_table.find { |bank| bank[:range].include?(clearing_code.to_i) }
     end
-    private_class_method :bank_info_for
 
     def self.possible_bank_info_for(bank_code: nil, account_number: nil)
       clearing_number = account_number.gsub(/\A0+/, '').slice(0, 4).to_i
@@ -95,14 +146,5 @@ module Ibandit
         end
     end
     private_class_method :bank_info_table
-
-    def self.build_swift_account_number(bank_info, clearing_code, serial_number)
-      if bank_info.fetch(:include_clearing_code)
-        (clearing_code + serial_number).rjust(17, '0')
-      else
-        serial_number.rjust(17, '0')
-      end
-    end
-    private_class_method :build_swift_account_number
   end
 end

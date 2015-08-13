@@ -1,8 +1,15 @@
 require 'spec_helper'
 
 describe Ibandit::SwedishDetailsConverter do
+  subject(:converter) do
+    described_class.new(account_number: account_number,
+                        branch_code: branch_code)
+  end
+
+  let(:branch_code) { nil }
+
   describe '.convert' do
-    subject { described_class.convert(account_number) }
+    subject { converter.convert }
 
     context 'with a type-1 account number' do
       let(:account_number) { '12810105723' }
@@ -14,6 +21,16 @@ describe Ibandit::SwedishDetailsConverter do
 
       context 'that includes hyphens' do
         let(:account_number) { '1281-0105723' }
+
+        its([:account_number]) { is_expected.to eq('0105723') }
+        its([:branch_code]) { is_expected.to eq('1281') }
+        its([:swift_bank_code]) { is_expected.to eq('120') }
+        its([:swift_account_number]) { is_expected.to eq('00000012810105723') }
+      end
+
+      context 'with a separate branch code' do
+        let(:branch_code) { '1281' }
+        let(:account_number) { '0105723' }
 
         its([:account_number]) { is_expected.to eq('0105723') }
         its([:branch_code]) { is_expected.to eq('1281') }
@@ -64,6 +81,18 @@ describe Ibandit::SwedishDetailsConverter do
         its([:branch_code]) { is_expected.to eq('5439') }
         its([:swift_bank_code]) { is_expected.to eq('500') }
         its([:swift_account_number]) { is_expected.to eq('00000054391024039') }
+
+        context 'with a separate branch code' do
+          let(:branch_code) { '5439' }
+          let(:account_number) { '1024039' }
+
+          its([:account_number]) { is_expected.to eq('1024039') }
+          its([:branch_code]) { is_expected.to eq('5439') }
+          its([:swift_bank_code]) { is_expected.to eq('500') }
+          its([:swift_account_number]) do
+            is_expected.to eq('00000054391024039')
+          end
+        end
       end
     end
 
@@ -95,6 +124,16 @@ describe Ibandit::SwedishDetailsConverter do
 
       context 'another in the 8000s range' do
         let(:account_number) { '8201-6 914357963-0' }
+
+        its([:account_number]) { is_expected.to eq('9143579630') }
+        its([:branch_code]) { is_expected.to eq('82016') }
+        its([:swift_bank_code]) { is_expected.to eq('800') }
+        its([:swift_account_number]) { is_expected.to eq('00820169143579630') }
+      end
+
+      context 'with an explicit branch code' do
+        let(:branch_code) { '8201-6' }
+        let(:account_number) { '914357963-0' }
 
         its([:account_number]) { is_expected.to eq('9143579630') }
         its([:branch_code]) { is_expected.to eq('82016') }
