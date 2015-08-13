@@ -23,7 +23,7 @@ module Ibandit
     end
 
     def self.explicit_swift_details?(country_code)
-      Constants::EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES.include?(country_code)
+      Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(country_code)
     end
 
     def self.fields_for?(country_code, opts)

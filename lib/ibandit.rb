@@ -7,6 +7,8 @@ require 'ibandit/german_details_converter'
 require 'ibandit/swedish_details_converter'
 require 'ibandit/iban_splitter'
 require 'ibandit/iban_assembler'
+require 'ibandit/pseudo_iban_assembler'
+require 'ibandit/pseudo_iban_splitter'
 require 'ibandit/local_details_cleaner'
 require 'ibandit/check_digit'
 

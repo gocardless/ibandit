@@ -8,8 +8,15 @@ module Ibandit
 
     def initialize(argument)
       if argument.is_a?(String)
-        @iban = argument.to_s.gsub(/\s+/, '').upcase
-        extract_swift_details_from_iban!
+        input = argument.to_s.gsub(/\s+/, '').upcase
+
+        if pseudo_iban?(input)
+          local_details = PseudoIBANSplitter.new(input).split
+          build_iban_from_local_details(local_details)
+        else
+          @iban = input
+          extract_swift_details_from_iban!
+        end
       elsif argument.is_a?(Hash)
         build_iban_from_local_details(argument)
       else
@@ -50,6 +57,15 @@ module Ibandit
 
     def bban
       iban[4..-1] unless iban.nil?
+    end
+
+    def pseudo_iban
+      @pseudo_iban ||= PseudoIBANAssembler.new(
+        country_code: country_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
+        account_number: account_number
+      ).assemble
     end
 
     ###############
@@ -316,7 +332,7 @@ module Ibandit
       @swift_branch_code    = swift_details[:branch_code]
       @swift_account_number = swift_details[:account_number]
 
-      return if Constants::EXPLICIT_SWIFT_DETAILS_COUNTRY_CODES.
+      return if Constants::PSEUDO_IBAN_COUNTRY_CODES.
                 include?(@country_code)
 
       @bank_code      = swift_details[:bank_code]
@@ -368,6 +384,10 @@ module Ibandit
         branch_code: @swift_branch_code,
         bank_code: @swift_bank_code
       }
+    end
+
+    def pseudo_iban?(input)
+      input.slice(2, 2) == Constants::PSEUDO_IBAN_CHECK_DIGITS
     end
   end
 end

@@ -437,6 +437,31 @@ iban = Ibandit::IBAN.new(
 iban.iban                     # => "GB60BARC20000055779911"
 ```
 
+### Pseudo-IBANs
+
+In some countries, it is not possible to recover local banking details from an
+IBAN.  For this reason, Ibandit has a concept of a *pseudo-IBAN*.  This is a
+string with a similar structure to an IBAN that can be decomposed into local
+banking details.  Pseudo-IBANs can be recognized by the fact that they have `ZZ`
+as the third and fourth characters (these would be check digits for a regular
+IBAN).
+
+```
+iban = Ibandit::IBAN.new(
+  country_code: 'SE',
+  branch_code: '7507',
+  account_number: '1211203'
+)
+iban.pseudo_iban              # => "SEZZX7507XXX1211203"
+
+iban = Ibandit::IBAN.new('SEZZX7507XXX1211203')
+iban.country_code             # => "SE"
+iban.branch_code              # => "7507"
+iban.account_number           # => "1211203"
+```
+
+At present, pseudo-IBANs are only available for Swedish bank accounts.
+
 ## Other libraries
 
 Another gem, [iban-tools](https://github.com/alphasights/iban-tools), also
