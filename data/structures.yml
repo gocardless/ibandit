@@ -736,6 +736,9 @@ SE:
   :bban_format: \d{3}\d{16}\d{1}
   :bank_code_format: \d{3}
   :account_number_format: \d{16}\d{1}
+  :pseudo_iban_bank_code_length: 0
+  :pseudo_iban_branch_code_length: 5
+  :pseudo_iban_account_number_length: 10
 SI:
   :bank_code_position: 5
   :bank_code_length: 5

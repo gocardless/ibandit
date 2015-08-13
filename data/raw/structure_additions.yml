@@ -76,6 +76,10 @@ QA:
 SA:
   :bank_code_format: \d{2}
   :account_number_format: '[A-Z0-9]{18}'
+SE:
+  :pseudo_iban_bank_code_length: 0
+  :pseudo_iban_branch_code_length: 5
+  :pseudo_iban_account_number_length: 10
 SI:
   :bank_code_format: \d{5}
   :account_number_format: \d{8}\d{2}
