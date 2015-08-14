@@ -1,3 +1,7 @@
+## 0.8.0 - August 14, 2015
+- Return local details for Sweden
+- Introduce pseudo-IBANs for Sweden
+
 ## 0.7.0 - August 11, 2015
 - Remove all unused `CheckDigit` methods
 
