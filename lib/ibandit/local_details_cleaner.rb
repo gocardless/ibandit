@@ -3,14 +3,14 @@ module Ibandit
     def self.clean(local_details)
       country_code = local_details[:country_code]
 
-      unless explicit_swift_details?(country_code)
-        local_details = swift_details_for(local_details).merge(local_details)
+      if can_clean?(country_code, local_details)
+        local_details = local_details.merge(
+          public_send(:"clean_#{country_code.downcase}_details", local_details))
       end
 
-      return local_details unless can_clean?(country_code, local_details)
+      return local_details if explicit_swift_details?(country_code)
 
-      local_details.merge(
-        public_send(:"clean_#{country_code.downcase}_details", local_details))
+      swift_details_for(local_details).merge(local_details)
     end
 
     ###########
