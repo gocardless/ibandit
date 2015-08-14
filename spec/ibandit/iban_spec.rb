@@ -112,28 +112,28 @@ describe Ibandit::IBAN do
       end
 
       its(:country_code) { is_expected.to eq(arg[:country_code]) }
-      its(:bank_code) { is_expected.to eq(arg[:bank_code]) }
+      its(:bank_code) { is_expected.to eq('120') }
       its(:branch_code) { is_expected.to eq(arg[:branch_code]) }
       its(:account_number) { is_expected.to eq(arg[:account_number]) }
       its(:swift_bank_code) { is_expected.to eq('120') }
       its(:swift_branch_code) { is_expected.to be_nil }
       its(:swift_account_number) { is_expected.to eq('00000012810105723') }
       its(:iban) { is_expected.to eq('SE5412000000012810105723') }
-      its(:pseudo_iban) { is_expected.to eq('SEZZX1281XXX0105723') }
+      its(:pseudo_iban) { is_expected.to eq('SEZZ120X1281XXX0105723') }
     end
 
     context 'when the IBAN was created from a pseudo-IBAN' do
       let(:arg) { 'SEZZX1281XXX0105723' }
 
       its(:country_code) { is_expected.to eq('SE') }
-      its(:bank_code) { is_expected.to be_nil }
+      its(:bank_code) { is_expected.to eq('120') }
       its(:branch_code) { is_expected.to eq('1281') }
       its(:account_number) { is_expected.to eq('0105723') }
       its(:swift_bank_code) { is_expected.to eq('120') }
       its(:swift_branch_code) { is_expected.to be_nil }
       its(:swift_account_number) { is_expected.to eq('00000012810105723') }
       its(:iban) { is_expected.to eq('SE5412000000012810105723') }
-      its(:pseudo_iban) { is_expected.to eq('SEZZX1281XXX0105723') }
+      its(:pseudo_iban) { is_expected.to eq('SEZZ120X1281XXX0105723') }
     end
   end
 
