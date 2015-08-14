@@ -1,3 +1,6 @@
+## 0.8.1 - August 14, 2015
+- Clean SWIFT details
+
 ## 0.8.0 - August 14, 2015
 - Return local details for Sweden
 - Introduce pseudo-IBANs for Sweden
