@@ -452,6 +452,7 @@ module Ibandit
       {
         account_number:       converted_details[:account_number],
         branch_code:          converted_details[:branch_code],
+        bank_code:            bank_code,
         swift_bank_code:      bank_code,
         swift_account_number: converted_details[:swift_account_number]
       }
