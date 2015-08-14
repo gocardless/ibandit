@@ -375,6 +375,7 @@ describe Ibandit::LocalDetailsCleaner do
     context 'with the sort code is hyphenated' do
       let(:branch_code) { '20-00-00' }
       its([:branch_code]) { is_expected.to eq('200000') }
+      its([:swift_branch_code]) { is_expected.to eq('200000') }
     end
 
     context 'with the sort code spaced' do
@@ -385,6 +386,7 @@ describe Ibandit::LocalDetailsCleaner do
     context 'with a short account number' do
       let(:account_number) { '579135' }
       its([:account_number]) { is_expected.to eq('00579135') }
+      its([:swift_account_number]) { is_expected.to eq('00579135') }
     end
 
     context 'with a too-short account number' do
@@ -421,6 +423,7 @@ describe Ibandit::LocalDetailsCleaner do
         after { Ibandit.bic_finder = nil }
 
         its([:bank_code]) { is_expected.to eq('BARC') }
+        its([:swift_bank_code]) { is_expected.to eq('BARC') }
       end
     end
 
