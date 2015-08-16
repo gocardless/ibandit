@@ -4,12 +4,12 @@ module Ibandit
     #
     # Local details can be provided as either:
     # - branch_code: clearing number, account_number: serial number
-    # - banch_code: nil, account_number: #{clearing number}#{serial number}
+    # - branch_code: nil, account_number: #{clearing number}#{serial number}
     #
     # The reverse conversion (extracting local details from SWIFT details) is
     # not possible, since the clearing number cannot be derived. You should NOT
-    # ever pass this class a SWIFT account number, as it will not convert
-    # it to local details successfully.
+    # pass this class a SWIFT account number, as it will not convert it to
+    # local details successfully.
     def initialize(branch_code: nil, account_number: nil)
       @branch_code = branch_code
       @account_number = account_number
@@ -87,55 +87,9 @@ module Ibandit
       end
     end
 
-    def self.valid_bank_code?(bank_code: nil, account_number: nil)
-      possible_bank_infos = possible_bank_info_for(
-        bank_code: bank_code, account_number: account_number
-      )
-
-      possible_bank_infos.any?
-    end
-
-    def self.valid_length?(bank_code: nil, account_number: nil)
-      return unless valid_bank_code?(
-        bank_code: bank_code, account_number: account_number
-      )
-
-      cleaned_account_number = account_number.gsub(/\A0+/, '')
-
-      possible_bank_infos = possible_bank_info_for(
-        bank_code: bank_code, account_number: account_number
-      )
-
-      possible_bank_infos.any? do |bank|
-        length = bank.fetch(:serial_number_length)
-        length += bank[:clearing_code_length] if bank[:include_clearing_code]
-
-        if bank[:zerofill_serial_number] && !bank[:include_clearing_code]
-          serial_number_length = bank.fetch(:serial_number_length)
-          cleaned_account_number =
-            cleaned_account_number.rjust(serial_number_length, '0')
-        end
-
-        cleaned_account_number.length == length
-      end
-    end
-
     def self.bank_info_for(clearing_code)
       bank_info_table.find { |bank| bank[:range].include?(clearing_code.to_i) }
     end
-
-    def self.possible_bank_info_for(bank_code: nil, account_number: nil)
-      clearing_number = account_number.gsub(/\A0+/, '').slice(0, 4).to_i
-
-      possible_bank_infos = bank_info_table.select do |bank|
-        bank.fetch(:bank_code).to_s == bank_code
-      end
-
-      possible_bank_infos.select do |bank|
-        !bank[:include_clearing_code] || bank[:range].include?(clearing_number)
-      end
-    end
-    private_class_method :possible_bank_info_for
 
     def self.bank_info_table
       @swedish_bank_lookup ||=

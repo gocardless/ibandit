@@ -276,19 +276,47 @@ module Ibandit
     def valid_swedish_details?
       return true unless country_code == 'SE'
 
-      bank_details = {
-        bank_code: swift_bank_code,
-        account_number: swift_account_number
-      }
+      if branch_code
+        valid_swedish_local_details?
+      else
+        valid_swedish_swift_details?
+      end
+    end
 
-      unless SwedishDetailsConverter.valid_bank_code?(bank_details)
+    def valid_swedish_swift_details?
+      unless SwedishDetailsValidator.bank_code_exists?(swift_bank_code)
         bank_code_field = bank_code.nil? ? :account_number : :bank_code
         @errors[bank_code_field] = Ibandit.translate(:is_invalid)
         @errors.delete(:bank_code) if bank_code.nil?
         return false
       end
 
-      unless SwedishDetailsConverter.valid_length?(bank_details)
+      length_valid =
+        SwedishDetailsValidator.account_number_length_valid_for_bank_code?(
+          bank_code: swift_bank_code,
+          account_number: swift_account_number
+        )
+
+      unless length_valid
+        @errors[:account_number] = Ibandit.translate(:is_invalid)
+        return false
+      end
+
+      true
+    end
+
+    def valid_swedish_local_details?
+      unless SwedishDetailsValidator.valid_clearing_code_length?(branch_code)
+        @errors[:branch_code] = Ibandit.translate(:is_invalid)
+        return false
+      end
+
+      valid_serial_number = SwedishDetailsValidator.valid_serial_number_length?(
+        clearing_code: branch_code,
+        serial_number: account_number
+      )
+
+      unless valid_serial_number
         @errors[:account_number] = Ibandit.translate(:is_invalid)
         return false
       end

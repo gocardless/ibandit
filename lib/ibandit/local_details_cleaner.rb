@@ -441,20 +441,19 @@ module Ibandit
     end
 
     def self.clean_se_details(local_details)
-      converted_details = SwedishDetailsConverter.new(
-        branch_code: local_details[:branch_code],
-        account_number: local_details[:account_number]
-      ).convert
-
-      bank_code = local_details[:bank_code] ||
-                  converted_details[:swift_bank_code]
-
-      {
-        account_number:       converted_details[:account_number],
-        branch_code:          converted_details[:branch_code],
-        swift_bank_code:      bank_code,
-        swift_account_number: converted_details[:swift_account_number]
-      }
+      if local_details[:bank_code]
+        # If a bank_code was provided without a branch code we're (probably)
+        # dealing with SWIFT details and should just return them.
+        return {
+          swift_account_number: local_details[:account_number],
+          swift_bank_code: local_details[:bank_code]
+        }
+      else
+        SwedishDetailsConverter.new(
+          branch_code: local_details[:branch_code],
+          account_number: local_details[:account_number]
+        ).convert
+      end
     end
 
     def self.clean_si_details(local_details)

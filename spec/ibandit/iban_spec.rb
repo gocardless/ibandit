@@ -1353,60 +1353,113 @@ describe Ibandit::IBAN do
     describe 'valid_swedish_details?' do
       subject { iban.valid_swedish_details? }
 
-      context 'with an account number that is too long' do
-        let(:arg) do
-          {
-            country_code: 'SE',
-            bank_code: '500',
-            account_number: '00000543910240391'
-          }
+      context 'with SWIFT details' do
+        context 'with an account number that is too long' do
+          let(:arg) do
+            {
+              country_code: 'SE',
+              bank_code: '500',
+              account_number: '00000543910240391'
+            }
+          end
+
+          it { is_expected.to eq(false) }
+
+          context 'locale en', locale: :en do
+            specify do
+              iban.valid_swedish_details?
+              expect(iban.errors).to eq(account_number: 'is invalid')
+            end
+          end
         end
 
-        it { is_expected.to eq(false) }
+        context "with an account number that doesn't have a bank code" do
+          let(:arg) do
+            {
+              country_code: 'SE',
+              bank_code: nil,
+              account_number: '00000000000010011'
+            }
+          end
 
-        context 'locale en', locale: :en do
-          specify do
-            iban.valid_swedish_details?
-            expect(iban.errors).to eq(account_number: 'is invalid')
+          it { is_expected.to eq(false) }
+
+          context 'locale en', locale: :en do
+            specify do
+              iban.valid?
+              expect(iban.errors).to include(account_number: 'is invalid')
+              expect(iban.errors).to_not include(:bank_code)
+            end
+          end
+        end
+
+        context 'with a bank code that does not match' do
+          let(:arg) do
+            {
+              country_code: 'SE',
+              bank_code: '902',
+              account_number: '00000054391024039'
+            }
+          end
+
+          it { is_expected.to eq(false) }
+
+          context 'locale en', locale: :en do
+            specify do
+              iban.valid_swedish_details?
+              expect(iban.errors).to eq(account_number: 'is invalid')
+            end
           end
         end
       end
 
-      context "with an account number that doesn't have a bank code" do
-        let(:arg) do
-          {
-            country_code: 'SE',
-            bank_code: nil,
-            account_number: '00000000000010011'
-          }
+      context 'with local details' do
+        context 'with good details' do
+          let(:arg) do
+            {
+              country_code: 'SE',
+              account_number: '5439-0240391'
+            }
+          end
+
+          it { is_expected.to eq(true) }
         end
 
-        it { is_expected.to eq(false) }
+        context 'with a clearing code that is too long' do
+          let(:arg) do
+            {
+              country_code: 'SE',
+              branch_code: '54391',
+              account_number: '0240391'
+            }
+          end
 
-        context 'locale en', locale: :en do
-          specify do
-            iban.valid?
-            expect(iban.errors).to include(account_number: 'is invalid')
-            expect(iban.errors).to_not include(:bank_code)
+          it { is_expected.to eq(false) }
+
+          context 'locale en', locale: :en do
+            specify do
+              iban.valid_swedish_details?
+              expect(iban.errors).to eq(branch_code: 'is invalid')
+            end
           end
         end
-      end
 
-      context 'with a bad bank code' do
-        let(:arg) do
-          {
-            country_code: 'SE',
-            bank_code: '902',
-            account_number: '00000054391024039'
-          }
-        end
+        context 'with a serial number that is too long' do
+          let(:arg) do
+            {
+              country_code: 'SE',
+              branch_code: '5439',
+              account_number: '024039111'
+            }
+          end
 
-        it { is_expected.to eq(false) }
+          it { is_expected.to eq(false) }
 
-        context 'locale en', locale: :en do
-          specify do
-            iban.valid_swedish_details?
-            expect(iban.errors).to eq(bank_code: 'is invalid')
+          context 'locale en', locale: :en do
+            specify do
+              iban.valid_swedish_details?
+              expect(iban.errors).to eq(account_number: 'is invalid')
+            end
           end
         end
       end
