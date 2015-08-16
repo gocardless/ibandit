@@ -56,15 +56,6 @@ describe Ibandit::SwedishDetailsConverter do
         its([:swift_account_number]) { is_expected.to eq('00000012810105723') }
       end
 
-      context 'that has been zero-padded' do
-        let(:account_number) { '000012810105723' }
-
-        its([:account_number]) { is_expected.to eq('0105723') }
-        its([:branch_code]) { is_expected.to eq('1281') }
-        its([:swift_bank_code]) { is_expected.to eq('120') }
-        its([:swift_account_number]) { is_expected.to eq('00000012810105723') }
-      end
-
       context 'that needs the account number part to be zero-padded' do
         let(:account_number) { '1281-1' }
 

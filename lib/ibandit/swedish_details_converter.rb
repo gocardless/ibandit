@@ -1,5 +1,15 @@
 module Ibandit
   class SwedishDetailsConverter
+    # Converts local Swedish details into SWIFT details.
+    #
+    # Local details can be provided as either:
+    # - branch_code: clearing number, account_number: serial number
+    # - banch_code: nil, account_number: #{clearing number}#{serial number}
+    #
+    # The reverse conversion (extracting local details from SWIFT details) is
+    # not possible, since the clearing number cannot be derived. You should NOT
+    # ever pass this class a SWIFT account number, as it will not convert
+    # it to local details successfully.
     def initialize(branch_code: nil, account_number: nil)
       @branch_code = branch_code
       @account_number = account_number
@@ -24,11 +34,7 @@ module Ibandit
     def cleaned_account_number
       # Don't trim leading zeroes if the account number we are given is a
       # serial number (i.e. if the clearing code is separate).
-      @cleaned_account_number ||= if @branch_code.nil?
-                                    clean_account_number(@account_number)
-                                  else
-                                    remove_bad_chars(@account_number)
-                                  end
+      @cleaned_account_number ||= remove_bad_chars(@account_number)
     end
 
     def cleaned_branch_code
@@ -38,11 +44,6 @@ module Ibandit
     def remove_bad_chars(number)
       return if number.nil?
       number.gsub(/[-.\s]/, '')
-    end
-
-    def clean_account_number(number)
-      return if number.nil?
-      remove_bad_chars(number).gsub(/\A0+/, '')
     end
 
     def bank_info
