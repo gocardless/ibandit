@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Ibandit::SwedishDetailsConverter do
+describe Ibandit::Sweden::LocalDetailsConverter do
   subject(:converter) do
     described_class.new(account_number: account_number,
                         branch_code: branch_code)

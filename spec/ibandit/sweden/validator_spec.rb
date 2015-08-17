@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Ibandit::SwedishDetailsValidator do
+describe Ibandit::Sweden::Validator do
   describe '.bank_code_exists_for_clearing_code?' do
     subject do
       described_class.bank_code_exists_for_clearing_code?(clearing_code)

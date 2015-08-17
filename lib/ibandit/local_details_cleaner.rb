@@ -449,7 +449,7 @@ module Ibandit
           swift_bank_code: local_details[:bank_code]
         }
       else
-        SwedishDetailsConverter.new(
+        Sweden::LocalDetailsConverter.new(
           branch_code: local_details[:branch_code],
           account_number: local_details[:account_number]
         ).convert
