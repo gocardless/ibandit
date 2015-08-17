@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Ibandit::SwedishDetailsConverter do
+describe Ibandit::Sweden::LocalDetailsConverter do
   subject(:converter) do
     described_class.new(account_number: account_number,
                         branch_code: branch_code)
@@ -49,15 +49,6 @@ describe Ibandit::SwedishDetailsConverter do
 
       context 'that includes full stops' do
         let(:account_number) { '1281.010.572.3' }
-
-        its([:account_number]) { is_expected.to eq('0105723') }
-        its([:branch_code]) { is_expected.to eq('1281') }
-        its([:swift_bank_code]) { is_expected.to eq('120') }
-        its([:swift_account_number]) { is_expected.to eq('00000012810105723') }
-      end
-
-      context 'that has been zero-padded' do
-        let(:account_number) { '000012810105723' }
 
         its([:account_number]) { is_expected.to eq('0105723') }
         its([:branch_code]) { is_expected.to eq('1281') }
@@ -203,110 +194,6 @@ describe Ibandit::SwedishDetailsConverter do
       its([:branch_code]) { is_expected.to eq('9960') }
       its([:swift_bank_code]) { is_expected.to eq('950') }
       its([:swift_account_number]) { is_expected.to eq('00099603401258276') }
-    end
-  end
-
-  describe '.valid_length?' do
-    subject do
-      described_class.valid_length?(bank_code: bank_code,
-                                    account_number: account_number)
-    end
-
-    context 'without a bank code' do
-      let(:account_number) { '12810105723' }
-      let(:bank_code) { nil }
-      it { is_expected.to eq(nil) }
-    end
-
-    context 'with an impossible bank code' do
-      let(:account_number) { '12810105723' }
-      let(:bank_code) { '500' }
-      it { is_expected.to eq(nil) }
-    end
-
-    context 'with a normal type-1 account number' do
-      let(:account_number) { '00000054391024039' }
-      let(:bank_code) { '500' }
-      it { is_expected.to eq(true) }
-
-      context 'that has a 6 digit serial number' do
-        let(:account_number) { '00000005439102403' }
-        let(:bank_code) { '500' }
-        it { is_expected.to eq(false) }
-      end
-
-      context 'that has an 8 digit serial number' do
-        let(:account_number) { '00000543910240391' }
-        let(:bank_code) { '500' }
-        it { is_expected.to eq(false) }
-      end
-    end
-
-    context 'without a Danske bank account' do
-      let(:account_number) { '12810105723' }
-      let(:bank_code) { '120' }
-      it { is_expected.to eq(true) }
-
-      context 'that has an 8 digit serial number' do
-        let(:account_number) { '00000128101057231' }
-        let(:bank_code) { '120' }
-        it { is_expected.to eq(false) }
-      end
-
-      context 'that has a 6 digit serial number' do
-        let(:account_number) { '00000001281010572' }
-        let(:bank_code) { '120' }
-        # This passes because it could be a 10 digit account number from the
-        # clearing code range 9180-9189.
-        it { is_expected.to eq(true) }
-      end
-    end
-
-    context 'with a Handelsbanken account number' do
-      let(:bank_code) { '600' }
-      let(:account_number) { '00000000219161038' }
-      it { is_expected.to eq(true) }
-
-      context 'that is only 8 characters long' do
-        let(:account_number) { '00000000021916103' }
-        it { is_expected.to eq(true) }
-      end
-
-      context 'that is 10 characters long' do
-        let(:account_number) { '00000002191610381' }
-        it { is_expected.to eq(false) }
-      end
-    end
-
-    context 'without a Nordea PlusGirot account number' do
-      let(:bank_code) { '950' }
-      let(:account_number) { '00099603401258276' }
-      it { is_expected.to eq(true) }
-    end
-  end
-
-  describe '.valid_bank_code?' do
-    subject do
-      described_class.valid_bank_code?(bank_code: bank_code,
-                                       account_number: account_number)
-    end
-
-    context 'without a bank code' do
-      let(:account_number) { '12810105723' }
-      let(:bank_code) { nil }
-      it { is_expected.to eq(false) }
-    end
-
-    context 'with an impossible bank code' do
-      let(:account_number) { '12810105723' }
-      let(:bank_code) { '500' }
-      it { is_expected.to eq(false) }
-    end
-
-    context 'with a possible bank code' do
-      let(:account_number) { '12810105723' }
-      let(:bank_code) { '120' }
-      it { is_expected.to eq(true) }
     end
   end
 end
