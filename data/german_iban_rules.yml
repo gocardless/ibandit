@@ -20,6 +20,12 @@
 '10020500':
   :check_digit_rule: 09
   :iban_rule: '000000'
+'10020510':
+  :check_digit_rule: 09
+  :iban_rule: '000000'
+'10020520':
+  :check_digit_rule: 09
+  :iban_rule: '000000'
 '10020890':
   :check_digit_rule: '99'
   :iban_rule: '003200'
@@ -1282,9 +1288,6 @@
   :iban_rule: '000000'
 '25060180':
   :check_digit_rule: C3
-  :iban_rule: '000000'
-'25060701':
-  :check_digit_rule: '32'
   :iban_rule: '000000'
 '25069168':
   :check_digit_rule: '28'
@@ -4292,9 +4295,6 @@
 '47861806':
   :check_digit_rule: '34'
   :iban_rule: '000000'
-'47861907':
-  :check_digit_rule: '34'
-  :iban_rule: '000000'
 '47862261':
   :check_digit_rule: '34'
   :iban_rule: '000000'
@@ -4645,9 +4645,6 @@
   :iban_rule: '000000'
 '50060474':
   :check_digit_rule: 09
-  :iban_rule: '000000'
-'50060500':
-  :check_digit_rule: '32'
   :iban_rule: '000000'
 '50061741':
   :check_digit_rule: '32'
@@ -6284,9 +6281,6 @@
 '54750010':
   :check_digit_rule: '00'
   :iban_rule: '000000'
-'54760900':
-  :check_digit_rule: '32'
-  :iban_rule: '000000'
 '54761411':
   :check_digit_rule: '32'
   :iban_rule: '000000'
@@ -6339,6 +6333,9 @@
   :check_digit_rule: '99'
   :iban_rule: '003200'
 '55020500':
+  :check_digit_rule: 09
+  :iban_rule: '000000'
+'55020555':
   :check_digit_rule: 09
   :iban_rule: '000000'
 '55020600':
@@ -6481,9 +6478,6 @@
   :iban_rule: '000000'
 '56062227':
   :check_digit_rule: '40'
-  :iban_rule: '000000'
-'56062577':
-  :check_digit_rule: '38'
   :iban_rule: '000000'
 '56070024':
   :check_digit_rule: '63'
@@ -7049,9 +7043,6 @@
 '60060396':
   :check_digit_rule: '10'
   :iban_rule: '000000'
-'60060606':
-  :check_digit_rule: '32'
-  :iban_rule: '000000'
 '60060893':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7361,9 +7352,6 @@
 '60250010':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'60250184':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '60261329':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7389,9 +7377,6 @@
   :check_digit_rule: '10'
   :iban_rule: '000000'
 '60291120':
-  :check_digit_rule: '10'
-  :iban_rule: '000000'
-'60291510':
   :check_digit_rule: '10'
   :iban_rule: '000000'
 '60320291':
@@ -7439,9 +7424,6 @@
 '60450050':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'60450193':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '60460142':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7490,9 +7472,6 @@
 '61050000':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'61050181':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '61060500':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7517,9 +7496,6 @@
 '61150020':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'61150185':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '61161696':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7589,9 +7565,6 @@
 '61450050':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'61450191':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '61480001':
   :check_digit_rule: '76'
   :iban_rule: '000503'
@@ -7613,9 +7586,6 @@
 '62050000':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'62050181':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '62061991':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7658,9 +7628,6 @@
 '62250030':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'62250182':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '62251550':
   :check_digit_rule: '01'
   :iban_rule: '000000'
@@ -7694,9 +7661,6 @@
 '63050000':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'63050181':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '63061486':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7754,9 +7718,6 @@
 '64050000':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'64050181':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '64061854':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7784,9 +7745,6 @@
 '64150020':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'64150182':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '64161397':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7868,9 +7826,6 @@
 '64390130':
   :check_digit_rule: '10'
   :iban_rule: '000000'
-'64450288':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '65020186':
   :check_digit_rule: '99'
   :iban_rule: '003200'
@@ -7880,9 +7835,6 @@
 '65050110':
   :check_digit_rule: '01'
   :iban_rule: '000000'
-'65050281':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '65061219':
   :check_digit_rule: '10'
   :iban_rule: '000000'
@@ -7955,9 +7907,6 @@
 '65341204':
   :check_digit_rule: '13'
   :iban_rule: '000503'
-'65350186':
-  :check_digit_rule: '01'
-  :iban_rule: '002500'
 '65351050':
   :check_digit_rule: '01'
   :iban_rule: '000000'
@@ -8036,6 +7985,9 @@
 '66020500':
   :check_digit_rule: 09
   :iban_rule: '000000'
+'66020566':
+  :check_digit_rule: 09
+  :iban_rule: '000000'
 '66030600':
   :check_digit_rule: '06'
   :iban_rule: '000000'
@@ -8059,9 +8011,6 @@
   :iban_rule: '000000'
 '66060300':
   :check_digit_rule: '06'
-  :iban_rule: '000000'
-'66060800':
-  :check_digit_rule: '32'
   :iban_rule: '000000'
 '66061059':
   :check_digit_rule: '06'
@@ -8585,6 +8534,9 @@
 '69291000':
   :check_digit_rule: '06'
   :iban_rule: '000000'
+'69291099':
+  :check_digit_rule: '06'
+  :iban_rule: '000000'
 '69362032':
   :check_digit_rule: '06'
   :iban_rule: '000000'
@@ -8727,6 +8679,9 @@
   :check_digit_rule: 09
   :iban_rule: '000000'
 '70020500':
+  :check_digit_rule: 09
+  :iban_rule: '000000'
+'70020570':
   :check_digit_rule: 09
   :iban_rule: '000000'
 '70020800':
@@ -10034,9 +9989,6 @@
 '76060000':
   :check_digit_rule: 09
   :iban_rule: '000000'
-'76060561':
-  :check_digit_rule: '88'
-  :iban_rule: '000100'
 '76060618':
   :check_digit_rule: '88'
   :iban_rule: '000000'
@@ -10442,9 +10394,6 @@
 '79061000':
   :check_digit_rule: '88'
   :iban_rule: '000000'
-'79061153':
-  :check_digit_rule: '88'
-  :iban_rule: '000000'
 '79062106':
   :check_digit_rule: '88'
   :iban_rule: '000000'
@@ -10455,9 +10404,6 @@
   :check_digit_rule: '88'
   :iban_rule: '000000'
 '79065028':
-  :check_digit_rule: '88'
-  :iban_rule: '000000'
-'79065160':
   :check_digit_rule: '88'
   :iban_rule: '000000'
 '79066082':
@@ -10811,9 +10757,6 @@
 '82060197':
   :check_digit_rule: '06'
   :iban_rule: '000100'
-'82060800':
-  :check_digit_rule: '32'
-  :iban_rule: '000000'
 '82064038':
   :check_digit_rule: '32'
   :iban_rule: '000000'

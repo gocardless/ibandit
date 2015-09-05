@@ -1,4 +1,8 @@
-## 0.8.2 - September 6, 2015
+## 0.8.3 - September 5, 2015
+
+- Update BLZ data (again)
+
+## 0.8.2 - September 5, 2015
 
 - Update BLZ data
 
