@@ -1,3 +1,7 @@
+## 0.8.2 - September 6, 2015
+
+- Update BLZ data
+
 ## 0.8.1 - August 14, 2015
 - Clean SWIFT details
 
