@@ -92,6 +92,12 @@ describe Ibandit::Sweden::Validator do
       let(:serial_number) { '12345678901' }
       it { is_expected.to eq(false) }
     end
+
+    context 'without a serial number' do
+      let(:clearing_code) { '9960' }
+      let(:serial_number) { nil }
+      it { is_expected.to eq(false) }
+    end
   end
 
   describe '.bank_code_exists?' do
