@@ -1,3 +1,7 @@
+## 0.8.4 - October 15, 2015
+
+- Fix bug in Sweden::Validator.valid_serial_number_length?
+
 ## 0.8.3 - September 5, 2015
 
 - Update BLZ data (again)
