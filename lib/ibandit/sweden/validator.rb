@@ -18,6 +18,7 @@ module Ibandit
 
       def self.valid_serial_number_length?(clearing_code: nil,
                                            serial_number: nil)
+        return false unless serial_number
         return unless bank_code_exists_for_clearing_code?(clearing_code)
 
         bank_info = Sweden::BankLookup.for_clearing_code(clearing_code)
