@@ -245,6 +245,23 @@ describe Ibandit::LocalDetailsCleaner do
       its([:account_number]) { is_expected.to eq('0003179681') }
     end
 
+    context 'with a space-separated 14-digit account number' do
+      let(:bank_code) { nil }
+      let(:branch_code) { nil }
+      let(:account_number) { '0345 0003179681' }
+
+      its([:bank_code]) { is_expected.to eq('0345') }
+      its([:account_number]) { is_expected.to eq('0003179681') }
+    end
+
+    context 'with a space-separated 13-digit account number' do
+      let(:bank_code) { nil }
+      let(:branch_code) { nil }
+      let(:account_number) { '0345 003179681' }
+
+      it { is_expected.to eq(local_details_with_swift) }
+    end
+
     context 'without an account number' do
       let(:account_number) { nil }
       it { is_expected.to eq(local_details_with_swift) }

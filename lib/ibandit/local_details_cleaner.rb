@@ -147,8 +147,14 @@ module Ibandit
       if local_details[:bank_code]
         bank_code      = local_details[:bank_code].rjust(4, '0')
         account_number = local_details[:account_number].rjust(10, '0')
-      else
+      elsif local_details[:account_number].include?('-')
         bank_code, account_number = local_details[:account_number].split('-', 2)
+      elsif local_details[:account_number].gsub(/\s/, '').length == 14
+        cleaned_account_number = local_details[:account_number].gsub(/\s/, '')
+        bank_code      = cleaned_account_number.slice(0, 4)
+        account_number = cleaned_account_number.slice(4, 10)
+      else
+        return {}
       end
 
       {
