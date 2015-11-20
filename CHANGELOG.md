@@ -1,3 +1,7 @@
+## 0.8.5 - November 20, 2015
+
+- Handle Danish long-format account numbers without a hyphen
+
 ## 0.8.4 - October 15, 2015
 
 - Fix bug in Sweden::Validator.valid_serial_number_length?
