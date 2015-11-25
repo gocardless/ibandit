@@ -1,3 +1,7 @@
+## Unreleased
+
+- Add details of Swedish validation scheme to Swedish data file
+
 ## 0.8.5 - November 20, 2015
 
 - Handle Danish long-format account numbers without a hyphen
