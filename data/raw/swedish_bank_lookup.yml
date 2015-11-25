@@ -29,6 +29,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [1200, 1399]
   :bank: Danske Bank
   :bank_code: 120
@@ -36,6 +37,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [1400, 2099]
   :bank: Nordea
   :bank_code: 300
@@ -43,6 +45,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [2300, 2399]
   :bank: Ålandsbanken Sverige AB
   :bank_code: 230
@@ -50,6 +53,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [2400, 2499]
   :bank: Danske Bank
   :bank_code: 120
@@ -57,6 +61,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
   # NOTE: We're ignoring Sambox bank (clearing number 2950) because the only
   # reference I've seen is wikipedia. Sambox does have its own bank code (295)
   # though, so we may want to revisit.
@@ -67,6 +72,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [3300, 3300]
   :bank: Nordea Personkonto
   # NOTE: We're routing Nordea Personkonto to the main Nordea bank code, but
@@ -76,6 +82,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: false
+  :validation_scheme: '2.1'
 - :range: [3301, 3399]
   :bank: Nordea
   :bank_code: 300
@@ -83,6 +90,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [3400, 3409]
   :bank: Länsförsäkringar Bank
   :bank_code: 902
@@ -90,6 +98,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [3410, 3781]
   :bank: Nordea
   :bank_code: 300
@@ -97,6 +106,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [3782, 3782]
   :bank: Nordea Personkonto
   # NOTE: We're routing Nordea Personkonto to the main Nordea bank code, but
@@ -106,6 +116,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: fase
+  :validation_scheme: '2.1'
 - :range: [3783, 3999]
   :bank: Nordea
   :bank_code: 300
@@ -113,6 +124,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [4000, 4999]
   :bank: Nordea
   :bank_code: 300
@@ -120,6 +132,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [5000, 5999]
   :bank: SEB
   :bank_code: 500
@@ -127,6 +140,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [6000, 6999]
   :bank: Handelsbanken
   :bank_code: 600
@@ -134,6 +148,7 @@
   :serial_number_length: 9
   :zerofill_serial_number: true
   :include_clearing_code: false
+  :validation_scheme: '2.2'
 - :range: [7000, 7999]
   :bank: Swedbank
   :bank_code: 800
@@ -141,6 +156,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [8000, 8999]
   # NOTE: This range also includes independent savings banks, some of which
   # appear to have their own bank code. For now we always use the Swedbank bank
@@ -151,6 +167,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: true
   :include_clearing_code: true
+  :validation_scheme: '2.3'
 - :range: [9020, 9029]
   :bank: Länsförsäkringar Bank
   :bank_code: 902
@@ -158,6 +175,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9040, 9049]
   :bank: Citibank
   :bank_code: 904
@@ -165,6 +183,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9060, 9069]
   :bank: Länsförsäkringar Bank
   :bank_code: 902
@@ -172,6 +191,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9090, 9099]
   :bank: ABN Amro
   :bank_code: 909
@@ -179,6 +199,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9100, 9109]
   :bank: Nordnet Bank
   :bank_code: 910
@@ -186,6 +207,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9120, 9124]
   :bank: SEB
   :bank_code: 500
@@ -193,6 +215,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9130, 9149]
   :bank: SEB
   :bank_code: 500
@@ -200,6 +223,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9150, 9169]
   :bank: Skandiabanken
   :bank_code: 915
@@ -207,6 +231,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9170, 9179]
   :bank: IKANO Bank
   :bank_code: 917
@@ -214,6 +239,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9180, 9189]
   :bank: Danske Bank
   :bank_code: 120
@@ -221,6 +247,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: false
+  :validation_scheme: '2.1'
 - :range: [9190, 9199]
   :bank: Den Norske Bank
   :bank_code: 919
@@ -228,6 +255,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9230, 9239]
   :bank: Marginalen Bank
   :bank_code: 923
@@ -235,6 +263,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9250, 9259]
   :bank: SBAB
   :bank_code: 925
@@ -242,6 +271,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9260, 9269]
   :bank: Den Norske Bank
   :bank_code: 919
@@ -249,6 +279,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9270, 9279]
   :bank: ICA Banken
   :bank_code: 927
@@ -256,6 +287,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9280, 9289]
   :bank: Resurs Banken AB
   :bank_code: 928
@@ -263,6 +295,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9300, 9329]
   :bank: Sparbanken Öresund
   :bank_code: 930
@@ -270,6 +303,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: false
+  :validation_scheme: '2.1'
 - :range: [9330, 9349]
   :bank: Sparbanken Öresund
   :bank_code: 933
@@ -277,6 +311,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: false
+  :validation_scheme: '2.1'
 - :range: [9390, 9399]
   :bank: Landshypotek AB
   :bank_code: 939
@@ -284,6 +319,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9400, 9449]
   :bank: Forex Bank AB
   :bank_code: 940
@@ -291,6 +327,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9460, 9469]
   :bank: GE Money Bank
   :bank_code: 945
@@ -298,6 +335,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9470, 9479]
   :bank: BNP Paribas
   :bank_code: 947
@@ -305,6 +343,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9500, 9549]
   :bank: Nordea - PlusGirot
   :bank_code: 950
@@ -312,6 +351,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: true
   :include_clearing_code: true
+  :validation_scheme: '2.3'
 - :range: [9550, 9569]
   :bank: Avanza Bank
   :bank_code: 955
@@ -319,6 +359,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9570, 9579]
   :bank: Sparbanken Syd
   :bank_code: 957
@@ -326,6 +367,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: false
+  :validation_scheme: '2.1'
 - :range: [9590, 9599]
   :bank: Erik Penser AB
   :bank_code: 959
@@ -333,6 +375,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9630, 9639]
   :bank: "Lån & Spar Bank"
   :bank_code: 963
@@ -340,6 +383,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.1'
 - :range: [9640, 9649]
   :bank: Nordax Finans
   :bank_code: 964
@@ -347,6 +391,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9660, 9669]
   :bank: Amfa Bank
   :bank_code: 966
@@ -354,6 +399,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9880, 9889]
   :bank: Riksgälden
   :bank_code: 988
@@ -361,6 +407,7 @@
   :serial_number_length: 7
   :zerofill_serial_number: false
   :include_clearing_code: true
+  :validation_scheme: '1.2'
 - :range: [9890, 9899]
   :bank: Riksgälden
   :bank_code: 989
@@ -368,6 +415,7 @@
   :serial_number_length: 10
   :zerofill_serial_number: false
   :include_clearing_code: false
+  :validation_scheme: '2.1'
 - :range: [9960, 9969]
   :bank: Nordea - PlusGirot
   :bank_code: 950
@@ -375,3 +423,4 @@
   :serial_number_length: 10
   :zerofill_serial_number: true
   :include_clearing_code: true
+  :validation_scheme: '2.3'
