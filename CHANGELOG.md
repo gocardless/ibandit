@@ -1,6 +1,7 @@
-## Unreleased
+## 0.8.6 -  December 6, 2015
 
 - Add details of Swedish validation scheme to Swedish data file
+- Update BLZ data
 
 ## 0.8.5 - November 20, 2015
 
