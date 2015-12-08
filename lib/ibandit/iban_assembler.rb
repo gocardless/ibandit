@@ -15,6 +15,8 @@ module Ibandit
         end
 
       assemble_iban(country_code, bban)
+    rescue InvalidCharacterError
+      nil
     end
 
     ##############################

@@ -34,7 +34,7 @@ module Ibandit
           when 65..90 then char.ord - 65     # A..Z
           else
             raise InvalidCharacterError,
-                  "Unexpected non-alphanumeric character '#{char}'"
+                  "Unexpected character '#{char}'"
           end
         end
       end
