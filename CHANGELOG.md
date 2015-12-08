@@ -1,3 +1,7 @@
+## 0.8.7 -  December 8, 2015
+
+- Handle bad characters gracefully when constructing Italian IBANs
+
 ## 0.8.6 -  December 6, 2015
 
 - Add details of Swedish validation scheme to Swedish data file
