@@ -9,8 +9,11 @@ rvm:
   - 2.0
   - 2.1
   - 2.2
+  - 2.3.0
   - jruby
   - rbx-2
+
+sudo: false
 
 script:
   - bundle exec rubocop
