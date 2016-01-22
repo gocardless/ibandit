@@ -1,3 +1,7 @@
+## 0.8.8 -  January 22, 2016
+
+- Strip whitespace from Spanish account numbers
+
 ## 0.8.7 -  December 8, 2015
 
 - Handle bad characters gracefully when constructing Italian IBANs
