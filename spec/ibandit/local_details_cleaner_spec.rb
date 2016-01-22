@@ -305,6 +305,11 @@ describe Ibandit::LocalDetailsCleaner do
       its([:account_number]) { is_expected.to eq('180000012345') }
     end
 
+    context 'with spaces in the account number' do
+      let(:account_number) { '18 0000012345' }
+      its([:account_number]) { is_expected.to eq('180000012345') }
+    end
+
     context 'without an account number' do
       let(:account_number) { nil }
       it { is_expected.to eq(local_details_with_swift) }
