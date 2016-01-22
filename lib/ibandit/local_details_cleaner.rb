@@ -191,9 +191,10 @@ module Ibandit
       if local_details[:bank_code] && local_details[:branch_code]
         bank_code      = local_details[:bank_code]
         branch_code    = local_details[:branch_code]
-        account_number = local_details[:account_number]
+        account_number = local_details[:account_number].gsub(/[-\s]/, '')
       else
-        cleaned_account_number = local_details[:account_number].tr('-', '')
+        cleaned_account_number =
+          local_details[:account_number].gsub(/[-\s]/, '')
 
         bank_code      = cleaned_account_number.slice(0, 4)
         branch_code    = cleaned_account_number.slice(4, 4)
