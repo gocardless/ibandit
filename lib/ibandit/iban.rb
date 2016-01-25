@@ -243,7 +243,9 @@ module Ibandit
       return unless valid_format?
       return true unless Ibandit.modulus_checker
 
-      valid_modulus_check_bank_code? && valid_modulus_check_account_number?
+      valid_modulus_check_bank_code? &&
+        valid_modulus_check_branch_code? &&
+        valid_modulus_check_account_number?
     end
 
     def passes_country_specific_checks?
@@ -385,7 +387,14 @@ module Ibandit
     def valid_modulus_check_bank_code?
       return true if Ibandit.modulus_checker.valid_bank_code?(iban.to_s)
 
-      @errors[modulus_check_bank_code_field] = Ibandit.translate(:is_invalid)
+      @errors[:bank_code] = Ibandit.translate(:is_invalid)
+      false
+    end
+
+    def valid_modulus_check_branch_code?
+      return true if Ibandit.modulus_checker.valid_branch_code?(iban.to_s)
+
+      @errors[:branch_code] = Ibandit.translate(:is_invalid)
       false
     end
 
@@ -394,15 +403,6 @@ module Ibandit
 
       @errors[:account_number] = Ibandit.translate(:is_invalid)
       false
-    end
-
-    def modulus_check_bank_code_field
-      if LocalDetailsCleaner.required_fields(country_code).
-         include?(:branch_code)
-        :branch_code
-      else
-        :bank_code
-      end
     end
 
     def swift_details

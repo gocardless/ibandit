@@ -1137,6 +1137,7 @@ describe Ibandit::IBAN do
       before do
         Ibandit.modulus_checker = double(
           valid_bank_code?: valid_bank_code,
+          valid_branch_code?: valid_branch_code,
           valid_account_number?: valid_account_number)
       end
       after { Ibandit.modulus_checker = nil }
@@ -1145,6 +1146,7 @@ describe Ibandit::IBAN do
       context 'with an invalid bank code' do
         let(:iban_code) { 'AT611904300234573201' }
         let(:valid_bank_code) { false }
+        let(:valid_branch_code) { true }
         let(:valid_account_number) { true }
 
         it { is_expected.to be(false) }
@@ -1177,60 +1179,64 @@ describe Ibandit::IBAN do
         context 'locale nl', locale: :nl do
           specify { expect(iban.errors).to include(bank_code: 'is ongeldig') }
         end
+      end
 
-        context 'when the bank code is not required' do
-          let(:iban_code) { 'GB60BARC20000055779911' }
-          before { Ibandit.bic_finder = double(call: 'BARCGB22XXX') }
-          after { Ibandit.bic_finder = nil }
-          before { iban.valid_local_modulus_check? }
+      context 'with an invalid branch code' do
+        let(:iban_code) { 'GB60BARC20000055779911' }
+        before { Ibandit.bic_finder = double(call: 'BARCGB22XXX') }
+        after { Ibandit.bic_finder = nil }
+        before { iban.valid_local_modulus_check? }
+        let(:valid_bank_code) { true }
+        let(:valid_branch_code) { false }
+        let(:valid_account_number) { true }
 
-          it { is_expected.to be(false) }
-          context 'locale en', locale: :en do
-            specify do
-              expect(iban.errors).to include(branch_code: 'is invalid')
-            end
+        it { is_expected.to be(false) }
+        context 'locale en', locale: :en do
+          specify do
+            expect(iban.errors).to include(branch_code: 'is invalid')
           end
+        end
 
-          context 'locale fr', locale: :fr do
-            specify do
-              expect(iban.errors).to include(branch_code: 'est invalide')
-            end
+        context 'locale fr', locale: :fr do
+          specify do
+            expect(iban.errors).to include(branch_code: 'est invalide')
           end
+        end
 
-          context 'locale de', locale: :de do
-            specify do
-              expect(iban.errors).to include(branch_code: 'ist nicht gültig')
-            end
+        context 'locale de', locale: :de do
+          specify do
+            expect(iban.errors).to include(branch_code: 'ist nicht gültig')
           end
+        end
 
-          context 'locale pt', locale: :pt do
-            specify do
-              expect(iban.errors).to include(branch_code: 'é inválido')
-            end
+        context 'locale pt', locale: :pt do
+          specify do
+            expect(iban.errors).to include(branch_code: 'é inválido')
           end
+        end
 
-          context 'locale es', locale: :es do
-            specify do
-              expect(iban.errors).to include(branch_code: 'es inválido')
-            end
+        context 'locale es', locale: :es do
+          specify do
+            expect(iban.errors).to include(branch_code: 'es inválido')
           end
+        end
 
-          context 'locale it', locale: :it do
-            specify do
-              expect(iban.errors).to include(branch_code: 'non è valido')
-            end
+        context 'locale it', locale: :it do
+          specify do
+            expect(iban.errors).to include(branch_code: 'non è valido')
           end
+        end
 
-          context 'locale nl', locale: :nl do
-            specify do
-              expect(iban.errors).to include(branch_code: 'is ongeldig')
-            end
+        context 'locale nl', locale: :nl do
+          specify do
+            expect(iban.errors).to include(branch_code: 'is ongeldig')
           end
         end
       end
 
       context 'with an invalid account number' do
         let(:valid_bank_code) { true }
+        let(:valid_branch_code) { true }
         let(:valid_account_number) { false }
 
         it { is_expected.to be(false) }
