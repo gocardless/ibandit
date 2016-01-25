@@ -1,3 +1,8 @@
+## 0.9.0 -  January 25, 2016
+
+- BREAKING CHANGE: Update modulus checker hooks to expect a `valid_branch_code?`
+  method. See https://github.com/gocardless/ibandit/pull/65 for more details.
+
 ## 0.8.8 -  January 22, 2016
 
 - Strip whitespace from Spanish account numbers
