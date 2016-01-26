@@ -1,3 +1,7 @@
+## 0.9.1 -  January 26, 2016
+
+- Update BLZ data
+
 ## 0.9.0 -  January 25, 2016
 
 - BREAKING CHANGE: Update modulus checker hooks to expect a `valid_branch_code?`
