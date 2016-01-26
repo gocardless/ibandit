@@ -10605,7 +10605,7 @@
   :check_digit_rule: '32'
   :iban_rule: '000000'
 '80063508':
-  :check_digit_rule: '28'
+  :check_digit_rule: 09
   :iban_rule: '000000'
 '80063558':
   :check_digit_rule: '32'
