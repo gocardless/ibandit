@@ -16927,9 +16927,9 @@
 800555001Salzlandsparkasse                                         39401Staﬂfurt                           Salzlandsparkasse Staﬂfurt 58092NOLADE21SES20052698U000000000000000
 800626081Volksbank Elsterland                                      06917Jessen (Elster)                    Volksbank Elsterland       68664GENODEF1JE132045747U000000000000000
 800626082Volksbank Elsterland (Gf P2)                              06917Jessen (Elster)                    Volksbank Elsterland       78664           32054836U000000000000000
-800635081Harzer Volksbank                                          38855Wernigerode                        Harzer Volksbank           68516GENODEF1QLB28045782M000000000000000
-800635082Harzer Volksbank (Gf P2)                                  38855Wernigerode                        Harzer Volksbank           78516           28054837M000000000000000
-800635082Harzer Volksbank                                          06484Quedlinburg                        Harzer Volksbank           68516           28056593M000000000000000
+800635081Harzer Volksbank                                          38855Wernigerode                        Harzer Volksbank           68516GENODEF1QLB09045782M000000000000000
+800635082Harzer Volksbank (Gf P2)                                  38855Wernigerode                        Harzer Volksbank           78516           09054837M000000000000000
+800635082Harzer Volksbank                                          06484Quedlinburg                        Harzer Volksbank           68516           09056593M000000000000000
 800635581Volksbank                                                 06513Sangerhausen                       Volksbank Sangerhausen     68624GENODEF1SGH32045786U000000000000000
 800635582Volksbank (Gf P2)                                         06513Sangerhausen                       Volksbank Sangerhausen     78624           32054838U000000000000000
 800635981Volksbank Wittenberg                                      06871Lutherstadt Wittenberg             Volksbank Wittenberg       68536GENODEF1WB132045795U000000000000000
