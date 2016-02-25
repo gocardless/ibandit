@@ -1,3 +1,9 @@
+## 0.10.0 -  February 25, 2016
+
+- BREAKING CHANGE: Pass an `Ibandit::IBAN` object to modulus checker hooks,
+  rather than a string. See https://github.com/gocardless/ibandit/pull/68 for
+  more details.
+
 ## 0.9.1 -  January 26, 2016
 
 - Update BLZ data
