@@ -1149,7 +1149,16 @@ describe Ibandit::IBAN do
         let(:valid_branch_code) { true }
         let(:valid_account_number) { true }
 
+        it 'calls valid_bank_code? with an IBAN object' do
+          expect(Ibandit.modulus_checker).
+            to receive(:valid_bank_code?).
+            with(instance_of(Ibandit::IBAN))
+
+          iban.valid_local_modulus_check?
+        end
+
         it { is_expected.to be(false) }
+
         context 'locale en', locale: :en do
           specify { expect(iban.errors).to include(bank_code: 'is invalid') }
         end
@@ -1190,7 +1199,16 @@ describe Ibandit::IBAN do
         let(:valid_branch_code) { false }
         let(:valid_account_number) { true }
 
+        it 'calls valid_branch_code? with an IBAN object' do
+          expect(Ibandit.modulus_checker).
+            to receive(:valid_branch_code?).
+            with(instance_of(Ibandit::IBAN))
+
+          iban.valid_local_modulus_check?
+        end
+
         it { is_expected.to be(false) }
+
         context 'locale en', locale: :en do
           specify do
             expect(iban.errors).to include(branch_code: 'is invalid')
@@ -1239,7 +1257,16 @@ describe Ibandit::IBAN do
         let(:valid_branch_code) { true }
         let(:valid_account_number) { false }
 
+        it 'calls valid_account_number? with an IBAN object' do
+          expect(Ibandit.modulus_checker).
+            to receive(:valid_account_number?).
+            with(instance_of(Ibandit::IBAN))
+
+          iban.valid_local_modulus_check?
+        end
+
         it { is_expected.to be(false) }
+
         context 'locale en', locale: :en do
           specify do
             expect(iban.errors).to include(account_number: 'is invalid')

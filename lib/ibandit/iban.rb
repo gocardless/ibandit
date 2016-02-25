@@ -385,21 +385,21 @@ module Ibandit
     end
 
     def valid_modulus_check_bank_code?
-      return true if Ibandit.modulus_checker.valid_bank_code?(iban.to_s)
+      return true if Ibandit.modulus_checker.valid_bank_code?(self)
 
       @errors[:bank_code] = Ibandit.translate(:is_invalid)
       false
     end
 
     def valid_modulus_check_branch_code?
-      return true if Ibandit.modulus_checker.valid_branch_code?(iban.to_s)
+      return true if Ibandit.modulus_checker.valid_branch_code?(self)
 
       @errors[:branch_code] = Ibandit.translate(:is_invalid)
       false
     end
 
     def valid_modulus_check_account_number?
-      return true if Ibandit.modulus_checker.valid_account_number?(iban.to_s)
+      return true if Ibandit.modulus_checker.valid_account_number?(self)
 
       @errors[:account_number] = Ibandit.translate(:is_invalid)
       false
