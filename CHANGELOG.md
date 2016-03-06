@@ -1,3 +1,7 @@
+## 0.10.1 -  March 7, 2016
+
+- Update BLZ data
+
 ## 0.10.0 -  February 25, 2016
 
 - BREAKING CHANGE: Pass an `Ibandit::IBAN` object to modulus checker hooks,
