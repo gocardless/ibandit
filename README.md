@@ -106,7 +106,7 @@ county combines them:
 `swift_account_number`
 :    The account number for the account
 
-`iban_national_id`
+`swift_national_id`
 :    The national ID for the bank / branch as documented by SWIFT
 
 The SWIFT IBAN components are all available as methods on an `IBAN` object:
@@ -119,7 +119,7 @@ iban.check_digits              # => "82"
 iban.swift_bank_code           # => "WEST"
 iban.swift_branch_code         # => "123456"
 iban.swift_account_number      # => "98765432"
-iban.iban_national_id          # => "WEST123456"
+iban.swift_national_id          # => "WEST123456"
 ```
 
 In addition, it is often useful to extract any local check digits from the IBAN.

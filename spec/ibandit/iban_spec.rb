@@ -52,7 +52,7 @@ describe Ibandit::IBAN do
     its(:swift_bank_code) { is_expected.to eq('WEST') }
     its(:swift_branch_code) { is_expected.to eq('123456') }
     its(:swift_account_number) { is_expected.to eq('98765432') }
-    its(:iban_national_id) { is_expected.to eq('WEST123456') }
+    its(:swift_national_id) { is_expected.to eq('WEST123456') }
     its(:local_check_digits) { is_expected.to be_nil }
 
     context 'when the IBAN is blank' do
@@ -63,7 +63,7 @@ describe Ibandit::IBAN do
       its(:bank_code) { is_expected.to be_nil }
       its(:branch_code) { is_expected.to be_nil }
       its(:account_number) { is_expected.to be_nil }
-      its(:iban_national_id) { is_expected.to be_nil }
+      its(:swift_national_id) { is_expected.to be_nil }
       its(:bban) { is_expected.to be_nil }
       its(:local_check_digits) { is_expected.to be_nil }
     end
@@ -79,7 +79,7 @@ describe Ibandit::IBAN do
       its(:swift_bank_code) { is_expected.to eq('800') }
       its(:swift_branch_code) { is_expected.to be_nil }
       its(:swift_account_number) { is_expected.to eq('00000075071211203') }
-      its(:iban_national_id) { is_expected.to eq('800') }
+      its(:swift_national_id) { is_expected.to eq('800') }
       its(:local_check_digits) { is_expected.to be_nil }
     end
 

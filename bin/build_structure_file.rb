@@ -16,7 +16,7 @@ class Country
   element 'account_number_position', as: :account_number_position
   element 'account_number_length', as: :account_number_length
   element 'iban_total_length', as: :total_length
-  element 'iban_national_id_length', as: :iban_national_id_length
+  element 'iban_national_id_length', as: :national_id_length
 end
 
 class Report
@@ -37,7 +37,7 @@ def get_iban_structures(iban_structures_file, iban_registry_file)
       account_number_position: country.account_number_position.to_i,
       account_number_length: country.account_number_length.to_i,
       total_length: country.total_length.to_i,
-      iban_national_id_length: country.iban_national_id_length.to_i
+      national_id_length: country.national_id_length.to_i
     }.merge(bban_formats[country.country_code])
   end
 end

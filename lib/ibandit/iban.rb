@@ -38,12 +38,12 @@ module Ibandit
     # Component parts #
     ###################
 
-    def iban_national_id
+    def swift_national_id
       return unless decomposable?
 
       national_id = swift_bank_code.to_s
       national_id += swift_branch_code.to_s
-      national_id.slice(0, structure[:iban_national_id_length])
+      national_id.slice(0, structure[:national_id_length])
     end
 
     def local_check_digits
