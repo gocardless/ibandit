@@ -1,3 +1,7 @@
+## 0.11.1 -  June 6, 2016
+
+- Update BLZ data
+
 ## 0.11.0 -  March 30, 2016
 
 - BREAKING CHANGE: Rename `IBAN#iban_national_id` to `IBAN#swift_national_id`.
