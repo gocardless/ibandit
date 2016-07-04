@@ -10,7 +10,7 @@ module Ibandit
       if argument.is_a?(String)
         input = argument.to_s.gsub(/\s+/, '').upcase
 
-        if pseudo_iban?(input)
+        if pseudo_iban?(input) && !PseudoIBANSplitter.new(input).split.nil?
           local_details = PseudoIBANSplitter.new(input).split
           build_iban_from_local_details(local_details)
         else

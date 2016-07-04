@@ -17,6 +17,11 @@ describe Ibandit::IBAN do
     specify { expect { iban }.to raise_error(TypeError) }
   end
 
+  context 'with an invalid pseudo IBAN' do
+    let(:arg) { 'dezzzz' }
+    its(:iban) { is_expected.to eq('DEZZZZ') }
+  end
+
   context 'with local details' do
     let(:arg) do
       {
