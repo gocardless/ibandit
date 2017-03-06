@@ -76,15 +76,15 @@ module Ibandit
                         end
 
         return serial_number unless bank_info.fetch(:zerofill_serial_number)
-
-        serial_number.rjust(serial_number_length, '0')
+        serial_number && serial_number.rjust(serial_number_length, '0')
       end
 
       def swift_account_number
-        if bank_info.fetch(:include_clearing_code)
+        if bank_info.fetch(:include_clearing_code) &&
+           clearing_code && serial_number
           (clearing_code + serial_number).rjust(17, '0')
         else
-          serial_number.rjust(17, '0')
+          serial_number && serial_number.rjust(17, '0')
         end
       end
     end
