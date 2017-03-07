@@ -131,6 +131,16 @@ describe Ibandit::Sweden::LocalDetailsConverter do
         its([:swift_bank_code]) { is_expected.to eq('800') }
         its([:swift_account_number]) { is_expected.to eq('00820169143579630') }
       end
+
+      context 'in the 8000s range, with a very short input' do
+        let(:account_number) { '8004' }
+        let(:branch_code) { nil }
+
+        its([:account_number]) { is_expected.to be_nil }
+        its([:branch_code]) { is_expected.to eq('8004') }
+        its([:swift_bank_code]) { is_expected.to eq('800') }
+        its([:swift_account_number]) { is_expected.to be_nil }
+      end
     end
 
     context 'with a Sparbanken Öresund clearing code' do
