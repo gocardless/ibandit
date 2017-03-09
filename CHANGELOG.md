@@ -1,3 +1,7 @@
+## 0.11.2 -  July 4, 2016
+
+- Handle invalid pseudo-IBANs
+
 ## 0.11.1 -  June 6, 2016
 
 - Update BLZ data
