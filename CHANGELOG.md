@@ -1,3 +1,10 @@
+## 0.11.3 -  March 9, 2017
+
+- Fix bug: Previously, constructing an `Ibandit::IBAN` object with
+  `country_code: "SE"` and certain 4-digit values for `account_number`
+  would throw `NoMethodError`. The IBAN object can now be successfully
+  constructed (and will return a false value for `valid?`).
+
 ## 0.11.2 -  July 4, 2016
 
 - Handle invalid pseudo-IBANs
