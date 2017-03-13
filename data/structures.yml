@@ -747,7 +747,7 @@ SI:
   :account_number_position: 10
   :account_number_length: 10
   :total_length: 19
-  :national_id_length: 2
+  :national_id_length: 5
   :bban_format: "\\d{5}\\d{8}\\d{2}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{8}\\d{2}"

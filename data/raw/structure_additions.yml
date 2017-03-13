@@ -83,6 +83,7 @@ SE:
 SI:
   :bank_code_format: \d{5}
   :account_number_format: \d{8}\d{2}
+  :national_id_length: 5
 SK:
   :local_check_digit_position: 14
   :local_check_digit_length: 1
