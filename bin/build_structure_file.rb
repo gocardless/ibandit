@@ -44,7 +44,7 @@ end
 
 def get_bban_formats(iban_registry_file)
   iban_registry_file.each_with_object({}) do |line, hash|
-    bban_structure = line['BBAN structure '].strip
+    bban_structure = line['BBAN structure'].strip
 
     bank_code_structure, branch_code_structure =
       if line['Bank identifier length']
@@ -53,7 +53,7 @@ def get_bban_formats(iban_registry_file)
         ['', nil]
       end
 
-    country_code = line['Country code as defined in ISO 3166'].strip
+    country_code = line['IBAN prefix country code (ISO 3166)'].strip
     hash[country_code] = convert_swift_convention(bban_structure,
                                                   bank_code_structure,
                                                   branch_code_structure)
@@ -108,7 +108,30 @@ if __FILE__ == $PROGRAM_NAME
   iban_registry_file = CSV.read(
     File.expand_path('../../data/raw/IBAN_Registry.txt', __FILE__),
     col_sep: "\t",
-    headers: true
+    headers: false,
+    encoding: "ISO8859-1",
+  )
+
+  # this thing is rotated from what normal people would do
+  transformed_registry_file = []
+
+  iban_registry_file.each_index do |row|
+    iban_registry_file[row].each_index do |column|
+      transformed_registry_file[column] ||= []
+      transformed_registry_file[column] << iban_registry_file[row][column]
+    end
+  end
+
+  transformed_registry_string = CSV.generate do |csv|
+    transformed_registry_file.each do |row|
+      csv << row
+    end
+  end
+
+  transposed_registry_csv = CSV.parse(
+    transformed_registry_string,
+    headers: true,
+    encoding: "ISO8859-1",
   )
 
   iban_structures_file = File.read(
@@ -117,7 +140,7 @@ if __FILE__ == $PROGRAM_NAME
 
   iban_structures = get_iban_structures(
     iban_structures_file,
-    iban_registry_file
+    transposed_registry_csv,
   )
 
   structure_additions = YAML.load_file(
