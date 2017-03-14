@@ -1,3 +1,8 @@
+## 0.11.4 - March 13, 2017
+
+- Fix `swift_national_id` for Slovenian IBANs. Previously it was
+  returning two digits, instead of five.
+
 ## 0.11.3 -  March 9, 2017
 
 - Fix bug: Previously, constructing an `Ibandit::IBAN` object with
