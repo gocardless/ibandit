@@ -210,7 +210,7 @@ DO:
   :national_id_length: 4
   :bban_format: "[A-Z0-9]{4}\\d{20}"
   :bank_code_format: "[A-Z]{4}"
-  :account_number_format: "{4}\\d{20}"
+  :account_number_format: "\\d{20}"
 EE:
   :bank_code_position: 5
   :bank_code_length: 2
