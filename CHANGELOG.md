@@ -1,3 +1,7 @@
+## 0.11.5 - June 16, 2017
+
+- Fix invalid regular expression `account_number_format` for Dominican Republic IBANs.
+
 ## 0.11.4 - March 13, 2017
 
 - Fix `swift_national_id` for Slovenian IBANs. Previously it was
