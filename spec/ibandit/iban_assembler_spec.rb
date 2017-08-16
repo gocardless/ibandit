@@ -498,8 +498,13 @@ describe Ibandit::IBANAssembler do
         it { is_expected.to eq('IT64Y0542811101000000123456') }
       end
 
-      context 'with a bad character' do
-        before { args[:account_number] = '000000123hhh' }
+      context 'with a bad character in an odd position' do
+        before { args[:account_number] = '000000123h00' }
+        it { is_expected.to be_nil }
+      end
+
+      context 'with a bad character in an even position' do
+        before { args[:account_number] = '0000001230h0' }
         it { is_expected.to be_nil }
       end
 

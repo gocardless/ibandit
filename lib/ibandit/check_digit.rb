@@ -1,5 +1,14 @@
 module Ibandit
   module CheckDigit
+    ITALIAN_ODD_MAPPING = {
+      'A' => 1,  'B' => 0,  'C' => 5,  'D' => 7,  'E' => 9,  'F' => 13,
+      'G' => 15, 'H' => 17, 'I' => 19, 'J' => 21, 'K' => 2,  'L' => 4,
+      'M' => 18, 'N' => 20, 'O' => 11, 'P' => 3,  'Q' => 6,  'R' => 8,
+      'S' => 12, 'T' => 14, 'U' => 16, 'V' => 10, 'W' => 22, 'X' => 25,
+      'Y' => 24, 'Z' => 23, '0' => 1,  '1' => 0,  '2' => 5,  '3' => 7,
+      '4' => 9,  '5' => 13, '6' => 15, '7' => 17, '8' => 19, '9' => 21
+    }.freeze
+
     def self.iban(country_code, bban)
       chars = bban + country_code + '00'
       digits = chars.bytes.map do |byte|
@@ -16,18 +25,14 @@ module Ibandit
     end
 
     def self.italian(string)
-      odd_mapping = {
-        'A' => 1,  'B' => 0,  'C' => 5,  'D' => 7,  'E' => 9,  'F' => 13,
-        'G' => 15, 'H' => 17, 'I' => 19, 'J' => 21, 'K' => 2,  'L' => 4,
-        'M' => 18, 'N' => 20, 'O' => 11, 'P' => 3,  'Q' => 6,  'R' => 8,
-        'S' => 12, 'T' => 14, 'U' => 16, 'V' => 10, 'W' => 22, 'X' => 25,
-        'Y' => 24, 'Z' => 23, '0' => 1,  '1' => 0,  '2' => 5,  '3' => 7,
-        '4' => 9,  '5' => 13, '6' => 15, '7' => 17, '8' => 19, '9' => 21
-      }
-
       scaled_values = string.chars.map.with_index do |char, index|
         if index.even?
-          odd_mapping[char]
+          if ITALIAN_ODD_MAPPING.include?(char)
+            ITALIAN_ODD_MAPPING[char]
+          else
+            raise InvalidCharacterError,
+                  "Unexpected character '#{char}'"
+          end
         else
           case char.ord
           when 48..57 then char.to_i         # 0..9
