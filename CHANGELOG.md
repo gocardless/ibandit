@@ -1,3 +1,7 @@
+## 0.11.6 - August 16, 2017
+
+- Handle invalid characters when computing check digits for Italy
+
 ## 0.11.5 - June 16, 2017
 
 - Fix invalid regular expression `account_number_format` for Dominican Republic IBANs.
