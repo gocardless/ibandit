@@ -37,7 +37,7 @@ iban.to_s                      # => "XQ75BADCODE666"
 iban.to_s(:formatted)          # => "XQ75 BADC ODE6 66"
 ```
 
-Alternatively, you can [create an IBAN from national banking details](#creating-an-iban-from-national-banking-details)
+Alternatively, you can [create an IBAN from national banking details](#creating-an-iban-from-national-banking-details).
 
 ### Validating an IBAN
 
@@ -69,22 +69,26 @@ Ibandit will also apply local modulus checks if you set a modulus checker:
 
 ```ruby
 module ModulusChecker
-  def self.valid_bank_code?(iban_string)
-    some_codes
+  def self.valid_bank_code?(iban)
+    # some_codes
   end
 
-  def self.valid_account_number?(iban_string)
-    some_codes
+  def self.valid_branch_code?(iban)
+    # some_codes
+  end
+
+  def self.valid_account_number?(iban)
+    # some_codes
   end
 end
 
 Ibandit.modulus_checker = ModulusChecker
 ```
 
-Both the `valid_bank_code?` and `valid_account_number?` methods will receive the plain-text IBAN.
-`valid_bank_code?` should return true unless it is known that the bank/branch code in this IBAN are
-invalid in the country specified. `valid_account_number?` should return true unless it is known that
-the account number in this IBAN cannot be valid due to local modulus checking rules.
+All three the `valid_bank_code?`, `valid_branch_code?` and `valid_account_number?` methods will receive an `IBAN` object.
+`valid_bank_code?` and `valid_branch_code?` should return true unless it is known that the bank/branch code in this IBAN
+are invalid in the country specified. `valid_account_number?` should return true unless it is known that the account number
+in this IBAN cannot be valid due to local modulus checking rules.
 
 ### Deconstructing an IBAN into national banking details
 
@@ -119,7 +123,7 @@ iban.check_digits              # => "82"
 iban.swift_bank_code           # => "WEST"
 iban.swift_branch_code         # => "123456"
 iban.swift_account_number      # => "98765432"
-iban.swift_national_id          # => "WEST123456"
+iban.swift_national_id         # => "WEST123456"
 ```
 
 In addition, it is often useful to extract any local check digits from the IBAN.
@@ -446,7 +450,7 @@ banking details.  Pseudo-IBANs can be recognized by the fact that they have `ZZ`
 as the third and fourth characters (these would be check digits for a regular
 IBAN).
 
-```
+```ruby
 iban = Ibandit::IBAN.new(
   country_code: 'SE',
   branch_code: '7507',
@@ -469,3 +473,7 @@ exists and is an excellent choice if you only require basic IBAN validation.
 We built Ibandit because iban-tools doesn't provide a comprehensive, consistent
 interface for the construction and deconstruction of IBANs into national
 details.
+
+---
+
+GoCardless ♥ open source. If you do too, come [join us](https://gocardless.com/about/jobs/software-engineer).
