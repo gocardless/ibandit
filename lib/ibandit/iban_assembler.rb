@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Ibandit
   module IBANAssembler
-    EXCEPTION_COUNTRY_CODES = %w(IT SM BE).freeze
+    EXCEPTION_COUNTRY_CODES = %w[IT SM BE].freeze
 
     def self.assemble(local_details)
       country_code = local_details[:country_code]
@@ -47,7 +49,7 @@ module Ibandit
       partial_bban = [
         opts[:bank_code],
         opts[:branch_code],
-        opts[:account_number]
+        opts[:account_number],
       ].join
 
       check_digit = opts[:check_digit] || CheckDigit.italian(partial_bban)
@@ -86,22 +88,23 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when *%w(AT CY CZ DE DK EE FI HR IS LT LU LV NL NO PL RO SE SI SK)
-        %i(bank_code account_number)
-      when 'BE'
-        %i(account_number)
+      when "AT", "CY", "CZ", "DE", "DK", "EE", "FI", "HR", "IS", "LT", "LU",
+           "LV", "NL", "NO", "PL", "RO", "SE", "SI", "SK"
+        %i[bank_code account_number]
+      when "BE"
+        %i[account_number]
       else
-        %i(bank_code branch_code account_number)
+        %i[bank_code branch_code account_number]
       end
     end
 
     def self.allowed_fields(country_code)
       # Some countries have additional optional fields
       case country_code
-      when 'BE' then %i(bank_code account_number)
-      when 'CY' then %i(bank_code branch_code account_number)
-      when 'IT' then %i(bank_code branch_code account_number check_digit)
-      when 'CZ', 'SK' then %i(bank_code account_number account_number_prefix)
+      when "BE" then %i[bank_code account_number]
+      when "CY" then %i[bank_code branch_code account_number]
+      when "IT" then %i[bank_code branch_code account_number check_digit]
+      when "CZ", "SK" then %i[bank_code account_number account_number_prefix]
       else required_fields(country_code)
       end
     end
@@ -110,7 +113,7 @@ module Ibandit
       [
         country_code,
         CheckDigit.iban(country_code, bban),
-        bban
+        bban,
       ].join
     rescue InvalidCharacterError
       nil

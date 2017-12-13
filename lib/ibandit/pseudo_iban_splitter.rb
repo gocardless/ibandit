@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   class PseudoIBANSplitter
     def initialize(pseudo_iban)
@@ -11,7 +13,7 @@ module Ibandit
         country_code: country_code,
         bank_code: bank_code,
         branch_code: branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -41,9 +43,9 @@ module Ibandit
 
     def pseudo_iban_part(start_index, length_key)
       length = structure.fetch(length_key)
-      return if length == 0
+      return if length.zero?
 
-      @pseudo_iban.slice(start_index, length).gsub(/\AX+/, '')
+      @pseudo_iban.slice(start_index, length).gsub(/\AX+/, "")
     end
 
     def bank_code_start_index

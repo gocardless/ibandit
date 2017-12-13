@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module Sweden
     class BankLookup
@@ -13,7 +15,7 @@ module Ibandit
       def self.bank_info_table
         @swedish_bank_lookup ||=
           begin
-            relative_path = '../../../../data/raw/swedish_bank_lookup.yml'
+            relative_path = "../../../../data/raw/swedish_bank_lookup.yml"
             raw_info = YAML.load_file(File.expand_path(relative_path, __FILE__))
 
             raw_info.map { |bank| bank.merge(range: Range.new(*bank[:range])) }

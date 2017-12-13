@@ -1,4 +1,6 @@
-require 'yaml'
+# frozen_string_literal: true
+
+require "yaml"
 
 module Ibandit
   class IBAN
@@ -8,7 +10,7 @@ module Ibandit
 
     def initialize(argument)
       if argument.is_a?(String)
-        input = argument.to_s.gsub(/\s+/, '').upcase
+        input = argument.to_s.gsub(/\s+/, "").upcase
 
         if pseudo_iban?(input) && !PseudoIBANSplitter.new(input).split.nil?
           local_details = PseudoIBANSplitter.new(input).split
@@ -20,7 +22,7 @@ module Ibandit
       elsif argument.is_a?(Hash)
         build_iban_from_local_details(argument)
       else
-        raise TypeError, 'Must pass an IBAN string or hash of local details'
+        raise TypeError, "Must pass an IBAN string or hash of local details"
       end
 
       @errors = {}
@@ -51,7 +53,7 @@ module Ibandit
 
       iban.slice(
         structure[:local_check_digit_position] - 1,
-        structure[:local_check_digit_length]
+        structure[:local_check_digit_length],
       )
     end
 
@@ -64,7 +66,7 @@ module Ibandit
         country_code: country_code,
         bank_code: bank_code,
         branch_code: branch_code,
-        account_number: account_number
+        account_number: account_number,
       ).assemble
     end
 
@@ -86,7 +88,7 @@ module Ibandit
         valid_branch_code_format?,
         valid_account_number_format?,
         valid_local_modulus_check?,
-        passes_country_specific_checks?
+        passes_country_specific_checks?,
       ].all?
     end
 
@@ -132,7 +134,7 @@ module Ibandit
     def valid_bank_code_length?
       return unless valid_country_code?
 
-      if swift_bank_code.nil? || swift_bank_code.length == 0
+      if swift_bank_code.nil? || swift_bank_code.empty?
         @errors[:bank_code] = Ibandit.translate(:is_required)
         return false
       end
@@ -150,10 +152,10 @@ module Ibandit
         return true
       end
 
-      if structure[:branch_code_length] == 0
+      if structure[:branch_code_length].zero?
         @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
                                                   country_code: country_code)
-      elsif swift_branch_code.nil? || swift_branch_code.length == 0
+      elsif swift_branch_code.nil? || swift_branch_code.empty?
         @errors[:branch_code] = Ibandit.translate(:is_required)
       else
         @errors[:branch_code] =
@@ -186,7 +188,7 @@ module Ibandit
       if iban.scan(/[^A-Z0-9]/).any?
         @errors[:characters] =
           Ibandit.translate(:non_alphanumeric_characters,
-                            characters: iban.scan(/[^A-Z\d]/).join(' '))
+                            characters: iban.scan(/[^A-Z\d]/).join(" "))
         false
       else
         true
@@ -252,21 +254,21 @@ module Ibandit
       return unless valid_country_code?
 
       case country_code
-      when 'DE' then supports_iban_determination?
-      when 'SE' then valid_swedish_details?
+      when "DE" then supports_iban_determination?
+      when "SE" then valid_swedish_details?
       else true
       end
     end
 
     def supports_iban_determination?
       return unless valid_format?
-      return true unless country_code == 'DE'
+      return true unless country_code == "DE"
 
       begin
         GermanDetailsConverter.convert(
           country_code: country_code,
           bank_code: swift_bank_code,
-          account_number: swift_account_number
+          account_number: swift_account_number,
         )
         true
       rescue UnsupportedAccountDetails
@@ -276,7 +278,7 @@ module Ibandit
     end
 
     def valid_swedish_details?
-      return true unless country_code == 'SE'
+      return true unless country_code == "SE"
 
       if branch_code
         valid_swedish_local_details?
@@ -296,7 +298,7 @@ module Ibandit
       length_valid =
         Sweden::Validator.account_number_length_valid_for_bank_code?(
           bank_code: swift_bank_code,
-          account_number: swift_account_number
+          account_number: swift_account_number,
         )
 
       unless length_valid
@@ -315,7 +317,7 @@ module Ibandit
 
       valid_serial_number = Sweden::Validator.valid_serial_number_length?(
         clearing_code: branch_code,
-        serial_number: account_number
+        serial_number: account_number,
       )
 
       unless valid_serial_number
@@ -363,7 +365,7 @@ module Ibandit
       @swift_account_number = swift_details[:account_number]
 
       return if Constants::PSEUDO_IBAN_COUNTRY_CODES.
-                include?(@country_code)
+          include?(@country_code)
 
       @bank_code      = swift_details[:bank_code]
       @branch_code    = swift_details[:branch_code]
@@ -410,7 +412,7 @@ module Ibandit
         country_code: @country_code,
         account_number: @swift_account_number,
         branch_code: @swift_branch_code,
-        bank_code: @swift_bank_code
+        bank_code: @swift_bank_code,
       }
     end
 

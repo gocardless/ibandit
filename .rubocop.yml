@@ -1,11 +1,9 @@
 inherit_from: .rubocop_todo.yml
+inherit_gem:
+  ruboconfig: rubocop.yml
 
 AllCops:
-  Include:
-    - config.ru
-    - Rakefile
-  Exclude:
-    - .*/**/*
+  TargetRubyVersion: 2.4
 
 # Limit lines to 80 characters.
 LineLength:
@@ -21,6 +19,9 @@ SingleLineMethods:
 # Wants underscores in all large numbers. Pain in the ass for things like
 # unix timestamps.
 NumericLiterals:
+  Enabled: false
+
+Performance/RegexpMatch:
   Enabled: false
 
 # Wants you to use the same argument names for every reduce. This seems kinda
@@ -43,5 +44,5 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 400
 
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: 'trailing'

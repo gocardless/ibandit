@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module LocalDetailsCleaner
     def self.clean(local_details)
@@ -5,7 +7,8 @@ module Ibandit
 
       if can_clean?(country_code, local_details)
         local_details = local_details.merge(
-          public_send(:"clean_#{country_code.downcase}_details", local_details))
+          public_send(:"clean_#{country_code.downcase}_details", local_details),
+        )
       end
 
       return local_details if explicit_swift_details?(country_code)
@@ -32,16 +35,16 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when 'AT', 'CY', 'DE', 'FI', 'LT', 'LU', 'LV', 'NL', 'RO', 'SI', 'SK'
-        %i(bank_code account_number)
-      when 'BE', 'CZ', 'DK', 'EE', 'ES', 'HR', 'HU', 'IS', 'NO', 'PL', 'SE'
-        %i(account_number)
-      when 'GB', 'IE', 'MT'
-        if Ibandit.bic_finder.nil? then %i(bank_code branch_code account_number)
-        else %i(branch_code account_number)
+      when "AT", "CY", "DE", "FI", "LT", "LU", "LV", "NL", "RO", "SI", "SK"
+        %i[bank_code account_number]
+      when "BE", "CZ", "DK", "EE", "ES", "HR", "HU", "IS", "NO", "PL", "SE"
+        %i[account_number]
+      when "GB", "IE", "MT"
+        if Ibandit.bic_finder.nil? then %i[bank_code branch_code account_number]
+        else %i[branch_code account_number]
         end
       else
-        %i(bank_code branch_code account_number)
+        %i[bank_code branch_code account_number]
       end
     end
 
@@ -55,16 +58,16 @@ module Ibandit
       return {} unless local_details[:account_number].length >= 4
       {
         bank_code:      local_details[:bank_code],
-        account_number: local_details[:account_number].rjust(11, '0')
+        account_number: local_details[:account_number].rjust(11, "0"),
       }
     end
 
     def self.clean_be_details(local_details)
-      account_number = local_details[:account_number].tr('-', '')
+      account_number = local_details[:account_number].tr("-", "")
 
       {
         bank_code:      local_details[:bank_code] || account_number.slice(0, 3),
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -76,7 +79,7 @@ module Ibandit
     def self.clean_cy_details(local_details)
       # Account number may be 7-16 digits long.
       # Add leading zeros to account number if < 16 digits.
-      cleaned_bank_code = local_details[:bank_code].gsub(/[-\s]/, '')
+      cleaned_bank_code = local_details[:bank_code].gsub(/[-\s]/, "")
 
       bank_code      = cleaned_bank_code.slice(0, 3)
       branch_code    =
@@ -87,7 +90,7 @@ module Ibandit
         end
       account_number =
         if local_details[:account_number].length >= 7
-          local_details[:account_number].rjust(16, '0')
+          local_details[:account_number].rjust(16, "0")
         else
           local_details[:account_number]
         end
@@ -95,7 +98,7 @@ module Ibandit
       {
         bank_code:      bank_code,
         branch_code:    branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -106,16 +109,16 @@ module Ibandit
       account_number =
         if local_details.include?(:account_number_prefix)
           [
-            local_details[:account_number_prefix].rjust(6, '0'),
-            local_details[:account_number].rjust(10, '0')
+            local_details[:account_number_prefix].rjust(6, "0"),
+            local_details[:account_number].rjust(10, "0"),
           ].join
         else
-          local_details[:account_number].tr('-', '').rjust(16, '0')
+          local_details[:account_number].tr("-", "").rjust(16, "0")
         end
 
       {
         bank_code:      local_details[:bank_code],
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -137,7 +140,7 @@ module Ibandit
 
       {
         bank_code:      converted_details[:bank_code],
-        account_number: converted_details[:account_number].rjust(10, '0')
+        account_number: converted_details[:account_number].rjust(10, "0"),
       }
     end
 
@@ -145,12 +148,12 @@ module Ibandit
       # This method supports being passed the component IBAN parts, as defined
       # by SWIFT, or a single traditional-format string split by a '-'.
       if local_details[:bank_code]
-        bank_code      = local_details[:bank_code].rjust(4, '0')
-        account_number = local_details[:account_number].rjust(10, '0')
-      elsif local_details[:account_number].include?('-')
-        bank_code, account_number = local_details[:account_number].split('-', 2)
-      elsif local_details[:account_number].gsub(/\s/, '').length == 14
-        cleaned_account_number = local_details[:account_number].gsub(/\s/, '')
+        bank_code      = local_details[:bank_code].rjust(4, "0")
+        account_number = local_details[:account_number].rjust(10, "0")
+      elsif local_details[:account_number].include?("-")
+        bank_code, account_number = local_details[:account_number].split("-", 2)
+      elsif local_details[:account_number].gsub(/\s/, "").length == 14
+        cleaned_account_number = local_details[:account_number].gsub(/\s/, "")
         bank_code      = cleaned_account_number.slice(0, 4)
         account_number = cleaned_account_number.slice(4, 10)
       else
@@ -158,8 +161,8 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code.rjust(4, '0'),
-        account_number: account_number.delete('-').rjust(10, '0')
+        bank_code:      bank_code.rjust(4, "0"),
+        account_number: account_number.delete("-").rjust(10, "0"),
       }
     end
 
@@ -171,16 +174,16 @@ module Ibandit
       # account number and converted using the rules at
       # http://www.pangaliit.ee/en/settlements-and-standards/bank-codes-of-estonian-banks
       domestic_bank_code =
-        local_details[:account_number].gsub(/\A0+/, '').slice(0, 2)
+        local_details[:account_number].gsub(/\A0+/, "").slice(0, 2)
 
       iban_bank_code =
         case domestic_bank_code
-        when '11' then '22'
-        when '93' then '00'
+        when "11" then "22"
+        when "93" then "00"
         else domestic_bank_code
         end
 
-      account_number = local_details[:account_number].rjust(14, '0')
+      account_number = local_details[:account_number].rjust(14, "0")
 
       { bank_code: iban_bank_code, account_number: account_number }
     end
@@ -191,10 +194,10 @@ module Ibandit
       if local_details[:bank_code] && local_details[:branch_code]
         bank_code      = local_details[:bank_code]
         branch_code    = local_details[:branch_code]
-        account_number = local_details[:account_number].gsub(/[-\s]/, '')
+        account_number = local_details[:account_number].gsub(/[-\s]/, "")
       else
         cleaned_account_number =
-          local_details[:account_number].gsub(/[-\s]/, '')
+          local_details[:account_number].gsub(/[-\s]/, "")
 
         bank_code      = cleaned_account_number.slice(0, 4)
         branch_code    = cleaned_account_number.slice(4, 4)
@@ -204,7 +207,7 @@ module Ibandit
       {
         bank_code:      bank_code,
         branch_code:    branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -213,18 +216,18 @@ module Ibandit
       #   by adding zero-padding. The expansion method depends on the first
       #   character of the bank code.
       account_number =
-        if %w(4 5 6).include?(local_details[:bank_code][0])
+        if %w[4 5 6].include?(local_details[:bank_code][0])
           [
             local_details[:account_number][0],
-            local_details[:account_number][1..-1].rjust(7, '0')
+            local_details[:account_number][1..-1].rjust(7, "0"),
           ].join
         else
-          local_details[:account_number].rjust(8, '0')
+          local_details[:account_number].rjust(8, "0")
         end
 
       {
         bank_code:      local_details[:bank_code],
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -232,29 +235,29 @@ module Ibandit
       {
         bank_code:      local_details[:bank_code],
         branch_code:    local_details[:branch_code],
-        account_number: local_details[:account_number].gsub(/[-\s]/, '')
+        account_number: local_details[:account_number].gsub(/[-\s]/, ""),
       }
     end
 
     def self.clean_gb_details(local_details)
       # Account number may be 6-8 digits
       # Add leading zeros to account number if < 8 digits.
-      branch_code = local_details[:branch_code].gsub(/[-\s]/, '')
+      branch_code = local_details[:branch_code].gsub(/[-\s]/, "")
 
       if local_details[:bank_code]
         bank_code = local_details[:bank_code]
       else
-        bic = Ibandit.find_bic('GB', branch_code)
+        bic = Ibandit.find_bic("GB", branch_code)
         bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      account_number = local_details[:account_number].gsub(/[-\s]/, '')
-      account_number = account_number.rjust(8, '0') if account_number.length > 5
+      account_number = local_details[:account_number].gsub(/[-\s]/, "")
+      account_number = account_number.rjust(8, "0") if account_number.length > 5
 
       {
         bank_code:      bank_code,
         branch_code:    branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -268,13 +271,13 @@ module Ibandit
       # This method supports being passed the component IBAN parts, as defined
       # by SWIFT, or a single traditional-format string split by a '-'.
       return local_details if local_details[:bank_code]
-      return local_details unless local_details[:account_number].include?('-')
+      return local_details unless local_details[:account_number].include?("-")
 
-      bank_code, account_number = local_details[:account_number].split('-', 2)
+      bank_code, account_number = local_details[:account_number].split("-", 2)
 
       {
         bank_code:      bank_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -285,20 +288,20 @@ module Ibandit
         return local_details
       end
 
-      cleaned_acct_number = local_details[:account_number].gsub(/[-\s]/, '')
+      cleaned_acct_number = local_details[:account_number].gsub(/[-\s]/, "")
 
       case cleaned_acct_number.length
       when 16
         {
           bank_code:      cleaned_acct_number.slice(0, 3),
           branch_code:    cleaned_acct_number.slice(3, 4),
-          account_number: cleaned_acct_number.slice(7, 9).ljust(17, '0')
+          account_number: cleaned_acct_number.slice(7, 9).ljust(17, "0"),
         }
       when 24
         {
           bank_code:      cleaned_acct_number.slice(0, 3),
           branch_code:    cleaned_acct_number.slice(3, 4),
-          account_number: cleaned_acct_number.slice(7, 17)
+          account_number: cleaned_acct_number.slice(7, 17),
         }
       else local_details
       end
@@ -306,39 +309,39 @@ module Ibandit
 
     def self.clean_ie_details(local_details)
       # Ireland uses the same local details as the United Kingdom
-      branch_code = local_details[:branch_code].gsub(/[-\s]/, '')
+      branch_code = local_details[:branch_code].gsub(/[-\s]/, "")
 
       if local_details[:bank_code]
         bank_code = local_details[:bank_code]
       else
-        bic = Ibandit.find_bic('IE', branch_code)
+        bic = Ibandit.find_bic("IE", branch_code)
         bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      account_number = local_details[:account_number].gsub(/[-\s]/, '')
-      account_number = account_number.rjust(8, '0') if account_number.length > 5
+      account_number = local_details[:account_number].gsub(/[-\s]/, "")
+      account_number = account_number.rjust(8, "0") if account_number.length > 5
 
       {
         bank_code:      bank_code,
         branch_code:    branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
     def self.clean_is_details(local_details)
       if local_details[:bank_code]
         bank_code = local_details[:bank_code]
-        parts = local_details[:account_number].split('-')
-      elsif local_details[:account_number].include?('-')
-        bank_code, *parts = local_details[:account_number].split('-')
+        parts = local_details[:account_number].split("-")
+      elsif local_details[:account_number].include?("-")
+        bank_code, *parts = local_details[:account_number].split("-")
       else
         bank_code = local_details[:account_number].slice(0, 4)
         parts = Array(local_details[:account_number][4..-1])
       end
 
       {
-        bank_code:      bank_code.rjust(4, '0'),
-        account_number: pad_is_account_number(parts)
+        bank_code:      bank_code.rjust(4, "0"),
+        account_number: pad_is_account_number(parts),
       }
     end
 
@@ -347,7 +350,7 @@ module Ibandit
       {
         bank_code:      local_details[:bank_code],
         branch_code:    local_details[:branch_code],
-        account_number: local_details[:account_number].rjust(12, '0')
+        account_number: local_details[:account_number].rjust(12, "0"),
       }
     end
 
@@ -378,17 +381,17 @@ module Ibandit
       if local_details[:bank_code]
         bank_code = local_details[:bank_code]
       else
-        bic = Ibandit.find_bic('MT', branch_code)
+        bic = Ibandit.find_bic("MT", branch_code)
         bank_code = bic.nil? ? nil : bic.slice(0, 4)
       end
 
-      account_number = local_details[:account_number].gsub(/[-\s]/, '')
-      account_number = account_number.rjust(18, '0')
+      account_number = local_details[:account_number].gsub(/[-\s]/, "")
+      account_number = account_number.rjust(18, "0")
 
       {
         bank_code:      bank_code,
         branch_code:    branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -396,7 +399,7 @@ module Ibandit
       # Add leading zeros to account number if < 10 digits.
       {
         bank_code:      local_details[:bank_code],
-        account_number: local_details[:account_number].rjust(10, '0')
+        account_number: local_details[:account_number].rjust(10, "0"),
       }
     end
 
@@ -407,7 +410,7 @@ module Ibandit
         bank_code      = local_details[:bank_code]
         account_number = local_details[:account_number]
       else
-        cleaned_acct_number = local_details[:account_number].gsub(/[-.\s]/, '')
+        cleaned_acct_number = local_details[:account_number].gsub(/[-.\s]/, "")
 
         bank_code      = cleaned_acct_number.slice(0, 4)
         account_number = cleaned_acct_number[4..-1]
@@ -415,7 +418,7 @@ module Ibandit
 
       {
         bank_code:      bank_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -426,7 +429,7 @@ module Ibandit
         bank_code      = local_details[:bank_code]
         account_number = local_details[:account_number]
       else
-        cleaned_acct_number = local_details[:account_number].gsub(/[\s]/, '')
+        cleaned_acct_number = local_details[:account_number].gsub(/[\s]/, "")
 
         bank_code      = cleaned_acct_number.slice(2, 8)
         account_number = cleaned_acct_number[10..-1]
@@ -434,7 +437,7 @@ module Ibandit
 
       {
         bank_code:      bank_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -451,14 +454,14 @@ module Ibandit
       if local_details[:bank_code]
         # If a bank_code was provided without a branch code we're (probably)
         # dealing with SWIFT details and should just return them.
-        return {
+        {
           swift_account_number: local_details[:account_number],
-          swift_bank_code: local_details[:bank_code]
+          swift_bank_code: local_details[:bank_code],
         }
       else
         Sweden::LocalDetailsConverter.new(
           branch_code: local_details[:branch_code],
-          account_number: local_details[:account_number]
+          account_number: local_details[:account_number],
         ).convert
       end
     end
@@ -467,7 +470,7 @@ module Ibandit
       # Add leading zeros to account number if < 10 digits.
       {
         bank_code:      local_details[:bank_code],
-        account_number: local_details[:account_number].rjust(10, '0')
+        account_number: local_details[:account_number].rjust(10, "0"),
       }
     end
 
@@ -482,12 +485,12 @@ module Ibandit
     end
 
     def self.pad_is_account_number(parts)
-      hufo           = parts[0].nil? ? '' : parts[0].rjust(2, '0')
-      reikningsnumer = parts[1].nil? ? '' : parts[1].rjust(6, '0')
-      ken_1          = parts[2].nil? ? '' : parts[2].rjust(6, '0')
-      ken_2          = parts[3].nil? ? '' : parts[3].rjust(4, '0')
+      hufo           = parts[0].nil? ? "" : parts[0].rjust(2, "0")
+      reikningsnumer = parts[1].nil? ? "" : parts[1].rjust(6, "0")
+      ken_1          = parts[2].nil? ? "" : parts[2].rjust(6, "0")
+      ken_2          = parts[3].nil? ? "" : parts[3].rjust(4, "0")
 
-      kennitala      = ken_1.empty? ? '' : (ken_1 + ken_2).rjust(10, '0')
+      kennitala      = ken_1.empty? ? "" : (ken_1 + ken_2).rjust(10, "0")
 
       hufo + reikningsnumer + kennitala
     end
@@ -497,7 +500,7 @@ module Ibandit
       {
         swift_bank_code:      local_details[:bank_code],
         swift_branch_code:    local_details[:branch_code],
-        swift_account_number: local_details[:account_number]
+        swift_account_number: local_details[:account_number],
       }
     end
     private_class_method :swift_details_for
