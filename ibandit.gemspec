@@ -11,13 +11,13 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency "i18n", "~> 0.7.0"
 
-  gem.authors = ["Grey Baker"]
+  gem.authors = %w[GoCardless]
   gem.description = "Ibandit is a Ruby library for manipulating and " \
                     "validating IBANs. It allows you to construct an IBAN " \
                     "from national banking details; deconstruct an IBAN into " \
                     "national banking details; and validate an IBAN's check " \
                     "digits and format."
-  gem.email = ["grey@gocardless.com"]
+  gem.email = %w[developers@gocardless.com]
   gem.files = `git ls-files`.split("\n")
   gem.homepage = "https://github.com/gocardless/ibandit"
   gem.licenses = ["MIT"]
