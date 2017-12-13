@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   class PseudoIBANAssembler
     def initialize(country_code: nil,
@@ -18,7 +20,7 @@ module Ibandit
         Constants::PSEUDO_IBAN_CHECK_DIGITS,
         padded_bank_code,
         padded_branch_code,
-        padded_account_number
+        padded_account_number,
       ].join
     end
 
@@ -49,7 +51,7 @@ module Ibandit
 
     def param_valid?(value, length_key)
       return true unless value.nil?
-      return true if structure[length_key] == 0
+      return true if structure[length_key].zero?
       false
     end
 
@@ -67,7 +69,7 @@ module Ibandit
 
     def pad(number, length_key)
       return if number.nil?
-      number.rjust(structure[length_key], 'X')
+      number.rjust(structure[length_key], "X")
     end
 
     def structure
