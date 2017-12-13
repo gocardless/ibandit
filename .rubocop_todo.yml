@@ -21,3 +21,7 @@ Metrics/CyclomaticComplexity:
 # Offense count: 4
 Style/Documentation:
   Enabled: false
+
+# Offense count: 4
+Style/NumericPredicate:
+  Enabled: false
