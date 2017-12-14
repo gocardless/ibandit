@@ -49,6 +49,15 @@ AT:
   :bban_format: "\\d{5}\\d{11}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{11}"
+AU:
+  :bank_code_length: 0
+  :branch_code_length: 6
+  :account_number_length: 9
+  :branch_code_format: "\\d{6}"
+  :account_number_format: "\\d{9}"
+  :pseudo_iban_bank_code_length: 0
+  :pseudo_iban_branch_code_length: 6
+  :pseudo_iban_account_number_length: 9
 AZ:
   :bank_code_position: 5
   :bank_code_length: 4

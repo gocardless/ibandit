@@ -39,6 +39,42 @@ describe Ibandit::PseudoIBANAssembler do
     end
   end
 
+  context "for Australia" do
+    context "with valid parameters" do
+      let(:local_details) do
+        {
+          country_code: "AU",
+          branch_code: "123456",
+          account_number: "123456789",
+        }
+      end
+
+      it { is_expected.to eq("AUZZ123456123456789") }
+    end
+
+    context "without a branch code" do
+      let(:local_details) do
+        {
+          country_code: "AU",
+          account_number: "123456789",
+        }
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context "without an account number" do
+      let(:local_details) do
+        {
+          country_code: "AU",
+          branch_code: "123456",
+        }
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   context "for a country that does not have pseudo-IBANs" do
     let(:local_details) do
       {

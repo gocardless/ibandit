@@ -35,15 +35,16 @@ module Ibandit
     end
 
     def account_number
-      pseudo_iban_part(account_number_start_index,
-                       :pseudo_iban_account_number_length)
+      remove_leading_padding(
+        @pseudo_iban.slice(account_number_start_index, @pseudo_iban.length),
+      )
     end
 
     def pseudo_iban_part(start_index, length_key)
       length = structure.fetch(length_key)
       return if length == 0
 
-      @pseudo_iban.slice(start_index, length).gsub(/\AX+/, "")
+      remove_leading_padding(@pseudo_iban.slice(start_index, length))
     end
 
     def bank_code_start_index
@@ -58,13 +59,8 @@ module Ibandit
       branch_code_start_index + structure.fetch(:pseudo_iban_branch_code_length)
     end
 
-    def expected_length
-      account_number_start_index +
-        structure.fetch(:pseudo_iban_account_number_length)
-    end
-
     def decomposable?
-      country_code_valid? && check_digits_valid? && correct_length?
+      country_code_valid? && check_digits_valid?
     end
 
     def country_code_valid?
@@ -75,12 +71,12 @@ module Ibandit
       check_digits == Constants::PSEUDO_IBAN_CHECK_DIGITS
     end
 
-    def correct_length?
-      @pseudo_iban.length == expected_length
-    end
-
     def structure
       Ibandit.structures[country_code]
+    end
+
+    def remove_leading_padding(input)
+      input.gsub(/\AX+/, "")
     end
   end
 end
