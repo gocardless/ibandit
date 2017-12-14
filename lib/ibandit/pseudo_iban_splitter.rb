@@ -11,7 +11,7 @@ module Ibandit
         country_code: country_code,
         bank_code: bank_code,
         branch_code: branch_code,
-        account_number: account_number
+        account_number: account_number,
       }
     end
 
@@ -43,7 +43,7 @@ module Ibandit
       length = structure.fetch(length_key)
       return if length == 0
 
-      @pseudo_iban.slice(start_index, length).gsub(/\AX+/, '')
+      @pseudo_iban.slice(start_index, length).gsub(/\AX+/, "")
     end
 
     def bank_code_start_index
