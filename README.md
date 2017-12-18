@@ -2,18 +2,59 @@ Ibandit [![Build Status](https://travis-ci.org/gocardless/ibandit.svg?branch=mas
 =======
 
 Ibandit is a Ruby library for manipulating and validating
-[IBANs](http://en.wikipedia.org/wiki/International_Bank_Account_Number). It
-allows you to:
+[IBANs](http://en.wikipedia.org/wiki/International_Bank_Account_Number).
 
-1. Create an IBAN from national banking details
-2. Deconstruct an IBAN into national banking details
-3. Validate an IBAN's check digits and structure
+The primary objective is to provide an interface that enables the storage and retrieval national banking details as a single value. This may be an IBAN, if a country fully and unambiguously supports it, or a combination of IBAN and/or pseudo-IBAN.
 
-Ibandit also provides helper methods for validating some countries' local
-account details.
+Therefore, there are three distinct modes:
 
-The gem is kept up to date using the IBAN structure file from SWIFT and the
-Bankleitzahl file from the Deutsche Bundesbank.
+1. For countries that support any form of IBAN: construct and validate IBAN from national banking details
+2. For countries that have unambiguous IBANs: deconstruct an IBAN into national banking details
+3. For countries where either of the above is not possible: a pseudo-IBAN as a substitute for the above.
+
+For storage, you should always try to use the `pseudo_iban`, falling back to `iban` if it not available.
+
+For example:
+- Sweden does support IBANs (**1.**) but the format is ambiguous due to variable length account numbers so they cannot be deconstructed (**2.**). For persistence, we therefore recommend using pseudo-IBANs (**3.**) because the national banking details can be recovered from them.
+- Australia does not support IBANs (**1.** & **2.**), therefore pseudo-IBANs (**3.**) can be created from national banking details for storage. To get back the national banking details, you can pass the pseudo-IBAN to Ibandit and it will parse out the national banking details again for use.
+
+# Supported Countries
+
+| Country         | Construct and Validate IBANs | Deconstruct IBANs  | Pseudo IBANs       |
+|-----------------|:----------------------------:|:------------------:|:------------------:|
+| Australia       |                              |                    | :white_check_mark: |
+| Austria         | :white_check_mark:           | :white_check_mark: |                    |
+| Belgium         | :white_check_mark:           | :white_check_mark: |                    |
+| Bulgaria        | :white_check_mark:           | :white_check_mark: |                    |
+| Croatia         | :white_check_mark:           | :white_check_mark: |                    |
+| Cyprus          | :white_check_mark:           | :white_check_mark: |                    |
+| Czech Republic  | :white_check_mark:           | :white_check_mark: |                    |
+| Denmark         | :white_check_mark:           | :white_check_mark: |                    |
+| Estonia         | :white_check_mark:           | :white_check_mark: |                    |
+| Finland         | :white_check_mark:           | :white_check_mark: |                    |
+| France          | :white_check_mark:           | :white_check_mark: |                    |
+| Germany         | :white_check_mark:           | :white_check_mark: |                    |
+| Greece          | :white_check_mark:           | :white_check_mark: |                    |
+| Hungary         | :white_check_mark:           | :white_check_mark: |                    |
+| Ireland         | :white_check_mark:           | :white_check_mark: |                    |
+| Iceland         | :white_check_mark:           | :white_check_mark: |                    |
+| Italy           | :white_check_mark:           | :white_check_mark: |                    |
+| Latvia          | :white_check_mark:           | :white_check_mark: |                    |
+| Lithuania       | :white_check_mark:           | :white_check_mark: |                    |
+| Luxembourg      | :white_check_mark:           | :white_check_mark: |                    |
+| Monaco          | :white_check_mark:           | :white_check_mark: |                    |
+| Malta           | :white_check_mark:           | :white_check_mark: |                    |
+| Netherlands     | :white_check_mark:           | :white_check_mark: |                    |
+| Norway          | :white_check_mark:           | :white_check_mark: |                    |
+| Poland          | :white_check_mark:           | :white_check_mark: |                    |
+| Portugal        | :white_check_mark:           | :white_check_mark: |                    |
+| Romania         | :white_check_mark:           | :white_check_mark: |                    |
+| San Marino      | :white_check_mark:           | :white_check_mark: |                    |
+| Slovakia        | :white_check_mark:           | :white_check_mark: |                    |
+| Slovenia        | :white_check_mark:           | :white_check_mark: |                    |
+| Spain           | :white_check_mark:           | :white_check_mark: |                    |
+| Sweden          | :white_check_mark:           |                    | :white_check_mark: |
+| United Kingdom  | :white_check_mark:           | :white_check_mark: |                    |
 
 ## Usage
 
@@ -443,12 +484,9 @@ iban.iban                     # => "GB60BARC20000055779911"
 
 ### Pseudo-IBANs
 
-In some countries, it is not possible to recover local banking details from an
-IBAN.  For this reason, Ibandit has a concept of a *pseudo-IBAN*.  This is a
-string with a similar structure to an IBAN that can be decomposed into local
-banking details.  Pseudo-IBANs can be recognized by the fact that they have `ZZ`
+Pseudo-IBANs can be recognized by the fact that they have `ZZ`
 as the third and fourth characters (these would be check digits for a regular
-IBAN).
+IBAN). Note: pseudo-IBANs can be used in conjunction with IBANs depending on the country. See [Supported Countries](#supported-countries).
 
 ```ruby
 iban = Ibandit::IBAN.new(
@@ -457,14 +495,28 @@ iban = Ibandit::IBAN.new(
   account_number: '1211203'
 )
 iban.pseudo_iban              # => "SEZZX7507XXX1211203"
+iban.iban                     # => "SE2680000000075071211203"
 
 iban = Ibandit::IBAN.new('SEZZX7507XXX1211203')
 iban.country_code             # => "SE"
 iban.branch_code              # => "7507"
 iban.account_number           # => "1211203"
-```
+iban.iban                     # => "SE2680000000075071211203"
 
-At present, pseudo-IBANs are only available for Swedish bank accounts.
+iban = Ibandit::IBAN.new(
+  country_code: 'AU',
+  branch_code: '123-456', # 6 digit BSB number
+  account_number: '123456789' # 9 digit account number
+)
+iban.pseudo_iban              # => "AUZZ123456123456789"
+iban.iban                     # => nil
+
+iban = Ibandit::IBAN.new('AUZZ123456123456789')
+iban.country_code             # => "AU"
+iban.branch_code              # => "123456"
+iban.account_number           # => "123456789"
+iban.iban                     # => nil
+```
 
 ## Other libraries
 

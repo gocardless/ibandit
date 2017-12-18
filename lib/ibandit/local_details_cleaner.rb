@@ -2,14 +2,13 @@ module Ibandit
   module LocalDetailsCleaner
     def self.clean(local_details)
       country_code = local_details[:country_code]
-
       if can_clean?(country_code, local_details)
         local_details = local_details.merge(
           public_send(:"clean_#{country_code.downcase}_details", local_details),
         )
       end
 
-      return local_details if explicit_swift_details?(country_code)
+      return local_details if explicit_swift_details?(local_details)
 
       swift_details_for(local_details).merge(local_details)
     end
@@ -23,8 +22,8 @@ module Ibandit
         fields_for?(country_code, local_details)
     end
 
-    def self.explicit_swift_details?(country_code)
-      Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(country_code)
+    def self.explicit_swift_details?(local_details)
+      local_details.include?(:swift_account_number)
     end
 
     def self.fields_for?(country_code, opts)
@@ -41,6 +40,8 @@ module Ibandit
         if Ibandit.bic_finder.nil? then %i[bank_code branch_code account_number]
         else %i[branch_code account_number]
         end
+      when "AU"
+        %i[branch_code account_number]
       else
         %i[bank_code branch_code account_number]
       end
@@ -57,6 +58,13 @@ module Ibandit
       {
         bank_code:      local_details[:bank_code],
         account_number: local_details[:account_number].rjust(11, "0"),
+      }
+    end
+
+    def self.clean_au_details(local_details)
+      {
+        branch_code:    local_details[:branch_code].delete("-"),
+        account_number: local_details[:account_number],
       }
     end
 

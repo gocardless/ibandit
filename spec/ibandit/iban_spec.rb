@@ -118,6 +118,9 @@ describe Ibandit::IBAN do
       its(:swift_bank_code) { is_expected.to eq(arg[:bank_code]) }
       its(:swift_branch_code) { is_expected.to eq(arg[:branch_code]) }
       its(:swift_account_number) { is_expected.to eq(arg[:account_number]) }
+      its(:pseudo_iban) { is_expected.to be_nil }
+      its(:iban) { is_expected.to eq("GB72WES12345678") }
+      its(:to_s) { is_expected.to eq("GB72WES12345678") }
     end
 
     context "when the IBAN was created with local details for Sweden" do
@@ -138,6 +141,7 @@ describe Ibandit::IBAN do
       its(:swift_account_number) { is_expected.to eq("00000012810105723") }
       its(:iban) { is_expected.to eq("SE5412000000012810105723") }
       its(:pseudo_iban) { is_expected.to eq("SEZZX1281XXX0105723") }
+      its(:to_s) { is_expected.to eq("SE5412000000012810105723") }
     end
 
     context "when the IBAN was created from a pseudo-IBAN" do
@@ -152,6 +156,75 @@ describe Ibandit::IBAN do
       its(:swift_account_number) { is_expected.to eq("00000012810105723") }
       its(:iban) { is_expected.to eq("SE5412000000012810105723") }
       its(:pseudo_iban) { is_expected.to eq("SEZZX1281XXX0105723") }
+      its(:to_s) { is_expected.to eq("SE5412000000012810105723") }
+    end
+
+    context "when the IBAN was created with local details for Australia" do
+      let(:arg) do
+        {
+          country_code: "AU",
+          branch_code: "123-456",
+          account_number: "123456789",
+        }
+      end
+
+      its(:country_code) { is_expected.to eq(arg[:country_code]) }
+      its(:bank_code) { is_expected.to be_nil }
+      its(:branch_code) { is_expected.to eq("123456") }
+      its(:account_number) { is_expected.to eq("123456789") }
+      its(:swift_bank_code) { is_expected.to be_nil }
+      its(:swift_branch_code) { is_expected.to eq("123456") }
+      its(:swift_account_number) { is_expected.to eq("123456789") }
+      its(:iban) { is_expected.to be_nil }
+      its(:pseudo_iban) { is_expected.to eq("AUZZ123456123456789") }
+      its(:valid?) { is_expected.to eq(true) }
+      its(:to_s) { is_expected.to eq("") }
+    end
+
+    context "when the IBAN was created from an Australian pseudo-IBAN" do
+      let(:arg) { "AUZZ123456123456789" }
+
+      its(:country_code) { is_expected.to eq("AU") }
+      its(:bank_code) { is_expected.to be_nil }
+      its(:branch_code) { is_expected.to eq("123456") }
+      its(:account_number) { is_expected.to eq("123456789") }
+      its(:swift_bank_code) { is_expected.to be_nil }
+      its(:swift_branch_code) { is_expected.to eq("123456") }
+      its(:swift_account_number) { is_expected.to eq("123456789") }
+      its(:iban) { is_expected.to be_nil }
+      its(:pseudo_iban) { is_expected.to eq("AUZZ123456123456789") }
+      its(:valid?) { is_expected.to eq(true) }
+      its(:to_s) { is_expected.to eq("") }
+    end
+
+    context "when the input is an invalid Australian pseudo-IBAN" do
+      let(:arg) { "AUZZ1234561234567899999" }
+
+      its(:iban) { is_expected.to be_nil }
+      its(:pseudo_iban) { is_expected.to eq(arg) }
+      it "is invalid and has the correct errors" do
+        expect(subject.valid?).to eq(false)
+        expect(subject.errors).
+          to eq(account_number: "is the wrong length (should be 9 characters)")
+      end
+    end
+
+    context "when the input is invalid local details for Australia" do
+      let(:arg) do
+        {
+          country_code: "AU",
+          branch_code: "123-4XX",
+          account_number: "1234567XX",
+        }
+      end
+
+      its(:iban) { is_expected.to be_nil }
+      its(:pseudo_iban) { is_expected.to eq("AUZZ1234XX1234567XX") }
+      it "is invalid and has the correct errors" do
+        expect(subject.valid?).to eq(false)
+        expect(subject.errors).to eq(account_number: "is invalid",
+                                     branch_code: "is invalid")
+      end
     end
   end
 
@@ -169,6 +242,22 @@ describe Ibandit::IBAN do
       let(:arg) { { country_code: "GB" } }
       its(:to_s) { is_expected.to_not be_nil }
       specify { expect(iban.to_s(:formatted)).to be_empty }
+    end
+
+    context "with Swedish local details" do
+      let(:arg) do
+        {
+          country_code: "SE",
+          branch_code: "1281",
+          account_number: "0105723",
+        }
+      end
+      specify { expect(iban.to_s).to eq("SE5412000000012810105723") }
+    end
+
+    context "with a Swedish pseudo-IBAN" do
+      let(:arg) { "SEZZX1281XXX0105723" }
+      specify { expect(iban.to_s).to eq("SE5412000000012810105723") }
     end
   end
 
@@ -1568,6 +1657,16 @@ describe Ibandit::IBAN do
     context "for a valid Austrian IBAN" do
       let(:iban_code) { "AT61 1904 3002 3457 3201" }
       it { is_expected.to be_valid }
+    end
+
+    context "for a valid Australian pseudo-IBAN" do
+      let(:iban_code) { "AUZZ123456123456789" }
+      it { is_expected.to be_valid }
+    end
+
+    context "for an invalid Australian pseudo-IBAN" do
+      let(:iban_code) { "AU99123456123456789" }
+      it { is_expected.to_not be_valid }
     end
 
     context "for a valid Azerbaijanian IBAN" do

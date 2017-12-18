@@ -76,6 +76,27 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context "Australia" do
+    let(:country_code) { "AU" }
+    let(:account_number) { "123456789" }
+
+    context "with dashes" do
+      let(:branch_code) { "123-456" }
+
+      its([:country_code]) { is_expected.to eq(country_code) }
+      its([:account_number]) { is_expected.to eq(account_number) }
+      its([:branch_code]) { is_expected.to eq("123456") }
+    end
+
+    context "without dashes" do
+      let(:branch_code) { "123456" }
+
+      its([:country_code]) { is_expected.to eq(country_code) }
+      its([:account_number]) { is_expected.to eq(account_number) }
+      its([:branch_code]) { is_expected.to eq("123456") }
+    end
+  end
+
   context "Belgium" do
     let(:country_code) { "BE" }
     let(:account_number) { "510007547061" }
@@ -987,7 +1008,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
-      it { is_expected.to eq(local_details) }
+      it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "with a bank code" do

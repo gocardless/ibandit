@@ -73,21 +73,17 @@ module Ibandit
     ###############
 
     def valid?
-      [
-        valid_country_code?,
-        valid_characters?,
-        valid_check_digits?,
-        valid_length?,
-        valid_bank_code_length?,
-        valid_branch_code_length?,
-        valid_account_number_length?,
-        valid_format?,
-        valid_bank_code_format?,
-        valid_branch_code_format?,
-        valid_account_number_format?,
-        valid_local_modulus_check?,
-        passes_country_specific_checks?,
-      ].all?
+      return false if country_code.nil?
+
+      if Constants::CONSTRUCTABLE_IBAN_COUNTRY_CODES.include?(country_code)
+        return false unless valid_iban?
+      end
+
+      if Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(country_code)
+        return false unless valid_pseudo_iban?
+      end
+
+      true
     end
 
     def valid_country_code?
@@ -131,6 +127,7 @@ module Ibandit
 
     def valid_bank_code_length?
       return unless valid_country_code?
+      return true if structure[:bank_code_length] == 0
 
       if swift_bank_code.nil? || swift_bank_code.empty?
         @errors[:bank_code] = Ibandit.translate(:is_required)
@@ -207,6 +204,7 @@ module Ibandit
 
     def valid_bank_code_format?
       return unless valid_bank_code_length?
+      return true if structure[:bank_code_length] == 0
 
       if swift_bank_code =~ Regexp.new(structure[:bank_code_format])
         true
@@ -332,6 +330,37 @@ module Ibandit
 
     private
 
+    def valid_pseudo_iban?
+      [
+        valid_country_code?,
+        valid_bank_code_length?,
+        valid_branch_code_length?,
+        valid_account_number_length?,
+        valid_bank_code_format?,
+        valid_branch_code_format?,
+        valid_account_number_format?,
+        passes_country_specific_checks?,
+      ].all?
+    end
+
+    def valid_iban?
+      [
+        valid_country_code?,
+        valid_characters?,
+        valid_check_digits?,
+        valid_length?,
+        valid_bank_code_length?,
+        valid_branch_code_length?,
+        valid_account_number_length?,
+        valid_format?,
+        valid_bank_code_format?,
+        valid_branch_code_format?,
+        valid_account_number_format?,
+        valid_local_modulus_check?,
+        passes_country_specific_checks?,
+      ].all?
+    end
+
     def decomposable?
       [iban, country_code, swift_bank_code, swift_account_number].none?(&:nil?)
     end
@@ -415,6 +444,7 @@ module Ibandit
     end
 
     def pseudo_iban?(input)
+      return false if input.nil?
       input.slice(2, 2) == Constants::PSEUDO_IBAN_CHECK_DIGITS
     end
   end
