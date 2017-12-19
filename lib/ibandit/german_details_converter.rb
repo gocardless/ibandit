@@ -1,7 +1,7 @@
 # German bank details don't map directly to IBANs in the same way as in other
 # countries - each bank has idiosyncracies for translating its cusomers' bank
 # details. These idiosyncracies are described in a document from the Bundesbank:
-# http://www.bundesbank.de/Navigation/DE/Aufgaben/Unbarer_Zahlungsverkehr/IBAN_Regeln/iban_regeln.html
+# https://www.bundesbank.de/Redaktion/EN/Standardartikel/Tasks/Payment_systems/iban_rules.html?nn=26102
 
 module Ibandit
   module GermanDetailsConverter
