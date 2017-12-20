@@ -23,23 +23,5 @@ describe Ibandit::PseudoIBANSplitter do
       its([:branch_code]) { is_expected.to eq("123456") }
       its([:account_number]) { is_expected.to eq("123456789") }
     end
-
-    context "for an unsupported country" do
-      let(:pseudo_iban) { "GBZZX1281XXX0105723" }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "with invalid check digits" do
-      let(:pseudo_iban) { "SEYYX1281XXX0105723" }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "with the wrong length" do
-      let(:pseudo_iban) { "SEYYX1281XXX010572" }
-
-      it { is_expected.to be_nil }
-    end
   end
 end

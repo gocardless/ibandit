@@ -5,36 +5,38 @@ module Ibandit
     end
 
     def split
-      return unless decomposable?
-
       {
         country_code: country_code,
+        check_digits: check_digits,
         bank_code: bank_code,
         branch_code: branch_code,
         account_number: account_number,
       }
     end
 
-    private
-
     def country_code
       @pseudo_iban.slice(0, 2)
     end
+
+    private
 
     def check_digits
       @pseudo_iban.slice(2, 2)
     end
 
     def bank_code
+      return unless country_code_valid?
       pseudo_iban_part(bank_code_start_index, :pseudo_iban_bank_code_length)
     end
 
     def branch_code
+      return unless country_code_valid?
       pseudo_iban_part(branch_code_start_index,
                        :pseudo_iban_branch_code_length)
     end
 
     def account_number
+      return unless country_code_valid?
       remove_leading_padding(
         @pseudo_iban.slice(account_number_start_index, @pseudo_iban.length),
       )
@@ -59,16 +61,8 @@ module Ibandit
       branch_code_start_index + structure.fetch(:pseudo_iban_branch_code_length)
     end
 
-    def decomposable?
-      country_code_valid? && check_digits_valid?
-    end
-
     def country_code_valid?
       Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(country_code)
-    end
-
-    def check_digits_valid?
-      check_digits == Constants::PSEUDO_IBAN_CHECK_DIGITS
     end
 
     def structure

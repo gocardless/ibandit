@@ -4,20 +4,26 @@ module Ibandit
   class IBAN
     attr_reader :errors, :iban, :country_code, :check_digits, :bank_code,
                 :branch_code, :account_number, :swift_bank_code,
-                :swift_branch_code, :swift_account_number
+                :swift_branch_code, :swift_account_number, :source
 
     def initialize(argument)
       if argument.is_a?(String)
         input = argument.to_s.gsub(/\s+/, "").upcase
 
-        if pseudo_iban?(input) && !PseudoIBANSplitter.new(input).split.nil?
-          local_details = PseudoIBANSplitter.new(input).split
+        pseudo_iban_splitter = PseudoIBANSplitter.new(input)
+        is_pseudo_iban_country = Constants::PSEUDO_IBAN_COUNTRY_CODES.
+          include?(pseudo_iban_splitter.country_code)
+        if pseudo_iban?(input) && is_pseudo_iban_country
+          @source = :pseudo_iban
+          local_details = pseudo_iban_splitter.split
           build_iban_from_local_details(local_details)
         else
+          @source = :iban
           @iban = input
           extract_swift_details_from_iban!
         end
       elsif argument.is_a?(Hash)
+        @source = :local_details
         build_iban_from_local_details(argument)
       else
         raise TypeError, "Must pass an IBAN string or hash of local details"
@@ -73,17 +79,27 @@ module Ibandit
     ###############
 
     def valid?
-      return false if country_code.nil?
+      has_iban = !iban.nil?
+      has_pseudo_iban = !pseudo_iban.nil?
 
-      if Constants::CONSTRUCTABLE_IBAN_COUNTRY_CODES.include?(country_code)
-        return false unless valid_iban?
+      if has_pseudo_iban && !has_iban
+        valid_pseudo_iban?
+      else
+        valid_iban?
       end
+    end
 
-      if Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(country_code)
-        return false unless valid_pseudo_iban?
-      end
+    def valid_pseudo_iban_check_digits?
+      return true unless source == :pseudo_iban
+      return true if check_digits == Constants::PSEUDO_IBAN_CHECK_DIGITS
 
-      true
+      @errors[:check_digits] =
+        Ibandit.translate(
+          :invalid_check_digits,
+          expected_check_digits: Constants::PSEUDO_IBAN_CHECK_DIGITS,
+          check_digits: check_digits,
+        )
+      false
     end
 
     def valid_country_code?
@@ -192,6 +208,7 @@ module Ibandit
 
     def valid_format?
       return unless valid_country_code?
+      return unless structure[:bban_format]
 
       if bban =~ Regexp.new(structure[:bban_format])
         true
@@ -332,6 +349,7 @@ module Ibandit
 
     def valid_pseudo_iban?
       [
+        valid_pseudo_iban_check_digits?,
         valid_country_code?,
         valid_bank_code_length?,
         valid_branch_code_length?,
@@ -378,7 +396,12 @@ module Ibandit
       @swift_bank_code      = try_dup(local_details[:swift_bank_code])
 
       @iban                 = IBANAssembler.assemble(swift_details)
-      @check_digits         = @iban.slice(2, 2) unless @iban.nil?
+
+      if source == :pseudo_iban
+        @check_digits       = try_dup(local_details[:check_digits])
+      else
+        @check_digits       = @iban.slice(2, 2) unless @iban.nil?
+      end
     end
 
     def extract_swift_details_from_iban!

@@ -69,7 +69,8 @@ module Ibandit
     end
 
     def self.supported_country_code?(local_details)
-      Constants::SUPPORTED_COUNTRY_CODES.include?(local_details[:country_code])
+      Constants::CONSTRUCTABLE_IBAN_COUNTRY_CODES.
+        include?(local_details[:country_code])
     end
 
     def self.valid_arguments?(local_details)
