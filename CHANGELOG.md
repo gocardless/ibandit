@@ -1,3 +1,7 @@
+## 0.11.7 - December 20, 2017
+
+- Add support for Australian pseudo-IBANs
+
 ## 0.11.6 - August 16, 2017
 
 - Handle invalid characters when computing check digits for Italy
