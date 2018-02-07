@@ -58,6 +58,7 @@ AU:
   :pseudo_iban_bank_code_length: 0
   :pseudo_iban_branch_code_length: 6
   :pseudo_iban_account_number_length: 9
+  :national_id_length: 6
 AZ:
   :bank_code_position: 5
   :bank_code_length: 4

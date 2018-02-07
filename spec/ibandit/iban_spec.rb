@@ -175,6 +175,7 @@ describe Ibandit::IBAN do
       its(:swift_bank_code) { is_expected.to be_nil }
       its(:swift_branch_code) { is_expected.to eq("123456") }
       its(:swift_account_number) { is_expected.to eq("123456789") }
+      its(:swift_national_id) { is_expected.to eq("123456") }
       its(:iban) { is_expected.to be_nil }
       its(:pseudo_iban) { is_expected.to eq("AUZZ123456123456789") }
       its(:valid?) { is_expected.to eq(true) }
@@ -191,6 +192,7 @@ describe Ibandit::IBAN do
       its(:swift_bank_code) { is_expected.to be_nil }
       its(:swift_branch_code) { is_expected.to eq("123456") }
       its(:swift_account_number) { is_expected.to eq("123456789") }
+      its(:swift_national_id) { is_expected.to eq("123456") }
       its(:iban) { is_expected.to be_nil }
       its(:pseudo_iban) { is_expected.to eq("AUZZ123456123456789") }
       its(:valid?) { is_expected.to eq(true) }
