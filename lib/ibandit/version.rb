@@ -1,3 +1,3 @@
 module Ibandit
-  VERSION = "0.11.8".freeze
+  VERSION = "0.11.9".freeze
 end
