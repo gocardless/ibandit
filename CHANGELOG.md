@@ -1,3 +1,7 @@
+## 0.11.8 - February 8, 2018
+
+- Add support for Australian swift national ids
+
 ## 0.11.7 - December 20, 2017
 
 - Add support for Australian pseudo-IBANs
