@@ -52,12 +52,12 @@ AT:
 AU:
   :bank_code_length: 0
   :branch_code_length: 6
-  :account_number_length: 9
+  :account_number_length: 10
   :branch_code_format: "\\d{6}"
-  :account_number_format: "\\d{9}"
+  :account_number_format: "[A-Z0-9]{10}"
   :pseudo_iban_bank_code_length: 0
   :pseudo_iban_branch_code_length: 6
-  :pseudo_iban_account_number_length: 9
+  :pseudo_iban_account_number_length: 10
   :national_id_length: 6
 AZ:
   :bank_code_position: 5
