@@ -164,22 +164,60 @@ describe Ibandit::IBAN do
         {
           country_code: "AU",
           branch_code: "123-456",
-          account_number: "123456789",
+          account_number: account_number,
         }
       end
 
-      its(:country_code) { is_expected.to eq(arg[:country_code]) }
-      its(:bank_code) { is_expected.to be_nil }
-      its(:branch_code) { is_expected.to eq("123456") }
-      its(:account_number) { is_expected.to eq("123456789") }
-      its(:swift_bank_code) { is_expected.to be_nil }
-      its(:swift_branch_code) { is_expected.to eq("123456") }
-      its(:swift_account_number) { is_expected.to eq("123456789") }
-      its(:swift_national_id) { is_expected.to eq("123456") }
-      its(:iban) { is_expected.to be_nil }
-      its(:pseudo_iban) { is_expected.to eq("AUZZ123456123456789") }
-      its(:valid?) { is_expected.to eq(true) }
-      its(:to_s) { is_expected.to eq("") }
+      context "and a 9 digit account number" do
+        let(:account_number) { "123456789" }
+
+        its(:country_code) { is_expected.to eq("AU") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to eq("123456") }
+        its(:account_number) { is_expected.to eq("0123456789") }
+        its(:swift_bank_code) { is_expected.to be_nil }
+        its(:swift_branch_code) { is_expected.to eq("123456") }
+        its(:swift_account_number) { is_expected.to eq("0123456789") }
+        its(:swift_national_id) { is_expected.to eq("123456") }
+        its(:iban) { is_expected.to be_nil }
+        its(:pseudo_iban) { is_expected.to eq("AUZZ1234560123456789") }
+        its(:valid?) { is_expected.to eq(true) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
+      context "and a 6 digit account number" do
+        let(:account_number) { "123456" }
+
+        its(:country_code) { is_expected.to eq("AU") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to eq("123456") }
+        its(:account_number) { is_expected.to eq("0000123456") }
+        its(:swift_bank_code) { is_expected.to be_nil }
+        its(:swift_branch_code) { is_expected.to eq("123456") }
+        its(:swift_account_number) { is_expected.to eq("0000123456") }
+        its(:swift_national_id) { is_expected.to eq("123456") }
+        its(:iban) { is_expected.to be_nil }
+        its(:pseudo_iban) { is_expected.to eq("AUZZ1234560000123456") }
+        its(:valid?) { is_expected.to eq(true) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
+      context "and a 10 characters alphanumeric account number" do
+        let(:account_number) { "AB1234567" }
+
+        its(:country_code) { is_expected.to eq("AU") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to eq("123456") }
+        its(:account_number) { is_expected.to eq("0AB1234567") }
+        its(:swift_bank_code) { is_expected.to be_nil }
+        its(:swift_branch_code) { is_expected.to eq("123456") }
+        its(:swift_account_number) { is_expected.to eq("0AB1234567") }
+        its(:swift_national_id) { is_expected.to eq("123456") }
+        its(:iban) { is_expected.to be_nil }
+        its(:pseudo_iban) { is_expected.to eq("AUZZ1234560AB1234567") }
+        its(:valid?) { is_expected.to eq(true) }
+        its(:to_s) { is_expected.to eq("") }
+      end
     end
 
     context "when the IBAN was created from an Australian pseudo-IBAN" do
@@ -188,13 +226,13 @@ describe Ibandit::IBAN do
       its(:country_code) { is_expected.to eq("AU") }
       its(:bank_code) { is_expected.to be_nil }
       its(:branch_code) { is_expected.to eq("123456") }
-      its(:account_number) { is_expected.to eq("123456789") }
+      its(:account_number) { is_expected.to eq("0123456789") }
       its(:swift_bank_code) { is_expected.to be_nil }
       its(:swift_branch_code) { is_expected.to eq("123456") }
-      its(:swift_account_number) { is_expected.to eq("123456789") }
+      its(:swift_account_number) { is_expected.to eq("0123456789") }
       its(:swift_national_id) { is_expected.to eq("123456") }
       its(:iban) { is_expected.to be_nil }
-      its(:pseudo_iban) { is_expected.to eq("AUZZ123456123456789") }
+      its(:pseudo_iban) { is_expected.to eq("AUZZ1234560123456789") }
       its(:valid?) { is_expected.to eq(true) }
       its(:to_s) { is_expected.to eq("") }
     end
@@ -207,7 +245,7 @@ describe Ibandit::IBAN do
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).
-          to eq(account_number: "is the wrong length (should be 9 characters)")
+          to eq(account_number: "is the wrong length (should be 10 characters)")
       end
     end
 
@@ -216,12 +254,12 @@ describe Ibandit::IBAN do
         {
           country_code: "AU",
           branch_code: "123-4XX",
-          account_number: "1234567XX",
+          account_number: "123456789:",
         }
       end
 
       its(:iban) { is_expected.to be_nil }
-      its(:pseudo_iban) { is_expected.to eq("AUZZ1234XX1234567XX") }
+      its(:pseudo_iban) { is_expected.to eq("AUZZ1234XX123456789:") }
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).to eq(account_number: "is invalid",

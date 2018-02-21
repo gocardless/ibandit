@@ -45,11 +45,11 @@ describe Ibandit::PseudoIBANAssembler do
         {
           country_code: "AU",
           branch_code: "123456",
-          account_number: "123456789",
+          account_number: "A123456789",
         }
       end
 
-      it { is_expected.to eq("AUZZ123456123456789") }
+      it { is_expected.to eq("AUZZ123456A123456789") }
     end
 
     context "without a branch code" do

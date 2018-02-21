@@ -1,3 +1,7 @@
+## 0.11.10 - February 21, 2018
+
+- Fix support for Australian bank accounts
+
 ## 0.11.9 - February 8, 2018
 
 - Add support for Australian swift national ids

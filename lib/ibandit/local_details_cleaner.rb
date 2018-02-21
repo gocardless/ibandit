@@ -62,9 +62,15 @@ module Ibandit
     end
 
     def self.clean_au_details(local_details)
+      # Account number may be up to 10 digits long.
+      # Add leading zeros to account number if < 10 digits.
+      #
+      # Minimum account_number length is 6
+      return {} unless local_details[:account_number].length >= 6
+
       {
         branch_code:    local_details[:branch_code].delete("-"),
-        account_number: local_details[:account_number],
+        account_number: local_details[:account_number].rjust(10, "0"),
       }
     end
 
