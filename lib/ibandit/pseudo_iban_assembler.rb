@@ -35,6 +35,10 @@ module Ibandit
       Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(@country_code)
     end
 
+    def padding_character
+      Constants::PSEUDO_IBAN_PADDING_CHARACTER_FOR[@country_code]
+    end
+
     def bank_code_valid?
       param_valid?(@bank_code, :pseudo_iban_bank_code_length)
     end
@@ -67,7 +71,7 @@ module Ibandit
 
     def pad(number, length_key)
       return if number.nil?
-      number.rjust(structure[length_key], "X")
+      number.rjust(structure[length_key], padding_character)
     end
 
     def structure

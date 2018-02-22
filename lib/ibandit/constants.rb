@@ -10,6 +10,11 @@ module Ibandit
 
     PSEUDO_IBAN_CHECK_DIGITS = "ZZ".freeze
 
+    PSEUDO_IBAN_PADDING_CHARACTER_FOR = {
+      "SE" => "X", # Using X for backwards compatibility
+      "AU" => "_", # Using _ because AU account numbers are alphanumeric
+    }.freeze
+
     SUPPORTED_COUNTRY_CODES = (
       CONSTRUCTABLE_IBAN_COUNTRY_CODES +
       DECONSTRUCTABLE_IBAN_COUNTRY_CODES +
