@@ -52,6 +52,18 @@ describe Ibandit::PseudoIBANAssembler do
       it { is_expected.to eq("AUZZ123456A123456789") }
     end
 
+    context "with valid parameters and padding" do
+      let(:local_details) do
+        {
+          country_code: "AU",
+          branch_code: "123456",
+          account_number: "XABC",
+        }
+      end
+
+      it { is_expected.to eq("AUZZ123456______XABC") }
+    end
+
     context "without a branch code" do
       let(:local_details) do
         {

@@ -65,12 +65,17 @@ module Ibandit
       Constants::PSEUDO_IBAN_COUNTRY_CODES.include?(country_code)
     end
 
+    def padding_character
+      Constants::PSEUDO_IBAN_PADDING_CHARACTER_FOR[country_code]
+    end
+
     def structure
       Ibandit.structures[country_code]
     end
 
     def remove_leading_padding(input)
-      input.gsub(/\AX+/, "")
+      return unless padding_character
+      input.gsub(/\A#{padding_character}+/, "")
     end
   end
 end
