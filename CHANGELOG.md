@@ -1,3 +1,7 @@
+## 0.11.11 - March 1, 2018
+
+- Fix padding for Australian pseudo-IBANs
+
 ## 0.11.10 - February 21, 2018
 
 - Fix support for Australian bank accounts
