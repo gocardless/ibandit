@@ -1,3 +1,7 @@
+## 0.11.12 - March 21, 2018
+
+- Validate Australian BSBs
+
 ## 0.11.11 - March 1, 2018
 
 - Fix padding for Australian pseudo-IBANs
