@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rubocop",         "~> 0.52.0"
   gem.add_development_dependency "sax-machine",     "~> 1.3"
 
-  gem.add_runtime_dependency "i18n", "~> 0.7.0"
+  gem.add_runtime_dependency "i18n"
 
   gem.authors = %w[GoCardless]
   gem.description = "Ibandit is a Ruby library for manipulating and " \
