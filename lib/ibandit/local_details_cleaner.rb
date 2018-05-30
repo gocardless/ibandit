@@ -65,8 +65,8 @@ module Ibandit
       # Account number may be up to 10 digits long.
       # Add leading zeros to account number if < 10 digits.
       #
-      # Minimum account_number length is 6
-      return {} unless local_details[:account_number].length >= 6
+      # Minimum account_number length is 5
+      return {} unless local_details[:account_number].length >= 5
 
       {
         branch_code:    local_details[:branch_code].delete("-"),
