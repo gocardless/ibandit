@@ -185,6 +185,23 @@ describe Ibandit::IBAN do
         its(:to_s) { is_expected.to eq("") }
       end
 
+      context "and a 5 digit account number" do
+        let(:account_number) { "12345" }
+
+        its(:country_code) { is_expected.to eq("AU") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to eq("123456") }
+        its(:account_number) { is_expected.to eq("0000012345") }
+        its(:swift_bank_code) { is_expected.to be_nil }
+        its(:swift_branch_code) { is_expected.to eq("123456") }
+        its(:swift_account_number) { is_expected.to eq("0000012345") }
+        its(:swift_national_id) { is_expected.to eq("123456") }
+        its(:iban) { is_expected.to be_nil }
+        its(:pseudo_iban) { is_expected.to eq("AUZZ1234560000012345") }
+        its(:valid?) { is_expected.to eq(true) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
       context "and a 6 digit account number" do
         let(:account_number) { "123456" }
 
@@ -297,6 +314,25 @@ describe Ibandit::IBAN do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).
           to eq(account_number: "is the wrong length (should be 10 characters)")
+      end
+    end
+
+    context "when the input is an account number too short for Australia" do
+      let(:arg) do
+        {
+          country_code: "AU",
+          branch_code: "123456",
+          account_number: "1234",
+        }
+      end
+
+      its(:iban) { is_expected.to be_nil }
+      its(:pseudo_iban) { is_expected.to eq("AUZZ123456______1234") }
+      it "is invalid and has the correct errors" do
+        expect(subject.valid?).to eq(false)
+        expect(subject.errors).to eq(
+          account_number: "is the wrong length (should be 10 characters)",
+        )
       end
     end
 
