@@ -1,3 +1,7 @@
+## 0.11.13 - May 30, 2018
+
+- Allow 5-digits Australian account numbers
+
 ## 0.11.12 - March 21, 2018
 
 - Validate Australian BSBs
