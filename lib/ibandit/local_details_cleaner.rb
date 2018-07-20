@@ -34,7 +34,8 @@ module Ibandit
       case country_code
       when "AT", "CY", "DE", "FI", "LT", "LU", "LV", "NL", "RO", "SI", "SK"
         %i[bank_code account_number]
-      when "BE", "CZ", "DK", "EE", "ES", "HR", "HU", "IS", "NO", "PL", "SE"
+      when "BE", "CZ", "DK", "EE", "ES", "HR",
+            "HU", "IS", "NO", "PL", "SE", "NZ"
         %i[account_number]
       when "GB", "IE", "MT"
         if Ibandit.bic_finder.nil? then %i[bank_code branch_code account_number]
@@ -430,6 +431,45 @@ module Ibandit
 
       {
         bank_code:      bank_code,
+        account_number: account_number,
+      }
+    end
+
+    def self.clean_nz_details(local_details)
+      # This method supports being passed the component parts of the NZ account
+      # number, or a single 15/16 digit string (BBbbbb-AAAAAAA-0SS) in the
+      # account number field.
+      #
+      # When given a 15/16 digit string, the component parts (i.e bank_code,
+      # branch_code and account_number) are extracted, with the 7-digit account
+      # number body and 2/3-digit account number suffix making up the actual
+      # account_number field.
+      if local_details[:bank_code] && local_details[:branch_code]
+        bank_code = local_details[:bank_code]
+        branch_code = local_details[:branch_code]
+        account_number = local_details[:account_number].tr("-", "")
+      else
+        cleaned_account_number = local_details[:account_number].tr("-", "")
+        bank_code = cleaned_account_number.slice(0, 2)
+        branch_code = cleaned_account_number.slice(2, 4)
+        account_number = cleaned_account_number[6..-1]
+      end
+
+      if account_number.length == 9
+        # > Some banks (such as BNZ) include three digits of the suffix in their
+        # > presentation of the account number to the end customer. Other banks
+        # > only show the last two digits of the suffix to the end customer.
+        # > Technically, all banks have three digit suffixes, it's just that the
+        # > first digit of the suffix is always 0 so it's usually ignored.
+        # > [https://en.wikipedia.org/wiki/New_Zealand_bank_account_number]
+        #
+        # Here, we insert the zero in cases where it is ignored.
+        account_number = account_number[0..6] + "0" + account_number[7..8]
+      end
+
+      {
+        bank_code:      bank_code,
+        branch_code:    branch_code,
         account_number: account_number,
       }
     end
