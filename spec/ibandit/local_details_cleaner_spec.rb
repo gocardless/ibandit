@@ -932,6 +932,38 @@ describe Ibandit::LocalDetailsCleaner do
     end
   end
 
+  context "New Zealand" do
+    let(:country_code) { "NZ" }
+    let(:bank_code) { "11" }
+    let(:branch_code) { "2222" }
+    let(:account_number) { "3333333044" }
+
+    it { is_expected.to eq(local_details_with_swift) }
+
+    context "with bank and branch codes in the account number" do
+      let(:bank_code) { nil }
+      let(:branch_code) { nil }
+      let(:account_number) { "11-2222-3333333-044" }
+
+      its([:bank_code]) { is_expected.to eq("11") }
+      its([:branch_code]) { is_expected.to eq("2222") }
+      its([:account_number]) { is_expected.to eq("3333333044") }
+
+      context "with a 2-digit account number suffix" do
+        let(:account_number) { "11-2222-3333333-44" }
+
+        its([:bank_code]) { is_expected.to eq("11") }
+        its([:branch_code]) { is_expected.to eq("2222") }
+        its([:account_number]) { is_expected.to eq("3333333044") }
+      end
+    end
+
+    context "without an account number" do
+      let(:account_number) { nil }
+      it { is_expected.to eq(local_details_with_swift) }
+    end
+  end
+
   context "Poland" do
     let(:country_code) { "PL" }
     let(:bank_code) { "10201026" }

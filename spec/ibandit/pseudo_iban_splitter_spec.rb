@@ -15,6 +15,15 @@ describe Ibandit::PseudoIBANSplitter do
       its([:account_number]) { is_expected.to eq("0105723") }
     end
 
+    context "for a New Zealand pseudo-IBAN" do
+      let(:pseudo_iban) { "NZZZ0156997777777030" }
+
+      its([:country_code]) { is_expected.to eq("NZ") }
+      its([:bank_code]) { is_expected.to eq("01") }
+      its([:branch_code]) { is_expected.to eq("5699") }
+      its([:account_number]) { is_expected.to eq("7777777030") }
+    end
+
     context "for an australian pseudo-IBAN" do
       let(:pseudo_iban) { "AUZZ123456123456789" }
 

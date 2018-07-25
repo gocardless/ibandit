@@ -3,8 +3,8 @@ require "yaml"
 module Ibandit
   class IBAN
     attr_reader :errors, :iban, :country_code, :check_digits, :bank_code,
-                :branch_code, :account_number, :swift_bank_code,
-                :swift_branch_code, :swift_account_number, :source
+                :branch_code, :swift_bank_code, :swift_branch_code,
+                :swift_account_number, :source
 
     def initialize(argument)
       if argument.is_a?(String)
@@ -52,6 +52,18 @@ module Ibandit
       national_id.slice(0, structure[:national_id_length])
     end
 
+    def account_number
+      return @account_number unless country_code == "NZ"
+
+      @account_number[0..6]
+    end
+
+    def account_number_suffix
+      return nil unless country_code == "NZ"
+
+      @account_number[7..-1]
+    end
+
     def local_check_digits
       return unless decomposable? && structure[:local_check_digit_position]
 
@@ -70,7 +82,7 @@ module Ibandit
         country_code: country_code,
         bank_code: bank_code,
         branch_code: branch_code,
-        account_number: account_number,
+        account_number: @account_number,
       ).assemble
     end
 

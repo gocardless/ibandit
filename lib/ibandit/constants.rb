@@ -4,7 +4,7 @@ module Ibandit
                                           HR HU IE IS IT LT LU LV MC MT NL NO PL
                                           PT RO SE SI SK SM].freeze
 
-    PSEUDO_IBAN_COUNTRY_CODES = %w[AU SE].freeze
+    PSEUDO_IBAN_COUNTRY_CODES = %w[AU SE NZ].freeze
     DECONSTRUCTABLE_IBAN_COUNTRY_CODES =
       CONSTRUCTABLE_IBAN_COUNTRY_CODES - PSEUDO_IBAN_COUNTRY_CODES
 
@@ -13,6 +13,7 @@ module Ibandit
     PSEUDO_IBAN_PADDING_CHARACTER_FOR = {
       "SE" => "X", # Using X for backwards compatibility
       "AU" => "_", # Using _ because AU account numbers are alphanumeric
+      "NZ" => "_",
     }.freeze
 
     SUPPORTED_COUNTRY_CODES = (

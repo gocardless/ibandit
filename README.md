@@ -46,6 +46,7 @@ For example:
 | Malta           | :white_check_mark:           | :white_check_mark: |                    |
 | Netherlands     | :white_check_mark:           | :white_check_mark: |                    |
 | Norway          | :white_check_mark:           | :white_check_mark: |                    |
+| New Zealand     |                              |                    | :white_check_mark: |
 | Poland          | :white_check_mark:           | :white_check_mark: |                    |
 | Portugal        | :white_check_mark:           | :white_check_mark: |                    |
 | Romania         | :white_check_mark:           | :white_check_mark: |                    |
@@ -516,6 +517,31 @@ iban.country_code             # => "AU"
 iban.branch_code              # => "123456"
 iban.account_number           # => "123456789"
 iban.iban                     # => nil
+
+# New Zealand
+iban = Ibandit::IBAN.new(
+  country_code: 'NZ',
+  bank_code: '01',
+  branch_code: '5659',
+  account_number: '3333333-44' # 7 digit account number and 2/3-digit account suffix
+)
+iban.pseudo_iban            # => "NZZZ0156593333333044"
+iban.iban                   # => nil
+
+iban = Ibandit::IBAN.new(
+  country_code: 'NZ',
+  account_number: '01-5659-3333333-44'
+)
+iban.pseudo_iban          # => "NZZZ0156593333333044"
+iban.bank_code            # => "01"
+iban.branch_code          # => "5659"
+iban.account_number       # => "3333333044"
+
+iban = Ibandit::IBAN.new('NZZZ0156593333333044')
+iban.country_code         # => "NZ"
+iban.bank_code            # => "01"
+iban.branch_code          # => "5659"
+iban.account_number       # => "3333333044"
 ```
 
 ## Other libraries

@@ -31,8 +31,7 @@ module Ibandit
 
     def branch_code
       return unless country_code_valid?
-      pseudo_iban_part(branch_code_start_index,
-                       :pseudo_iban_branch_code_length)
+      pseudo_iban_part(branch_code_start_index, :pseudo_iban_branch_code_length)
     end
 
     def account_number
