@@ -1,3 +1,7 @@
+## 0.11.14 - July 26, 2018
+
+- Add support for NZ pseudo-IBANs
+
 ## 0.11.13 - May 30, 2018
 
 - Allow 5-digits Australian account numbers
