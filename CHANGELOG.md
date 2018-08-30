@@ -1,3 +1,7 @@
+## 0.11.15 - August 30, 2018
+
+- Validate New Zealand branch codes
+
 ## 0.11.14 - July 26, 2018
 
 - Add support for NZ pseudo-IBANs
