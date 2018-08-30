@@ -282,6 +282,7 @@ module Ibandit
       when "DE" then supports_iban_determination?
       when "SE" then valid_swedish_details?
       when "AU" then valid_australian_details?
+      when "NZ" then valid_nz_details?
       else true
       end
     end
@@ -352,6 +353,13 @@ module Ibandit
       end
 
       true
+    end
+
+    def valid_nz_details?
+      return true unless country_code == "NZ"
+      return true unless Ibandit.modulus_checker
+
+      valid_modulus_check_branch_code?
     end
 
     def valid_australian_details?
