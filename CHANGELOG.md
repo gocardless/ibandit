@@ -1,3 +1,7 @@
+## 0.11.16 - September 3, 2018
+
+- Loosen `i18n` dependency (thanks @glaszig!)
+
 ## 0.11.15 - August 30, 2018
 
 - Validate New Zealand branch codes
