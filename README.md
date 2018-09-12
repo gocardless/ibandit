@@ -525,22 +525,22 @@ iban = Ibandit::IBAN.new(
   branch_code: '0004',
   account_number: '3333333-44' # 7 digit account number and 2/3-digit account suffix
 )
-iban.pseudo_iban            # => "NZZZ0156593333333044"
+iban.pseudo_iban            # => "NZZZ0100043333333044"
 iban.iban                   # => nil
 
 iban = Ibandit::IBAN.new(
   country_code: 'NZ',
-  account_number: '01-5659-3333333-44'
+  account_number: '01-0004-3333333-44'
 )
-iban.pseudo_iban          # => "NZZZ0156593333333044"
+iban.pseudo_iban          # => "NZZZ0100043333333044"
 iban.bank_code            # => "01"
-iban.branch_code          # => "5659"
+iban.branch_code          # => "0004"
 iban.account_number       # => "3333333044"
 
-iban = Ibandit::IBAN.new('NZZZ0156593333333044')
+iban = Ibandit::IBAN.new('NZZZ0100043333333044')
 iban.country_code         # => "NZ"
 iban.bank_code            # => "01"
-iban.branch_code          # => "5659"
+iban.branch_code          # => "0004"
 iban.account_number       # => "3333333044"
 ```
 
