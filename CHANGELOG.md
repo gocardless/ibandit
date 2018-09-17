@@ -1,3 +1,7 @@
+## 0.11.17 - September 17, 2018
+
+- Do not crash when given too short account numbers for New Zealand
+
 ## 0.11.16 - September 3, 2018
 
 - Loosen `i18n` dependency (thanks @glaszig!)
