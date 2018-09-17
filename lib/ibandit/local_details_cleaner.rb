@@ -455,7 +455,7 @@ module Ibandit
         account_number = cleaned_account_number[6..-1]
       end
 
-      if account_number.length == 9
+      if account_number && account_number.length == 9
         # > Some banks (such as BNZ) include three digits of the suffix in their
         # > presentation of the account number to the end customer. Other banks
         # > only show the last two digits of the suffix to the end customer.
