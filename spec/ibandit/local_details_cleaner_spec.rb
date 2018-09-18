@@ -956,6 +956,11 @@ describe Ibandit::LocalDetailsCleaner do
         its([:branch_code]) { is_expected.to eq("2222") }
         its([:account_number]) { is_expected.to eq("3333333044") }
       end
+
+      context "when the account number is shorter than 6 chars" do
+        let(:account_number) { "12345" }
+        its([:account_number]) { is_expected.to be_nil }
+      end
     end
 
     context "without an account number" do
