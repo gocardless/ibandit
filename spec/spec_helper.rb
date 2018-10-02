@@ -38,3 +38,19 @@ end
 RSpec.shared_context "locale nl", locale: :nl do
   around { |example| I18n.with_locale(:nl) { example.run } }
 end
+
+RSpec.shared_context "locale nb", locale: :nb do
+  around { |example| I18n.with_locale(:nb) { example.run } }
+end
+
+RSpec.shared_context "locale sl", locale: :sl do
+  around { |example| I18n.with_locale(:sl) { example.run } }
+end
+
+RSpec.shared_context "locale sv", locale: :sv do
+  around { |example| I18n.with_locale(:sv) { example.run } }
+end
+
+RSpec.shared_context "locale da", locale: :da do
+  around { |example| I18n.with_locale(:da) { example.run } }
+end

@@ -1,0 +1,12 @@
+nb:
+  ibandit:
+    invalid_country_code: "'%{country_code}' er ikke en gyldig IBAN-landskode iht. ISO 3166-1"
+    invalid_check_digits: "Tallkontrollen mislyktes i moduluskontrollen. Forventet '%{expected_check_digits}', mottok '%{check_digits}'."
+    invalid_length: "Lengden samsvarer ikke med SWIFT-spesifikasjonene (forventet %{expected_length} tegn, mottok %{length})"
+    is_required: "er påkrevd"
+    wrong_length: "har feil lengde (skal være %{expected} tegn)"
+    not_used_in_country: "brukes ikke i %{country_code}"
+    non_alphanumeric_characters: "Ikke-alfanumeriske tegn funnet: %{characters}"
+    invalid_format: "Uventet format for IBAN for %{country_code}."
+    is_invalid: "er ikke gyldig"
+    does_not_support_payments: "støtter ikke betalinger"
