@@ -1,3 +1,8 @@
+## 0.11.18 - October 9, 2018
+
+- Improve existing error message translations and add support for
+  four new languages: Norwegian, Swedish, Danish and Slovenian.
+
 ## 0.11.17 - September 17, 2018
 
 - Do not crash when given too short account numbers for New Zealand
