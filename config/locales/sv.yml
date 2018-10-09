@@ -1,0 +1,12 @@
+sv:
+  ibandit:
+    invalid_country_code: "'%{country_code}' är inte en giltig ISO 3166-1 IBAN landskod"
+    invalid_check_digits: "Kontrollera felaktiga siffror med modulkontroll. Förväntade '%{expected_check_digits}', mottagna '%{check_digits}'."
+    invalid_length: "Längd matchar inte förväntad SWIFT-specifikation (förväntade %{expected_length} tecken, mottagna %{length})"
+    is_required: "krävs"
+    wrong_length: "har fel längd (bör vara %{expected} tecken)"
+    not_used_in_country: "används inte i %{country_code}"
+    non_alphanumeric_characters: "Icke alfanumeriska tecken hittades: %{characters}"
+    invalid_format: "Oväntat format för %{country_code} IBAN."
+    is_invalid: "är ogiltig"
+    does_not_support_payments: "stödjer inte betalningar"

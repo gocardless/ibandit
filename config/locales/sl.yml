@@ -1,0 +1,12 @@
+sl:
+  ibandit:
+    invalid_country_code: "'%{country_code}' ni veljavna koda države v IBAN po standardu ISO 3166-1"
+    invalid_check_digits: "Številke čeka niso uspešno prestale preverjanja modula. Pričakovano '%{expected_check_digits}', prejeto '%{check_digits}'."
+    invalid_length: "Dolžina se ne ujema z opredelitvijo za kodo SWIFT (pričakovani znaki: %{expected_length}, prejeti znaki: %{length})"
+    is_required: "je obvezno"
+    wrong_length: "je napačne dolžine (biti mora %{expected} znakov)"
+    not_used_in_country: "se ne uporablja v %{country_code}"
+    non_alphanumeric_characters: "Najdeni ne-alfanumerični znaki: %{characters}"
+    invalid_format: "Nepričakovana oblika zapisa %{country_code} v IBAN."
+    is_invalid: "ni veljavno"
+    does_not_support_payments: "ne podpira plačil"
