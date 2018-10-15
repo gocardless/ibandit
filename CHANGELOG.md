@@ -1,3 +1,7 @@
+## 0.11.19 - October 15, 2018
+
+- Add support for CA pseudo-IBANs
+
 ## 0.11.18 - October 9, 2018
 
 - Improve existing error message translations and add support for
