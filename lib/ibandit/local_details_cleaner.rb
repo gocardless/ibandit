@@ -84,6 +84,10 @@ module Ibandit
       }
     end
 
+    def self.clean_ca_details(local_details)
+      local_details
+    end
+
     def self.clean_bg_details(local_details)
       # Bulgarian national bank details were replaced with IBANs in 2006.
       local_details

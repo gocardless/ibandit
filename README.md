@@ -27,6 +27,7 @@ For example:
 | Belgium         | :white_check_mark:           | :white_check_mark: |                    |
 | Bulgaria        | :white_check_mark:           | :white_check_mark: |                    |
 | Croatia         | :white_check_mark:           | :white_check_mark: |                    |
+| Canada          |                              |                    | :white_check_mark: |
 | Cyprus          | :white_check_mark:           | :white_check_mark: |                    |
 | Czech Republic  | :white_check_mark:           | :white_check_mark: |                    |
 | Denmark         | :white_check_mark:           | :white_check_mark: |                    |

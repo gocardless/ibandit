@@ -886,3 +886,13 @@ TL:
   :bban_format: "\\d{3}\\d{14}\\d{2}"
   :bank_code_format: "\\d{3}"
   :account_number_format: " \\d{14} \\d{2}"
+CA:
+  :bank_code_length: 4
+  :branch_code_length: 5
+  :account_number_length: 12
+  :bank_code_format: "\\d{4}"
+  :branch_code_format: "\\d{5}"
+  :account_number_format: "\\d{7,12}"
+  :pseudo_iban_bank_code_length: 4
+  :pseudo_iban_branch_code_length: 5
+  :pseudo_iban_account_number_length: 12
