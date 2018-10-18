@@ -374,20 +374,14 @@ describe Ibandit::IBAN do
         its(:country_code) { is_expected.to eq("CA") }
         its(:bank_code) { is_expected.to eq("0036") }
         its(:branch_code) { is_expected.to eq("00063") }
-        its(:account_number) { is_expected.to eq("0123456") }
+        its(:account_number) { is_expected.to eq("000000123456") }
         its(:swift_bank_code) { is_expected.to eq("0036") }
         its(:swift_branch_code) { is_expected.to eq("00063") }
-        its(:swift_account_number) { is_expected.to eq("0123456") }
-        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____0123456") }
+        its(:swift_account_number) { is_expected.to eq("000000123456") }
+        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063000000123456") }
 
-        # ibandit account number length validation can check for maximum
-        # length but not against a range, say, 7 to 12 digits, allowed in CA.
-        #
-        # given we are only going to deal with pseudo-IBANs in CA, choosing to
-        # not complete IBAN validation unless we need it.
-        #
         its(:iban) { is_expected.to be_nil }
-        its(:valid?) { is_expected.to eq(false) }
+        its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
 
@@ -403,14 +397,8 @@ describe Ibandit::IBAN do
         its(:swift_account_number) { is_expected.to eq("012345678900") }
         its(:pseudo_iban) { is_expected.to eq("CAZZ003600063012345678900") }
 
-        # ibandit account number length validation can check for maximum
-        # length but not against a range, say, 7 to 12 digits, allowed in CA.
-        #
-        # given we are only going to deal with pseudo-IBANs in CA, choosing to
-        # not complete IBAN validation unless we need it.
-        #
         its(:iban) { is_expected.to be_nil }
-        its(:valid?) { is_expected.to eq(true) }
+        its(:valid?) { is_expected.to be true }
         its(:to_s) { is_expected.to eq("") }
       end
     end
@@ -421,24 +409,18 @@ describe Ibandit::IBAN do
       its(:country_code) { is_expected.to eq("CA") }
       its(:bank_code) { is_expected.to eq("0036") }
       its(:branch_code) { is_expected.to eq("00063") }
-      its(:account_number) { is_expected.to eq("0123456") }
+      its(:account_number) { is_expected.to eq("000000123456") }
       its(:swift_bank_code) { is_expected.to eq("0036") }
       its(:swift_branch_code) { is_expected.to eq("00063") }
-      its(:swift_account_number) { is_expected.to eq("0123456") }
-      its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____0123456") }
+      its(:swift_account_number) { is_expected.to eq("000000123456") }
+      its(:pseudo_iban) { is_expected.to eq("CAZZ003600063000000123456") }
 
-      # ibandit account number length validation can check for maximum
-      # length but not against a range, say, 7 to 12 digits, allowed in CA.
-      #
-      # given we are only going to deal with pseudo-IBANs in CA, choosing to
-      # not complete IBAN validation unless we need it.
-      #
       its(:iban) { is_expected.to be_nil }
-      its(:valid?) { is_expected.to eq(false) }
+      its(:valid?) { is_expected.to be true }
       its(:to_s) { is_expected.to eq("") }
     end
 
-    context "when the input is an invalid Canadan pseudo-IBAN" do
+    context "when the input is an invalid Canadian pseudo-IBAN" do
       let(:arg) { "CAZZ00360006301234" }
 
       it "is invalid and has the correct errors" do
