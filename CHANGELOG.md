@@ -1,3 +1,7 @@
+## 0.11.20 - October 18, 2018
+
+- Generate valid CA IBANs from local details
+
 ## 0.11.19 - October 15, 2018
 
 - Add support for CA pseudo-IBANs
