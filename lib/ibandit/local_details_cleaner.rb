@@ -85,7 +85,9 @@ module Ibandit
     end
 
     def self.clean_ca_details(local_details)
-      local_details
+      return {} if local_details[:account_number].length < 7 # minimum length
+
+      { account_number: local_details[:account_number].rjust(12, "0") }
     end
 
     def self.clean_bg_details(local_details)

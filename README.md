@@ -505,6 +505,7 @@ iban.branch_code              # => "7507"
 iban.account_number           # => "1211203"
 iban.iban                     # => "SE2680000000075071211203"
 
+# Australia
 iban = Ibandit::IBAN.new(
   country_code: 'AU',
   branch_code: '123-456', # 6 digit BSB number
@@ -517,6 +518,23 @@ iban = Ibandit::IBAN.new('AUZZ123456123456789')
 iban.country_code             # => "AU"
 iban.branch_code              # => "123456"
 iban.account_number           # => "123456789"
+iban.iban                     # => nil
+
+# Canada
+iban = Ibandit::IBAN.new(
+  country_code: 'CA',
+  bank_code: '0036',          # 4 Financial Institution number
+  branch_code: '00063',       # 5 digit Branch Transit number
+  account_number: '0123456'   # 7 to 12 digits
+)
+iban.pseudo_iban              # => "CAZZ003600063000000123456"
+iban.iban                     # => nil
+
+iban = Ibandit::IBAN.new('CAZZ003600063000000123456')
+iban.country_code             # => "CA"
+iban.bank_code                # => "0036"
+iban.branch_code              # => "00063"
+iban.account_number           # => "000000123456"
 iban.iban                     # => nil
 
 # New Zealand
