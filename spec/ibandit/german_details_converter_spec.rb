@@ -11,8 +11,8 @@ describe Ibandit::GermanDetailsConverter do
         end
 
         before do
-          expect_any_instance_of(klass).to receive(:converted_details).
-            and_call_original
+          allow_any_instance_of(klass).
+            to receive(:converted_details).and_call_original
         end
 
         convertor.fetch("valid", []).each do |tuple|
@@ -32,7 +32,7 @@ describe Ibandit::GermanDetailsConverter do
             end
 
             it do
-              is_expected.to eq(
+              expect(subject).to eq(
                 bank_code: converted_bank_code,
                 account_number: converted_account_number,
               )

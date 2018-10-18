@@ -41,8 +41,8 @@ module Ibandit
     end
 
     module PseudoAccountNumberBehaviour
-      def self.included(o)
-        o.extend(ClassMethods)
+      def self.included(object)
+        object.extend(ClassMethods)
       end
 
       module ClassMethods
