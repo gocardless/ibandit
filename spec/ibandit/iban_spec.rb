@@ -383,6 +383,7 @@ describe Ibandit::IBAN do
         its(:swift_bank_code) { is_expected.to eq("0036") }
         its(:swift_branch_code) { is_expected.to eq("00063") }
         its(:swift_account_number) { is_expected.to eq("000000123456") }
+        its(:swift_national_id) { is_expected.to eq("0036") }
         its(:pseudo_iban) { is_expected.to eq("CAZZ003600063000000123456") }
 
         its(:iban) { is_expected.to be_nil }
@@ -400,6 +401,7 @@ describe Ibandit::IBAN do
         its(:swift_bank_code) { is_expected.to eq("0036") }
         its(:swift_branch_code) { is_expected.to eq("00063") }
         its(:swift_account_number) { is_expected.to eq("012345678900") }
+        its(:swift_national_id) { is_expected.to eq("0036") }
         its(:pseudo_iban) { is_expected.to eq("CAZZ003600063012345678900") }
 
         its(:iban) { is_expected.to be_nil }
