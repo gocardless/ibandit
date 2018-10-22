@@ -1,3 +1,9 @@
+## 0.11.22 - October 18, 2018
+
+- Skipped 0.11.21
+- Added national_id_length for CA IBANs to prevent segfault when building from
+    local details.
+
 ## 0.11.20 - October 18, 2018
 
 - Generate valid CA IBANs from local details
