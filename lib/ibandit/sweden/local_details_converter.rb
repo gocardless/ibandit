@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module Sweden
     class LocalDetailsConverter
@@ -44,6 +46,7 @@ module Ibandit
 
       def remove_bad_chars(number)
         return if number.nil?
+
         number.gsub(/[-.\s]/, "")
       end
 
@@ -76,7 +79,10 @@ module Ibandit
                         end
 
         return serial_number unless bank_info.fetch(:zerofill_serial_number)
-        serial_number && serial_number.rjust(serial_number_length, "0")
+
+        return unless serial_number
+
+        serial_number.rjust(serial_number_length, "0")
       end
 
       def swift_account_number
@@ -84,7 +90,9 @@ module Ibandit
             clearing_code && serial_number
           (clearing_code + serial_number).rjust(17, "0")
         else
-          serial_number && serial_number.rjust(17, "0")
+          return unless serial_number
+
+          serial_number.rjust(17, "0")
         end
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module Constants
     CONSTRUCTABLE_IBAN_COUNTRY_CODES = %w[AT BE BG CY CZ DE DK EE ES FI FR GB GR
@@ -8,7 +10,7 @@ module Ibandit
     DECONSTRUCTABLE_IBAN_COUNTRY_CODES =
       CONSTRUCTABLE_IBAN_COUNTRY_CODES - PSEUDO_IBAN_COUNTRY_CODES
 
-    PSEUDO_IBAN_CHECK_DIGITS = "ZZ".freeze
+    PSEUDO_IBAN_CHECK_DIGITS = "ZZ"
 
     PSEUDO_IBAN_PADDING_CHARACTER_FOR = {
       "SE" => "X", # Using X for backwards compatibility

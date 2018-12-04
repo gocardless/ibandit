@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Ibandit
   module IBANSplitter
     def self.split(iban)
       {
-        country_code:   country_code_from(iban),
-        check_digits:   check_digits_from(iban),
-        bank_code:      bank_code_from(iban),
-        branch_code:    branch_code_from(iban),
+        country_code: country_code_from(iban),
+        check_digits: check_digits_from(iban),
+        bank_code: bank_code_from(iban),
+        branch_code: branch_code_from(iban),
         account_number: account_number_from(iban),
       }
     end
@@ -36,9 +38,8 @@ module Ibandit
     end
 
     def self.branch_code_from(iban)
-      unless decomposable?(iban) && structure(iban)[:branch_code_length] > 0
-        return
-      end
+      return unless decomposable?(iban)
+      return unless structure(iban)[:branch_code_length].positive?
 
       iban.slice(
         structure(iban)[:branch_code_position] - 1,
