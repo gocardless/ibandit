@@ -1,6 +1,9 @@
 inherit_from: .rubocop_todo.yml
 inherit_gem:
-  gc_ruboconfig: rubocop.yml
+  ruboconfig: rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 2.1
 
 # Limit lines to 80 characters.
 LineLength:

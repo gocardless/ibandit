@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe Ibandit::IBAN do
   subject(:iban) { described_class.new(arg) }
-
   let(:arg) { iban_code }
   let(:iban_code) { "GB82WEST12345698765432" }
 
@@ -10,19 +9,16 @@ describe Ibandit::IBAN do
 
   context "with a poorly formatted IBAN" do
     let(:iban_code) { "  gb82 WeSt 1234 5698 7654 32\n" }
-
     its(:iban) { is_expected.to eq("GB82WEST12345698765432") }
   end
 
   context "with nil" do
     let(:arg) { nil }
-
     specify { expect { iban }.to raise_error(TypeError) }
   end
 
   context "with an invalid pseudo IBAN" do
     let(:arg) { "dezzzz" }
-
     its(:iban) { is_expected.to eq("DEZZZZ") }
   end
 
@@ -97,7 +93,6 @@ describe Ibandit::IBAN do
 
     context "when the IBAN was created from a Slovenian IBAN" do
       let(:iban_code) { "SI56 1910 0000 0123 438" }
-
       its(:country_code) { is_expected.to eq("SI") }
       its(:bank_code) { is_expected.to eq("19100") }
       its(:branch_code) { is_expected.to be_nil }
@@ -446,7 +441,6 @@ describe Ibandit::IBAN do
           account_number: account_number,
         }
       end
-
       context "with a 3 digit account number suffix" do
         let(:account_number) { "3333333-944" }
 
@@ -464,7 +458,6 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
-
       context "with a 2 digit account number suffix" do
         let(:account_number) { "3333333-44" }
 
@@ -482,7 +475,6 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
-
       context "with bank and branch code embedded in account_number field" do
         let(:arg) do
           {
@@ -505,7 +497,6 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
-
       context "with a bank code embedded in account_number field" do
         let(:arg) do
           {
@@ -567,7 +558,6 @@ describe Ibandit::IBAN do
 
     context "with the IBAN is nil" do
       let(:arg) { { country_code: "GB" } }
-
       its(:to_s) { is_expected.to_not be_nil }
       specify { expect(iban.to_s(:formatted)).to be_empty }
     end
@@ -580,13 +570,11 @@ describe Ibandit::IBAN do
           account_number: "0105723",
         }
       end
-
       specify { expect(iban.to_s).to eq("SE5412000000012810105723") }
     end
 
     context "with a Swedish pseudo-IBAN" do
       let(:arg) { "SEZZX1281XXX0105723" }
-
       specify { expect(iban.to_s).to eq("SE5412000000012810105723") }
     end
   end
@@ -604,9 +592,7 @@ describe Ibandit::IBAN do
 
     context "with an unknown country code" do
       before { iban.valid_country_code? }
-
       let(:iban_code) { "AA123456789123456" }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -653,19 +639,16 @@ describe Ibandit::IBAN do
 
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
-
       it { is_expected.to eq(true) }
 
       context "where the check digit is zero-padded" do
         let(:iban_code) { "GB06WEST12345698765442" }
-
         it { is_expected.to eq(true) }
       end
     end
 
     context "with invalid details" do
       let(:iban_code) { "GB12WEST12345698765432" }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -779,7 +762,6 @@ describe Ibandit::IBAN do
 
     context "with invalid characters" do
       let(:iban_code) { "AA82-EST123456987654" }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -790,7 +772,6 @@ describe Ibandit::IBAN do
 
     context "with an empty IBAN" do
       let(:iban_code) { "" }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -809,7 +790,6 @@ describe Ibandit::IBAN do
 
     context "with invalid details" do
       let(:iban_code) { "GB82WEST123456987654" }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -922,7 +902,6 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       let(:iban_code) { "AA82WEST123456987654" }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -941,7 +920,6 @@ describe Ibandit::IBAN do
 
     context "with invalid details" do
       before { allow(iban).to receive(:swift_bank_code).and_return("WES") }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1042,7 +1020,6 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       before { allow(iban).to receive(:country_code).and_return("AA") }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -1061,7 +1038,6 @@ describe Ibandit::IBAN do
 
     context "with invalid details" do
       before { allow(iban).to receive(:swift_branch_code).and_return("12345") }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1162,7 +1138,6 @@ describe Ibandit::IBAN do
 
     context "without a branch code" do
       before { allow(iban).to receive(:swift_branch_code).and_return(nil) }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1245,7 +1220,6 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       before { allow(iban).to receive(:country_code).and_return("AA") }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -1266,7 +1240,6 @@ describe Ibandit::IBAN do
       before do
         allow(iban).to receive(:swift_account_number).and_return("1234567")
       end
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1369,7 +1342,6 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       before { allow(iban).to receive(:country_code).and_return("AA") }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -1384,13 +1356,11 @@ describe Ibandit::IBAN do
 
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
-
       it { is_expected.to eq(true) }
     end
 
     context "with invalid details" do
       let(:iban_code) { "GB-123ABCD" }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1490,13 +1460,11 @@ describe Ibandit::IBAN do
 
     context "with valid details" do
       let(:iban_code) { "GB82WEST12345698765432" }
-
       it { is_expected.to eq(true) }
     end
 
     context "with invalid details" do
       let(:iban_code) { "GB82WEST12AAAAAA7654" }
-
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1590,7 +1558,6 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       let(:iban_code) { "AA82WEST12AAAAAA7654" }
-
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -1952,9 +1919,7 @@ describe Ibandit::IBAN do
           valid_account_number?: valid_account_number,
         )
       end
-
       after { Ibandit.modulus_checker = nil }
-
       before { iban.valid_local_modulus_check? }
 
       context "with an invalid bank code" do
@@ -1966,7 +1931,7 @@ describe Ibandit::IBAN do
         it "calls valid_bank_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_bank_code?).
-            with(instance_of(described_class))
+            with(instance_of(Ibandit::IBAN))
 
           iban.valid_local_modulus_check?
         end
@@ -2027,11 +1992,8 @@ describe Ibandit::IBAN do
       context "with an invalid branch code" do
         let(:iban_code) { "GB60BARC20000055779911" }
         before { Ibandit.bic_finder = double(call: "BARCGB22XXX") }
-
         after { Ibandit.bic_finder = nil }
-
         before { iban.valid_local_modulus_check? }
-
         let(:valid_bank_code) { true }
         let(:valid_branch_code) { false }
         let(:valid_account_number) { true }
@@ -2039,7 +2001,7 @@ describe Ibandit::IBAN do
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_branch_code?).
-            with(instance_of(described_class))
+            with(instance_of(Ibandit::IBAN))
 
           iban.valid_local_modulus_check?
         end
@@ -2121,7 +2083,7 @@ describe Ibandit::IBAN do
         it "calls valid_account_number? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_account_number?).
-            with(instance_of(described_class))
+            with(instance_of(Ibandit::IBAN))
 
           iban.valid_local_modulus_check?
         end
@@ -2452,7 +2414,6 @@ describe Ibandit::IBAN do
           )
           iban.valid_australian_details?
         end
-
         after { Ibandit.modulus_checker = nil }
 
         let(:valid_branch_code) { true }
@@ -2460,7 +2421,7 @@ describe Ibandit::IBAN do
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_branch_code?).
-            with(instance_of(described_class))
+            with(instance_of(Ibandit::IBAN))
 
           iban.valid_australian_details?
         end
@@ -2579,7 +2540,6 @@ describe Ibandit::IBAN do
           )
           iban.valid_nz_details?
         end
-
         after { Ibandit.modulus_checker = nil }
 
         let(:valid_branch_code) { true }
@@ -2587,7 +2547,7 @@ describe Ibandit::IBAN do
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_branch_code?).
-            with(instance_of(described_class))
+            with(instance_of(Ibandit::IBAN))
 
           iban.valid_nz_details?
         end
@@ -2708,703 +2668,586 @@ describe Ibandit::IBAN do
 
     context "for a valid Albanian IBAN" do
       let(:iban_code) { "AL47 2121 1009 0000 0002 3569 8741" }
-
       it { is_expected.to be_valid }
     end
 
     context "for a valid Andorran IBAN" do
       let(:iban_code) { "AD12 0001 2030 2003 5910 0100" }
-
       it { is_expected.to be_valid }
     end
 
     context "for a valid Austrian IBAN" do
       let(:iban_code) { "AT61 1904 3002 3457 3201" }
-
       it { is_expected.to be_valid }
     end
 
     context "for a valid Australian pseudo-IBAN" do
       let(:iban_code) { "AUZZ123456123456789" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Australian pseudo-IBAN" do
       let(:iban_code) { "AU99123456123456789" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Azerbaijanian IBAN" do
       let(:iban_code) { "AZ21 NABZ 0000 0000 1370 1000 1944" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Azerbaijanian IBAN" do
       let(:iban_code) { "AZ91 NABZ 0000 0000 1370 1000 1944" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Bahrainian IBAN" do
       let(:iban_code) { "BH67 BMAG 0000 1299 1234 56" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Bahrainian IBAN" do
       let(:iban_code) { "BH97 BMAG 0000 1299 1234 56" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Belgian IBAN" do
       let(:iban_code) { "BE62 5100 0754 7061" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Belgian IBAN" do
       let(:iban_code) { "BE92 5100 0754 7061" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Bosnian IBAN" do
       let(:iban_code) { "BA39 1290 0794 0102 8494" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Bosnian IBAN" do
       let(:iban_code) { "BA99 1290 0794 0102 8494" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Bulgarian IBAN" do
       let(:iban_code) { "BG80 BNBG 9661 1020 3456 78" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Bulgarian IBAN" do
       let(:iban_code) { "BG90 BNBG 9661 1020 3456 78" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Croatian IBAN" do
       let(:iban_code) { "HR12 1001 0051 8630 0016 0" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Croatian IBAN" do
       let(:iban_code) { "HR92 1001 0051 8630 0016 0" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Cypriot IBAN" do
       let(:iban_code) { "CY17 0020 0128 0000 0012 0052 7600" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Cypriot IBAN" do
       let(:iban_code) { "CY97 0020 0128 0000 0012 0052 7600" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Czech IBAN" do
       let(:iban_code) { "CZ65 0800 0000 1920 0014 5399" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Czech IBAN" do
       let(:iban_code) { "CZ95 0800 0000 1920 0014 5399" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Danish IBAN" do
       let(:iban_code) { "DK50 0040 0440 1162 43" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Danish IBAN" do
       let(:iban_code) { "DK90 0040 0440 1162 43" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Estonian IBAN" do
       let(:iban_code) { "EE38 2200 2210 2014 5685" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Estonian IBAN" do
       let(:iban_code) { "EE98 2200 2210 2014 5685" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Faroe Islands IBAN" do
       let(:iban_code) { "FO97 5432 0388 8999 44" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Faroe Islands IBAN" do
       let(:iban_code) { "FO27 5432 0388 8999 44" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Finnish IBAN" do
       let(:iban_code) { "FI21 1234 5600 0007 85" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Finnish IBAN" do
       let(:iban_code) { "FI91 1234 5600 0007 85" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid French IBAN" do
       let(:iban_code) { "FR14 2004 1010 0505 0001 3M02 606" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid French IBAN" do
       let(:iban_code) { "FR94 2004 1010 0505 0001 3M02 606" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Georgian IBAN" do
       let(:iban_code) { "GE29 NB00 0000 0101 9049 17" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Georgian IBAN" do
       let(:iban_code) { "GE99 NB00 0000 0101 9049 17" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid German IBAN" do
       let(:iban_code) { "DE89 3704 0044 0532 0130 00" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid German IBAN" do
       let(:iban_code) { "DE99 3704 0044 0532 0130 00" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Gibraltan IBAN" do
       let(:iban_code) { "GI75 NWBK 0000 0000 7099 453" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Gibraltan IBAN" do
       let(:iban_code) { "GI95 NWBK 0000 0000 7099 453" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Greek IBAN" do
       let(:iban_code) { "GR16 0110 1250 0000 0001 2300 695" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Greek IBAN" do
       let(:iban_code) { "GR96 0110 1250 0000 0001 2300 695" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Greenland IBAN" do
       let(:iban_code) { "GL56 0444 9876 5432 10" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Greenland IBAN" do
       let(:iban_code) { "GL96 0444 9876 5432 10" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Hungarian IBAN" do
       let(:iban_code) { "HU42 1177 3016 1111 1018 0000 0000" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Hungarian IBAN" do
       let(:iban_code) { "HU92 1177 3016 1111 1018 0000 0000" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Icelandic IBAN" do
       let(:iban_code) { "IS14 0159 2600 7654 5510 7303 39" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Icelandic IBAN" do
       let(:iban_code) { "IS94 0159 2600 7654 5510 7303 39" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Irish IBAN" do
       let(:iban_code) { "IE29 AIBK 9311 5212 3456 78" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Irish IBAN" do
       let(:iban_code) { "IE99 AIBK 9311 5212 3456 78" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Israeli IBAN" do
       let(:iban_code) { "IL62 0108 0000 0009 9999 999" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Israeli IBAN" do
       let(:iban_code) { "IL92 0108 0000 0009 9999 999" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Italian IBAN" do
       let(:iban_code) { "IT40 S054 2811 1010 0000 0123 456" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Italian IBAN" do
       let(:iban_code) { "IT90 S054 2811 1010 0000 0123 456" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Jordanian IBAN" do
       let(:iban_code) { "JO94 CBJO 0010 0000 0000 0131 0003 02" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Jordanian IBAN" do
       let(:iban_code) { "JO24 CBJO 0010 0000 0000 0131 0003 02" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Kuwaiti IBAN" do
       let(:iban_code) { "KW81 CBKU 0000 0000 0000 1234 5601 01" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Kuwaiti IBAN" do
       let(:iban_code) { "KW91 CBKU 0000 0000 0000 1234 5601 01" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Latvian IBAN" do
       let(:iban_code) { "LV80 BANK 0000 4351 9500 1" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Latvian IBAN" do
       let(:iban_code) { "LV90 BANK 0000 4351 9500 1" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Lebanese IBAN" do
       let(:iban_code) { "LB62 0999 0000 0001 0019 0122 9114" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Lebanese IBAN" do
       let(:iban_code) { "LB92 0999 0000 0001 0019 0122 9114" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Liechtensteinian IBAN" do
       let(:iban_code) { "LI21 0881 0000 2324 013A A" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Liechtensteinian IBAN" do
       let(:iban_code) { "LI91 0881 0000 2324 013A A" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Lithuanian IBAN" do
       let(:iban_code) { "LT12 1000 0111 0100 1000" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Lithuanian IBAN" do
       let(:iban_code) { "LT92 1000 0111 0100 1000" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Luxembourgian IBAN" do
       let(:iban_code) { "LU28 0019 4006 4475 0000" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Luxembourgian IBAN" do
       let(:iban_code) { "LU98 0019 4006 4475 0000" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Macedonian IBAN" do
       let(:iban_code) { "MK072 5012 0000 0589 84" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Macedonian IBAN" do
       let(:iban_code) { "MK972 5012 0000 0589 84" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Maltese IBAN" do
       let(:iban_code) { "MT84 MALT 0110 0001 2345 MTLC AST0 01S" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Maltese IBAN" do
       let(:iban_code) { "MT94 MALT 0110 0001 2345 MTLC AST0 01S" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Maurititanian IBAN" do
       let(:iban_code) { "MU17 BOMM 0101 1010 3030 0200 000M UR" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Maurititanian IBAN" do
       let(:iban_code) { "MU97 BOMM 0101 1010 3030 0200 000M UR" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Moldovan IBAN" do
       let(:iban_code) { "MD24 AG00 0225 1000 1310 4168" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Moldovan IBAN" do
       let(:iban_code) { "MD94 AG00 0225 1000 1310 4168" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Monocan IBAN" do
       let(:iban_code) { "MC93 2005 2222 1001 1223 3M44 555" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Monocan IBAN" do
       let(:iban_code) { "MC23 2005 2222 1001 1223 3M44 555" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Montenegrian IBAN" do
       let(:iban_code) { "ME25 5050 0001 2345 6789 51" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Montenegrian IBAN" do
       let(:iban_code) { "ME95 5050 0001 2345 6789 51" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Dutch IBAN" do
       let(:iban_code) { "NL39 RABO 0300 0652 64" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Dutch IBAN" do
       let(:iban_code) { "NL99 RABO 0300 0652 64" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Norwegian IBAN" do
       let(:iban_code) { "NO93 8601 1117 947" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Norwegian IBAN" do
       let(:iban_code) { "NO23 8601 1117 947" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid New Zealand pseudo-IBAN" do
       let(:iban_code) { "NZZZ5566667777777088" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid New Zealand pseudo-IBAN" do
       let(:iban_code) { "NZZZ55666677777770888" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Pakistani IBAN" do
       let(:iban_code) { "PK36 SCBL 0000 0011 2345 6702" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Pakistani IBAN" do
       let(:iban_code) { "PK96 SCBL 0000 0011 2345 6702" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Polish IBAN" do
       let(:iban_code) { "PL60 1020 1026 0000 0422 7020 1111" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Polish IBAN" do
       let(:iban_code) { "PL90 1020 1026 0000 0422 7020 1111" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Potuguese IBAN" do
       let(:iban_code) { "PT50 0002 0123 1234 5678 9015 4" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Potuguese IBAN" do
       let(:iban_code) { "PT90 0002 0123 1234 5678 9015 4" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Qatari IBAN" do
       let(:iban_code) { "QA58 DOHB 0000 1234 5678 90AB CDEF G" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Qatari IBAN" do
       let(:iban_code) { "QA98 DOHB 0000 1234 5678 90AB CDEF G" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Romanian IBAN" do
       let(:iban_code) { "RO49 AAAA 1B31 0075 9384 0000" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Romanian IBAN" do
       let(:iban_code) { "RO99 AAAA 1B31 0075 9384 0000" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid San Marinian IBAN" do
       let(:iban_code) { "SM86 U032 2509 8000 0000 0270 100" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid San Marinian IBAN" do
       let(:iban_code) { "SM96 U032 2509 8000 0000 0270 100" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Saudi IBAN" do
       let(:iban_code) { "SA03 8000 0000 6080 1016 7519" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Saudi IBAN" do
       let(:iban_code) { "SA93 8000 0000 6080 1016 7519" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Serbian IBAN" do
       let(:iban_code) { "RS35 2600 0560 1001 6113 79" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Serbian IBAN" do
       let(:iban_code) { "RS95 2600 0560 1001 6113 79" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Slovakian IBAN" do
       let(:iban_code) { "SK31 1200 0000 1987 4263 7541" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Slovakian IBAN" do
       let(:iban_code) { "SK91 1200 0000 1987 4263 7541" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Slovenian IBAN" do
       let(:iban_code) { "SI56 1910 0000 0123 438" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Slovenian IBAN" do
       let(:iban_code) { "SI96 1910 0000 0123 438" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Spanish IBAN" do
       let(:iban_code) { "ES80 2310 0001 1800 0001 2345" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Spanish IBAN" do
       let(:iban_code) { "ES90 2310 0001 1800 0001 2345" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Swedish IBAN" do
       let(:iban_code) { "SE35 5000 0000 0549 1000 0003" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Swedish IBAN" do
       let(:iban_code) { "SE95 5000 0000 0549 1000 0003" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Swiss IBAN" do
       let(:iban_code) { "CH93 0076 2011 6238 5295 7" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Swiss IBAN" do
       let(:iban_code) { "CH23 0076 2011 6238 5295 7" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Tunisian IBAN" do
       let(:iban_code) { "TN59 1000 6035 1835 9847 8831" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Tunisian IBAN" do
       let(:iban_code) { "TN99 1000 6035 1835 9847 8831" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid Turkish IBAN" do
       let(:iban_code) { "TR33 0006 1005 1978 6457 8413 26" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid Turkish IBAN" do
       let(:iban_code) { "TR93 0006 1005 1978 6457 8413 26" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid UAE IBAN" do
       let(:iban_code) { "AE07 0331 2345 6789 0123 456" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid UAE IBAN" do
       let(:iban_code) { "AE97 0331 2345 6789 0123 456" }
-
       it { is_expected.to_not be_valid }
     end
 
     context "for a valid UK IBAN" do
       let(:iban_code) { "GB82 WEST 1234 5698 7654 32" }
-
       it { is_expected.to be_valid }
     end
 
     context "for an invalid UK IBAN" do
       let(:iban_code) { "GB92 WEST 1234 5698 7654 32" }
-
       it { is_expected.to_not be_valid }
     end
   end
@@ -3412,73 +3255,61 @@ describe Ibandit::IBAN do
   describe "#local_check_digits" do
     context "with a Belgian IBAN" do
       let(:iban_code) { "BE62510007547061" }
-
       its(:local_check_digits) { is_expected.to eq("61") }
     end
 
     context "with a French IBAN" do
       let(:iban_code) { "FR1234567890123456789012345" }
-
       its(:local_check_digits) { is_expected.to eq("45") }
     end
 
     context "with a Monocan IBAN" do
       let(:iban_code) { "MC9320052222100112233M44555" }
-
       its(:local_check_digits) { is_expected.to eq("55") }
     end
 
     context "with a Spanish IBAN" do
       let(:iban_code) { "ES1212345678911234567890" }
-
       its(:local_check_digits) { is_expected.to eq("91") }
     end
 
     context "with an Italian IBAN" do
       let(:iban_code) { "IT12A1234567890123456789012" }
-
       its(:local_check_digits) { is_expected.to eq("A") }
     end
 
     context "with an Estonian IBAN" do
       let(:iban_code) { "EE382200221020145685" }
-
       its(:local_check_digits) { is_expected.to eq("5") }
     end
 
     context "with an Finnish IBAN" do
       let(:iban_code) { "FI2112345600000785" }
-
       its(:local_check_digits) { is_expected.to eq("5") }
     end
 
     context "with an Portuguese IBAN" do
       let(:iban_code) { "PT50000201231234567890154" }
-
       its(:local_check_digits) { is_expected.to eq("54") }
     end
 
     context "with a Norwegian IBAN" do
       let(:iban_code) { "NO9386011117947" }
-
       its(:local_check_digits) { is_expected.to eq("7") }
     end
 
     context "with an Icelandic IBAN" do
       let(:iban_code) { "IS250311260024684606972049" }
-
       its(:local_check_digits) { is_expected.to eq("4") }
     end
 
     context "with a Slovakian IBAN" do
       let(:iban_code) { "SK3112000000198742637541" }
-
       its(:local_check_digits) { is_expected.to eq("9") }
     end
 
     context "with a Dutch IBAN" do
       let(:iban_code) { "NL91ABNA0417164300" }
-
       its(:local_check_digits) { is_expected.to eq("0") }
     end
   end
