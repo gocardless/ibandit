@@ -7,7 +7,7 @@ module Ibandit
   module GermanDetailsConverter
     def self.rules
       @rules ||= YAML.load_file(
-        File.expand_path("../../data/german_iban_rules.yml", __dir__),
+        File.expand_path("../../../data/german_iban_rules.yml", __FILE__),
       )
     end
 
@@ -41,8 +41,8 @@ module Ibandit
     end
 
     module PseudoAccountNumberBehaviour
-      def self.included(object)
-        object.extend(ClassMethods)
+      def self.included(o)
+        o.extend(ClassMethods)
       end
 
       module ClassMethods

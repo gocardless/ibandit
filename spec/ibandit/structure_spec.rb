@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "structures.yml" do
-  FILE = File.expand_path("../../data/structures.yml", __dir__)
+  FILE = File.expand_path("../../../data/structures.yml", __FILE__)
   STRUCTURES = YAML.load_file(FILE)
 
   STRUCTURES.each do |country, rules|

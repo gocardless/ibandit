@@ -19,18 +19,15 @@ describe Ibandit::IBANAssembler do
 
   describe ".assemble" do
     subject(:assemble) { described_class.assemble(args) }
-
     let(:args) { { country_code: "ES" } }
 
     context "without a country_code" do
       let(:args) { { bank_code: 1 } }
-
       it { is_expected.to be_nil }
     end
 
     context "with an unsupported country_code" do
       let(:args) { { country_code: "FU" } }
-
       it { is_expected.to be_nil }
     end
 
@@ -49,13 +46,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -69,7 +64,6 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -90,13 +84,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -117,19 +109,16 @@ describe Ibandit::IBANAssembler do
 
       context "without an branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to eq("CY040020000001200527600") }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -149,13 +138,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -173,13 +160,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -197,13 +182,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -223,7 +206,6 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -244,9 +226,7 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code or branch code" do
         before { args.delete(:bank_code) }
-
         before { args.delete(:branch_code) }
-
         before { args[:account_number] = "23100001180000012345" }
 
         it { is_expected.to be_nil }
@@ -254,7 +234,6 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -270,13 +249,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -297,25 +274,21 @@ describe Ibandit::IBANAssembler do
 
       context "without the rib key in the account number" do
         before { args[:account_number] = "0500013M026" }
-
         specify { expect(Ibandit::IBAN.new(assemble)).to_not be_valid }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -336,31 +309,26 @@ describe Ibandit::IBANAssembler do
 
       context "with the bank_code supplied manually" do
         before { args.merge!(bank_code: "BARC") }
-
         it { is_expected.to eq("GB07BARC20000000579135") }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "with a non-numeric branch code" do
         before { args[:branch_code] = "abc123" }
-
         it { is_expected.to be_nil }
       end
     end
@@ -381,19 +349,16 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -411,13 +376,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -438,9 +401,7 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code or branch_code" do
         before { args.delete(:bank_code) }
-
         before { args.delete(:branch_code) }
-
         before { args[:account_number] = "11773016-11111018-00000000" }
 
         it { is_expected.to be_nil }
@@ -448,7 +409,6 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         before { args[:account_number] = "11773016-11111018-00000000" }
 
         it { is_expected.to be_nil }
@@ -456,7 +416,6 @@ describe Ibandit::IBANAssembler do
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         before { args[:account_number] = "11773016-11111018-00000000" }
 
         it { is_expected.to be_nil }
@@ -464,7 +423,6 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -483,19 +441,16 @@ describe Ibandit::IBANAssembler do
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -515,13 +470,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -542,37 +495,31 @@ describe Ibandit::IBANAssembler do
 
       context "with an explicitly passed check digit" do
         before { args[:check_digit] = "Y" }
-
         it { is_expected.to eq("IT64Y0542811101000000123456") }
       end
 
       context "with a bad character in an odd position" do
         before { args[:account_number] = "000000123h00" }
-
         it { is_expected.to be_nil }
       end
 
       context "with a bad character in an even position" do
         before { args[:account_number] = "0000001230h0" }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -592,13 +539,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -618,13 +563,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -644,13 +587,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -671,25 +612,21 @@ describe Ibandit::IBANAssembler do
 
       context "without the rib key in the account number" do
         before { args[:account_number] = "0500013M026" }
-
         specify { expect(Ibandit::IBAN.new(assemble)).to_not be_valid }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -713,25 +650,21 @@ describe Ibandit::IBANAssembler do
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "with a non-numeric branch code" do
         before { args[:branch_code] = "abc123" }
-
         it { is_expected.to be_nil }
       end
     end
@@ -751,13 +684,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -777,7 +708,6 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         before { args[:account_number] = "86011117947" }
 
         it { is_expected.to be_nil }
@@ -785,7 +715,6 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -805,7 +734,6 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         before { args[:account_number] = "60102010260000042270201111" }
 
         it { is_expected.to be_nil }
@@ -813,7 +741,6 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -834,19 +761,16 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -866,13 +790,11 @@ describe Ibandit::IBANAssembler do
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -892,13 +814,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -918,13 +838,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -944,13 +862,11 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
@@ -971,19 +887,16 @@ describe Ibandit::IBANAssembler do
 
       context "without a bank_code" do
         before { args.delete(:bank_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
         before { args.delete(:branch_code) }
-
         it { is_expected.to be_nil }
       end
 
       context "without an account_number" do
         before { args.delete(:account_number) }
-
         it { is_expected.to be_nil }
       end
     end
