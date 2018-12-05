@@ -1,3 +1,7 @@
+## 0.11.23 - December 5, 2018
+
+- Add support for validating Canadian branch codes if a modulus checker is configured
+
 ## 0.11.22 - October 18, 2018
 
 - Skipped 0.11.21
