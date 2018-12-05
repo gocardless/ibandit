@@ -283,6 +283,7 @@ module Ibandit
       when "SE" then valid_swedish_details?
       when "AU" then valid_australian_details?
       when "NZ" then valid_nz_details?
+      when "CA" then valid_ca_details?
       else true
       end
     end
@@ -357,6 +358,13 @@ module Ibandit
 
     def valid_nz_details?
       return true unless country_code == "NZ"
+      return true unless Ibandit.modulus_checker
+
+      valid_modulus_check_branch_code?
+    end
+
+    def valid_ca_details?
+      return true unless country_code == "CA"
       return true unless Ibandit.modulus_checker
 
       valid_modulus_check_branch_code?

@@ -2629,6 +2629,133 @@ describe Ibandit::IBAN do
     end
   end
 
+  describe "valid_ca_details" do
+    subject { iban.valid_ca_details? }
+
+    context "with non-Canadian details" do
+      let(:arg) do
+        {
+          country_code: "GB",
+          bank_code: "1234",
+          branch_code: "200000",
+          account_number: "55779911",
+        }
+      end
+
+      it { is_expected.to be(true) }
+    end
+
+    context "with Canadian details" do
+      let(:arg) do
+        {
+          country_code: "CA",
+          bank_code: "0036",
+          branch_code: "00063",
+          account_number: "0123456",
+        }
+      end
+
+      context "without a modulus checker defined" do
+        it { is_expected.to be(true) }
+      end
+
+      context "with a modulus checker defined" do
+        before do
+          Ibandit.modulus_checker = double(
+            valid_branch_code?: valid_branch_code,
+          )
+          iban.valid_ca_details?
+        end
+
+        after { Ibandit.modulus_checker = nil }
+
+        let(:valid_branch_code) { true }
+
+        it "calls valid_branch_code? with an IBAN object" do
+          expect(Ibandit.modulus_checker).
+            to receive(:valid_branch_code?).
+            with(instance_of(described_class))
+
+          iban.valid_ca_details?
+        end
+
+        it { is_expected.to be(true) }
+
+        context "with an invalid branch code" do
+          let(:valid_branch_code) { false }
+
+          it { is_expected.to be(false) }
+
+          context "locale en", locale: :en do
+            specify do
+              expect(iban.errors).to include(branch_code: "is invalid")
+            end
+          end
+
+          context "locale fr", locale: :fr do
+            specify do
+              expect(iban.errors).to include(branch_code: "n'est pas valide")
+            end
+          end
+
+          context "locale de", locale: :de do
+            specify do
+              expect(iban.errors).to include(branch_code: "ist ungültig")
+            end
+          end
+
+          context "locale pt", locale: :pt do
+            specify do
+              expect(iban.errors).to include(branch_code: "é inválido")
+            end
+          end
+
+          context "locale es", locale: :es do
+            specify do
+              expect(iban.errors).to include(branch_code: "no es válido")
+            end
+          end
+
+          context "locale it", locale: :it do
+            specify do
+              expect(iban.errors).to include(branch_code: "non è valido")
+            end
+          end
+
+          context "locale nl", locale: :nl do
+            specify do
+              expect(iban.errors).to include(branch_code: "is ongeldig")
+            end
+          end
+
+          context "locale nb", locale: :nb do
+            specify do
+              expect(iban.errors).to include(branch_code: "er ikke gyldig")
+            end
+          end
+
+          context "locale sl", locale: :sl do
+            specify do
+              expect(iban.errors).to include(branch_code: "ni veljavno")
+            end
+          end
+
+          context "locale da", locale: :da do
+            specify do
+              expect(iban.errors).to include(branch_code: "er ugyldig")
+            end
+          end
+
+          context "locale sv", locale: :sv do
+            specify do
+              expect(iban.errors).to include(branch_code: "är ogiltig")
+            end
+          end
+        end
+      end
+    end
+  end
+
   describe "#valid?" do
     describe "validations called" do
       after { iban.valid? }
