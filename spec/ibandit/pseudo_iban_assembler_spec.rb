@@ -143,13 +143,13 @@ describe Ibandit::PseudoIBANAssembler do
       let(:local_details) do
         {
           country_code: "CA",
-          bank_code: "0036",
+          bank_code: "036",
           branch_code: "00063",
           account_number: "0123456",
         }
       end
 
-      it { is_expected.to eq("CAZZ003600063_____0123456") }
+      it { is_expected.to eq("CAZZ03600063_____0123456") }
     end
 
     context "without a bank_code" do
@@ -168,7 +168,7 @@ describe Ibandit::PseudoIBANAssembler do
       let(:local_details) do
         {
           country_code: "CA",
-          bank_code: "0036",
+          bank_code: "036",
           account_number: "0123456",
         }
       end
@@ -180,7 +180,7 @@ describe Ibandit::PseudoIBANAssembler do
       let(:local_details) do
         {
           country_code: "CA",
-          bank_code: "0036",
+          bank_code: "036",
           branch_code: "00063",
         }
       end

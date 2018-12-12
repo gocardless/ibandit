@@ -523,16 +523,16 @@ iban.iban                     # => nil
 # Canada
 iban = Ibandit::IBAN.new(
   country_code: 'CA',
-  bank_code: '0036',          # 4 Financial Institution number
+  bank_code: '036',           # 3 Financial Institution number
   branch_code: '00063',       # 5 digit Branch Transit number
   account_number: '0123456'   # 7 to 12 digits
 )
-iban.pseudo_iban              # => "CAZZ003600063000000123456"
+iban.pseudo_iban              # => "CAZZ03600063000000123456"
 iban.iban                     # => nil
 
-iban = Ibandit::IBAN.new('CAZZ003600063000000123456')
+iban = Ibandit::IBAN.new('CAZZ03600063000000123456')
 iban.country_code             # => "CA"
-iban.bank_code                # => "0036"
+iban.bank_code                # => "036"
 iban.branch_code              # => "00063"
 iban.account_number           # => "000000123456"
 iban.iban                     # => nil

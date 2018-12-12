@@ -70,28 +70,28 @@ describe Ibandit::PseudoIBANSplitter do
     end
 
     context "for a canadian pseudo-IBAN without padding" do
-      let(:pseudo_iban) { "CAZZ0036000630123456" }
+      let(:pseudo_iban) { "CAZZ036000630123456" }
 
       its([:country_code]) { is_expected.to eq("CA") }
-      its([:bank_code]) { is_expected.to eq("0036") }
+      its([:bank_code]) { is_expected.to eq("036") }
       its([:branch_code]) { is_expected.to eq("00063") }
       its([:account_number]) { is_expected.to eq("0123456") }
     end
 
     context "for a canadian pseudo-IBAN with padding" do
-      let(:pseudo_iban) { "CAZZ003600063_____0123456" }
+      let(:pseudo_iban) { "CAZZ03600063_____0123456" }
 
       its([:country_code]) { is_expected.to eq("CA") }
-      its([:bank_code]) { is_expected.to eq("0036") }
+      its([:bank_code]) { is_expected.to eq("036") }
       its([:branch_code]) { is_expected.to eq("00063") }
       its([:account_number]) { is_expected.to eq("0123456") }
     end
 
     context "for a canadian pseudo-IBAN with a 12-digit account number" do
-      let(:pseudo_iban) { "CAZZ003600063012345678900" }
+      let(:pseudo_iban) { "CAZZ03600063012345678900" }
 
       its([:country_code]) { is_expected.to eq("CA") }
-      its([:bank_code]) { is_expected.to eq("0036") }
+      its([:bank_code]) { is_expected.to eq("036") }
       its([:branch_code]) { is_expected.to eq("00063") }
       its([:account_number]) { is_expected.to eq("012345678900") }
     end
