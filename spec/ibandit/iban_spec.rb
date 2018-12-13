@@ -362,14 +362,53 @@ describe Ibandit::IBAN do
       let(:arg) do
         {
           country_code: "CA",
-          bank_code: "0036",
+          bank_code: bank_code,
           branch_code: "00063",
           account_number: account_number,
         }
       end
 
+      context "and a 3 digit bank code" do
+        let(:account_number) { "0123456" }
+        let(:bank_code) { "036" }
+
+        its(:country_code) { is_expected.to eq("CA") }
+        its(:bank_code) { is_expected.to eq("0036") }
+        its(:branch_code) { is_expected.to eq("00063") }
+        its(:account_number) { is_expected.to eq("000000123456") }
+        its(:swift_bank_code) { is_expected.to eq("0036") }
+        its(:swift_branch_code) { is_expected.to eq("00063") }
+        its(:swift_account_number) { is_expected.to eq("000000123456") }
+        its(:swift_national_id) { is_expected.to eq("0036") }
+        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063000000123456") }
+
+        its(:iban) { is_expected.to be_nil }
+        its(:valid?) { is_expected.to eq(true) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
+      context "and a 2 digit bank code" do
+        let(:account_number) { "0123456" }
+        let(:bank_code) { "36" }
+
+        its(:country_code) { is_expected.to eq("CA") }
+        its(:bank_code) { is_expected.to eq("36") }
+        its(:branch_code) { is_expected.to eq("00063") }
+        its(:account_number) { is_expected.to eq("000000123456") }
+        its(:swift_bank_code) { is_expected.to eq("36") }
+        its(:swift_branch_code) { is_expected.to eq("00063") }
+        its(:swift_account_number) { is_expected.to eq("000000123456") }
+        its(:swift_national_id) { is_expected.to eq("3600") }
+        its(:pseudo_iban) { is_expected.to eq("CAZZ__3600063000000123456") }
+
+        its(:iban) { is_expected.to be_nil }
+        its(:valid?) { is_expected.to eq(false) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
       context "and a 7 digit account number" do
         let(:account_number) { "0123456" }
+        let(:bank_code) { "0036" }
 
         its(:country_code) { is_expected.to eq("CA") }
         its(:bank_code) { is_expected.to eq("0036") }
@@ -388,6 +427,7 @@ describe Ibandit::IBAN do
 
       context "and a 12 digit account number" do
         let(:account_number) { "012345678900" }
+        let(:bank_code) { "0036" }
 
         its(:country_code) { is_expected.to eq("CA") }
         its(:bank_code) { is_expected.to eq("0036") }
