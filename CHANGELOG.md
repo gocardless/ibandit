@@ -1,3 +1,7 @@
+## 0.11.24 - December 13, 2018
+
+- Add support for 3-digit financial institution numbers in Canada
+
 ## 0.11.23 - December 5, 2018
 
 - Add support for validating Canadian branch codes if a modulus checker is configured
