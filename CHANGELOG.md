@@ -1,3 +1,7 @@
+## 0.11.25 - January 10, 2019
+
+- Prevent account numbers from being all-zero in Australia
+
 ## 0.11.24 - December 13, 2018
 
 - Add support for 3-digit financial institution numbers in Canada
