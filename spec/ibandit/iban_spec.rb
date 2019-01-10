@@ -273,6 +273,23 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
+
+      context "and an account number that is all zero" do
+        let(:account_number) { "000000" }
+
+        its(:country_code) { is_expected.to eq("AU") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to eq("123456") }
+        its(:account_number) { is_expected.to eq("0000000000") }
+        its(:swift_bank_code) { is_expected.to be_nil }
+        its(:swift_branch_code) { is_expected.to eq("123456") }
+        its(:swift_account_number) { is_expected.to eq("0000000000") }
+        its(:swift_national_id) { is_expected.to eq("123456") }
+        its(:iban) { is_expected.to be_nil }
+        its(:pseudo_iban) { is_expected.to eq("AUZZ1234560000000000") }
+        its(:valid?) { is_expected.to eq(false) }
+        its(:to_s) { is_expected.to eq("") }
+      end
     end
 
     context "when the IBAN was created from an Australian pseudo-IBAN" do
