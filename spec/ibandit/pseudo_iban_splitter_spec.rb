@@ -95,5 +95,29 @@ describe Ibandit::PseudoIBANSplitter do
       its([:branch_code]) { is_expected.to eq("00063") }
       its([:account_number]) { is_expected.to eq("012345678900") }
     end
+
+    context "for a US pseudo-IBAN without padding" do
+      let(:pseudo_iban) { "USZZ0123456780123456" }
+
+      its([:country_code]) { is_expected.to eq("US") }
+      its([:bank_code]) { is_expected.to eq("012345678") }
+      its([:account_number]) { is_expected.to eq("0123456") }
+    end
+
+    context "for a US pseudo-IBAN with padding" do
+      let(:pseudo_iban) { "USZZ012345678__________0123456" }
+
+      its([:country_code]) { is_expected.to eq("US") }
+      its([:bank_code]) { is_expected.to eq("012345678") }
+      its([:account_number]) { is_expected.to eq("0123456") }
+    end
+
+    context "for a US pseudo-IBAN with a 17-digit account number" do
+      let(:pseudo_iban) { "USZZ01234567801234567890123456" }
+
+      its([:country_code]) { is_expected.to eq("US") }
+      its([:bank_code]) { is_expected.to eq("012345678") }
+      its([:account_number]) { is_expected.to eq("01234567890123456") }
+    end
   end
 end
