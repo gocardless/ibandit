@@ -612,7 +612,7 @@ describe Ibandit::IBAN do
       end
 
       context "and a 9 digit bank code" do
-        let(:bank_code) { "012345678" }
+        let(:bank_code) { "965498456" }
         let(:account_number) { "01234567890123456" }
 
         its(:country_code) { is_expected.to eq("US") }
@@ -623,7 +623,7 @@ describe Ibandit::IBAN do
         its(:swift_account_number) { is_expected.to eq(account_number) }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
         its(:pseudo_iban) do
-          is_expected.to eq("USZZ01234567801234567890123456")
+          is_expected.to eq("USZZ96549845601234567890123456")
         end
 
         its(:iban) { is_expected.to be_nil }
@@ -651,9 +651,21 @@ describe Ibandit::IBAN do
         its(:to_s) { is_expected.to eq("") }
       end
 
+      context "and bank code that doesn't pass checksum test" do
+        let(:bank_code) { "900000000" }
+        let(:account_number) { "01234567890123456" }
+
+        its(:iban) { is_expected.to be_nil }
+
+        it "returns an error on bank_code attribute" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).to eq(bank_code: "is invalid")
+        end
+      end
+
       context "and a 7 digit account number" do
         let(:account_number) { "0123456" }
-        let(:bank_code) { "012345678" }
+        let(:bank_code) { "965498456" }
 
         its(:country_code) { is_expected.to eq("US") }
         its(:bank_code) { is_expected.to eq(bank_code) }
@@ -663,7 +675,7 @@ describe Ibandit::IBAN do
         its(:swift_account_number) { is_expected.to eq("__________0123456") }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
         its(:pseudo_iban) do
-          is_expected.to eq("USZZ012345678__________0123456")
+          is_expected.to eq("USZZ965498456__________0123456")
         end
 
         its(:iban) { is_expected.to be_nil }
@@ -673,7 +685,7 @@ describe Ibandit::IBAN do
 
       context "and a 17 digit account number" do
         let(:account_number) { "01234567890123456" }
-        let(:bank_code) { "012345678" }
+        let(:bank_code) { "965498456" }
 
         its(:country_code) { is_expected.to eq("US") }
         its(:bank_code) { is_expected.to eq(bank_code) }
@@ -683,7 +695,7 @@ describe Ibandit::IBAN do
         its(:swift_account_number) { is_expected.to eq(account_number) }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
         its(:pseudo_iban) do
-          is_expected.to eq("USZZ01234567801234567890123456")
+          is_expected.to eq("USZZ96549845601234567890123456")
         end
 
         its(:iban) { is_expected.to be_nil }
@@ -693,18 +705,18 @@ describe Ibandit::IBAN do
     end
 
     context "when the IBAN was created from a US pseudo-IBAN" do
-      let(:arg) { "USZZ01234567801234567890123456" }
+      let(:arg) { "USZZ96549845601234567890123456" }
 
       its(:country_code) { is_expected.to eq("US") }
-      its(:bank_code) { is_expected.to eq("012345678") }
+      its(:bank_code) { is_expected.to eq("965498456") }
       its(:branch_code) { is_expected.to be_nil }
       its(:account_number) { is_expected.to eq("01234567890123456") }
-      its(:swift_bank_code) { is_expected.to eq("012345678") }
+      its(:swift_bank_code) { is_expected.to eq("965498456") }
       its(:swift_branch_code) { is_expected.to eq(nil) }
       its(:swift_account_number) { is_expected.to eq("01234567890123456") }
-      its(:swift_national_id) { is_expected.to eq("012345678") }
+      its(:swift_national_id) { is_expected.to eq("965498456") }
       its(:pseudo_iban) do
-        is_expected.to eq("USZZ01234567801234567890123456")
+        is_expected.to eq("USZZ96549845601234567890123456")
       end
 
       its(:iban) { is_expected.to be_nil }
