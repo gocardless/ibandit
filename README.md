@@ -562,6 +562,21 @@ iban.country_code         # => "NZ"
 iban.bank_code            # => "01"
 iban.branch_code          # => "0004"
 iban.account_number       # => "3333333044"
+
+# USA
+iban = Ibandit::IBAN.new(
+  country_code: 'US',
+  bank_code: '965498456',      # 9-digit routing number
+  account_number: '0123456789' # 1 to 17 digits
+)
+iban.pseudo_iban               # => "USZZ965498456_______0123456789"
+iban.iban                      # => nil
+
+iban = Ibandit::IBAN.new('USZZ965498456_______0123456789')
+iban.country_code              # => "US"
+iban.bank_code                 # => "965498456"
+iban.account_number            # => "_______0123456789"
+iban.iban                      # => nil
 ```
 
 ## Other libraries
