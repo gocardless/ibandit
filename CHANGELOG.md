@@ -1,3 +1,7 @@
+## 0.11.26 - January 30, 2019
+
+- Add support for US pseudo-IBANs
+
 ## 0.11.25 - January 10, 2019
 
 - Prevent account numbers from being all-zero in Australia
