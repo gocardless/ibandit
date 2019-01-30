@@ -284,6 +284,7 @@ module Ibandit
       when "AU" then valid_australian_details?
       when "NZ" then valid_nz_details?
       when "CA" then valid_ca_details?
+      when "US" then bank_code_passes_checksum_test?
       else true
       end
     end
@@ -382,6 +383,24 @@ module Ibandit
 
       valid_modulus_check_branch_code?
     end
+
+    # rubocop:disable Metrics/AbcSize
+    def bank_code_passes_checksum_test?
+      return false if swift_bank_code.length != 9
+
+      code_digits = swift_bank_code.chars.map(&:to_i)
+      mod =
+        (
+          3 * (code_digits[0] + code_digits[3] + code_digits[6]) +
+          7 * (code_digits[1] + code_digits[4] + code_digits[7]) +
+          1 * (code_digits[2] + code_digits[5] + code_digits[8])
+        ) % 10
+
+      @errors[:bank_code] = Ibandit.translate(:is_invalid) unless mod.zero?
+
+      mod.zero?
+    end
+    # rubocop:enable Metrics/AbcSize
 
     ###################
     # Private methods #

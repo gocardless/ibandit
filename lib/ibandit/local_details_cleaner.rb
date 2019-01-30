@@ -32,7 +32,8 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when "AT", "CY", "DE", "FI", "LT", "LU", "LV", "NL", "RO", "SI", "SK"
+      when "AT", "CY", "DE", "FI", "LT", "LU",
+            "LV", "NL", "RO", "SI", "SK", "US"
         %i[bank_code account_number]
       when "BE", "CZ", "DK", "EE", "ES", "HR",
             "HU", "IS", "NO", "PL", "SE", "NZ"
@@ -96,6 +97,18 @@ module Ibandit
       {
         account_number: local_details[:account_number].rjust(12, "0"),
         bank_code: bank_code,
+      }
+    end
+
+    def self.clean_us_details(local_details)
+      return {} unless local_details[:bank_code].length == 9
+
+      account_number = local_details[:account_number].delete(" ")
+      return {} unless (1..17).cover?(account_number.length)
+
+      {
+        bank_code: local_details[:bank_code],
+        account_number: account_number.rjust(17, "_"),
       }
     end
 

@@ -57,6 +57,7 @@ For example:
 | Spain           | :white_check_mark:           | :white_check_mark: |                    |
 | Sweden          | :white_check_mark:           |                    | :white_check_mark: |
 | United Kingdom  | :white_check_mark:           | :white_check_mark: |                    |
+| USA             |                              |                    | :white_check_mark: |
 
 ## Usage
 

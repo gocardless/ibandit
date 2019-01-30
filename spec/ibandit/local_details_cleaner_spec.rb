@@ -1158,4 +1158,24 @@ describe Ibandit::LocalDetailsCleaner do
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
+
+  context "US" do
+    context "when the account number has space characters" do
+      let(:country_code) { "US" }
+      let(:bank_code) { "012345678" }
+      let(:account_number) { "0123-45678 1234567" }
+
+      its([:bank_code]) { is_expected.to eq(bank_code) }
+      its([:account_number]) { is_expected.to eq("0123-456781234567") }
+    end
+
+    context "when the account number is shorter than the maximum length" do
+      let(:country_code) { "US" }
+      let(:bank_code) { "012345678" }
+      let(:account_number) { "0123456789" }
+
+      its([:bank_code]) { is_expected.to eq(bank_code) }
+      its([:account_number]) { is_expected.to eq("_______0123456789") }
+    end
+  end
 end
