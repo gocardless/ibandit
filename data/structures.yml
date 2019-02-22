@@ -902,8 +902,7 @@ US:
   :branch_code_length: 0
   :account_number_length: 17
   :bank_code_format: "\\d{9}"
-  # TODO: update account number format based on inputs from user research
-  :account_number_format: ".{1,17}"
+  :account_number_format: "\\A_*\\d{1,17}\\z"
   :national_id_length: 9
   :pseudo_iban_bank_code_length: 9
   :pseudo_iban_branch_code_length: 0

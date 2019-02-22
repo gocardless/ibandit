@@ -724,13 +724,22 @@ describe Ibandit::IBAN do
       its(:to_s) { is_expected.to eq("") }
     end
 
-    context "when the input is an invalid US pseudo-IBAN" do
+    context "when the input pseudo-IBAN has an invalid US bank_code" do
       let(:arg) { "USZZ__012345601234567890123456" }
 
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).
           to eq(bank_code: "is the wrong length (should be 9 characters)")
+      end
+    end
+
+    context "when the input pseudo-IBAN has an invalid US account_number" do
+      let(:arg) { "USZZ965498456ABC01234567890123" }
+
+      it "is invalid and has an error populated" do
+        expect(subject.valid?).to eq(false)
+        expect(subject.errors).to eq(account_number: "is invalid")
       end
     end
   end
