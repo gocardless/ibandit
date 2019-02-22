@@ -1,3 +1,7 @@
+## 0.11.27 - February 22, 2019
+
+- Update US account number format validation to allow digits-only
+
 ## 0.11.26 - January 30, 2019
 
 - Add support for US pseudo-IBANs
