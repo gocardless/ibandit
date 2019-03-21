@@ -386,6 +386,7 @@ module Ibandit
 
     # rubocop:disable Metrics/AbcSize
     def bank_code_passes_checksum_test?
+      return false unless swift_bank_code
       return false if swift_bank_code.length != 9
 
       code_digits = swift_bank_code.chars.map(&:to_i)

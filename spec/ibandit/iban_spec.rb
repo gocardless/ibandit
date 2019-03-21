@@ -683,6 +683,18 @@ describe Ibandit::IBAN do
         its(:to_s) { is_expected.to eq("") }
       end
 
+      context "and bank code that is nil" do
+        let(:bank_code) { nil }
+        let(:account_number) { "01234567890123456" }
+
+        its(:iban) { is_expected.to be_nil }
+
+        it "returns an error on bank_code attribute" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).to eq(bank_code: "is required")
+        end
+      end
+
       context "and a 17 digit account number" do
         let(:account_number) { "01234567890123456" }
         let(:bank_code) { "965498456" }
