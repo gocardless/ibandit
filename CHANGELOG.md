@@ -1,3 +1,7 @@
+## 0.11.28 - March 21, 2019
+
+- Handle bad input more gracefully (`bank_code` being nil)
+
 ## 0.11.27 - February 22, 2019
 
 - Update US account number format validation to allow digits-only
