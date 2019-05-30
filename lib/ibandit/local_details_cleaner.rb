@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module LocalDetailsCleaner
     def self.clean(local_details)

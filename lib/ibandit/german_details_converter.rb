@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # German bank details don't map directly to IBANs in the same way as in other
 # countries - each bank has idiosyncracies for translating its cusomers' bank
 # details. These idiosyncracies are described in a document from the Bundesbank:

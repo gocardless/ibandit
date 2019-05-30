@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module IBANAssembler
     EXCEPTION_COUNTRY_CODES = %w[IT SM BE].freeze

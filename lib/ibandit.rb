@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "i18n"
 require "ibandit/version"
 require "ibandit/errors"

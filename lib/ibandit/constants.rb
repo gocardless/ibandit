@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module Constants
     CONSTRUCTABLE_IBAN_COUNTRY_CODES = %w[AT BE BG CY CZ DE DK EE ES FI FR GB GR

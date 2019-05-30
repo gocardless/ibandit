@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module IBANSplitter
     def self.split(iban)

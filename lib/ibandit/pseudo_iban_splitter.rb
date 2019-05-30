@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   class PseudoIBANSplitter
     def initialize(pseudo_iban)
