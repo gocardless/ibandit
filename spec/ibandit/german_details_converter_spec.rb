@@ -30,6 +30,7 @@ describe Ibandit::GermanDetailsConverter do
             let(:converted_account_number) do
               tuple["converted_account_number"] || account_number
             end
+
             it do
               is_expected.to eq(
                 bank_code: converted_bank_code,
@@ -44,6 +45,7 @@ describe Ibandit::GermanDetailsConverter do
             "#{tuple['account_number']}" do
             let(:bank_code) { tuple["bank_code"] || "00000000" }
             let(:account_number) { tuple["account_number"] }
+
             it "raises UnsupportedAccountDetails" do
               expect { subject }.
                 to raise_error(Ibandit::UnsupportedAccountDetails)
@@ -88,6 +90,7 @@ describe Ibandit::GermanDetailsConverter do
     valid_account_numbers.each do |number|
       context number.to_s do
         let(:account_number) { number }
+
         it { is_expected.to be_valid }
       end
     end
@@ -95,6 +98,7 @@ describe Ibandit::GermanDetailsConverter do
     invalid_account_numbers.each do |number|
       context number.to_s do
         let(:account_number) { number }
+
         it { is_expected.to_not be_valid }
       end
     end

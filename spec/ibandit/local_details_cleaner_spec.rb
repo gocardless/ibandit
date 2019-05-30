@@ -30,6 +30,7 @@ describe Ibandit::LocalDetailsCleaner do
 
   context "with an unsupported country code" do
     let(:country_code) { "FU" }
+
     it { is_expected.to eq(local_details_with_swift) }
   end
 
@@ -42,36 +43,43 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with an account number which needs zero-padding" do
       let(:account_number) { "234573201" }
+
       its([:account_number]) { is_expected.to eq("00234573201") }
     end
 
     context "with an account number under 4 digits" do
       let(:account_number) { "123" }
+
       its([:account_number]) { is_expected.to eq("123") }
     end
 
     context "with a long account number" do
       let(:account_number) { "234573201999" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "with a short bank code" do
       let(:bank_code) { "1904" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "with a long bank code" do
       let(:bank_code) { "190430" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -107,12 +115,14 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with dashes" do
       let(:account_number) { "510-0075470-61" }
+
       its([:bank_code]) { is_expected.to eq("510") }
       its([:account_number]) { is_expected.to eq("510007547061") }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -127,16 +137,19 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -163,33 +176,39 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with a short account number" do
       let(:account_number) { "1200527600" }
+
       its([:account_number]) { is_expected.to eq("0000001200527600") }
     end
 
     context "with a too-short account number" do
       let(:account_number) { "123456" }
+
       its([:account_number]) { is_expected.to eq(account_number) }
     end
 
     context "with a long account number" do
       let(:account_number) { "00000001200527600" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "with the branch code in the bank code field" do
       let(:bank_code) { "002 00128" }
       let(:branch_code) { nil }
+
       its([:bank_code]) { is_expected.to eq("002") }
       its([:branch_code]) { is_expected.to eq("00128") }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -204,23 +223,27 @@ describe Ibandit::LocalDetailsCleaner do
     context "with an account number prefix" do
       let(:prefix) { "000019" }
       let(:account_number) { "2000145399" }
+
       before { local_details.merge!(account_number_prefix: prefix) }
 
       its([:account_number]) { is_expected.to eq("0000192000145399") }
 
       context "which needs zero-padding" do
         let(:prefix) { "19" }
+
         its([:account_number]) { is_expected.to eq("0000192000145399") }
       end
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -234,22 +257,26 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "with an excessively short account number" do
       let(:account_number) { "666" }
+
       its([:account_number]) { is_expected.to eq(account_number) }
     end
 
     context "with a pseudo account number" do
       let(:bank_code) { "37080040" }
       let(:account_number) { "111" }
+
       its([:bank_code]) { is_expected.to eq(bank_code) }
       its([:account_number]) { is_expected.to eq("0215022000") }
     end
@@ -257,6 +284,7 @@ describe Ibandit::LocalDetailsCleaner do
     context "with unsupported account details" do
       let(:account_number) { "7955791111" }
       let(:bank_code) { "20000000" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -297,6 +325,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -310,12 +339,14 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with an account number that needs translating" do
       let(:account_number) { "111020145685" }
+
       its([:bank_code]) { is_expected.to eq("22") }
       its([:account_number]) { is_expected.to eq("00111020145685") }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -340,11 +371,13 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with spaces in the account number" do
       let(:account_number) { "18 0000012345" }
+
       its([:account_number]) { is_expected.to eq("180000012345") }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -358,6 +391,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with a shorter account number" do
       let(:account_number) { "785" }
+
       its([:account_number]) { is_expected.to eq("00000785") }
     end
 
@@ -371,11 +405,13 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -390,31 +426,37 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the RIB key spaced in the account number" do
       let(:account_number) { "0500013M026 06" }
+
       its([:account_number]) { is_expected.to eq("0500013M02606") }
     end
 
     context "with the RIB key hyphenated in the account number" do
       let(:account_number) { "0500013M026-06" }
+
       its([:account_number]) { is_expected.to eq("0500013M02606") }
     end
 
     context "with the RIB key missing" do
       let(:account_number) { "0500013M026" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -429,47 +471,56 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the sort code is hyphenated" do
       let(:branch_code) { "20-00-00" }
+
       its([:branch_code]) { is_expected.to eq("200000") }
       its([:swift_branch_code]) { is_expected.to eq("200000") }
     end
 
     context "with the sort code spaced" do
       let(:branch_code) { "20 00 00" }
+
       its([:branch_code]) { is_expected.to eq("200000") }
     end
 
     context "with a short account number" do
       let(:account_number) { "579135" }
+
       its([:account_number]) { is_expected.to eq("00579135") }
       its([:swift_account_number]) { is_expected.to eq("00579135") }
     end
 
     context "with a too-short account number" do
       let(:account_number) { "5678" }
+
       its([:account_number]) { is_expected.to eq(account_number) }
     end
 
     context "with the account number spaced" do
       let(:account_number) { "5577 9911" }
+
       its([:account_number]) { is_expected.to eq("55779911") }
     end
 
     context "with the account number hyphenated" do
       let(:account_number) { "5577-9911" }
+
       its([:account_number]) { is_expected.to eq("55779911") }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
 
       context "with a BIC finder set" do
         let(:bic_finder) { double }
+
         before do
           allow(bic_finder).to receive(:call).with("GB", "200000").
             and_return("BARCGB22XXX")
@@ -485,6 +536,7 @@ describe Ibandit::LocalDetailsCleaner do
     context "with a bank code and BIC finder set" do
       let(:bank_code) { "OVERRIDE" }
       let(:bic_finder) { double }
+
       before do
         allow(bic_finder).to receive(:call).with("GB", "200000").
           and_return("BARCGB22XXX")
@@ -506,16 +558,19 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -537,12 +592,14 @@ describe Ibandit::LocalDetailsCleaner do
 
       context "with a badly formatted account number" do
         let(:account_number) { "1863000160" }
+
         it { is_expected.to eq(local_details_with_swift) }
       end
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -577,18 +634,21 @@ describe Ibandit::LocalDetailsCleaner do
 
       context "with an invalid length account number" do
         let(:account_number) { "11773016-1111101" }
+
         it { is_expected.to eq(local_details_with_swift) }
       end
 
       context "with a bank code, too" do
         let(:account_number) { "11773016-11111018" }
         let(:bank_code) { "117" }
+
         it { is_expected.to eq(local_details_with_swift) }
       end
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -603,45 +663,54 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the sort code is hyphenated" do
       let(:branch_code) { "93-11-52" }
+
       its([:branch_code]) { is_expected.to eq("931152") }
     end
 
     context "with the sort code spaced" do
       let(:branch_code) { "93 11 52" }
+
       its([:branch_code]) { is_expected.to eq("931152") }
     end
 
     context "with a short account number" do
       let(:account_number) { "579135" }
+
       its([:account_number]) { is_expected.to eq("00579135") }
     end
 
     context "with a too-short account number" do
       let(:account_number) { "5678" }
+
       its([:account_number]) { is_expected.to eq(account_number) }
     end
 
     context "with the account number spaced" do
       let(:account_number) { "5577 9911" }
+
       its([:account_number]) { is_expected.to eq("55779911") }
     end
 
     context "with the account number hyphenated" do
       let(:account_number) { "5577-9911" }
+
       its([:account_number]) { is_expected.to eq("55779911") }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
 
       context "with a BIC finder set" do
         let(:bic_finder) { double }
+
         before do
           allow(bic_finder).to receive(:call).with("IE", "931152").
             and_return("AIBKIE22XXX")
@@ -656,6 +725,7 @@ describe Ibandit::LocalDetailsCleaner do
     context "with a bank code and BIC finder set" do
       let(:bank_code) { "OVERRIDE" }
       let(:bic_finder) { double }
+
       before do
         allow(bic_finder).to receive(:call).with("IE", "931152").
           and_return("AIBKIE22XXX")
@@ -703,12 +773,14 @@ describe Ibandit::LocalDetailsCleaner do
 
       context "without a hyphen" do
         let(:account_number) { "26-2468-606972049" }
+
         its([:account_number]) { is_expected.to eq("260024680606972049") }
       end
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -728,21 +800,25 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the account number not zero-padded" do
       let(:account_number) { "123456" }
+
       its([:account_number]) { is_expected.to eq("000000123456") }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -756,11 +832,13 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -774,11 +852,13 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -792,11 +872,13 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -811,31 +893,37 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the RIB key spaced in the account number" do
       let(:account_number) { "0500013M026 06" }
+
       its([:account_number]) { is_expected.to eq("0500013M02606") }
     end
 
     context "with the RIB key hyphenated in the account number" do
       let(:account_number) { "0500013M026-06" }
+
       its([:account_number]) { is_expected.to eq("0500013M02606") }
     end
 
     context "with the RIB key missing" do
       let(:account_number) { "0500013M026" }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -850,25 +938,30 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the account number spaced" do
       let(:account_number) { "9027 2930 51" }
+
       its([:account_number]) { is_expected.to eq("000000009027293051") }
     end
 
     context "with the account number hyphenated" do
       let(:account_number) { "9027-2930-51" }
+
       its([:account_number]) { is_expected.to eq("000000009027293051") }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
 
       context "with a BIC finder set" do
         let(:bic_finder) { double }
+
         before do
           allow(bic_finder).to receive(:call).with("MT", "44093").
             and_return("MMEBMTMTXXX")
@@ -883,6 +976,7 @@ describe Ibandit::LocalDetailsCleaner do
     context "with a bank code and BIC finder set" do
       let(:bank_code) { "OVERRIDE" }
       let(:bic_finder) { double }
+
       before do
         allow(bic_finder).to receive(:call).with("MT", "44093").
           and_return("MMEBMTMTXXX")
@@ -903,21 +997,25 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "with an account number that needs zero-padding" do
       let(:account_number) { "417164300" }
+
       its([:account_number]) { is_expected.to eq("0417164300") }
     end
   end
@@ -940,6 +1038,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -971,12 +1070,14 @@ describe Ibandit::LocalDetailsCleaner do
 
       context "when the account number is shorter than 6 chars" do
         let(:account_number) { "12345" }
+
         its([:account_number]) { is_expected.to be_nil }
       end
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -999,6 +1100,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -1013,16 +1115,19 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -1036,11 +1141,13 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -1057,6 +1164,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
@@ -1080,16 +1188,19 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with an account number which needs zero-padding" do
       let(:account_number) { "123438" }
+
       its([:account_number]) { is_expected.to eq("0000123438") }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -1104,23 +1215,27 @@ describe Ibandit::LocalDetailsCleaner do
     context "with an account number prefix" do
       let(:prefix) { "000019" }
       let(:account_number) { "8742637541" }
+
       before { local_details.merge!(account_number_prefix: prefix) }
 
       its([:account_number]) { is_expected.to eq("0000198742637541") }
 
       context "which needs zero-padding" do
         let(:prefix) { "19" }
+
         its([:account_number]) { is_expected.to eq("0000198742637541") }
       end
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end
@@ -1140,21 +1255,25 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with the account number not zero-padded" do
       let(:account_number) { "123456" }
+
       its([:account_number]) { is_expected.to eq("000000123456") }
     end
 
     context "without a bank code" do
       let(:bank_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without a branch code" do
       let(:branch_code) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
     context "without an account number" do
       let(:account_number) { nil }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
   end

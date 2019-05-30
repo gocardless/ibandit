@@ -23,11 +23,13 @@ describe Ibandit::IBANAssembler do
 
     context "without a country_code" do
       let(:args) { { bank_code: 1 } }
+
       it { is_expected.to be_nil }
     end
 
     context "with an unsupported country_code" do
       let(:args) { { country_code: "FU" } }
+
       it { is_expected.to be_nil }
     end
 
