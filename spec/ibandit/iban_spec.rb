@@ -2141,7 +2141,7 @@ describe Ibandit::IBAN do
         it "calls valid_bank_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_bank_code?).
-            with(instance_of(Ibandit::IBAN))
+            with(instance_of(described_class))
 
           iban.valid_local_modulus_check?
         end
@@ -2211,7 +2211,7 @@ describe Ibandit::IBAN do
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_branch_code?).
-            with(instance_of(Ibandit::IBAN))
+            with(instance_of(described_class))
 
           iban.valid_local_modulus_check?
         end
@@ -2293,7 +2293,7 @@ describe Ibandit::IBAN do
         it "calls valid_account_number? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_account_number?).
-            with(instance_of(Ibandit::IBAN))
+            with(instance_of(described_class))
 
           iban.valid_local_modulus_check?
         end
@@ -2631,7 +2631,7 @@ describe Ibandit::IBAN do
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_branch_code?).
-            with(instance_of(Ibandit::IBAN))
+            with(instance_of(described_class))
 
           iban.valid_australian_details?
         end
@@ -2757,7 +2757,7 @@ describe Ibandit::IBAN do
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
             to receive(:valid_branch_code?).
-            with(instance_of(Ibandit::IBAN))
+            with(instance_of(described_class))
 
           iban.valid_nz_details?
         end
