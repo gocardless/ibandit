@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe Ibandit::LocalDetailsCleaner do
   subject(:cleaned) { described_class.clean(local_details) }
+
   let(:local_details) do
     {
       country_code: country_code,

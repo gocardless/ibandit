@@ -19,6 +19,7 @@ describe Ibandit::IBANAssembler do
 
   describe ".assemble" do
     subject(:assemble) { described_class.assemble(args) }
+
     let(:args) { { country_code: "ES" } }
 
     context "without a country_code" do

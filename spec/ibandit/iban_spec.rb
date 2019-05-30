@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe Ibandit::IBAN do
   subject(:iban) { described_class.new(arg) }
+
   let(:arg) { iban_code }
   let(:iban_code) { "GB82WEST12345698765432" }
 
