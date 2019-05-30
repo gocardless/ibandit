@@ -4,17 +4,17 @@ describe Ibandit::LocalDetailsCleaner do
   subject(:cleaned) { described_class.clean(local_details) }
   let(:local_details) do
     {
-      country_code:   country_code,
-      bank_code:      bank_code,
-      branch_code:    branch_code,
+      country_code: country_code,
+      bank_code: bank_code,
+      branch_code: branch_code,
       account_number: account_number,
     }
   end
 
   let(:local_details_with_swift) do
     local_details.merge(
-      swift_bank_code:      bank_code,
-      swift_branch_code:    branch_code,
+      swift_bank_code: bank_code,
+      swift_branch_code: branch_code,
       swift_account_number: account_number,
     )
   end
