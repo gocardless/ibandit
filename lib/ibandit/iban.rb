@@ -478,7 +478,7 @@ module Ibandit
       @swift_account_number = swift_details[:account_number]
 
       return if Constants::PSEUDO_IBAN_COUNTRY_CODES.
-          include?(@country_code)
+        include?(@country_code)
 
       @bank_code      = swift_details[:bank_code]
       @branch_code    = swift_details[:branch_code]
