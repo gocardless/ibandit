@@ -515,6 +515,7 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
+
       context "with a 2 digit account number suffix" do
         let(:account_number) { "3333333-44" }
 
@@ -532,6 +533,7 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
+
       context "with bank and branch code embedded in account_number field" do
         let(:arg) do
           {
@@ -554,6 +556,7 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
+
       context "with a bank code embedded in account_number field" do
         let(:arg) do
           {
