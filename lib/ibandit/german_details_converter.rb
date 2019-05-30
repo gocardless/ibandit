@@ -290,6 +290,7 @@ module Ibandit
 
         def valid?
           return false unless valid_length? && valid_account_type?
+
           [master_number[-1].to_i, 10].include?(remainder)
         end
 

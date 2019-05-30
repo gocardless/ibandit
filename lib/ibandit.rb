@@ -23,6 +23,7 @@ module Ibandit
 
     def find_bic(country_code, national_id)
       raise NotImplementedError, "BIC finder is not defined" unless @bic_finder
+
       @bic_finder.call(country_code, national_id)
     end
 

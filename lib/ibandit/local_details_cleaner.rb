@@ -57,6 +57,7 @@ module Ibandit
       # Account number may be 4-11 digits long.
       # Add leading zeros to account number if < 11 digits.
       return {} unless local_details[:account_number].length >= 4
+
       {
         bank_code: local_details[:bank_code],
         account_number: local_details[:account_number].rjust(11, "0"),

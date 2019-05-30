@@ -26,16 +26,19 @@ module Ibandit
 
     def bank_code
       return unless country_code_valid?
+
       pseudo_iban_part(bank_code_start_index, :pseudo_iban_bank_code_length)
     end
 
     def branch_code
       return unless country_code_valid?
+
       pseudo_iban_part(branch_code_start_index, :pseudo_iban_branch_code_length)
     end
 
     def account_number
       return unless country_code_valid?
+
       remove_leading_padding(
         @pseudo_iban.slice(account_number_start_index, @pseudo_iban.length),
       )
@@ -74,6 +77,7 @@ module Ibandit
 
     def remove_leading_padding(input)
       return unless padding_character
+
       input.gsub(/\A#{padding_character}+/, "")
     end
   end

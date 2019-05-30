@@ -54,6 +54,7 @@ module Ibandit
     def param_valid?(value, length_key)
       return true unless value.nil?
       return true if structure[length_key] == 0
+
       false
     end
 
@@ -71,6 +72,7 @@ module Ibandit
 
     def pad(number, length_key)
       return if number.nil?
+
       number.rjust(structure[length_key], padding_character)
     end
 

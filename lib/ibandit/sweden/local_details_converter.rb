@@ -44,6 +44,7 @@ module Ibandit
 
       def remove_bad_chars(number)
         return if number.nil?
+
         number.gsub(/[-.\s]/, "")
       end
 
@@ -76,6 +77,7 @@ module Ibandit
                         end
 
         return serial_number unless bank_info.fetch(:zerofill_serial_number)
+
         serial_number && serial_number.rjust(serial_number_length, "0")
       end
 

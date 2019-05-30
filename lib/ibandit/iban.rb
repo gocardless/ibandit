@@ -208,6 +208,7 @@ module Ibandit
 
     def valid_characters?
       return if iban.nil?
+
       if iban.scan(/[^A-Z0-9]/).any?
         @errors[:characters] =
           Ibandit.translate(:non_alphanumeric_characters,
@@ -530,6 +531,7 @@ module Ibandit
 
     def pseudo_iban?(input)
       return false if input.nil?
+
       input.slice(2, 2) == Constants::PSEUDO_IBAN_CHECK_DIGITS
     end
 
