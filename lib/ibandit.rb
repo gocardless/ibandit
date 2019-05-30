@@ -16,7 +16,7 @@ require "ibandit/pseudo_iban_splitter"
 require "ibandit/local_details_cleaner"
 require "ibandit/check_digit"
 
-I18n.load_path += Dir[File.expand_path('../config/locales/*.{rb,yml}',
+I18n.load_path += Dir[File.expand_path("../config/locales/*.{rb,yml}",
                                        __dir__)]
 
 module Ibandit
@@ -31,7 +31,7 @@ module Ibandit
 
     def structures
       @structures ||= YAML.load_file(
-        File.expand_path('../data/structures.yml', __dir__),
+        File.expand_path("../data/structures.yml", __dir__),
       )
     end
 

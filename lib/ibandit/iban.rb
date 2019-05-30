@@ -157,7 +157,7 @@ module Ibandit
 
     def valid_bank_code_length?
       return unless valid_country_code?
-      return true if structure[:bank_code_length] == 0
+      return true if structure[:bank_code_length].zero?
 
       if swift_bank_code.nil? || swift_bank_code.empty?
         @errors[:bank_code] = Ibandit.translate(:is_required)
@@ -177,7 +177,7 @@ module Ibandit
         return true
       end
 
-      if structure[:branch_code_length] == 0
+      if structure[:branch_code_length]&.zero?
         @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
                                                   country_code: country_code)
       elsif swift_branch_code.nil? || swift_branch_code.empty?
@@ -236,7 +236,7 @@ module Ibandit
 
     def valid_bank_code_format?
       return unless valid_bank_code_length?
-      return true if structure[:bank_code_length] == 0
+      return true if structure[:bank_code_length]&.zero?
 
       if swift_bank_code =~ Regexp.new(structure[:bank_code_format])
         true

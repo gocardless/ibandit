@@ -6,12 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLines:
-  Exclude:
-    - 'spec/ibandit/german_details_converter_spec.rb'
-
 # Offense count: 10
 Metrics/AbcSize:
   Max: 25
@@ -38,12 +32,6 @@ Naming/UncommunicativeMethodParamName:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/ibandit/structure_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterSubject:
-  Exclude:
-    - 'spec/ibandit/german_details_converter_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: Max.
@@ -92,34 +80,3 @@ RSpec/SubjectStub:
 RSpec/VerifiedDoubles:
   Exclude:
     - 'spec/ibandit/iban_spec.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle, IgnoredMethods.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'spec/**/*'
-    - 'lib/ibandit/iban.rb'
-    - 'lib/ibandit/iban_splitter.rb'
-    - 'lib/ibandit/pseudo_iban_assembler.rb'
-    - 'lib/ibandit/pseudo_iban_splitter.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantFreeze:
-  Exclude:
-    - 'lib/ibandit/constants.rb'
-    - 'lib/ibandit/version.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Gemfile'
-    - 'ibandit.gemspec'
-    - 'lib/ibandit.rb'
-    - 'lib/ibandit/german_details_converter.rb'
-    - 'spec/ibandit/structure_spec.rb'

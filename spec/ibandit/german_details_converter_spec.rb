@@ -7,10 +7,10 @@ describe Ibandit::GermanDetailsConverter do
     json_fixture(json_fixture_file).each do |convertor|
       context "Rule #{convertor['convertor']}" do
         subject { test_subject }
+
         let(:klass) do
           described_class.const_get("Rule#{convertor['convertor']}")
         end
-
 
         before do
           expect_any_instance_of(klass).to receive(:converted_details).

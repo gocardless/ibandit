@@ -48,7 +48,7 @@ module Ibandit
 
     def pseudo_iban_part(start_index, length_key)
       length = structure.fetch(length_key)
-      return if length == 0
+      return if length&.zero?
 
       remove_leading_padding(@pseudo_iban.slice(start_index, length))
     end

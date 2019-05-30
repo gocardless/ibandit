@@ -55,7 +55,7 @@ module Ibandit
 
     def param_valid?(value, length_key)
       return true unless value.nil?
-      return true if structure[length_key] == 0
+      return true if structure[length_key]&.zero?
 
       false
     end

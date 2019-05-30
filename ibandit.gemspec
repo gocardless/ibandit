@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('lib/ibandit/version', __dir__)
+require File.expand_path("lib/ibandit/version", __dir__)
 
 Gem::Specification.new do |gem|
   gem.add_development_dependency "nokogiri",        "~> 1.6"
