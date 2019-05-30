@@ -32,7 +32,7 @@ describe Ibandit::GermanDetailsConverter do
             end
 
             it do
-              is_expected.to eq(
+              expect(subject).to eq(
                 bank_code: converted_bank_code,
                 account_number: converted_account_number,
               )
