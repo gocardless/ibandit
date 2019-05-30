@@ -813,6 +813,7 @@ describe Ibandit::IBAN do
 
     context "with an unknown country code" do
       before { iban.valid_country_code? }
+
       let(:iban_code) { "AA123456789123456" }
 
       it { is_expected.to eq(false) }
@@ -1149,6 +1150,7 @@ describe Ibandit::IBAN do
 
     context "with invalid details" do
       before { allow(iban).to receive(:swift_bank_code).and_return("WES") }
+
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1249,6 +1251,7 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       before { allow(iban).to receive(:country_code).and_return("AA") }
+
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -1267,6 +1270,7 @@ describe Ibandit::IBAN do
 
     context "with invalid details" do
       before { allow(iban).to receive(:swift_branch_code).and_return("12345") }
+
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1367,6 +1371,7 @@ describe Ibandit::IBAN do
 
     context "without a branch code" do
       before { allow(iban).to receive(:swift_branch_code).and_return(nil) }
+
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1449,6 +1454,7 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       before { allow(iban).to receive(:country_code).and_return("AA") }
+
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -1469,6 +1475,7 @@ describe Ibandit::IBAN do
       before do
         allow(iban).to receive(:swift_account_number).and_return("1234567")
       end
+
       it { is_expected.to eq(false) }
 
       context "locale en", locale: :en do
@@ -1571,6 +1578,7 @@ describe Ibandit::IBAN do
 
     context "with an invalid country_code" do
       before { allow(iban).to receive(:country_code).and_return("AA") }
+
       it { is_expected.to be_nil }
 
       it "does not set errors on the IBAN" do
@@ -2153,7 +2161,9 @@ describe Ibandit::IBAN do
           valid_account_number?: valid_account_number,
         )
       end
+
       after { Ibandit.modulus_checker = nil }
+
       before { iban.valid_local_modulus_check? }
 
       context "with an invalid bank code" do
@@ -2226,8 +2236,11 @@ describe Ibandit::IBAN do
       context "with an invalid branch code" do
         let(:iban_code) { "GB60BARC20000055779911" }
         before { Ibandit.bic_finder = double(call: "BARCGB22XXX") }
+
         after { Ibandit.bic_finder = nil }
+
         before { iban.valid_local_modulus_check? }
+
         let(:valid_bank_code) { true }
         let(:valid_branch_code) { false }
         let(:valid_account_number) { true }
@@ -2648,6 +2661,7 @@ describe Ibandit::IBAN do
           )
           iban.valid_australian_details?
         end
+
         after { Ibandit.modulus_checker = nil }
 
         let(:valid_branch_code) { true }
@@ -2774,6 +2788,7 @@ describe Ibandit::IBAN do
           )
           iban.valid_nz_details?
         end
+
         after { Ibandit.modulus_checker = nil }
 
         let(:valid_branch_code) { true }

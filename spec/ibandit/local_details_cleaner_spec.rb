@@ -526,6 +526,7 @@ describe Ibandit::LocalDetailsCleaner do
             and_return("BARCGB22XXX")
           Ibandit.bic_finder = bic_finder
         end
+
         after { Ibandit.bic_finder = nil }
 
         its([:bank_code]) { is_expected.to eq("BARC") }
@@ -542,6 +543,7 @@ describe Ibandit::LocalDetailsCleaner do
           and_return("BARCGB22XXX")
         Ibandit.bic_finder = bic_finder
       end
+
       after { Ibandit.bic_finder = nil }
 
       its([:bank_code]) { is_expected.to eq("OVERRIDE") }
@@ -716,6 +718,7 @@ describe Ibandit::LocalDetailsCleaner do
             and_return("AIBKIE22XXX")
           Ibandit.bic_finder = bic_finder
         end
+
         after { Ibandit.bic_finder = nil }
 
         its([:bank_code]) { is_expected.to eq("AIBK") }
@@ -731,6 +734,7 @@ describe Ibandit::LocalDetailsCleaner do
           and_return("AIBKIE22XXX")
         Ibandit.bic_finder = bic_finder
       end
+
       after { Ibandit.bic_finder = nil }
 
       its([:bank_code]) { is_expected.to eq("OVERRIDE") }
@@ -795,6 +799,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with an explicit check digit" do
       before { local_details.merge!(check_digit: "Y") }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
@@ -967,6 +972,7 @@ describe Ibandit::LocalDetailsCleaner do
             and_return("MMEBMTMTXXX")
           Ibandit.bic_finder = bic_finder
         end
+
         after { Ibandit.bic_finder = nil }
 
         its([:bank_code]) { is_expected.to eq("MMEB") }
@@ -982,6 +988,7 @@ describe Ibandit::LocalDetailsCleaner do
           and_return("MMEBMTMTXXX")
         Ibandit.bic_finder = bic_finder
       end
+
       after { Ibandit.bic_finder = nil }
 
       its([:bank_code]) { is_expected.to eq("OVERRIDE") }
@@ -1250,6 +1257,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with an explicit check digit" do
       before { local_details.merge!(check_digit: "Y") }
+
       it { is_expected.to eq(local_details_with_swift) }
     end
 
