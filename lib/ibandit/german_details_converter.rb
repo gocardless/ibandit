@@ -7,7 +7,7 @@ module Ibandit
   module GermanDetailsConverter
     def self.rules
       @rules ||= YAML.load_file(
-        File.expand_path("../../../data/german_iban_rules.yml", __FILE__),
+        File.expand_path('../../data/german_iban_rules.yml', __dir__),
       )
     end
 
