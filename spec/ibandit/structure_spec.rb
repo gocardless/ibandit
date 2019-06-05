@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe "structures.yml" do
-  FILE = File.expand_path("../../../data/structures.yml", __FILE__)
+  FILE = File.expand_path("../../data/structures.yml", __dir__)
   STRUCTURES = YAML.load_file(FILE)
 
   STRUCTURES.each do |country, rules|

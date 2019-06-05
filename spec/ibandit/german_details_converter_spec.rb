@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe Ibandit::GermanDetailsConverter do
   shared_examples "json based fixture" do |json_fixture_file|
     json_fixture(json_fixture_file).each do |convertor|
       context "Rule #{convertor['convertor']}" do
+        subject { test_subject }
+
         let(:klass) do
           described_class.const_get("Rule#{convertor['convertor']}")
         end
-
-        subject { test_subject }
 
         before do
           expect_any_instance_of(klass).to receive(:converted_details).
@@ -30,8 +32,9 @@ describe Ibandit::GermanDetailsConverter do
             let(:converted_account_number) do
               tuple["converted_account_number"] || account_number
             end
+
             it do
-              is_expected.to eq(
+              expect(subject).to eq(
                 bank_code: converted_bank_code,
                 account_number: converted_account_number,
               )
@@ -44,6 +47,7 @@ describe Ibandit::GermanDetailsConverter do
             "#{tuple['account_number']}" do
             let(:bank_code) { tuple["bank_code"] || "00000000" }
             let(:account_number) { tuple["account_number"] }
+
             it "raises UnsupportedAccountDetails" do
               expect { subject }.
                 to raise_error(Ibandit::UnsupportedAccountDetails)
@@ -88,6 +92,7 @@ describe Ibandit::GermanDetailsConverter do
     valid_account_numbers.each do |number|
       context number.to_s do
         let(:account_number) { number }
+
         it { is_expected.to be_valid }
       end
     end
@@ -95,6 +100,7 @@ describe Ibandit::GermanDetailsConverter do
     invalid_account_numbers.each do |number|
       context number.to_s do
         let(:account_number) { number }
+
         it { is_expected.to_not be_valid }
       end
     end

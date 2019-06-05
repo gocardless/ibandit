@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # German bank details don't map directly to IBANs in the same way as in other
 # countries - each bank has idiosyncracies for translating its cusomers' bank
 # details. These idiosyncracies are described in a document from the Bundesbank:
@@ -7,7 +9,7 @@ module Ibandit
   module GermanDetailsConverter
     def self.rules
       @rules ||= YAML.load_file(
-        File.expand_path("../../../data/german_iban_rules.yml", __FILE__),
+        File.expand_path("../../data/german_iban_rules.yml", __dir__),
       )
     end
 
@@ -290,6 +292,7 @@ module Ibandit
 
         def valid?
           return false unless valid_length? && valid_account_type?
+
           [master_number[-1].to_i, 10].include?(remainder)
         end
 

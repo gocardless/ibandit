@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "i18n"
 require "ibandit/version"
 require "ibandit/errors"
@@ -14,8 +16,8 @@ require "ibandit/pseudo_iban_splitter"
 require "ibandit/local_details_cleaner"
 require "ibandit/check_digit"
 
-I18n.load_path += Dir[File.expand_path("../../config/locales/*.{rb,yml}",
-                                       __FILE__)]
+I18n.load_path += Dir[File.expand_path("../config/locales/*.{rb,yml}",
+                                       __dir__)]
 
 module Ibandit
   class << self
@@ -23,12 +25,13 @@ module Ibandit
 
     def find_bic(country_code, national_id)
       raise NotImplementedError, "BIC finder is not defined" unless @bic_finder
+
       @bic_finder.call(country_code, national_id)
     end
 
     def structures
       @structures ||= YAML.load_file(
-        File.expand_path("../../data/structures.yml", __FILE__),
+        File.expand_path("../data/structures.yml", __dir__),
       )
     end
 

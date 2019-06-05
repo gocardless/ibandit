@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "yaml"
 
 module Ibandit
@@ -155,7 +157,7 @@ module Ibandit
 
     def valid_bank_code_length?
       return unless valid_country_code?
-      return true if structure[:bank_code_length] == 0
+      return true if structure[:bank_code_length].zero?
 
       if swift_bank_code.nil? || swift_bank_code.empty?
         @errors[:bank_code] = Ibandit.translate(:is_required)
@@ -175,7 +177,7 @@ module Ibandit
         return true
       end
 
-      if structure[:branch_code_length] == 0
+      if structure[:branch_code_length]&.zero?
         @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
                                                   country_code: country_code)
       elsif swift_branch_code.nil? || swift_branch_code.empty?
@@ -208,6 +210,7 @@ module Ibandit
 
     def valid_characters?
       return if iban.nil?
+
       if iban.scan(/[^A-Z0-9]/).any?
         @errors[:characters] =
           Ibandit.translate(:non_alphanumeric_characters,
@@ -233,7 +236,7 @@ module Ibandit
 
     def valid_bank_code_format?
       return unless valid_bank_code_length?
-      return true if structure[:bank_code_length] == 0
+      return true if structure[:bank_code_length]&.zero?
 
       if swift_bank_code =~ Regexp.new(structure[:bank_code_format])
         true
@@ -477,7 +480,7 @@ module Ibandit
       @swift_account_number = swift_details[:account_number]
 
       return if Constants::PSEUDO_IBAN_COUNTRY_CODES.
-          include?(@country_code)
+        include?(@country_code)
 
       @bank_code      = swift_details[:bank_code]
       @branch_code    = swift_details[:branch_code]
@@ -530,6 +533,7 @@ module Ibandit
 
     def pseudo_iban?(input)
       return false if input.nil?
+
       input.slice(2, 2) == Constants::PSEUDO_IBAN_CHECK_DIGITS
     end
 

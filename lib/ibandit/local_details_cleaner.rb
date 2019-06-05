@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ibandit
   module LocalDetailsCleaner
     def self.clean(local_details)
@@ -57,8 +59,9 @@ module Ibandit
       # Account number may be 4-11 digits long.
       # Add leading zeros to account number if < 11 digits.
       return {} unless local_details[:account_number].length >= 4
+
       {
-        bank_code:      local_details[:bank_code],
+        bank_code: local_details[:bank_code],
         account_number: local_details[:account_number].rjust(11, "0"),
       }
     end
@@ -71,7 +74,7 @@ module Ibandit
       return {} unless local_details[:account_number].length >= 5
 
       {
-        branch_code:    local_details[:branch_code].delete("-"),
+        branch_code: local_details[:branch_code].delete("-"),
         account_number: local_details[:account_number].rjust(10, "0"),
       }
     end
@@ -80,7 +83,7 @@ module Ibandit
       account_number = local_details[:account_number].tr("-", "")
 
       {
-        bank_code:      local_details[:bank_code] || account_number.slice(0, 3),
+        bank_code: local_details[:bank_code] || account_number.slice(0, 3),
         account_number: account_number,
       }
     end
@@ -137,8 +140,8 @@ module Ibandit
         end
 
       {
-        bank_code:      bank_code,
-        branch_code:    branch_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
         account_number: account_number,
       }
     end
@@ -158,7 +161,7 @@ module Ibandit
         end
 
       {
-        bank_code:      local_details[:bank_code],
+        bank_code: local_details[:bank_code],
         account_number: account_number,
       }
     end
@@ -180,7 +183,7 @@ module Ibandit
       return {} unless converted_details[:account_number].length >= 4
 
       {
-        bank_code:      converted_details[:bank_code],
+        bank_code: converted_details[:bank_code],
         account_number: converted_details[:account_number].rjust(10, "0"),
       }
     end
@@ -202,7 +205,7 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code.rjust(4, "0"),
+        bank_code: bank_code.rjust(4, "0"),
         account_number: account_number.delete("-").rjust(10, "0"),
       }
     end
@@ -246,8 +249,8 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code,
-        branch_code:    branch_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
         account_number: account_number,
       }
     end
@@ -267,15 +270,15 @@ module Ibandit
         end
 
       {
-        bank_code:      local_details[:bank_code],
+        bank_code: local_details[:bank_code],
         account_number: account_number,
       }
     end
 
     def self.clean_fr_details(local_details)
       {
-        bank_code:      local_details[:bank_code],
-        branch_code:    local_details[:branch_code],
+        bank_code: local_details[:bank_code],
+        branch_code: local_details[:branch_code],
         account_number: local_details[:account_number].gsub(/[-\s]/, ""),
       }
     end
@@ -296,8 +299,8 @@ module Ibandit
       account_number = account_number.rjust(8, "0") if account_number.length > 5
 
       {
-        bank_code:      bank_code,
-        branch_code:    branch_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
         account_number: account_number,
       }
     end
@@ -317,7 +320,7 @@ module Ibandit
       bank_code, account_number = local_details[:account_number].split("-", 2)
 
       {
-        bank_code:      bank_code,
+        bank_code: bank_code,
         account_number: account_number,
       }
     end
@@ -334,14 +337,14 @@ module Ibandit
       case cleaned_acct_number.length
       when 16
         {
-          bank_code:      cleaned_acct_number.slice(0, 3),
-          branch_code:    cleaned_acct_number.slice(3, 4),
+          bank_code: cleaned_acct_number.slice(0, 3),
+          branch_code: cleaned_acct_number.slice(3, 4),
           account_number: cleaned_acct_number.slice(7, 9).ljust(17, "0"),
         }
       when 24
         {
-          bank_code:      cleaned_acct_number.slice(0, 3),
-          branch_code:    cleaned_acct_number.slice(3, 4),
+          bank_code: cleaned_acct_number.slice(0, 3),
+          branch_code: cleaned_acct_number.slice(3, 4),
           account_number: cleaned_acct_number.slice(7, 17),
         }
       else local_details
@@ -363,8 +366,8 @@ module Ibandit
       account_number = account_number.rjust(8, "0") if account_number.length > 5
 
       {
-        bank_code:      bank_code,
-        branch_code:    branch_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
         account_number: account_number,
       }
     end
@@ -381,7 +384,7 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code.rjust(4, "0"),
+        bank_code: bank_code.rjust(4, "0"),
         account_number: pad_is_account_number(parts),
       }
     end
@@ -389,8 +392,8 @@ module Ibandit
     def self.clean_it_details(local_details)
       # Add leading zeros to account number if < 12 digits.
       {
-        bank_code:      local_details[:bank_code],
-        branch_code:    local_details[:branch_code],
+        bank_code: local_details[:bank_code],
+        branch_code: local_details[:branch_code],
         account_number: local_details[:account_number].rjust(12, "0"),
       }
     end
@@ -430,8 +433,8 @@ module Ibandit
       account_number = account_number.rjust(18, "0")
 
       {
-        bank_code:      bank_code,
-        branch_code:    branch_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
         account_number: account_number,
       }
     end
@@ -439,7 +442,7 @@ module Ibandit
     def self.clean_nl_details(local_details)
       # Add leading zeros to account number if < 10 digits.
       {
-        bank_code:      local_details[:bank_code],
+        bank_code: local_details[:bank_code],
         account_number: local_details[:account_number].rjust(10, "0"),
       }
     end
@@ -458,7 +461,7 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code,
+        bank_code: bank_code,
         account_number: account_number,
       }
     end
@@ -496,8 +499,8 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code,
-        branch_code:    branch_code,
+        bank_code: bank_code,
+        branch_code: branch_code,
         account_number: account_number,
       }
     end
@@ -516,7 +519,7 @@ module Ibandit
       end
 
       {
-        bank_code:      bank_code,
+        bank_code: bank_code,
         account_number: account_number,
       }
     end
@@ -549,7 +552,7 @@ module Ibandit
     def self.clean_si_details(local_details)
       # Add leading zeros to account number if < 10 digits.
       {
-        bank_code:      local_details[:bank_code],
+        bank_code: local_details[:bank_code],
         account_number: local_details[:account_number].rjust(10, "0"),
       }
     end
@@ -578,8 +581,8 @@ module Ibandit
 
     def self.swift_details_for(local_details)
       {
-        swift_bank_code:      local_details[:bank_code],
-        swift_branch_code:    local_details[:branch_code],
+        swift_bank_code: local_details[:bank_code],
+        swift_branch_code: local_details[:branch_code],
         swift_account_number: local_details[:account_number],
       }
     end
