@@ -157,7 +157,7 @@ module Ibandit
 
     def valid_bank_code_length?
       return unless valid_country_code?
-      return true if structure[:bank_code_length].zero?
+      return true if structure[:bank_code_length]&.zero?
 
       if swift_bank_code.nil? || swift_bank_code.empty?
         @errors[:bank_code] = Ibandit.translate(:is_required)
