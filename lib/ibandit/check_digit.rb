@@ -23,7 +23,7 @@ module Ibandit
         end
       end
       remainder = digits.join.to_i % 97
-      sprintf("%02d", 98 - remainder)
+      sprintf("%<check_digit>02d", check_digit: 98 - remainder)
     end
 
     def self.italian(string)
