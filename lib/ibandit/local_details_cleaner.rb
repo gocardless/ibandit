@@ -198,7 +198,7 @@ module Ibandit
         bank_code, account_number = local_details[:account_number].split("-", 2)
       elsif local_details[:account_number].gsub(/\s/, "").length == 14
         cleaned_account_number = local_details[:account_number].gsub(/\s/, "")
-        bank_code      = cleaned_account_number.slice(0, 4)
+        bank_code = cleaned_account_number.slice(0, 4)
         account_number = cleaned_account_number.slice(4, 10)
       else
         return {}
@@ -573,7 +573,7 @@ module Ibandit
       ken_1          = parts[2].nil? ? "" : parts[2].rjust(6, "0")
       ken_2          = parts[3].nil? ? "" : parts[3].rjust(4, "0")
 
-      kennitala      = ken_1.empty? ? "" : (ken_1 + ken_2).rjust(10, "0")
+      kennitala = ken_1.empty? ? "" : (ken_1 + ken_2).rjust(10, "0")
 
       hufo + reikningsnumer + kennitala
     end

@@ -460,12 +460,12 @@ module Ibandit
       @swift_branch_code    = try_dup(local_details[:swift_branch_code])
       @swift_bank_code      = try_dup(local_details[:swift_bank_code])
 
-      @iban                 = IBANAssembler.assemble(swift_details)
+      @iban = IBANAssembler.assemble(swift_details)
 
       if source == :pseudo_iban
-        @check_digits       = try_dup(local_details[:check_digits])
+        @check_digits = try_dup(local_details[:check_digits])
       else
-        @check_digits       = @iban.slice(2, 2) unless @iban.nil?
+        @check_digits = @iban.slice(2, 2) unless @iban.nil?
       end
     end
 
