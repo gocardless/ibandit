@@ -5,5 +5,5 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem "gc_ruboconfig"
+  gem 'gc_ruboconfig', "~> 2.5.0"
 end
