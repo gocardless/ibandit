@@ -149,15 +149,15 @@ CH:
   :bank_code_format: "\\d{5}"
   :account_number_format: "[A-Z0-9]{12}"
 CR:
-  :bank_code_position: 5
+  :bank_code_position: 6
   :bank_code_length: 3
   :branch_code_position: 0
   :branch_code_length: 0
-  :account_number_position: 8
+  :account_number_position: 9
   :account_number_length: 14
-  :total_length: 21
+  :total_length: 22
   :national_id_length: 3
-  :bban_format: "\\d{3}\\d{14}"
+  :bban_format: "0\\d{3}\\d{14}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{14}"
 CY:
