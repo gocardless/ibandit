@@ -517,7 +517,7 @@ module Ibandit
         updated_account_number =
           case unpadded_account_number.size
           when 5, 6 then unpadded_account_number + "00"
-          when 7 then
+          when 7
             if Check63.new(unpadded_account_number + "00").valid?
               unpadded_account_number + "00"
             else
