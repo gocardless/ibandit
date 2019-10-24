@@ -82,6 +82,7 @@ describe Ibandit::Sweden::LocalDetailsConverter do
           its([:account_number]) { is_expected.to eq("1024039") }
           its([:branch_code]) { is_expected.to eq("5439") }
           its([:swift_bank_code]) { is_expected.to eq("500") }
+
           its([:swift_account_number]) do
             is_expected.to eq("00000054391024039")
           end
