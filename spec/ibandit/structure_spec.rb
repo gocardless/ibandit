@@ -3,10 +3,10 @@
 require "spec_helper"
 
 describe "structures.yml" do
-  FILE = File.expand_path("../../data/structures.yml", __dir__)
-  STRUCTURES = YAML.load_file(FILE)
+  structure_file = File.expand_path("../../data/structures.yml", __dir__)
+  structures = YAML.load_file(structure_file)
 
-  STRUCTURES.each do |country, rules|
+  structures.each do |country, rules|
     context country do
       rules.each do |rule, value|
         next unless rule =~ /_format$/

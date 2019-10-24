@@ -338,6 +338,7 @@ describe Ibandit::IBAN do
 
       its(:iban) { is_expected.to be_nil }
       its(:pseudo_iban) { is_expected.to eq(arg) }
+
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).
@@ -356,6 +357,7 @@ describe Ibandit::IBAN do
 
       its(:iban) { is_expected.to be_nil }
       its(:pseudo_iban) { is_expected.to eq("AUZZ123456______1234") }
+
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).to eq(
@@ -375,6 +377,7 @@ describe Ibandit::IBAN do
 
       its(:iban) { is_expected.to be_nil }
       its(:pseudo_iban) { is_expected.to eq("AUZZ1234XX123456789:") }
+
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).to eq(account_number: "is invalid",
@@ -606,6 +609,7 @@ describe Ibandit::IBAN do
 
       its(:iban) { is_expected.to be_nil }
       its(:pseudo_iban) { is_expected.to eq(arg) }
+
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).
@@ -633,6 +637,7 @@ describe Ibandit::IBAN do
         its(:swift_branch_code) { is_expected.to eq(nil) }
         its(:swift_account_number) { is_expected.to eq(account_number) }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
+
         its(:pseudo_iban) do
           is_expected.to eq("USZZ02607315001234567890123456")
         end
@@ -653,6 +658,7 @@ describe Ibandit::IBAN do
         its(:swift_branch_code) { is_expected.to eq(nil) }
         its(:swift_account_number) { is_expected.to eq(account_number) }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
+
         its(:pseudo_iban) do
           is_expected.to eq("USZZ__012345601234567890123456")
         end
@@ -685,6 +691,7 @@ describe Ibandit::IBAN do
         its(:swift_branch_code) { is_expected.to eq(nil) }
         its(:swift_account_number) { is_expected.to eq("__________0123456") }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
+
         its(:pseudo_iban) do
           is_expected.to eq("USZZ026073150__________0123456")
         end
@@ -717,6 +724,7 @@ describe Ibandit::IBAN do
         its(:swift_branch_code) { is_expected.to eq(nil) }
         its(:swift_account_number) { is_expected.to eq(account_number) }
         its(:swift_national_id) { is_expected.to eq(bank_code) }
+
         its(:pseudo_iban) do
           is_expected.to eq("USZZ02607315001234567890123456")
         end
@@ -738,6 +746,7 @@ describe Ibandit::IBAN do
       its(:swift_branch_code) { is_expected.to eq(nil) }
       its(:swift_account_number) { is_expected.to eq("01234567890123456") }
       its(:swift_national_id) { is_expected.to eq("026073150") }
+
       its(:pseudo_iban) do
         is_expected.to eq("USZZ02607315001234567890123456")
       end
