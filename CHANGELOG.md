@@ -1,3 +1,10 @@
+## 1.0.0 - October 24, 2019
+
+- Discontinued support for older Ruby versions (2.1.10, 2.2.7, 2.3.4 and 2.4.1)
+- Update rubocop and ruboconfig
+- Updates the example bank details for the United States
+- Updates the definition of the structure for IBANs in Costa Rica (courtesy @sprileyMSTS)
+
 ## 0.11.28 - March 21, 2019
 
 - Handle bad input more gracefully (`bank_code` being nil)
