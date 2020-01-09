@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Ibandit::PseudoIBANAssembler do
-  subject(:pseudo_iban) { described_class.new(local_details).assemble }
+  subject(:pseudo_iban) { described_class.new(**local_details).assemble }
 
   context "for Sweden" do
     context "with valid parameters" do
