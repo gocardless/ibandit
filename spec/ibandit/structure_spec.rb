@@ -9,7 +9,7 @@ describe "structures.yml" do
   structures.each do |country, rules|
     context country do
       rules.each do |rule, value|
-        next unless rule =~ /_format$/
+        next unless rule.to_s.end_with?("_format")
 
         it "builds #{rule} rule" do
           expect { Regexp.new(value) }.to_not raise_exception
