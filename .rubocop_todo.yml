@@ -24,7 +24,7 @@ Naming/MemoizedInstanceVariableName:
 # Offense count: 1
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'lib/ibandit/german_details_converter.rb'
 
