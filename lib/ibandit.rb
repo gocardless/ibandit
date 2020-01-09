@@ -36,7 +36,7 @@ module Ibandit
     end
 
     def translate(key, options = {})
-      I18n.translate(key, { scope: [:ibandit] }.merge(options))
+      I18n.translate(key, scope: [:ibandit], **options)
     end
   end
 end
