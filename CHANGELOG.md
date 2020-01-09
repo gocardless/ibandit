@@ -1,3 +1,7 @@
+## 1.0.1 - January 9, 2019
+
+- Add Ruby 2.7 support and fix deprecation warnings
+
 ## 1.0.0 - October 24, 2019
 
 - Discontinued support for older Ruby versions (2.1.10, 2.2.7, 2.3.4 and 2.4.1)
