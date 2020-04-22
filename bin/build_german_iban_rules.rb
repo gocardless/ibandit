@@ -1,37 +1,96 @@
 #!/usr/bin/env ruby
 
-# Script for parsing the Bankleitzahl file (BLZ2.txt) from the Deutsche
+# Script for parsing the Bankleitzahl file (BLZ2.xlsx) from the Deutsche
 # Bundesbank.
+# Directions:
+# Locate the BLZ2.xlsx and place in data/raw/BLZ2.xlsx
+
 require 'yaml'
+require 'roo'
+require_relative '../lib/ibandit/german_details_converter'
 
-BLZ_FIELDS = {
-  bank_code:           { position: 0, length: 8 },
-  primary_record:      { position: 8, length: 1 },
-  check_digit_rule:    { position: 150, length: 2 },
-  iban_rule:           { position: 168, length: 6 }
-}.freeze
+class Parser
+  BLZ_FIELDS = {
+    bank_code: "BLZ",
+    primary_record: "eigene BLZ",
+    check_digit_rule: "Prüfziffer",
+    iban_rule: "IBAN",
+  }
 
-def parse_line(line)
-  BLZ_FIELDS.each_with_object({}) do |(field, details), hash|
-    hash[field] = line.slice(details[:position], details[:length])
+  attr_reader :rules
+
+  def initialize(file_path:)
+    @xlsx_file = Roo::Excelx.new(file_path)
+    @data_positions = {}
+    @rules = {}
   end
-end
 
-def get_iban_rules(blz2_file)
-  blz2_file.each_with_object({}) do |line, hash|
-    bank_details = parse_line(line)
+  def run!
+    generate_rules!
+    validate_rules_exist!
+    true
+  end
 
-    next if bank_details.delete(:primary_record) == '2'
+  private
 
-    hash[bank_details.delete(:bank_code)] = bank_details
+  attr_reader :xlsx_file, :data_positions
+
+  def parse_line(line)
+    data_positions.each_with_object({}) do |(field, position), hash|
+      hash[field] = line[position].value.to_s
+    end
+  end
+
+  def determine_data_locations(line)
+    BLZ_FIELDS.each_with_object({}) do |(field, header_name), hash|
+      cell = line.find { |cell| cell.value == header_name }
+
+      raise "Can't find '#{header_name}', file format may have changed!" unless cell
+
+      # eg cell.coordinate = [1, 2], row 1 column 2, minus 1 for the array access
+      hash[field] = cell.coordinate[1] - 1
+    end
+  end
+
+  def generate_rules!
+    @rules = xlsx_file.each_row_streaming.with_object({}) do |line, hash|
+      # Are we on the header line?
+      if line.first.coordinate[0] == 1
+        data_positions.merge!(determine_data_locations(line))
+      else
+        bank_details = parse_line(line)
+
+        next if bank_details.delete(:primary_record) == '2'
+
+        hash[bank_details.delete(:bank_code)] = bank_details
+      end
+    end
+  end
+
+  def validate_rules_exist!
+    iban_rules = rules.values.map { |r| r.fetch(:iban_rule) }.uniq
+    iban_rule_classes = Ibandit::GermanDetailsConverter::BaseRule.all_iban_rules
+
+    iban_rules.each do |iban_rule|
+      if Ibandit::GermanDetailsConverter.const_defined?("Rule#{iban_rule}")
+        iban_rule_classes.delete(Ibandit::GermanDetailsConverter.const_get("Rule#{iban_rule}"))
+      else
+        puts "Warning: Rule#{iban_rule} doesn't exist in german_details_converter"
+      end
+    end
+
+    iban_rule_classes.each do |rule|
+      puts "Note: No bank codes using Rule#{rule}"
+    end
   end
 end
 
 # Only parse the files if this file is run as an executable (not required in,
 # as it is in the specs)
 if __FILE__ == $PROGRAM_NAME
-  blz2_file = File.open(File.expand_path('../../data/raw/BLZ2.txt', __FILE__))
-  iban_rules = get_iban_rules(blz2_file)
+  parser = Parser.new(file_path: File.expand_path('../../data/raw/BLZ2.xlsx', __FILE__))
+  parser.run!
+  iban_rules = parser.rules
 
   output_file_path = File.expand_path(
     '../../data/german_iban_rules.yml',

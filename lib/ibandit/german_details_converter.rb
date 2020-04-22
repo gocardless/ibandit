@@ -3,7 +3,8 @@
 # German bank details don't map directly to IBANs in the same way as in other
 # countries - each bank has idiosyncracies for translating its cusomers' bank
 # details. These idiosyncracies are described in a document from the Bundesbank:
-# https://www.bundesbank.de/Redaktion/EN/Standardartikel/Tasks/Payment_systems/iban_rules.html?nn=26102
+# Locate the BLZ2.xlsx from Bundesbank
+# Rules defined based on Uebersicht_der_IBAN_Regeln_06_2019.pdf
 
 module Ibandit
   module GermanDetailsConverter
@@ -31,6 +32,12 @@ module Ibandit
     ##############
 
     class BaseRule
+      def self.all_iban_rules
+        ObjectSpace.each_object(singleton_class).reject do |klass|
+          klass == self
+        end
+      end
+
       def initialize(bank_code, account_number)
         @bank_code = bank_code
         @account_number = account_number
