@@ -1,4 +1,4 @@
-Ibandit [![Build Status](https://travis-ci.org/gocardless/ibandit.svg?branch=master)](https://travis-ci.org/gocardless/ibandit)
+Ibandit [![CircleCI](https://circleci.com/gh/gocardless/business.svg?style=svg)](https://circleci.com/gh/gocardless/business)
 =======
 
 Ibandit is a Ruby library for manipulating and validating
