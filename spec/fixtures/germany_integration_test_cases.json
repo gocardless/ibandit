@@ -22,15 +22,15 @@
       { "bank_code": "72020700", "account_number" : "1111111611" }
     ]
   },
-  {
-    "convertor": "000300",
-    "valid": [
-      { "bank_code": "51010800", "account_number" : "1" }
-    ],
-    "invalid": [
-      { "bank_code": "51010800", "account_number" : "6161604670" }
-    ]
-  },
+  // {
+  //   "convertor": "000300",
+  //   "valid": [
+  //     { "bank_code": "51010800", "account_number" : "1" }
+  //   ],
+  //   "invalid": [
+  //     { "bank_code": "51010800", "account_number" : "6161604670" }
+  //   ]
+  // },
   {
     "convertor": "000400",
     "valid": [
@@ -101,12 +101,12 @@
       {"bank_code":"51020000","account_number":"30009963","converted_bank_code":"50020200","converted_account_number":"30009963"}
     ]
   },
-  {
-    "convertor": "000900",
-    "valid": [
-      {"bank_code":"68351976","account_number":"1116232594","converted_bank_code":"68351557","converted_account_number":"3047232594"}
-    ]
-  },
+  // {
+  //   "convertor": "000900",
+  //   "valid": [
+  //     {"bank_code":"68351976","account_number":"1116232594","converted_bank_code":"68351557","converted_account_number":"3047232594"}
+  //   ]
+  // },
   {
     "convertor": "001001",
     "valid": [
@@ -160,11 +160,11 @@
     "valid": [
       { "bank_code": "39060180", "account_number": "556", "converted_account_number": "0120440110" }
     ]
-  },
-  {
-    "convertor": "001900",
-    "valid": [
-      { "bank_code": "50130100", "account_number": "556", "converted_bank_code": "50120383" }
-    ]
   }
+  // {
+  //   "convertor": "001900",
+  //   "valid": [
+  //     { "bank_code": "50130100", "account_number": "556", "converted_bank_code": "50120383" }
+  //   ]
+  // }
 ]
