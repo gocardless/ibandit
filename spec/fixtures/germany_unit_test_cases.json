@@ -319,6 +319,20 @@
       { "bank_code": "10010010", "account_number" : "0040412000" }
     ]
   },
+    {
+    "convertor": "004201",
+    "valid": [
+      { "bank_code": "10010010", "account_number" : "0050462000" },
+      { "bank_code": "70020001", "account_number" : "0040402000" },
+      { "bank_code": "70020001", "account_number" : "1004400001" }
+    ],
+    "invalid": [
+      { "bank_code": "10010010", "account_number" : "504620001" },
+      { "bank_code": "10010010", "account_number" : "0040400000" },
+      { "bank_code": "10010010", "account_number" : "0040412000" },
+      { "bank_code": "70020001", "account_number" : "1035400001" }
+    ]
+  },
   {
     "convertor": "004301",
     "valid": [

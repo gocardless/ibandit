@@ -957,6 +957,23 @@ module Ibandit
       end
     end
 
+    # New version of Rule004200 but with another range:
+    # For 10-digit Account Numbers, only the following Account Numbers are
+    # applicable to be issued / created into an IBAN with the
+    # standard-IBAN rule: nnn4400001 to nnn4499999
+    class Rule004201 < Rule004200
+      def converted_details
+        unpadded_account_number = @account_number.gsub(/\A0+/, "")
+
+        if unpadded_account_number.size == 10 &&
+            %w[4400001 4499999].include?(unpadded_account_number.slice(3, 10))
+          { bank_code: @bank_code, account_number: @account_number }
+        else
+          super
+        end
+      end
+    end
+
     class Rule004301 < BaseRule
       def converted_details
         { bank_code: "66650085", account_number: @account_number }
@@ -1026,6 +1043,10 @@ module Ibandit
 
         { bank_code: @bank_code, account_number: updated_account_number }
       end
+    end
+
+    class Rule004910 < BaseRule
+      # Rule 0049 10 is actually about modulus checking, not IBAN construction
     end
 
     class Rule005000 < BaseRule
