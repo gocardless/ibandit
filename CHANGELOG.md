@@ -1,3 +1,7 @@
+## 1.0.2 - May 12, 2020
+
+- Update BLZ data
+
 ## 1.0.1 - January 9, 2019
 
 - Add Ruby 2.7 support and fix deprecation warnings

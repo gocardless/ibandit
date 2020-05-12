@@ -286,7 +286,7 @@ describe Ibandit::LocalDetailsCleaner do
 
     context "with unsupported account details" do
       let(:account_number) { "7955791111" }
-      let(:bank_code) { "20000000" }
+      let(:bank_code) { "99999999" }
 
       it { is_expected.to eq(local_details_with_swift) }
     end
