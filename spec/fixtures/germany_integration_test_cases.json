@@ -160,6 +160,12 @@
     "valid": [
       { "bank_code": "39060180", "account_number": "556", "converted_account_number": "0120440110" }
     ]
+  },
+  {
+    "convertor": "004901",
+    "valid": [
+      { "bank_code": "30060010", "account_number": "12345678", "converted_account_number": "12345678" }
+    ]
   }
   // {
   //   "convertor": "001900",

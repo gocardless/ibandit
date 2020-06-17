@@ -1,3 +1,7 @@
+## 1.1.0.1 - June 17, 2020
+
+- Fix Rule4901
+
 ## 1.1.0 - June 15, 2020
 
 - Update BLZ data
