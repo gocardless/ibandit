@@ -1045,7 +1045,7 @@ module Ibandit
       end
     end
 
-    class Rule004901 < BaseRule
+    class Rule004901 < Rule000000
       # Rule 0049 01 is actually about modulus checking, not IBAN construction
     end
 
