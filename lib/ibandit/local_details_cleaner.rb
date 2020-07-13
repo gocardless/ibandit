@@ -512,7 +512,7 @@ module Ibandit
         bank_code      = local_details[:bank_code]
         account_number = local_details[:account_number]
       else
-        cleaned_acct_number = local_details[:account_number].gsub(/[\s]/, "")
+        cleaned_acct_number = local_details[:account_number].gsub(/\s/, "")
 
         bank_code      = cleaned_acct_number.slice(2, 8)
         account_number = cleaned_acct_number[10..-1]
