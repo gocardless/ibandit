@@ -89,7 +89,9 @@ module Ibandit
     end
 
     def self.clean_ca_details(local_details)
-      return {} if local_details[:account_number].length < 7 # minimum length
+      account_number = local_details[:account_number].tr("-", "")
+
+      return {} if account_number.length < 7 # minimum length
 
       bank_code = if local_details[:bank_code].length == 3
                     local_details[:bank_code].rjust(4, "0")
@@ -98,7 +100,7 @@ module Ibandit
                   end
 
       {
-        account_number: local_details[:account_number].rjust(12, "0"),
+        account_number: account_number.rjust(12, "0"),
         bank_code: bank_code,
       }
     end

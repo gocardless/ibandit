@@ -167,6 +167,12 @@ describe Ibandit::LocalDetailsCleaner do
     its([:country_code]) { is_expected.to eq(country_code) }
     its([:bank_code]) { is_expected.to eq("0036") }
     its([:branch_code]) { is_expected.to eq("00063") }
+
+    context "with a hyphen" do
+      let(:account_number) { "0123456-789" }
+
+      its([:account_number]) { is_expected.to eq("000123456789") }
+    end
   end
 
   context "Cyprus" do
