@@ -452,6 +452,13 @@ describe Ibandit::IBAN do
         its(:to_s) { is_expected.to eq("") }
       end
 
+      context "and account number has invalid characters in" do
+        let(:account_number) { "123456XX789" }
+        let(:bank_code) { "0036" }
+
+        its(:valid?) { is_expected.to be false }
+      end
+
       context "and a 12 digit account number" do
         let(:account_number) { "012345678900" }
         let(:bank_code) { "0036" }

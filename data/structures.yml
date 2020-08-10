@@ -892,7 +892,7 @@ CA:
   :account_number_length: 12
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{5}"
-  :account_number_format: "\\d{7,12}"
+  :account_number_format: "\\A\\d{7,12}\\z"
   :national_id_length: 4
   :pseudo_iban_bank_code_length: 4
   :pseudo_iban_branch_code_length: 5
