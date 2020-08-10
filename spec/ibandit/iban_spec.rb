@@ -112,6 +112,22 @@ describe Ibandit::IBAN do
       its(:local_check_digits) { is_expected.to be_nil }
     end
 
+    context "when the IBAN was created from a Belgian IBAN" do
+      let(:iban_code) { "BE62510007547061" }
+
+      its(:country_code) { is_expected.to eq("BE") }
+      its(:bank_code) { is_expected.to eq("510") }
+      its(:branch_code) { is_expected.to be_nil }
+      its(:account_number) { is_expected.to eq("510007547061") }
+      its(:account_number_suffix) { is_expected.to be_nil }
+      its(:swift_bank_code) { is_expected.to eq("510") }
+      its(:swift_branch_code) { is_expected.to be_nil }
+      its(:swift_account_number) { is_expected.to eq("510007547061") }
+      its(:swift_national_id) { is_expected.to eq("510") }
+      its(:local_check_digits) { is_expected.to eq("61") }
+      its(:bban) { is_expected.to eq("510007547061") }
+    end
+
     context "when the IBAN was created with local details" do
       let(:arg) do
         {
