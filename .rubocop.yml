@@ -43,3 +43,8 @@ Metrics/ModuleLength:
 
 Layout/DotPosition:
   EnforcedStyle: 'trailing'
+
+# Wants to to lock to Ruby 2.4 as specified here but as this is a public gem
+# this is quite aggressive.
+Gemspec/RequiredRubyVersion:
+  Enabled: false
