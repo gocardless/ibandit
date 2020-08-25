@@ -9,7 +9,8 @@ module Ibandit
                 :swift_account_number, :source
 
     def initialize(argument)
-      if argument.is_a?(String)
+      case argument
+      when String
         input = argument.to_s.gsub(/\s+/, "").upcase
 
         pseudo_iban_splitter = PseudoIBANSplitter.new(input)
@@ -24,7 +25,7 @@ module Ibandit
           @iban = input
           extract_swift_details_from_iban!
         end
-      elsif argument.is_a?(Hash)
+      when Hash
         @source = :local_details
         build_iban_from_local_details(argument)
       else
