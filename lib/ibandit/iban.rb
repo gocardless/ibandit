@@ -225,7 +225,7 @@ module Ibandit
       return unless valid_country_code?
       return unless structure[:bban_format]
 
-      if bban&.match?(Regexp.new(structure[:bban_format]))
+      if bban&.match?(entire_string_regex(structure[:bban_format]))
         true
       else
         @errors[:format] = Ibandit.translate(:invalid_format,
@@ -238,7 +238,9 @@ module Ibandit
       return unless valid_bank_code_length?
       return true if structure[:bank_code_length]&.zero?
 
-      if swift_bank_code&.match?(Regexp.new(structure[:bank_code_format]))
+      if swift_bank_code&.match?(
+        entire_string_regex(structure[:bank_code_format]),
+      )
         true
       else
         @errors[:bank_code] = Ibandit.translate(:is_invalid)
@@ -250,7 +252,9 @@ module Ibandit
       return unless valid_branch_code_length?
       return true unless structure[:branch_code_format]
 
-      if swift_branch_code&.match?(Regexp.new(structure[:branch_code_format]))
+      if swift_branch_code&.match?(
+        entire_string_regex(structure[:branch_code_format]),
+      )
         true
       else
         @errors[:branch_code] = Ibandit.translate(:is_invalid)
@@ -262,7 +266,7 @@ module Ibandit
       return unless valid_account_number_length?
 
       if swift_account_number&.match?(
-        Regexp.new(structure[:account_number_format]),
+        entire_string_regex(structure[:account_number_format]),
       )
         true
       else
@@ -497,6 +501,10 @@ module Ibandit
 
     def structure
       Ibandit.structures[country_code]
+    end
+
+    def entire_string_regex(pattern)
+      Regexp.new("\\A#{pattern}\\z")
     end
 
     def formatted

@@ -95,7 +95,7 @@ BE:
   :national_id_length: 3
   :bban_format: "\\d{3}\\d{7}\\d{2}"
   :bank_code_format: "\\d{3}"
-  :account_number_format: "\\d{7}\\d{2}"
+  :account_number_format: "\\d{7}\\d{2}\\d{3}"
   :local_check_digit_position: 15
   :local_check_digit_length: 2
 BG:
@@ -902,7 +902,7 @@ US:
   :branch_code_length: 0
   :account_number_length: 17
   :bank_code_format: "\\d{9}"
-  :account_number_format: "\\A_*\\d{1,17}\\z"
+  :account_number_format: "_*\\d{1,17}"
   :national_id_length: 9
   :pseudo_iban_bank_code_length: 9
   :pseudo_iban_branch_code_length: 0
