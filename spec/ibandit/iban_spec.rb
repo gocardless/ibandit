@@ -2270,15 +2270,15 @@ describe Ibandit::IBAN do
 
       context "with an invalid branch code" do
         let(:iban_code) { "GB60BARC20000055779911" }
+        let(:valid_bank_code) { true }
+        let(:valid_branch_code) { false }
+        let(:valid_account_number) { true }
+
         before { Ibandit.bic_finder = double(call: "BARCGB22XXX") }
 
         after { Ibandit.bic_finder = nil }
 
         before { iban.valid_local_modulus_check? }
-
-        let(:valid_bank_code) { true }
-        let(:valid_branch_code) { false }
-        let(:valid_account_number) { true }
 
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).
