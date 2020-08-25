@@ -1,3 +1,9 @@
+## 1.2.0 - August 25, 2020
+
+- Improve validation for iban lengths
+- Strip unwanted hyphen chars for Canadian IBANs
+- Update rubocop and related gems
+
 ## 1.1.0.1 - June 17, 2020
 
 - Fix Rule4901
