@@ -1,3 +1,7 @@
+## 1.2.1 - September 1, 2020
+
+- Update BLZ data - BLZ_20200907
+
 ## 1.2.0 - August 25, 2020
 
 - Improve validation for iban lengths
