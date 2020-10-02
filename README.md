@@ -589,4 +589,4 @@ details.
 
 ---
 
-GoCardless ♥ open source. If you do too, come [join us](https://gocardless.com/about/jobs/software-engineer).
+GoCardless ♥ open source. If you do too, come [join us](https://gocardless.com/about/careers/).
