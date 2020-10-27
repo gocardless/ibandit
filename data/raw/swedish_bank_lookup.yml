@@ -1,8 +1,10 @@
 ---
 # Sources:
 # - https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_clearingnummer_till_svenska_banker
-# - http://www.bgc.se/globalassets/dokument/tekniska-manualer/bankernaskontonummeruppbyggnad_tekniskmanual_sv.pdf
-# - SWIFT IBAN data
+# - Source before October 2020 (link now broken): http://www.bgc.se/globalassets/dokument/tekniska-manualer/bankernaskontonummeruppbyggnad_tekniskmanual_sv.pdf
+# - As of 30/10/2020: https://www.bankgirot.se/globalassets/dokument/anvandarmanualer/bankernaskontonummeruppbyggnad_anvandarmanual_sv.pdf
+# - Swedish Bankers' Association clearing numbers: https://www.swedishbankers.se/media/4245/1906_clearingnummer-institut.pdf
+# - https://transferwise.com/gb/iban/sweden
 #
 # Fields:
 # - Range:                  The range of clearing codes for this bank. Used to
@@ -400,6 +402,14 @@
   :zerofill_serial_number: false
   :include_clearing_code: true
   :validation_scheme: '1.2'
+- :range: [9770, 9779]
+  :bank: INTERGIRO INTL AB (PUBL)
+  :bank_code: 977
+  :clearing_code_length: 4
+  :serial_number_length: 17
+  :zerofill_serial_number: true
+  :include_clearing_code: false
+  :validation_scheme: '1.1'
 - :range: [9880, 9889]
   :bank: Riksgälden
   :bank_code: 988
