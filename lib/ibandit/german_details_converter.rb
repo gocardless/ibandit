@@ -307,7 +307,7 @@ module Ibandit
         end
 
         def sum_of_weighted_values
-          weighted_values.reduce(0, &:+)
+          weighted_values.sum
         end
 
         def weighted_values
@@ -550,7 +550,7 @@ module Ibandit
         end
 
         def sum_of_weighted_digits
-          weighted_digits.reduce(0, &:+)
+          weighted_digits.sum
         end
 
         def weighted_digits
