@@ -1,3 +1,7 @@
+## 1.2.2 - October 30, 2020
+
+- Update Swedish Bank data
+
 ## 1.2.1 - September 1, 2020
 
 - Update BLZ data - BLZ_20200907
