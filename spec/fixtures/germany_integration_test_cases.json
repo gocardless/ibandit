@@ -134,7 +134,7 @@
   {
     "convertor": "001400",
     "valid": [
-      { "bank_code": "10090603", "account_number": "60624", "converted_bank_code": "30060601" }
+      { "bank_code": "30060601", "account_number": "60624", "converted_bank_code": "30060601" }
     ]
   },
   {
