@@ -11,7 +11,7 @@ describe Ibandit::IBANAssembler do
         account_number: iban.swift_account_number,
         branch_code: iban.swift_branch_code,
         bank_code: iban.swift_bank_code,
-      }.reject { |_key, value| value.nil? }
+      }.compact
     end
 
     it "successfully reconstructs the IBAN" do
