@@ -95,3 +95,6 @@ SM:
   :local_check_digit_length: 1
 TL:
   :bban_format: \d{3}\d{14}\d{2}
+XR:
+  :local_check_digit_position: 18
+  :local_check_digit_length: 2
