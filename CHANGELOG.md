@@ -1,4 +1,8 @@
-## 1.2.1 - December 11, 2020
+## 1.3.0 - February 18, 2021
+
+- Add support for BY, EG, FO, IQ, LC, SC, UA and VA
+
+## 1.2.3 - December 11, 2020
 
 - Update BLZ data - BLZ_20201207
 
