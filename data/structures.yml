@@ -49,16 +49,6 @@ AT:
   :bban_format: "\\d{5}\\d{11}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{11}"
-AU:
-  :bank_code_length: 0
-  :branch_code_length: 6
-  :account_number_length: 10
-  :branch_code_format: "\\d{6}"
-  :account_number_format: "[A-Z0-9]{10}"
-  :pseudo_iban_bank_code_length: 0
-  :pseudo_iban_branch_code_length: 6
-  :pseudo_iban_account_number_length: 10
-  :national_id_length: 6
 AZ:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -149,16 +139,16 @@ CH:
   :bank_code_format: "\\d{5}"
   :account_number_format: "[A-Z0-9]{12}"
 CR:
-  :bank_code_position: 6
-  :bank_code_length: 3
+  :bank_code_position: 5
+  :bank_code_length: 4
   :branch_code_position: 0
   :branch_code_length: 0
   :account_number_position: 9
   :account_number_length: 14
   :total_length: 22
-  :national_id_length: 3
-  :bban_format: "0\\d{3}\\d{14}"
-  :bank_code_format: "\\d{3}"
+  :national_id_length: 4
+  :bban_format: "\\d{4}\\d{14}"
+  :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{14}"
 CY:
   :bank_code_position: 5
@@ -219,7 +209,7 @@ DO:
   :total_length: 28
   :national_id_length: 4
   :bban_format: "[A-Z0-9]{4}\\d{20}"
-  :bank_code_format: "[A-Z]{4}"
+  :bank_code_format: "[A-Z0-9]{4}"
   :account_number_format: "\\d{20}"
 EE:
   :bank_code_position: 5
@@ -302,8 +292,8 @@ GB:
   :national_id_length: 10
   :bban_format: "[A-Z]{4}\\d{6}\\d{8}"
   :bank_code_format: "[A-Z]{4}"
-  :account_number_format: "\\d{8}"
   :branch_code_format: "\\d{6}"
+  :account_number_format: "\\d{8}"
 GE:
   :bank_code_position: 5
   :bank_code_length: 2
@@ -647,17 +637,6 @@ NL:
   :account_number_format: "\\d{6}\\d{1}"
   :local_check_digit_position: 15
   :local_check_digit_length: 1
-NZ:
-  :bank_code_length: 2
-  :branch_code_length: 4
-  :account_number_length: 10
-  :bank_code_format: "\\d{2}"
-  :branch_code_format: "\\d{4}"
-  :account_number_format: "\\d{7}\\d{3}"
-  :pseudo_iban_bank_code_length: 2
-  :pseudo_iban_branch_code_length: 4
-  :pseudo_iban_account_number_length: 10
-  :national_id_length: 6
 PK:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -692,8 +671,8 @@ PS:
   :total_length: 29
   :national_id_length: 4
   :bban_format: "[A-Z]{4}[A-Z0-9]{21}"
-  :bank_code_format: '4'
-  :account_number_format: "}[A-Z0-9]{21}"
+  :bank_code_format: "[A-Z]{4}"
+  :account_number_format: "[A-Z0-9]{21}"
 PT:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -823,9 +802,9 @@ TR:
   :account_number_length: 17
   :total_length: 26
   :national_id_length: 5
-  :bban_format: "\\d{5}[A-Z0-9]{1}[A-Z0-9]{16}"
+  :bban_format: "\\d{5}\\d{1}[A-Z0-9]{16}"
   :bank_code_format: "\\d{5}"
-  :account_number_format: "[A-Z0-9]{1}[A-Z0-9]{16}"
+  :account_number_format: "\\d{1}[A-Z0-9]{16}"
 VG:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -864,16 +843,17 @@ QA:
   :account_number_format: "[A-Z0-9]{21}"
 XK:
   :bank_code_position: 5
-  :bank_code_length: 4
-  :branch_code_position: 0
-  :branch_code_length: 0
-  :account_number_position: 5
-  :account_number_length: 16
+  :bank_code_length: 2
+  :branch_code_position: 7
+  :branch_code_length: 2
+  :account_number_position: 9
+  :account_number_length: 10
   :total_length: 20
-  :national_id_length: 4
+  :national_id_length: 2
   :bban_format: "\\d{4}\\d{10}\\d{2}"
-  :bank_code_format: "\\d{4}"
-  :account_number_format: "\\d{10}\\d{2}"
+  :bank_code_format: "\\d{2}"
+  :branch_code_format: "\\d{2}"
+  :account_number_format: "\\d{10}"
 TL:
   :bank_code_position: 5
   :bank_code_length: 3
@@ -885,7 +865,131 @@ TL:
   :national_id_length: 3
   :bban_format: "\\d{3}\\d{14}\\d{2}"
   :bank_code_format: "\\d{3}"
-  :account_number_format: " \\d{14} \\d{2}"
+  :account_number_format: "\\d{14}\\d{2}"
+LC:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 9
+  :account_number_length: 24
+  :total_length: 32
+  :national_id_length: 4
+  :bban_format: "[A-Z]{4}[A-Z0-9]{24}"
+  :bank_code_format: "[A-Z]{4}"
+  :account_number_format: "[A-Z0-9]{24}"
+UA:
+  :bank_code_position: 5
+  :bank_code_length: 6
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 11
+  :account_number_length: 19
+  :total_length: 29
+  :national_id_length: 6
+  :bban_format: "\\d{6}[A-Z0-9]{19}"
+  :bank_code_format: "\\d{6}"
+  :account_number_format: "[A-Z0-9]{19}"
+ST:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 13
+  :account_number_length: 13
+  :total_length: 25
+  :national_id_length: 8
+  :bban_format: "\\d{4}\\d{4}\\d{11}\\d{2}"
+  :bank_code_format: "\\d{4}"
+  :branch_code_format: "\\d{4}"
+  :account_number_format: "\\d{11}\\d{2}"
+SC:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 13
+  :account_number_length: 16
+  :total_length: 31
+  :national_id_length: 8
+  :bban_format: "[A-Z]{4}\\d{2}\\d{2}\\d{16}[A-Z]{3}"
+  :bank_code_format: "[A-Z]{4}"
+  :branch_code_format: "\\d{4}"
+  :account_number_format: "\\d{16}"
+IQ:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 3
+  :account_number_position: 12
+  :account_number_length: 12
+  :total_length: 23
+  :national_id_length: 4
+  :bban_format: "[A-Z]{4}\\d{3}\\d{12}"
+  :bank_code_format: "[A-Z]{4}"
+  :branch_code_format: "\\d{3}"
+  :account_number_format: "\\d{12}"
+SV:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 9
+  :account_number_length: 20
+  :total_length: 28
+  :national_id_length: 4
+  :bban_format: "[A-Z]{4}\\d{20}"
+  :bank_code_format: "[A-Z]{4}"
+  :account_number_format: "\\d{20}"
+BY:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 9
+  :account_number_length: 20
+  :total_length: 28
+  :national_id_length: 4
+  :bban_format: "[A-Z0-9]{4}\\d{4}[A-Z0-9]{16}"
+  :bank_code_format: "[A-Z0-9]{4}"
+  :account_number_format: "\\d{4}[A-Z0-9]{16}"
+VA:
+  :bank_code_position: 5
+  :bank_code_length: 3
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 8
+  :account_number_length: 15
+  :total_length: 22
+  :national_id_length: 3
+  :bban_format: "\\d{3}\\d{15}"
+  :bank_code_format: "\\d{3}"
+  :account_number_format: "\\d{15}"
+EG:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 13
+  :account_number_length: 17
+  :total_length: 29
+  :national_id_length: 0
+  :bban_format: "\\d{4}\\d{4}\\d{17}"
+  :bank_code_format: "\\d{4}"
+  :branch_code_format: "\\d{4}"
+  :account_number_format: "\\d{17}"
+
+# Pseudo Ibans
+AU:
+  :bank_code_length: 0
+  :branch_code_length: 6
+  :account_number_length: 10
+  :branch_code_format: "\\d{6}"
+  :account_number_format: "[A-Z0-9]{10}"
+  :pseudo_iban_bank_code_length: 0
+  :pseudo_iban_branch_code_length: 6
+  :pseudo_iban_account_number_length: 10
+  :national_id_length: 6
 CA:
   :bank_code_length: 4
   :branch_code_length: 5
@@ -897,6 +1001,17 @@ CA:
   :pseudo_iban_bank_code_length: 4
   :pseudo_iban_branch_code_length: 5
   :pseudo_iban_account_number_length: 12
+NZ:
+  :bank_code_length: 2
+  :branch_code_length: 4
+  :account_number_length: 10
+  :bank_code_format: "\\d{2}"
+  :branch_code_format: "\\d{4}"
+  :account_number_format: "\\d{7}\\d{3}"
+  :pseudo_iban_bank_code_length: 2
+  :pseudo_iban_branch_code_length: 4
+  :pseudo_iban_account_number_length: 10
+  :national_id_length: 6
 US:
   :bank_code_length: 9
   :branch_code_length: 0
