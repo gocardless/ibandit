@@ -997,7 +997,7 @@ CA:
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{5}"
   :account_number_format: "\\d{7,12}"
-  :national_id_length: 4
+  :national_id_length: 9
   :pseudo_iban_bank_code_length: 4
   :pseudo_iban_branch_code_length: 5
   :pseudo_iban_account_number_length: 12

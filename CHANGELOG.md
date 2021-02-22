@@ -1,3 +1,9 @@
+## 1.4.0 - February 22, 2021
+
+- [Breaking] Correct `swift_national_id` for Canadian Psudo Ibans. Before `swift_national_id`
+  would return the institution code only. Now it returns the `{institution_code}{branch_code}` as
+  per the format for electronic transfers - `0YYYXXXXX`
+
 ## 1.3.0 - February 18, 2021
 
 - Add support for BY, EG, FO, IQ, LC, SC, UA and VA
