@@ -3140,6 +3140,9 @@
 '37011000':
   :check_digit_rule: '24'
   :iban_rule: '000000'
+'37019000':
+  :check_digit_rule: '09'
+  :iban_rule: '000000'
 '37020090':
   :check_digit_rule: '99'
   :iban_rule: '003200'
@@ -4568,9 +4571,6 @@
 '50010060':
   :check_digit_rule: '24'
   :iban_rule: '000000'
-'50010111':
-  :check_digit_rule: '13'
-  :iban_rule: '000000'
 '50010200':
   :check_digit_rule: '09'
   :iban_rule: '000000'
@@ -5306,9 +5306,6 @@
 '50863513':
   :check_digit_rule: '32'
   :iban_rule: '000000'
-'50864322':
-  :check_digit_rule: '32'
-  :iban_rule: '000000'
 '50865224':
   :check_digit_rule: '32'
   :iban_rule: '000000'
@@ -5709,9 +5706,6 @@
   :check_digit_rule: '32'
   :iban_rule: '000000'
 '52069065':
-  :check_digit_rule: '32'
-  :iban_rule: '000000'
-'52069103':
   :check_digit_rule: '32'
   :iban_rule: '000000'
 '52069149':
