@@ -1,3 +1,8 @@
+## 1.4.1 - March 3, 2021
+
+- Update BLZ data - BLZVZ FTSEX MD 652
+
+
 ## 1.4.0 - February 22, 2021
 
 - [Breaking] Correct `swift_national_id` for Canadian Psudo Ibans. Before `swift_national_id`
