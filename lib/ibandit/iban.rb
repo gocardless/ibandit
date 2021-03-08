@@ -174,9 +174,7 @@ module Ibandit
 
     def valid_branch_code_length?
       return unless valid_country_code?
-      if swift_branch_code.to_s.length == structure[:branch_code_length]
-        return true
-      end
+      return true if swift_branch_code.to_s.length == structure[:branch_code_length]
 
       if structure[:branch_code_length]&.zero?
         @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
@@ -199,8 +197,13 @@ module Ibandit
         return false
       end
 
-      if swift_account_number.length == structure[:account_number_length]
-        return true
+      case structure[:account_number_length]
+      when Range
+        if structure[:account_number_length].include?(swift_account_number.length)
+          return true
+        end
+      else
+        return true if swift_account_number.length == structure[:account_number_length]
       end
 
       @errors[:account_number] =
