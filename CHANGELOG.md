@@ -1,7 +1,10 @@
+## 1.5.0 - March 11, 2021
+
+- Fix issue with padding on Canadian and USA pseudo IBANs #198
+
 ## 1.4.1 - March 3, 2021
 
 - Update BLZ data - BLZVZ FTSEX MD 652
-
 
 ## 1.4.0 - February 22, 2021
 
