@@ -91,7 +91,7 @@ module Ibandit
     def self.clean_ca_details(local_details)
       account_number = local_details[:account_number].tr("-", "")
 
-      return {} if account_number.length < 7 # minimum length
+      return {} unless (7..12).cover?(account_number.length)
 
       bank_code = if local_details[:bank_code].length == 3
                     local_details[:bank_code].rjust(4, "0")
@@ -100,7 +100,7 @@ module Ibandit
                   end
 
       {
-        account_number: account_number.rjust(12, "0"),
+        account_number: account_number,
         bank_code: bank_code,
       }
     end
@@ -113,7 +113,7 @@ module Ibandit
 
       {
         bank_code: local_details[:bank_code],
-        account_number: account_number.rjust(17, "_"),
+        account_number: account_number,
       }
     end
 
@@ -330,9 +330,7 @@ module Ibandit
     def self.clean_hu_details(local_details)
       # This method supports being passed the component IBAN parts, as defined
       # by SWIFT, or a single 16 or 24 digit string.
-      if local_details[:bank_code] || local_details[:branch_code]
-        return local_details
-      end
+      return local_details if local_details[:bank_code] || local_details[:branch_code]
 
       cleaned_acct_number = local_details[:account_number].gsub(/[-\s]/, "")
 

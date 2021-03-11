@@ -575,7 +575,7 @@ iban.iban                      # => nil
 iban = Ibandit::IBAN.new('USZZ026073150_______2715500356')
 iban.country_code              # => "US"
 iban.bank_code                 # => "026073150"
-iban.account_number            # => "_______2715500356"
+iban.account_number            # => "2715500356"
 iban.iban                      # => nil
 ```
 

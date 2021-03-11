@@ -5,9 +5,9 @@ inherit_gem:
 AllCops:
   TargetRubyVersion: 2.4
 
-# Limit lines to 80 characters.
+# Limit lines to 90 characters.
 Layout/LineLength:
-  Max: 80
+  Max: 90
 
 Metrics/ClassLength:
   Max: 400
