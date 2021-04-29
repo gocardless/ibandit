@@ -1,3 +1,7 @@
+## Upcoming
+
+- Drop Ruby 2.4 support
+
 ## 1.5.0 - March 11, 2021
 
 - Fix issue with padding on Canadian and USA pseudo IBANs #198
