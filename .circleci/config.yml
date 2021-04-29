@@ -34,4 +34,4 @@ workflows:
           name: Ruby << matrix.ruby-version >>
           matrix:
             parameters:
-              ruby-version: ["2.4.10", "2.5.8", "2.6.6", "2.7.2", "3.0.0"]
+              ruby-version: ["2.5.9", "2.6.7", "2.7.3", "3.0.1"]
