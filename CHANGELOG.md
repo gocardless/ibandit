@@ -1,3 +1,7 @@
+## 1.6.1 - Aug 13, 2021
+
+- Update BLZ data - BLZ_20210906
+
 ## 1.6.0 - June 17, 2021
 
 - Drop Ruby 2.4 support
