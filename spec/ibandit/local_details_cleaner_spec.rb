@@ -95,7 +95,7 @@ describe Ibandit::LocalDetailsCleaner do
       let(:branch_code) { "123-456" }
 
       its([:country_code]) { is_expected.to eq(country_code) }
-      its([:account_number]) { is_expected.to eq("0123456789") }
+      its([:account_number]) { is_expected.to eq("123456789") }
       its([:branch_code]) { is_expected.to eq("123456") }
     end
 
@@ -103,7 +103,7 @@ describe Ibandit::LocalDetailsCleaner do
       let(:branch_code) { "123456" }
 
       its([:country_code]) { is_expected.to eq(country_code) }
-      its([:account_number]) { is_expected.to eq("0123456789") }
+      its([:account_number]) { is_expected.to eq("123456789") }
       its([:branch_code]) { is_expected.to eq("123456") }
     end
   end
