@@ -270,13 +270,15 @@ module Ibandit
         when "13"
           if unpadded_account_number.size.between?(6, 7)
             unpadded_account_number + "00"
-          else @account_number
+          else
+            @account_number
           end
         when "76"
           case unpadded_account_number.size
           when 7..8
             if Check76.new(@account_number).valid? then @account_number
-            else unpadded_account_number + "00"
+            else
+              unpadded_account_number + "00"
             end
           when 5..6 then unpadded_account_number + "00"
           else @account_number
