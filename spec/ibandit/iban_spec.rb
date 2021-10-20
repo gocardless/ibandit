@@ -1061,7 +1061,7 @@ describe Ibandit::IBAN do
           iban.valid_length?
           expect(iban.errors).
             to include(length: "Length doesn't match SWIFT specification " \
-                       "(expected 22 characters, received 20)")
+                               "(expected 22 characters, received 20)")
         end
       end
 
@@ -1313,7 +1313,7 @@ describe Ibandit::IBAN do
           iban.valid_branch_code_length?
           expect(iban.errors).
             to include(branch_code: "is the wrong length (should be 6 " \
-                       "characters)")
+                                    "characters)")
         end
       end
 

@@ -19,7 +19,7 @@ describe Ibandit::GermanDetailsConverter do
 
         convertor.fetch("valid", []).each do |tuple|
           context "bank code: #{tuple['bank_code']} account number " \
-            "#{tuple['account_number']}" do
+                  "#{tuple['account_number']}" do
             let(:bank_code) do
               tuple["bank_code"]
             end
@@ -44,7 +44,7 @@ describe Ibandit::GermanDetailsConverter do
 
         convertor.fetch("invalid", []).each do |tuple|
           context "bank code: #{tuple['bank_code']} account number " \
-            "#{tuple['account_number']}" do
+                  "#{tuple['account_number']}" do
             let(:bank_code) { tuple["bank_code"] || "00000000" }
             let(:account_number) { tuple["account_number"] }
 

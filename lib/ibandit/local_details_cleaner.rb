@@ -42,7 +42,8 @@ module Ibandit
         %i[account_number]
       when "GB", "IE", "MT"
         if Ibandit.bic_finder.nil? then %i[bank_code branch_code account_number]
-        else %i[branch_code account_number]
+        else
+          %i[branch_code account_number]
         end
       when "AU"
         %i[branch_code account_number]
