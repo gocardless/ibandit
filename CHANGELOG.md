@@ -1,3 +1,7 @@
+## 1.7.1 - November 25, 2021
+
+- Update BLZ data - BLZ_20211206
+ 
 ## 1.7.0 - Sept 8, 2021
 
 - Stop padding out Australian account details to 10 digits
