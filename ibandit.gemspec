@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "pry-byebug",      "~> 3.9"
   gem.add_development_dependency "rspec",           "~> 3.3"
   gem.add_development_dependency "rspec-its",       "~> 1.2"
-  gem.add_development_dependency "rspec_junit_formatter", "~> 0.4.1"
+  gem.add_development_dependency "rspec_junit_formatter", "~> 0.5.0"
   gem.add_development_dependency "sax-machine", "~> 1.3"
 
   gem.add_runtime_dependency "i18n"
