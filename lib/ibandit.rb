@@ -30,8 +30,9 @@ module Ibandit
     end
 
     def structures
-      @structures ||= YAML.load_file(
-        File.expand_path("../data/structures.yml", __dir__),
+      @structures ||= YAML.safe_load(
+        Pathname.new(__dir__).join("../data/structures.yml").read,
+        permitted_classes: [Range, Symbol],
       )
     end
 
