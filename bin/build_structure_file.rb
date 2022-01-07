@@ -153,8 +153,9 @@ if __FILE__ == $PROGRAM_NAME
     iban_registry_file,
   )
 
-  structure_additions = YAML.load_file(
-    File.expand_path("../data/raw/structure_additions.yml", __dir__),
+  structure_additions = YAML.safe_load(
+    Pathname.new(__dir__).join("../data/raw/structure_additions.yml").read,
+    permitted_classes: [Range, Symbol],
   )
 
   complete_structures = merge_structures(iban_structures, structure_additions)

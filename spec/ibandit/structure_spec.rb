@@ -3,8 +3,8 @@
 require "spec_helper"
 
 describe "structures.yml" do
-  structure_file = File.expand_path("../../data/structures.yml", __dir__)
-  structures = YAML.load_file(structure_file)
+  structure_file = Pathname.new(__dir__).join("../../data/structures.yml").read
+  structures = YAML.safe_load(structure_file, permitted_classes: [Range, Symbol])
 
   structures.each do |country, rules|
     context country do
