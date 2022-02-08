@@ -1,3 +1,7 @@
+## 1.8.1 - February 8, 2022
+
+- Fix issue with structure loading - thanks @shaicoleman
+
 ## 1.8.0 - January 7, 2022
 
 - Add Ruby 3.1 support
