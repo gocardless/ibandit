@@ -154,7 +154,7 @@ if __FILE__ == $PROGRAM_NAME
   )
 
   structure_additions = YAML.safe_load(
-    Pathname.new(__dir__).join("../data/raw/structure_additions.yml").read,
+    File.read(File.expand_path("../data/raw/structure_additions.yml", __dir__)),
     permitted_classes: [Range, Symbol],
   )
 
