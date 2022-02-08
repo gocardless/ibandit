@@ -28,4 +28,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.summary = "Convert national banking details into IBANs, and vice-versa."
   gem.version = Ibandit::VERSION.dup
+  gem.metadata["rubygems_mfa_required"] = "true"
 end

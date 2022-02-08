@@ -46,7 +46,7 @@ module Ibandit
         end
       end
 
-      (scaled_values.sum % 26 + 65).chr
+      ((scaled_values.sum % 26) + 65).chr
     end
   end
 end
