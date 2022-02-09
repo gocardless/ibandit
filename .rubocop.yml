@@ -48,3 +48,6 @@ Layout/DotPosition:
 # this is quite aggressive.
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+Rails/Blank:
+  Enabled: false
