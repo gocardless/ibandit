@@ -3,7 +3,7 @@
 require File.expand_path("lib/ibandit/version", __dir__)
 
 Gem::Specification.new do |gem|
-  gem.add_development_dependency "gc_ruboconfig",   "~> 2.31.0"
+  gem.add_development_dependency "gc_ruboconfig",   "~> 2.32.0"
   gem.add_development_dependency "nokogiri",        "~> 1.6"
   gem.add_development_dependency "pry",             "~> 0.13"
   gem.add_development_dependency "pry-byebug",      "~> 3.9"
@@ -28,4 +28,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.summary = "Convert national banking details into IBANs, and vice-versa."
   gem.version = Ibandit::VERSION.dup
+  gem.metadata["rubygems_mfa_required"] = "true"
 end

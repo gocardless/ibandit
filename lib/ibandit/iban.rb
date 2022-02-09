@@ -405,9 +405,9 @@ module Ibandit
       code_digits = swift_bank_code.chars.map(&:to_i)
       mod =
         (
-          3 * (code_digits[0] + code_digits[3] + code_digits[6]) +
-          7 * (code_digits[1] + code_digits[4] + code_digits[7]) +
-          1 * (code_digits[2] + code_digits[5] + code_digits[8])
+          (3 * (code_digits[0] + code_digits[3] + code_digits[6])) +
+          (7 * (code_digits[1] + code_digits[4] + code_digits[7])) +
+          (1 * (code_digits[2] + code_digits[5] + code_digits[8]))
         ) % 10
 
       @errors[:bank_code] = Ibandit.translate(:is_invalid) unless mod.zero?
