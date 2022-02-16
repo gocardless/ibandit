@@ -1,3 +1,7 @@
+## 1.9.0 - February 16, 2022
+
+- Update BLZ data - BLZ_20220307
+
 ## 1.8.1 - February 8, 2022
 
 - Fix issue with structure loading - thanks @shaicoleman
