@@ -4,7 +4,7 @@ Ibandit [![CircleCI](https://circleci.com/gh/gocardless/business.svg?style=svg)]
 Ibandit is a Ruby library for manipulating and validating
 [IBANs](http://en.wikipedia.org/wiki/International_Bank_Account_Number).
 
-The primary objective is to provide an interface that enables the storage and retrieval national banking details as a single value. This may be an IBAN, if a country fully and unambiguously supports it, or a combination of IBAN and/or pseudo-IBAN.
+The primary objective is to provide an interface that enables the storage and retrieval of national banking details as a single value. This may be an IBAN, if a country fully and unambiguously supports it, or a combination of IBAN and/or pseudo-IBAN.
 
 Therefore, there are three distinct modes:
 
@@ -12,7 +12,7 @@ Therefore, there are three distinct modes:
 2. For countries that have unambiguous IBANs: deconstruct an IBAN into national banking details
 3. For countries where either of the above is not possible: a pseudo-IBAN as a substitute for the above.
 
-For storage, you should always try to use the `pseudo_iban`, falling back to `iban` if it not available.
+For storage, you should always try to use the `pseudo_iban`, falling back to `iban` if it is not available.
 
 For example:
 - Sweden does support IBANs (**1.**) but the format is ambiguous due to variable length account numbers so they cannot be deconstructed (**2.**). For persistence, we therefore recommend using pseudo-IBANs (**3.**) because the national banking details can be recovered from them.
@@ -129,7 +129,7 @@ end
 Ibandit.modulus_checker = ModulusChecker
 ```
 
-All three the `valid_bank_code?`, `valid_branch_code?` and `valid_account_number?` methods will receive an `IBAN` object.
+All three of the `valid_bank_code?`, `valid_branch_code?` and `valid_account_number?` methods will receive an `IBAN` object.
 `valid_bank_code?` and `valid_branch_code?` should return true unless it is known that the bank/branch code in this IBAN
 are invalid in the country specified. `valid_account_number?` should return true unless it is known that the account number
 in this IBAN cannot be valid due to local modulus checking rules.
@@ -137,7 +137,7 @@ in this IBAN cannot be valid due to local modulus checking rules.
 ### Deconstructing an IBAN into national banking details
 
 SWIFT define the following components for IBANs, and publish details of how each
-county combines them:
+country combines them:
 
 `country_code`
 :    The [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) country code prefix
