@@ -1,3 +1,7 @@
+## 1.10.0 - June 1, 2022
+
+- Update BLZ data - 05.05.22
+
 ## 1.9.0 - February 16, 2022
 
 - Update BLZ data - BLZ_20220307
