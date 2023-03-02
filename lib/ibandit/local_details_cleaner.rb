@@ -294,7 +294,7 @@ module Ibandit
         bank_code = local_details[:bank_code]
       else
         bic = Ibandit.find_bic("GB", branch_code)
-        bank_code = bic.nil? ? nil : bic.slice(0, 4)
+        bank_code = bic&.slice(0, 4)
       end
 
       account_number = local_details[:account_number].gsub(/[-\s]/, "")
@@ -359,7 +359,7 @@ module Ibandit
         bank_code = local_details[:bank_code]
       else
         bic = Ibandit.find_bic("IE", branch_code)
-        bank_code = bic.nil? ? nil : bic.slice(0, 4)
+        bank_code = bic&.slice(0, 4)
       end
 
       account_number = local_details[:account_number].gsub(/[-\s]/, "")
@@ -426,7 +426,7 @@ module Ibandit
         bank_code = local_details[:bank_code]
       else
         bic = Ibandit.find_bic("MT", branch_code)
-        bank_code = bic.nil? ? nil : bic.slice(0, 4)
+        bank_code = bic&.slice(0, 4)
       end
 
       account_number = local_details[:account_number].gsub(/[-\s]/, "")
