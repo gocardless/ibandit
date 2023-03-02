@@ -946,8 +946,8 @@ describe Ibandit::IBAN do
           iban.valid_check_digits?
           expect(iban.errors).
             to include(check_digits: "Verifique os dígitos. A verificação " \
-                                     "do módulo falhou. '82' esperados, '12'" \
-                                     " recebidos.")
+                                     "do módulo falhou. '82' esperados, '12' " \
+                                     "recebidos.")
         end
       end
 
@@ -1070,8 +1070,8 @@ describe Ibandit::IBAN do
           iban.valid_length?
           expect(iban.errors).
             to include(length: "La longueur ne correspond pas à la " \
-                               "spécification SWIFT (22 caractères attendus," \
-                               " 20 reçus)")
+                               "spécification SWIFT (22 caractères attendus, " \
+                               "20 reçus)")
         end
       end
 
@@ -1089,9 +1089,9 @@ describe Ibandit::IBAN do
         it "sets errors on the IBAN" do
           iban.valid_length?
           expect(iban.errors).
-            to include(length: "O comprimento não corresponde à especificação" \
-                               " do código SWIFT (22 caracteres esperados, 20" \
-                               " recebidos)")
+            to include(length: "O comprimento não corresponde à especificação " \
+                               "do código SWIFT (22 caracteres esperados, 20 " \
+                               "recebidos)")
         end
       end
 
@@ -1099,8 +1099,8 @@ describe Ibandit::IBAN do
         it "sets errors on the IBAN" do
           iban.valid_length?
           expect(iban.errors).
-            to include(length: "La longitud no coincide con la especificación" \
-                               " SWIFT (se esperaban 22 caracteres, pero se " \
+            to include(length: "La longitud no coincide con la especificación " \
+                               "SWIFT (se esperaban 22 caracteres, pero se " \
                                "han recibido 20)")
         end
       end
@@ -1148,8 +1148,8 @@ describe Ibandit::IBAN do
         it "sets errors on the IBAN" do
           iban.valid_length?
           expect(iban.errors).
-            to include(length: "Længden modsvarer ikke SWIFT-specifikation" \
-                               " (forventede 22 tegn, modtog 20)")
+            to include(length: "Længden modsvarer ikke SWIFT-specifikation " \
+                               "(forventede 22 tegn, modtog 20)")
         end
       end
 
@@ -1588,8 +1588,8 @@ describe Ibandit::IBAN do
         it "sets errors on the IBAN" do
           iban.valid_account_number_length?
           expect(iban.errors).
-            to include(account_number: "je napačne dolžine (biti mora 8" \
-                                       " znakov)")
+            to include(account_number: "je napačne dolžine (biti mora 8 " \
+                                       "znakov)")
         end
       end
 
@@ -1597,8 +1597,8 @@ describe Ibandit::IBAN do
         it "sets errors on the IBAN" do
           iban.valid_account_number_length?
           expect(iban.errors).
-            to include(account_number: "har forkert længde (skulle være 8" \
-                                       " tegn)")
+            to include(account_number: "har forkert længde (skulle være 8 " \
+                                       "tegn)")
         end
       end
 
