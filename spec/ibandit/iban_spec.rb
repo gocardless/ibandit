@@ -11,7 +11,9 @@ describe Ibandit::IBAN do
   its(:iban) { is_expected.to eq(iban_code) }
 
   context "with locales" do
-    all_keys = YAML.safe_load_file("config/locales/en.yml")["en"]["ibandit"].keys
+    all_keys = YAML.safe_load(
+      File.read("config/locales/en.yml"),
+    )["en"]["ibandit"].keys
 
     Ibandit::Constants::SUPPORTED_LOCALES.each do |locale|
       context "for #{locale}", locale: locale do
