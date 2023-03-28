@@ -10,6 +10,20 @@ describe Ibandit::IBAN do
 
   its(:iban) { is_expected.to eq(iban_code) }
 
+  context "with locales" do
+    all_keys = YAML.safe_load_file("config/locales/en.yml")["en"]["ibandit"].keys
+
+    Ibandit::Constants::SUPPORTED_LOCALES.each do |locale|
+      context "for #{locale}", locale: locale do
+        all_keys.each do |error_key|
+          it "has a translation for #{error_key}" do
+            expect { Ibandit.translate(error_key) }.to_not raise_error
+          end
+        end
+      end
+    end
+  end
+
   context "with a poorly formatted IBAN" do
     let(:iban_code) { "  gb82 WeSt 1234 5698 7654 32\n" }
 
@@ -853,41 +867,11 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_country_code?
-          expect(iban.errors).
-            to include(country_code: "'AA' is not a valid ISO 3166-1 IBAN " \
-                                     "country code")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_country_code?
-          expect(iban.errors).
-            to include(country_code: "'AA' ist kein gültiges " \
-                                     "IBAN-Länderkennzeichen gemäß ISO 3166-1")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_country_code?
-          expect(iban.errors).
-            to include(country_code: "'AA' não corresponde a um código de " \
-                                     "país do IBAN válido segundo a norma " \
-                                     "ISO 3166-1")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_country_code?
-          expect(iban.errors).
-            to include(country_code: "'AA' is geen geldig ISO 3166-1 IBAN " \
-                                     "landcode")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_country_code?
+        expect(iban.errors).to include(
+          country_code: "'AA' is not a valid ISO 3166-1 IBAN country code",
+        )
       end
     end
   end
@@ -912,112 +896,12 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Check digits failed modulus check. " \
-                                     "Expected '82', received '12'.")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Les chiffres de contrôle n'ont pas " \
-                                     "satisfait au contrôle de validité. " \
-                                     "Attendus '82', reçus '12'.")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Prüfziffer hat Betragsprüfung nicht " \
-                                     "bestanden. (82 Zeichen erwartet, 12 " \
-                                     "angegeben).")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Verifique os dígitos. A verificação " \
-                                     "do módulo falhou. '82' esperados, '12' " \
-                                     "recebidos.")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Los dígitos de verificación han " \
-                                     "generado un error en la comprobación " \
-                                     "del módulo. Se esperaba \"82\", pero " \
-                                     "se ha recibido \"12\".")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Controllo del modulo non riuscito per " \
-                                     "i caratteri. 82 caratteri previsti, 12 " \
-                                     "immessi.")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Controlegetal mislukte modulus check. " \
-                                     "Verwachte '82', ontvangen '12'.")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Tallkontrollen mislyktes i " \
-                                     "moduluskontrollen. Forventet '82'" \
-                                     ", mottok '12'.")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Številke čeka niso uspešno prestale " \
-                                     "preverjanja modula. Pričakovano '82', " \
-                                     "prejeto '12'.")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Kontrolcifre bestod ikke modulustjek. " \
-                                     "Forventede '82'; modtog '12'.")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_check_digits?
-          expect(iban.errors).
-            to include(check_digits: "Kontrollera felaktiga siffror med " \
-                                     "modulkontroll. Förväntade '82', " \
-                                     "mottagna '12'.")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_check_digits?
+        expect(iban.errors).to include(
+          check_digits: "Check digits failed modulus check. " \
+                        "Expected '82', received '12'.",
+        )
       end
     end
 
@@ -1056,111 +940,12 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Length doesn't match SWIFT specification " \
-                               "(expected 22 characters, received 20)")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "La longueur ne correspond pas à la " \
-                               "spécification SWIFT (22 caractères attendus, " \
-                               "20 reçus)")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Länge entspricht nicht der " \
-                               "SWIFT-Spezifikation (22 Zeichen erwartet, " \
-                               "20 angegeben)")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "O comprimento não corresponde à especificação " \
-                               "do código SWIFT (22 caracteres esperados, 20 " \
-                               "recebidos)")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "La longitud no coincide con la especificación " \
-                               "SWIFT (se esperaban 22 caracteres, pero se " \
-                               "han recibido 20)")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "La lunghezza non corrisponde alla specifica " \
-                               "SWIFT (22 caratteri previsti, 20 immessi)")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Lengte komt niet overeen met SWIFT-" \
-                               "specificatie (verwachte 22 karakters, " \
-                               "ontvangen 20)")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Lengden samsvarer ikke med " \
-                               "SWIFT-spesifikasjonene (forventet 22 tegn, " \
-                               "mottok 20)")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Dolžina se ne ujema z opredelitvijo za " \
-                               "kodo SWIFT (pričakovani znaki: 22, " \
-                               "prejeti znaki: 20)")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Længden modsvarer ikke SWIFT-specifikation " \
-                               "(forventede 22 tegn, modtog 20)")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_length?
-          expect(iban.errors).
-            to include(length: "Längd matchar inte förväntad " \
-                               "SWIFT-specifikation (förväntade 22 tecken, " \
-                               "mottagna 20)")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_length?
+        expect(iban.errors).to include(
+          length: "Length doesn't match SWIFT specification " \
+                  "(expected 22 characters, received 20)",
+        )
       end
     end
 
@@ -1188,99 +973,11 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "is the wrong length (should be 4 " \
-                                  "characters)")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "est une longueur incorrecte (doit " \
-                                  "contenir 4 caractères)")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "hat nicht die richtige Länge (sollte " \
-                                  "4 Zeichen haben)")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "não tem o comprimento correto (deve " \
-                                  "ter 4 caracteres)")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "no tiene la longitud correcta (debe " \
-                                  "tener 4 caracteres)")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "non ha la lunghezza richiesta (deve " \
-                                  "essere di 4 caratteri)")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "heeft onjuiste lengte (moet 4 tekens " \
-                                  "lang zijn)")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "har feil lengde (skal være 4 tegn)")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "je napačne dolžine (biti mora 4 znakov)")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "har forkert længde (skulle være 4 tegn)")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_length?
-          expect(iban.errors).
-            to include(bank_code: "har fel längd (bör vara 4 tecken)")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_bank_code_length?
+        expect(iban.errors).to include(
+          bank_code: "is the wrong length (should be 4 characters)",
+        )
       end
     end
 
@@ -1308,99 +1005,11 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "is the wrong length (should be 6 " \
-                                    "characters)")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "est une longueur incorrecte (doit " \
-                                    "contenir 6 caractères)")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "hat nicht die richtige Länge (sollte " \
-                                    "6 Zeichen haben)")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "não tem o comprimento correto (deve " \
-                                    "ter 6 caracteres)")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "no tiene la longitud correcta (debe " \
-                                    "tener 6 caracteres)")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "non ha la lunghezza richiesta (deve " \
-                                    "essere di 6 caratteri)")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "heeft onjuiste lengte (moet 6 tekens " \
-                                    "lang zijn)")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "har feil lengde (skal være 6 tegn)")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "je napačne dolžine (biti mora 6 znakov)")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "har forkert længde (skulle være 6 tegn)")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).
-            to include(branch_code: "har fel längd (bör vara 6 tecken)")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_branch_code_length?
+        expect(iban.errors).to include(
+          branch_code: "is the wrong length (should be 6 characters)",
+        )
       end
     end
 
@@ -1409,81 +1018,9 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "is required")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "est obligatoire")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "ist erforderlich")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "é obrigatório")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "es obligatorio")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "è obbligatorio")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "moet opgegeven zijn")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "er påkrevd")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "je obvezno")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "er påkrævet")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_length?
-          expect(iban.errors).to include(branch_code: "krävs")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_branch_code_length?
+        expect(iban.errors).to include(branch_code: "is required")
       end
     end
 
@@ -1513,101 +1050,11 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "is the wrong length (should be 8 " \
-                                       "characters)")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "est une longueur incorrecte (doit " \
-                                       "contenir 8 caractères)")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "hat nicht die richtige Länge (sollte " \
-                                       "8 Zeichen haben)")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "não tem o comprimento correto (deve " \
-                                       "ter 8 caracteres)")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "no tiene la longitud correcta (debe " \
-                                       "tener 8 caracteres)")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "non ha la lunghezza richiesta (deve " \
-                                       "essere di 8 caratteri)")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "heeft onjuiste lengte (moet 8 " \
-                                       "tekens lang zijn)")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "har feil lengde (skal være 8 tegn)")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "je napačne dolžine (biti mora 8 " \
-                                       "znakov)")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "har forkert længde (skulle være 8 " \
-                                       "tegn)")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_length?
-          expect(iban.errors).
-            to include(account_number: "har fel längd (bör vara 8 tecken)")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_account_number_length?
+        expect(iban.errors).to include(
+          account_number: "is the wrong length (should be 8 characters)",
+        )
       end
     end
 
@@ -1637,94 +1084,11 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Non-alphanumeric characters found: -")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Caractères non alphanumériques trouvés : -")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Nicht-alphanumerischen Zeichen gefunden: -")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Caracteres não alfanuméricos " \
-                                   "encontrados: -")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Se han encontrado caracteres no " \
-                                   "alfanuméricos: -")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Caratteri non alfanumerici trovati: -")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Niet-alfanumerieke tekens gevonden: -")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Ikke-alfanumeriske tegn funnet: -")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Najdeni ne-alfanumerični znaki: -")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Ikke-alfanumeriske tegn registreret: -")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_characters?
-          expect(iban.errors).
-            to include(characters: "Icke alfanumeriska tecken hittades: -")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_characters?
+        expect(iban.errors).to include(
+          characters: "Non-alphanumeric characters found: -",
+        )
       end
     end
   end
@@ -1743,92 +1107,9 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Unexpected format for a GB IBAN.")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Format non attendu pour un IBAN GB.")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Unerwartetes Format für eine GB-IBAN.")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Formato inesperado para um IBAN GB.")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Formato inesperado para un IBAN de GB.")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Formato imprevisto per un IBAN GB.")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Onverwachte formaat voor een GB IBAN.")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Uventet format for IBAN for GB.")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Nepričakovana oblika zapisa GB v IBAN.")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Uventet format for en IBAN fra GB.")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_format?
-          expect(iban.errors).
-            to include(format: "Oväntat format för GB IBAN.")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_format?
+        expect(iban.errors).to include(format: "Unexpected format for a GB IBAN.")
       end
     end
 
@@ -1859,81 +1140,9 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "is invalid")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "n'est pas valide")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "ist ungültig")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "é inválido")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "no es válido")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "non è valido")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "is ongeldig")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "er ikke gyldig")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "ni veljavno")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "er ugyldig")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_bank_code_format?
-          expect(iban.errors).to include(bank_code: "är ogiltig")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_bank_code_format?
+        expect(iban.errors).to include(bank_code: "is invalid")
       end
     end
 
@@ -1972,81 +1181,9 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "is invalid")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "n'est pas valide")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "ist ungültig")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "é inválido")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "no es válido")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "non è valido")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "is ongeldig")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "er ikke gyldig")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "ni veljavno")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "er ugyldig")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_branch_code_format?
-          expect(iban.errors).to include(branch_code: "är ogiltig")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_branch_code_format?
+        expect(iban.errors).to include(branch_code: "is invalid")
       end
     end
 
@@ -2084,81 +1221,9 @@ describe Ibandit::IBAN do
 
       it { is_expected.to eq(false) }
 
-      context "locale en", locale: :en do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "is invalid")
-        end
-      end
-
-      context "locale fr", locale: :fr do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "n'est pas valide")
-        end
-      end
-
-      context "locale de", locale: :de do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "ist ungültig")
-        end
-      end
-
-      context "locale pt", locale: :pt do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "é inválido")
-        end
-      end
-
-      context "locale es", locale: :es do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "no es válido")
-        end
-      end
-
-      context "locale it", locale: :it do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "non è valido")
-        end
-      end
-
-      context "locale nl", locale: :nl do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "is ongeldig")
-        end
-      end
-
-      context "locale nb", locale: :nb do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "er ikke gyldig")
-        end
-      end
-
-      context "locale sl", locale: :sl do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "ni veljavno")
-        end
-      end
-
-      context "locale da", locale: :da do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "er ugyldig")
-        end
-      end
-
-      context "locale sv", locale: :sv do
-        it "sets errors on the IBAN" do
-          iban.valid_account_number_format?
-          expect(iban.errors).to include(account_number: "är ogiltig")
-        end
+      it "sets errors on the IBAN" do
+        iban.valid_account_number_format?
+        expect(iban.errors).to include(account_number: "is invalid")
       end
     end
 
@@ -2217,54 +1282,8 @@ describe Ibandit::IBAN do
 
         it { is_expected.to be(false) }
 
-        context "locale en", locale: :en do
-          specify { expect(iban.errors).to include(bank_code: "is invalid") }
-        end
-
-        context "locale fr", locale: :fr do
-          specify do
-            expect(iban.errors).to include(bank_code: "n'est pas valide")
-          end
-        end
-
-        context "locale de", locale: :de do
-          specify do
-            expect(iban.errors).to include(bank_code: "ist ungültig")
-          end
-        end
-
-        context "locale pt", locale: :pt do
-          specify { expect(iban.errors).to include(bank_code: "é inválido") }
-        end
-
-        context "locale es", locale: :es do
-          specify { expect(iban.errors).to include(bank_code: "no es válido") }
-        end
-
-        context "locale it", locale: :it do
-          specify { expect(iban.errors).to include(bank_code: "non è valido") }
-        end
-
-        context "locale nl", locale: :nl do
-          specify { expect(iban.errors).to include(bank_code: "is ongeldig") }
-        end
-
-        context "locale nb", locale: :nb do
-          specify do
-            expect(iban.errors).to include(bank_code: "er ikke gyldig")
-          end
-        end
-
-        context "locale sl", locale: :sl do
-          specify { expect(iban.errors).to include(bank_code: "ni veljavno") }
-        end
-
-        context "locale da", locale: :da do
-          specify { expect(iban.errors).to include(bank_code: "er ugyldig") }
-        end
-
-        context "locale sv", locale: :sv do
-          specify { expect(iban.errors).to include(bank_code: "är ogiltig") }
+        it "sets the errors on the IBAN" do
+          expect(iban.errors).to include(bank_code: "is invalid")
         end
       end
 
@@ -2290,70 +1309,8 @@ describe Ibandit::IBAN do
 
         it { is_expected.to be(false) }
 
-        context "locale en", locale: :en do
-          specify do
-            expect(iban.errors).to include(branch_code: "is invalid")
-          end
-        end
-
-        context "locale fr", locale: :fr do
-          specify do
-            expect(iban.errors).to include(branch_code: "n'est pas valide")
-          end
-        end
-
-        context "locale de", locale: :de do
-          specify do
-            expect(iban.errors).to include(branch_code: "ist ungültig")
-          end
-        end
-
-        context "locale pt", locale: :pt do
-          specify do
-            expect(iban.errors).to include(branch_code: "é inválido")
-          end
-        end
-
-        context "locale es", locale: :es do
-          specify do
-            expect(iban.errors).to include(branch_code: "no es válido")
-          end
-        end
-
-        context "locale it", locale: :it do
-          specify do
-            expect(iban.errors).to include(branch_code: "non è valido")
-          end
-        end
-
-        context "locale nl", locale: :nl do
-          specify do
-            expect(iban.errors).to include(branch_code: "is ongeldig")
-          end
-        end
-
-        context "locale nb", locale: :nb do
-          specify do
-            expect(iban.errors).to include(branch_code: "er ikke gyldig")
-          end
-        end
-
-        context "locale sl", locale: :sl do
-          specify do
-            expect(iban.errors).to include(branch_code: "ni veljavno")
-          end
-        end
-
-        context "locale da", locale: :da do
-          specify do
-            expect(iban.errors).to include(branch_code: "er ugyldig")
-          end
-        end
-
-        context "locale sv", locale: :sv do
-          specify do
-            expect(iban.errors).to include(branch_code: "är ogiltig")
-          end
+        it "sets the errors on the IBAN" do
+          expect(iban.errors).to include(branch_code: "is invalid")
         end
       end
 
@@ -2372,70 +1329,8 @@ describe Ibandit::IBAN do
 
         it { is_expected.to be(false) }
 
-        context "locale en", locale: :en do
-          specify do
-            expect(iban.errors).to include(account_number: "is invalid")
-          end
-        end
-
-        context "locale fr", locale: :fr do
-          specify do
-            expect(iban.errors).to include(account_number: "n'est pas valide")
-          end
-        end
-
-        context "locale de", locale: :de do
-          specify do
-            expect(iban.errors).to include(account_number: "ist ungültig")
-          end
-        end
-
-        context "locale pt", locale: :pt do
-          specify do
-            expect(iban.errors).to include(account_number: "é inválido")
-          end
-        end
-
-        context "locale es", locale: :es do
-          specify do
-            expect(iban.errors).to include(account_number: "no es válido")
-          end
-        end
-
-        context "locale it", locale: :it do
-          specify do
-            expect(iban.errors).to include(account_number: "non è valido")
-          end
-        end
-
-        context "locale nl", locale: :nl do
-          specify do
-            expect(iban.errors).to include(account_number: "is ongeldig")
-          end
-        end
-
-        context "locale nb", locale: :nb do
-          specify do
-            expect(iban.errors).to include(account_number: "er ikke gyldig")
-          end
-        end
-
-        context "locale sl", locale: :sl do
-          specify do
-            expect(iban.errors).to include(account_number: "ni veljavno")
-          end
-        end
-
-        context "locale da", locale: :da do
-          specify do
-            expect(iban.errors).to include(account_number: "er ugyldig")
-          end
-        end
-
-        context "locale sv", locale: :sv do
-          specify do
-            expect(iban.errors).to include(account_number: "är ogiltig")
-          end
+        it "sets the errors on the IBAN" do
+          expect(iban.errors).to include(account_number: "is invalid")
         end
       end
     end
@@ -2454,92 +1349,10 @@ describe Ibandit::IBAN do
 
         it { is_expected.to eq(false) }
 
-        context "locale en", locale: :en do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "does not support payments")
-          end
-        end
-
-        context "locale fr", locale: :fr do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "ne prend pas en charge les paiements")
-          end
-        end
-
-        context "locale de", locale: :de do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "unterstützt keine Zahlungen")
-          end
-        end
-
-        context "locale pt", locale: :pt do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "não suporta pagamentos")
-          end
-        end
-
-        context "locale es", locale: :es do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "no admite pagos")
-          end
-        end
-
-        context "locale it", locale: :it do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "non supporta i pagamenti")
-          end
-        end
-
-        context "locale nl", locale: :nl do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "ondersteunt geen betalingen")
-          end
-        end
-
-        context "locale nb", locale: :nb do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "støtter ikke betalinger")
-          end
-        end
-
-        context "locale sl", locale: :sl do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "ne podpira plačil")
-          end
-        end
-
-        context "locale da", locale: :da do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "understøtter ikke betalinger")
-          end
-        end
-
-        context "locale sv", locale: :sv do
-          specify do
-            iban.supports_iban_determination?
-            expect(iban.errors).
-              to include(account_number: "stödjer inte betalningar")
-          end
+        it "sets the errors on the IBAN" do
+          iban.supports_iban_determination?
+          expect(iban.errors).
+            to include(account_number: "does not support payments")
         end
       end
     end
@@ -2559,11 +1372,9 @@ describe Ibandit::IBAN do
 
           it { is_expected.to eq(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              iban.valid_swedish_details?
-              expect(iban.errors).to eq(account_number: "is invalid")
-            end
+          it "sets the errors on the IBAN" do
+            iban.valid_swedish_details?
+            expect(iban.errors).to eq(account_number: "is invalid")
           end
         end
 
@@ -2578,12 +1389,10 @@ describe Ibandit::IBAN do
 
           it { is_expected.to eq(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              iban.valid?
-              expect(iban.errors).to include(account_number: "is invalid")
-              expect(iban.errors).to_not include(:bank_code)
-            end
+          it "sets the errors on the IBAN" do
+            iban.valid?
+            expect(iban.errors).to include(account_number: "is invalid")
+            expect(iban.errors).to_not include(:bank_code)
           end
         end
 
@@ -2598,11 +1407,9 @@ describe Ibandit::IBAN do
 
           it { is_expected.to eq(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              iban.valid_swedish_details?
-              expect(iban.errors).to eq(account_number: "is invalid")
-            end
+          it "sets the errors on the IBAN" do
+            iban.valid_swedish_details?
+            expect(iban.errors).to eq(account_number: "is invalid")
           end
         end
       end
@@ -2630,11 +1437,9 @@ describe Ibandit::IBAN do
 
           it { is_expected.to eq(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              iban.valid_swedish_details?
-              expect(iban.errors).to eq(branch_code: "is invalid")
-            end
+          it "sets the errors on the IBAN" do
+            iban.valid_swedish_details?
+            expect(iban.errors).to eq(branch_code: "is invalid")
           end
         end
 
@@ -2649,11 +1454,9 @@ describe Ibandit::IBAN do
 
           it { is_expected.to eq(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              iban.valid_swedish_details?
-              expect(iban.errors).to eq(account_number: "is invalid")
-            end
+          it "sets the errors on the IBAN" do
+            iban.valid_swedish_details?
+            expect(iban.errors).to eq(account_number: "is invalid")
           end
         end
       end
@@ -2716,70 +1519,8 @@ describe Ibandit::IBAN do
 
           it { is_expected.to be(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              expect(iban.errors).to include(branch_code: "is invalid")
-            end
-          end
-
-          context "locale fr", locale: :fr do
-            specify do
-              expect(iban.errors).to include(branch_code: "n'est pas valide")
-            end
-          end
-
-          context "locale de", locale: :de do
-            specify do
-              expect(iban.errors).to include(branch_code: "ist ungültig")
-            end
-          end
-
-          context "locale pt", locale: :pt do
-            specify do
-              expect(iban.errors).to include(branch_code: "é inválido")
-            end
-          end
-
-          context "locale es", locale: :es do
-            specify do
-              expect(iban.errors).to include(branch_code: "no es válido")
-            end
-          end
-
-          context "locale it", locale: :it do
-            specify do
-              expect(iban.errors).to include(branch_code: "non è valido")
-            end
-          end
-
-          context "locale nl", locale: :nl do
-            specify do
-              expect(iban.errors).to include(branch_code: "is ongeldig")
-            end
-          end
-
-          context "locale nb", locale: :nb do
-            specify do
-              expect(iban.errors).to include(branch_code: "er ikke gyldig")
-            end
-          end
-
-          context "locale sl", locale: :sl do
-            specify do
-              expect(iban.errors).to include(branch_code: "ni veljavno")
-            end
-          end
-
-          context "locale da", locale: :da do
-            specify do
-              expect(iban.errors).to include(branch_code: "er ugyldig")
-            end
-          end
-
-          context "locale sv", locale: :sv do
-            specify do
-              expect(iban.errors).to include(branch_code: "är ogiltig")
-            end
+          it "sets the errors on the IBAN" do
+            expect(iban.errors).to include(branch_code: "is invalid")
           end
         end
       end
@@ -2843,70 +1584,8 @@ describe Ibandit::IBAN do
 
           it { is_expected.to be(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              expect(iban.errors).to include(branch_code: "is invalid")
-            end
-          end
-
-          context "locale fr", locale: :fr do
-            specify do
-              expect(iban.errors).to include(branch_code: "n'est pas valide")
-            end
-          end
-
-          context "locale de", locale: :de do
-            specify do
-              expect(iban.errors).to include(branch_code: "ist ungültig")
-            end
-          end
-
-          context "locale pt", locale: :pt do
-            specify do
-              expect(iban.errors).to include(branch_code: "é inválido")
-            end
-          end
-
-          context "locale es", locale: :es do
-            specify do
-              expect(iban.errors).to include(branch_code: "no es válido")
-            end
-          end
-
-          context "locale it", locale: :it do
-            specify do
-              expect(iban.errors).to include(branch_code: "non è valido")
-            end
-          end
-
-          context "locale nl", locale: :nl do
-            specify do
-              expect(iban.errors).to include(branch_code: "is ongeldig")
-            end
-          end
-
-          context "locale nb", locale: :nb do
-            specify do
-              expect(iban.errors).to include(branch_code: "er ikke gyldig")
-            end
-          end
-
-          context "locale sl", locale: :sl do
-            specify do
-              expect(iban.errors).to include(branch_code: "ni veljavno")
-            end
-          end
-
-          context "locale da", locale: :da do
-            specify do
-              expect(iban.errors).to include(branch_code: "er ugyldig")
-            end
-          end
-
-          context "locale sv", locale: :sv do
-            specify do
-              expect(iban.errors).to include(branch_code: "är ogiltig")
-            end
+          it "sets the errors on the IBAN" do
+            expect(iban.errors).to include(branch_code: "is invalid")
           end
         end
       end
@@ -2970,70 +1649,8 @@ describe Ibandit::IBAN do
 
           it { is_expected.to be(false) }
 
-          context "locale en", locale: :en do
-            specify do
-              expect(iban.errors).to include(branch_code: "is invalid")
-            end
-          end
-
-          context "locale fr", locale: :fr do
-            specify do
-              expect(iban.errors).to include(branch_code: "n'est pas valide")
-            end
-          end
-
-          context "locale de", locale: :de do
-            specify do
-              expect(iban.errors).to include(branch_code: "ist ungültig")
-            end
-          end
-
-          context "locale pt", locale: :pt do
-            specify do
-              expect(iban.errors).to include(branch_code: "é inválido")
-            end
-          end
-
-          context "locale es", locale: :es do
-            specify do
-              expect(iban.errors).to include(branch_code: "no es válido")
-            end
-          end
-
-          context "locale it", locale: :it do
-            specify do
-              expect(iban.errors).to include(branch_code: "non è valido")
-            end
-          end
-
-          context "locale nl", locale: :nl do
-            specify do
-              expect(iban.errors).to include(branch_code: "is ongeldig")
-            end
-          end
-
-          context "locale nb", locale: :nb do
-            specify do
-              expect(iban.errors).to include(branch_code: "er ikke gyldig")
-            end
-          end
-
-          context "locale sl", locale: :sl do
-            specify do
-              expect(iban.errors).to include(branch_code: "ni veljavno")
-            end
-          end
-
-          context "locale da", locale: :da do
-            specify do
-              expect(iban.errors).to include(branch_code: "er ugyldig")
-            end
-          end
-
-          context "locale sv", locale: :sv do
-            specify do
-              expect(iban.errors).to include(branch_code: "är ogiltig")
-            end
+          it "sets the errors on the IBAN" do
+            expect(iban.errors).to include(branch_code: "is invalid")
           end
         end
       end

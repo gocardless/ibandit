@@ -25,5 +25,9 @@ module Ibandit
       DECONSTRUCTABLE_IBAN_COUNTRY_CODES +
       PSEUDO_IBAN_COUNTRY_CODES
     ).uniq
+
+    SUPPORTED_LOCALES = %w[
+      da de en es fr it nb nl pt sl sv
+    ].freeze
   end
 end
