@@ -89,7 +89,7 @@ module Ibandit
 
     def self.required_fields(country_code)
       case country_code
-      when "AT", "CY", "CZ", "DE", "DK", "EE", "FI", "HR", "IS", "LT", "LU",
+      when "AT", "CY", "CZ", "DE", "DK", "EE", "FO", "FI", "GL", "HR", "IS", "LT", "LU",
            "LV", "NL", "NO", "PL", "RO", "SE", "SI", "SK"
         %i[bank_code account_number]
       when "BE"

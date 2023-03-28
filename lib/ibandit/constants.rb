@@ -2,7 +2,7 @@
 
 module Ibandit
   module Constants
-    CONSTRUCTABLE_IBAN_COUNTRY_CODES = %w[AT BE BG CY CZ DE DK EE ES FI FR GB GR
+    CONSTRUCTABLE_IBAN_COUNTRY_CODES = %w[AT BE BG CY CZ DE DK EE ES FI FO FR GB GL GR
                                           HR HU IE IS IT LT LU LV MC MT NL NO PL
                                           PT RO SE SI SK SM].freeze
 
