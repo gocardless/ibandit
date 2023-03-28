@@ -73,7 +73,7 @@ module Ibandit
 
       def serial_number
         serial_number = if @branch_code.nil?
-                          cleaned_account_number[clearing_code_length..-1]
+                          cleaned_account_number[clearing_code_length..]
                         else
                           cleaned_account_number
                         end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataexport filedate="20150425" filetype="full" product="ibanstructure">
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+<dataexport product="ibanstructure_v2" filetype="full" filedate="20230224">
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000001</record_key>
     <iban_country_code>AD</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -16,11 +16,14 @@
     <account_number_position>13</account_number_position>
     <account_number_length>12</account_number_length>
     <iban_total_length>24</iban_total_length>
-    <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <sepa>Y</sepa>
+    <optional_commence_date>20190301</optional_commence_date>
+    <mandatory_commence_date>20191201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000002</record_key>
     <iban_country_code>AE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -34,10 +37,13 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>23</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20111119</optional_commence_date>
+    <mandatory_commence_date>20120414</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000003</record_key>
     <iban_country_code>AL</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -52,10 +58,13 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20090601</optional_commence_date>
+    <mandatory_commence_date>20100101</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000004</record_key>
     <iban_country_code>AT</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -69,10 +78,12 @@
     <account_number_length>11</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000005</record_key>
     <iban_country_code>AZ</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -86,10 +97,13 @@
     <account_number_length>20</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20120201</optional_commence_date>
+    <mandatory_commence_date>20120903</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000006</record_key>
     <iban_country_code>BA</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -104,10 +118,13 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20070201</optional_commence_date>
+    <mandatory_commence_date>20090201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000007</record_key>
     <iban_country_code>BE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -121,10 +138,12 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>16</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000008</record_key>
     <iban_country_code>BG</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -139,10 +158,13 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20060605</optional_commence_date>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000009</record_key>
     <iban_country_code>BH</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -156,10 +178,13 @@
     <account_number_length>14</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20110901</optional_commence_date>
+    <mandatory_commence_date>20120131</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000A</record_key>
     <iban_country_code>BR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -174,10 +199,12 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>29</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20130701</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000B</record_key>
     <iban_country_code>CH</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -191,27 +218,32 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>21</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20140201</optional_commence_date>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000C</record_key>
     <iban_country_code>CR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
     <iban_check_digits_position>3</iban_check_digits_position>
     <iban_check_digits_length>2</iban_check_digits_length>
     <bank_identifier_position>5</bank_identifier_position>
-    <bank_identifier_length>3</bank_identifier_length>
+    <bank_identifier_length>4</bank_identifier_length>
     <branch_identifier_length>0</branch_identifier_length>
-    <iban_national_id_length>3</iban_national_id_length>
-    <account_number_position>8</account_number_position>
+    <iban_national_id_length>4</iban_national_id_length>
+    <account_number_position>9</account_number_position>
     <account_number_length>14</account_number_length>
-    <iban_total_length>21</iban_total_length>
+    <iban_total_length>22</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20190101</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000D</record_key>
     <iban_country_code>CY</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -226,10 +258,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000E</record_key>
     <iban_country_code>CZ</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -243,10 +277,13 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20110607</optional_commence_date>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000F</record_key>
     <iban_country_code>DE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -260,10 +297,12 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000G</record_key>
     <iban_country_code>DK</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -277,10 +316,12 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>18</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000H</record_key>
     <iban_country_code>DO</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -294,10 +335,12 @@
     <account_number_length>20</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20110401</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000I</record_key>
     <iban_country_code>EE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -311,10 +354,13 @@
     <account_number_length>14</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20140101</optional_commence_date>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000J</record_key>
     <iban_country_code>ES</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -329,27 +375,33 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000K</record_key>
     <iban_country_code>FI</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
     <iban_check_digits_position>3</iban_check_digits_position>
     <iban_check_digits_length>2</iban_check_digits_length>
     <bank_identifier_position>5</bank_identifier_position>
-    <bank_identifier_length>6</bank_identifier_length>
+    <bank_identifier_length>3</bank_identifier_length>
     <branch_identifier_length>0</branch_identifier_length>
     <iban_national_id_length>3</iban_national_id_length>
-    <account_number_position>11</account_number_position>
-    <account_number_length>8</account_number_length>
+    <account_number_position>8</account_number_position>
+    <account_number_length>11</account_number_length>
     <iban_total_length>18</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20080101</optional_commence_date>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+    <reused_by>AX</reused_by>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000L</record_key>
     <iban_country_code>FO</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -363,10 +415,12 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>18</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000M</record_key>
     <iban_country_code>FR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -381,10 +435,13 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>27</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+    <reused_by>WF,RE,PM,PF,NC,MQ,GP,GF,YT</reused_by>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000N</record_key>
     <iban_country_code>GB</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -399,10 +456,14 @@
     <account_number_length>8</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20010401</optional_commence_date>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+    <reused_by>KY,JE,IM,GG</reused_by>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000O</record_key>
     <iban_country_code>GE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -416,10 +477,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20130228</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000P</record_key>
     <iban_country_code>GI</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -433,10 +496,13 @@
     <account_number_length>15</account_number_length>
     <iban_total_length>23</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20030701</optional_commence_date>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000Q</record_key>
     <iban_country_code>GL</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -450,10 +516,12 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>18</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20160201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000R</record_key>
     <iban_country_code>GR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -468,10 +536,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>27</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000S</record_key>
     <iban_country_code>GT</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -485,11 +555,13 @@
     <account_number_length>20</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>N</sepa>
-    <optional_commence_date>20140701</optional_commence_date>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20110901</optional_commence_date>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000T</record_key>
     <iban_country_code>HR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -503,10 +575,12 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>21</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20130601</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000U</record_key>
     <iban_country_code>HU</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -521,10 +595,12 @@
     <account_number_length>17</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000V</record_key>
     <iban_country_code>IE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -539,10 +615,12 @@
     <account_number_length>8</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000W</record_key>
     <iban_country_code>IL</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -557,10 +635,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>23</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20070701</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000X</record_key>
     <iban_country_code>IS</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -574,10 +654,12 @@
     <account_number_length>18</account_number_length>
     <iban_total_length>26</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000Y</record_key>
     <iban_country_code>IT</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -592,10 +674,13 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>27</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20080601</optional_commence_date>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000000Z</record_key>
     <iban_country_code>KW</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -609,10 +694,13 @@
     <account_number_length>22</account_number_length>
     <iban_total_length>30</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20110101</optional_commence_date>
+    <mandatory_commence_date>20151101</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000010</record_key>
     <iban_country_code>KZ</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -626,10 +714,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20100607</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000011</record_key>
     <iban_country_code>LB</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -639,14 +729,17 @@
     <bank_identifier_length>4</bank_identifier_length>
     <branch_identifier_length>0</branch_identifier_length>
     <iban_national_id_length>4</iban_national_id_length>
-    <account_number_position>14</account_number_position>
-    <account_number_length>14</account_number_length>
+    <account_number_position>9</account_number_position>
+    <account_number_length>20</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20100101</optional_commence_date>
+    <mandatory_commence_date>20100701</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000012</record_key>
     <iban_country_code>LI</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -660,10 +753,12 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>21</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000013</record_key>
     <iban_country_code>LT</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -677,10 +772,12 @@
     <account_number_length>11</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000014</record_key>
     <iban_country_code>LU</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -694,10 +791,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000015</record_key>
     <iban_country_code>LV</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -711,10 +810,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>21</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000016</record_key>
     <iban_country_code>MC</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -729,10 +830,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>27</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000017</record_key>
     <iban_country_code>MD</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -746,10 +849,13 @@
     <account_number_length>18</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20160101</optional_commence_date>
+    <mandatory_commence_date>20170101</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000018</record_key>
     <iban_country_code>ME</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -763,10 +869,12 @@
     <account_number_length>15</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20070401</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000019</record_key>
     <iban_country_code>MK</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -780,10 +888,12 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>19</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20050701</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001A</record_key>
     <iban_country_code>MR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -798,10 +908,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>27</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20120101</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001B</record_key>
     <iban_country_code>MT</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -816,10 +928,12 @@
     <account_number_length>18</account_number_length>
     <iban_total_length>31</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001C</record_key>
     <iban_country_code>MU</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -834,10 +948,12 @@
     <account_number_length>18</account_number_length>
     <iban_total_length>30</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20070401</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001D</record_key>
     <iban_country_code>NL</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -851,10 +967,12 @@
     <account_number_length>10</account_number_length>
     <iban_total_length>18</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001E</record_key>
     <iban_country_code>NO</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -868,10 +986,12 @@
     <account_number_length>7</account_number_length>
     <iban_total_length>15</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001F</record_key>
     <iban_country_code>PK</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -885,10 +1005,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20130106</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001G</record_key>
     <iban_country_code>PL</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -902,10 +1024,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>28</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001H</record_key>
     <iban_country_code>PS</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -919,10 +1043,12 @@
     <account_number_length>21</account_number_length>
     <iban_total_length>29</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20130301</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001I</record_key>
     <iban_country_code>PT</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -937,10 +1063,12 @@
     <account_number_length>13</account_number_length>
     <iban_total_length>25</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001J</record_key>
     <iban_country_code>RO</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -954,10 +1082,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001K</record_key>
     <iban_country_code>RS</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -971,10 +1101,12 @@
     <account_number_length>15</account_number_length>
     <iban_total_length>22</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20050101</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001L</record_key>
     <iban_country_code>SA</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -988,10 +1120,12 @@
     <account_number_length>18</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20111119</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001M</record_key>
     <iban_country_code>SE</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1005,10 +1139,12 @@
     <account_number_length>17</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001N</record_key>
     <iban_country_code>SI</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1017,15 +1153,17 @@
     <bank_identifier_position>5</bank_identifier_position>
     <bank_identifier_length>5</bank_identifier_length>
     <branch_identifier_length>0</branch_identifier_length>
-    <iban_national_id_length>2</iban_national_id_length>
+    <iban_national_id_length>5</iban_national_id_length>
     <account_number_position>10</account_number_position>
     <account_number_length>10</account_number_length>
     <iban_total_length>19</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001O</record_key>
     <iban_country_code>SK</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1039,10 +1177,13 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20140501</optional_commence_date>
+    <mandatory_commence_date>20161031</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001P</record_key>
     <iban_country_code>SM</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1057,10 +1198,12 @@
     <account_number_length>12</account_number_length>
     <iban_total_length>27</iban_total_length>
     <sepa>Y</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001Q</record_key>
     <iban_country_code>TN</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1070,15 +1213,17 @@
     <bank_identifier_length>2</bank_identifier_length>
     <branch_identifier_position>7</branch_identifier_position>
     <branch_identifier_length>3</branch_identifier_length>
-    <iban_national_id_length>2</iban_national_id_length>
+    <iban_national_id_length>5</iban_national_id_length>
     <account_number_position>10</account_number_position>
     <account_number_length>15</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20070104</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001R</record_key>
     <iban_country_code>TR</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1092,10 +1237,13 @@
     <account_number_length>17</account_number_length>
     <iban_total_length>26</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20050901</optional_commence_date>
+    <mandatory_commence_date>20081010</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001S</record_key>
     <iban_country_code>VG</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1109,10 +1257,12 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>24</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20120401</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001T</record_key>
     <iban_country_code>JO</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1120,17 +1270,20 @@
     <iban_check_digits_length>2</iban_check_digits_length>
     <bank_identifier_position>5</bank_identifier_position>
     <bank_identifier_length>4</bank_identifier_length>
-    <branch_identifier_length>0</branch_identifier_length>
+    <branch_identifier_position>9</branch_identifier_position>
+    <branch_identifier_length>4</branch_identifier_length>
     <iban_national_id_length>4</iban_national_id_length>
-    <account_number_position>9</account_number_position>
-    <account_number_length>22</account_number_length>
+    <account_number_position>13</account_number_position>
+    <account_number_length>18</account_number_length>
     <iban_total_length>30</iban_total_length>
     <sepa>N</sepa>
     <optional_commence_date>20140202</optional_commence_date>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <mandatory_commence_date>20140202</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001U</record_key>
     <iban_country_code>QA</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1144,29 +1297,33 @@
     <account_number_length>21</account_number_length>
     <iban_total_length>29</iban_total_length>
     <sepa>N</sepa>
-    <optional_commence_date>20140101</optional_commence_date>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <optional_commence_date>20130501</optional_commence_date>
+    <mandatory_commence_date>20140501</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001V</record_key>
     <iban_country_code>XK</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
     <iban_check_digits_position>3</iban_check_digits_position>
     <iban_check_digits_length>2</iban_check_digits_length>
     <bank_identifier_position>5</bank_identifier_position>
-    <bank_identifier_length>4</bank_identifier_length>
-    <branch_identifier_length>0</branch_identifier_length>
+    <bank_identifier_length>2</bank_identifier_length>
+    <branch_identifier_position>7</branch_identifier_position>
+    <branch_identifier_length>2</branch_identifier_length>
     <iban_national_id_length>4</iban_national_id_length>
     <account_number_position>5</account_number_position>
     <account_number_length>16</account_number_length>
     <iban_total_length>20</iban_total_length>
     <sepa>N</sepa>
     <optional_commence_date>20150201</optional_commence_date>
-  </ibanstructure>
-  <ibanstructure>
-    <tag>IS</tag>
-    <modification_flag>U</modification_flag>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001W</record_key>
     <iban_country_code>TL</iban_country_code>
     <iban_country_code_position>1</iban_country_code_position>
     <iban_country_code_length>2</iban_country_code_length>
@@ -1180,5 +1337,690 @@
     <account_number_length>16</account_number_length>
     <iban_total_length>23</iban_total_length>
     <sepa>N</sepa>
-  </ibanstructure>
+    <mandatory_commence_date>20150112</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001X</record_key>
+    <iban_country_code>LC</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>4</iban_national_id_length>
+    <account_number_position>9</account_number_position>
+    <account_number_length>24</account_number_length>
+    <iban_total_length>32</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20150801</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001Y</record_key>
+    <iban_country_code>UA</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>6</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>6</iban_national_id_length>
+    <account_number_position>11</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>29</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20191101</optional_commence_date>
+    <mandatory_commence_date>20200117</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000001Z</record_key>
+    <iban_country_code>ST</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_position>9</branch_identifier_position>
+    <branch_identifier_length>4</branch_identifier_length>
+    <iban_national_id_length>8</iban_national_id_length>
+    <account_number_position>13</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>25</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20200301</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000020</record_key>
+    <iban_country_code>SC</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>8</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>8</iban_national_id_length>
+    <account_number_position>13</account_number_position>
+    <account_number_length>16</account_number_length>
+    <iban_total_length>31</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20161001</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000021</record_key>
+    <iban_country_code>IQ</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_position>9</branch_identifier_position>
+    <branch_identifier_length>3</branch_identifier_length>
+    <iban_national_id_length>7</iban_national_id_length>
+    <account_number_position>12</account_number_position>
+    <account_number_length>12</account_number_length>
+    <iban_total_length>23</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20161101</optional_commence_date>
+    <mandatory_commence_date>20170102</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000022</record_key>
+    <iban_country_code>SV</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>4</iban_national_id_length>
+    <account_number_position>9</account_number_position>
+    <account_number_length>20</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20161101</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000023</record_key>
+    <iban_country_code>BY</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>4</iban_national_id_length>
+    <account_number_position>9</account_number_position>
+    <account_number_length>20</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20161201</optional_commence_date>
+    <mandatory_commence_date>20170704</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000024</record_key>
+    <iban_country_code>VA</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>3</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>3</iban_national_id_length>
+    <account_number_position>8</account_number_position>
+    <account_number_length>15</account_number_length>
+    <iban_total_length>22</iban_total_length>
+    <sepa>Y</sepa>
+    <optional_commence_date>20190301</optional_commence_date>
+    <mandatory_commence_date>20191201</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000025</record_key>
+    <iban_country_code>AO</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_position>9</branch_identifier_position>
+    <branch_identifier_length>4</branch_identifier_length>
+    <iban_national_id_length>8</iban_national_id_length>
+    <account_number_position>13</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>25</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000026</record_key>
+    <iban_country_code>CG</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000027</record_key>
+    <iban_country_code>GQ</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000028</record_key>
+    <iban_country_code>CI</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS0000000029</record_key>
+    <iban_country_code>BF</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002A</record_key>
+    <iban_country_code>MA</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>3</bank_identifier_length>
+    <branch_identifier_position>15</branch_identifier_position>
+    <branch_identifier_length>3</branch_identifier_length>
+    <iban_national_id_length>3</iban_national_id_length>
+    <account_number_position>18</account_number_position>
+    <account_number_length>11</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002B</record_key>
+    <iban_country_code>SN</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002C</record_key>
+    <iban_country_code>CV</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_position>9</branch_identifier_position>
+    <branch_identifier_length>4</branch_identifier_length>
+    <iban_national_id_length>8</iban_national_id_length>
+    <account_number_position>13</account_number_position>
+    <account_number_length>11</account_number_length>
+    <iban_total_length>25</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002D</record_key>
+    <iban_country_code>GA</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002E</record_key>
+    <iban_country_code>BJ</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002F</record_key>
+    <iban_country_code>CM</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002G</record_key>
+    <iban_country_code>MZ</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>7</bank_identifier_position>
+    <bank_identifier_length>2</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>2</iban_national_id_length>
+    <account_number_position>9</account_number_position>
+    <account_number_length>17</account_number_length>
+    <iban_total_length>25</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002H</record_key>
+    <iban_country_code>MG</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002I</record_key>
+    <iban_country_code>CF</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002J</record_key>
+    <iban_country_code>TG</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002K</record_key>
+    <iban_country_code>GW</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>16</account_number_length>
+    <iban_total_length>25</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002L</record_key>
+    <iban_country_code>KM</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002M</record_key>
+    <iban_country_code>ML</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>14</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002N</record_key>
+    <iban_country_code>MN</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>4</iban_national_id_length>
+    <account_number_position>9</account_number_position>
+    <account_number_length>12</account_number_length>
+    <iban_total_length>20</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002O</record_key>
+    <iban_country_code>DZ</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>3</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>3</iban_national_id_length>
+    <account_number_position>8</account_number_position>
+    <account_number_length>17</account_number_length>
+    <iban_total_length>24</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002P</record_key>
+    <iban_country_code>TD</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002Q</record_key>
+    <iban_country_code>NE</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>5</iban_national_id_length>
+    <account_number_position>10</account_number_position>
+    <account_number_length>19</account_number_length>
+    <iban_total_length>28</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002R</record_key>
+    <iban_country_code>EG</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>4</bank_identifier_length>
+    <branch_identifier_position>9</branch_identifier_position>
+    <branch_identifier_length>4</branch_identifier_length>
+    <iban_national_id_length>8</iban_national_id_length>
+    <account_number_position>13</account_number_position>
+    <account_number_length>17</account_number_length>
+    <iban_total_length>29</iban_total_length>
+    <sepa>N</sepa>
+    <mandatory_commence_date>20210101</mandatory_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002S</record_key>
+    <iban_country_code>LY</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>3</bank_identifier_length>
+    <branch_identifier_position>8</branch_identifier_position>
+    <branch_identifier_length>3</branch_identifier_length>
+    <iban_national_id_length>6</iban_national_id_length>
+    <account_number_position>11</account_number_position>
+    <account_number_length>15</account_number_length>
+    <iban_total_length>25</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20210101</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002T</record_key>
+    <iban_country_code>SD</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>2</bank_identifier_length>
+    <branch_identifier_length>0</branch_identifier_length>
+    <iban_national_id_length>2</iban_national_id_length>
+    <account_number_position>7</account_number_position>
+    <account_number_length>12</account_number_length>
+    <iban_total_length>18</iban_total_length>
+    <sepa>N</sepa>
+    <mandatory_commence_date>20221231</mandatory_commence_date>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002U</record_key>
+    <iban_country_code>BI</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <optional_commence_date>20211021</optional_commence_date>
+    <iso13616>Y</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002V</record_key>
+    <iban_country_code>DJ</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>5</bank_identifier_length>
+    <branch_identifier_position>10</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>10</iban_national_id_length>
+    <account_number_position>15</account_number_position>
+    <account_number_length>13</account_number_length>
+    <iban_total_length>27</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
+  <ibanstructure_v2>
+    <modification_flag>A</modification_flag>
+    <record_key>IS000000002W</record_key>
+    <iban_country_code>RU</iban_country_code>
+    <iban_country_code_position>1</iban_country_code_position>
+    <iban_country_code_length>2</iban_country_code_length>
+    <iban_check_digits_position>3</iban_check_digits_position>
+    <iban_check_digits_length>2</iban_check_digits_length>
+    <bank_identifier_position>5</bank_identifier_position>
+    <bank_identifier_length>9</bank_identifier_length>
+    <branch_identifier_position>14</branch_identifier_position>
+    <branch_identifier_length>5</branch_identifier_length>
+    <iban_national_id_length>14</iban_national_id_length>
+    <account_number_position>19</account_number_position>
+    <account_number_length>15</account_number_length>
+    <iban_total_length>33</iban_total_length>
+    <sepa>N</sepa>
+    <iso13616>N</iso13616>
+  </ibanstructure_v2>
 </dataexport>

@@ -8,6 +8,9 @@ AD:
   :account_number_length: 12
   :total_length: 24
   :national_id_length: 8
+  :iban_example: AD1200012030200359100100
+  :bban_example: '00012030200359100100'
+  :domestic_account_number_example: '2030200359100100'
   :bban_format: "\\d{4}\\d{4}[A-Z0-9]{12}"
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{4}"
@@ -21,6 +24,9 @@ AE:
   :account_number_length: 16
   :total_length: 23
   :national_id_length: 3
+  :iban_example: AE070331234567890123456
+  :bban_example: '0331234567890123456'
+  :domestic_account_number_example: '1234567890123456'
   :bban_format: "\\d{3}\\d{16}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{16}"
@@ -33,10 +39,13 @@ AL:
   :account_number_length: 16
   :total_length: 28
   :national_id_length: 8
+  :iban_example: AL47212110090000000235698741
+  :bban_example: '212110090000000235698741'
+  :domestic_account_number_example: '0000000235698741'
   :bban_format: "\\d{8}[A-Z0-9]{16}"
   :bank_code_format: "\\d{3}"
-  :account_number_format: "[A-Z0-9]{16}"
   :branch_code_format: "\\d{5}"
+  :account_number_format: "[A-Z0-9]{16}"
 AT:
   :bank_code_position: 5
   :bank_code_length: 5
@@ -46,6 +55,9 @@ AT:
   :account_number_length: 11
   :total_length: 20
   :national_id_length: 5
+  :iban_example: AT611904300234573201
+  :bban_example: '1904300234573201'
+  :domestic_account_number_example: BLZ 19043 Kto 234573201
   :bban_format: "\\d{5}\\d{11}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{11}"
@@ -58,6 +70,9 @@ AZ:
   :account_number_length: 20
   :total_length: 28
   :national_id_length: 4
+  :iban_example: AZ21NABZ00000000137010001944
+  :bban_example: NABZ00000000137010001944
+  :domestic_account_number_example: NABZ00000000137010001944
   :bban_format: "[A-Z]{4}[A-Z0-9]{20}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{20}"
@@ -70,6 +85,9 @@ BA:
   :account_number_length: 10
   :total_length: 20
   :national_id_length: 3
+  :iban_example: BA391290079401028494
+  :bban_example: '1990440001200279'
+  :domestic_account_number_example: 199-044-00012002-79
   :bban_format: "\\d{3}\\d{3}\\d{8}\\d{2}"
   :bank_code_format: "\\d{3}"
   :branch_code_format: "\\d{3}"
@@ -83,6 +101,9 @@ BE:
   :account_number_length: 12
   :total_length: 16
   :national_id_length: 3
+  :iban_example: BE68539007547034
+  :bban_example: '539007547034'
+  :domestic_account_number_example: BE68 5390 0754 7034
   :bban_format: "\\d{3}\\d{7}\\d{2}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{7}\\d{2}\\d{3}"
@@ -97,6 +118,8 @@ BG:
   :account_number_length: 10
   :total_length: 22
   :national_id_length: 8
+  :iban_example: BG80BNBG96611020345678
+  :bban_example: BNBG96611020345678
   :bban_format: "[A-Z]{4}\\d{4}\\d{2}[A-Z0-9]{8}"
   :bank_code_format: "[A-Z]{4}"
   :branch_code_format: "\\d{4}"
@@ -110,6 +133,9 @@ BH:
   :account_number_length: 14
   :total_length: 22
   :national_id_length: 4
+  :iban_example: BH67BMAG00001299123456
+  :bban_example: BMAG00001299123456
+  :domestic_account_number_example: '00001299123456'
   :bban_format: "[A-Z]{4}[A-Z0-9]{14}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{14}"
@@ -122,10 +148,13 @@ BR:
   :account_number_length: 12
   :total_length: 29
   :national_id_length: 8
+  :iban_example: BR1800360305000010009795493C1
+  :bban_example: '00360305000010009795493P1'
+  :domestic_account_number_example: '0009795493C1'
   :bban_format: "\\d{8}\\d{5}\\d{10}[A-Z]{1}[A-Z0-9]{1}"
   :bank_code_format: "\\d{8}"
-  :account_number_format: "\\d{10}[A-Z]{1}[A-Z0-9]{1}"
   :branch_code_format: "\\d{5}"
+  :account_number_format: "\\d{10}[A-Z]{1}[A-Z0-9]{1}"
 CH:
   :bank_code_position: 5
   :bank_code_length: 5
@@ -135,6 +164,9 @@ CH:
   :account_number_length: 12
   :total_length: 21
   :national_id_length: 5
+  :iban_example: CH9300762011623852957
+  :bban_example: '00762011623852957'
+  :domestic_account_number_example: 762 1162-3852.957
   :bban_format: "\\d{5}[A-Z0-9]{12}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "[A-Z0-9]{12}"
@@ -147,6 +179,9 @@ CR:
   :account_number_length: 14
   :total_length: 22
   :national_id_length: 4
+  :iban_example: CR05015202001026284066
+  :bban_example: '15202001026284066'
+  :domestic_account_number_example: '02001026284066'
   :bban_format: "\\d{4}\\d{14}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{14}"
@@ -159,6 +194,9 @@ CY:
   :account_number_length: 16
   :total_length: 28
   :national_id_length: 8
+  :iban_example: CY17002001280000001200527600
+  :bban_example: '002001280000001200527600'
+  :domestic_account_number_example: '0000001200527600'
   :bban_format: "\\d{3}\\d{5}[A-Z0-9]{16}"
   :bank_code_format: "\\d{3}"
   :branch_code_format: "\\d{5}"
@@ -172,6 +210,9 @@ CZ:
   :account_number_length: 16
   :total_length: 24
   :national_id_length: 4
+  :iban_example: CZ6508000000192000145399
+  :bban_example: '08000000192000145399'
+  :domestic_account_number_example: 19-2000145399/0800
   :bban_format: "\\d{4}\\d{6}\\d{10}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{6}\\d{10}"
@@ -184,6 +225,9 @@ DE:
   :account_number_length: 10
   :total_length: 22
   :national_id_length: 8
+  :iban_example: DE89370400440532013000
+  :bban_example: '370400440532013000'
+  :domestic_account_number_example: '532013000'
   :bban_format: "\\d{8}\\d{10}"
   :bank_code_format: "\\d{8}"
   :account_number_format: "\\d{10}"
@@ -196,6 +240,9 @@ DK:
   :account_number_length: 10
   :total_length: 18
   :national_id_length: 4
+  :iban_example: DK5000400440116243
+  :bban_example: '00400440116243'
+  :domestic_account_number_example: 0040 0440116243
   :bban_format: "\\d{4}\\d{9}\\d{1}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{9}\\d{1}"
@@ -208,6 +255,9 @@ DO:
   :account_number_length: 20
   :total_length: 28
   :national_id_length: 4
+  :iban_example: DO28BAGR00000001212453611324
+  :bban_example: BAGR00000001212453611324
+  :domestic_account_number_example: '00000001212453611324'
   :bban_format: "[A-Z0-9]{4}\\d{20}"
   :bank_code_format: "[A-Z0-9]{4}"
   :account_number_format: "\\d{20}"
@@ -220,6 +270,9 @@ EE:
   :account_number_length: 14
   :total_length: 20
   :national_id_length: 2
+  :iban_example: EE382200221020145685
+  :bban_example: '2200221020145685'
+  :domestic_account_number_example: '221020145685'
   :bban_format: "\\d{2}\\d{2}\\d{11}\\d{1}"
   :bank_code_format: "[1-9][0-9]"
   :account_number_format: "\\d{2}\\d{11}\\d{1}"
@@ -234,6 +287,9 @@ ES:
   :account_number_length: 12
   :total_length: 24
   :national_id_length: 4
+  :iban_example: ES9121000418450200051332
+  :bban_example: '21000418450200051332'
+  :domestic_account_number_example: 2100 0418 45 0200051332
   :bban_format: "\\d{4}\\d{4}\\d{1}\\d{1}\\d{10}"
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{4}"
@@ -249,6 +305,7 @@ FI:
   :account_number_length: 8
   :total_length: 18
   :national_id_length: 3
+  :iban_example: FI2112345600000785
   :bban_format: "\\d{6}\\d{7}\\d{1}"
   :bank_code_format: "\\d{6}"
   :account_number_format: "\\d{7}\\d{1}"
@@ -263,6 +320,9 @@ FO:
   :account_number_length: 10
   :total_length: 18
   :national_id_length: 4
+  :iban_example: FO6264600001631634
+  :bban_example: '64600001631634'
+  :domestic_account_number_example: 6460 0001631634
   :bban_format: "\\d{4}\\d{9}\\d{1}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{9}\\d{1}"
@@ -275,6 +335,9 @@ FR:
   :account_number_length: 13
   :total_length: 27
   :national_id_length: 10
+  :iban_example: FR1420041010050500013M02606
+  :bban_example: 20041010050500013M02606
+  :domestic_account_number_example: 20041 01005 0500013M026 06
   :bban_format: "\\d{5}\\d{5}[A-Z0-9]{11}\\d{2}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "[A-Z0-9]{11}\\d{2}"
@@ -290,6 +353,9 @@ GB:
   :account_number_length: 8
   :total_length: 22
   :national_id_length: 10
+  :iban_example: GB29NWBK60161331926819
+  :bban_example: NWBK60161331926819
+  :domestic_account_number_example: 60-16-13 31926819
   :bban_format: "[A-Z]{4}\\d{6}\\d{8}"
   :bank_code_format: "[A-Z]{4}"
   :branch_code_format: "\\d{6}"
@@ -303,6 +369,9 @@ GE:
   :account_number_length: 16
   :total_length: 22
   :national_id_length: 2
+  :iban_example: GE29NB0000000101904917
+  :bban_example: NB0000000101904917
+  :domestic_account_number_example: '0000000101904917'
   :bban_format: "[A-Z]{2}\\d{16}"
   :bank_code_format: "[A-Z]{2}"
   :account_number_format: "\\d{16}"
@@ -315,6 +384,9 @@ GI:
   :account_number_length: 15
   :total_length: 23
   :national_id_length: 4
+  :iban_example: GI75NWBK000000007099453
+  :bban_example: NWBK000000007099453
+  :domestic_account_number_example: 0000 00007099 453
   :bban_format: "[A-Z]{4}[A-Z0-9]{15}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{15}"
@@ -327,6 +399,9 @@ GL:
   :account_number_length: 10
   :total_length: 18
   :national_id_length: 4
+  :iban_example: GL8964710001000206
+  :bban_example: '64710001000206'
+  :domestic_account_number_example: 6471 0001000206
   :bban_format: "\\d{4}\\d{9}\\d{1}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{9}\\d{1}"
@@ -339,6 +414,9 @@ GR:
   :account_number_length: 16
   :total_length: 27
   :national_id_length: 3
+  :iban_example: GR1601101250000000012300695
+  :bban_example: '01101250000000012300695'
+  :domestic_account_number_example: '01250000000012300695'
   :bban_format: "\\d{3}\\d{4}[A-Z0-9]{16}"
   :bank_code_format: "\\d{3}"
   :branch_code_format: "\\d{4}"
@@ -352,6 +430,9 @@ GT:
   :account_number_length: 20
   :total_length: 28
   :national_id_length: 4
+  :iban_example: GT82TRAJ01020000001210029690
+  :bban_example: TRAJ01020000001210029690
+  :domestic_account_number_example: '01020000001210029690'
   :bban_format: "[A-Z0-9]{4}[A-Z0-9]{20}"
   :bank_code_format: "[A-Z0-9]{4}"
   :account_number_format: "[A-Z0-9]{20}"
@@ -364,6 +445,9 @@ HR:
   :account_number_length: 10
   :total_length: 21
   :national_id_length: 7
+  :iban_example: HR1210010051863000160
+  :bban_example: '10010051863000160'
+  :domestic_account_number_example: 1001005-1863000160
   :bban_format: "\\d{7}\\d{10}"
   :bank_code_format: "\\d{7}"
   :account_number_format: "\\d{10}"
@@ -376,6 +460,9 @@ HU:
   :account_number_length: 17
   :total_length: 28
   :national_id_length: 7
+  :iban_example: HU42117730161111101800000000
+  :bban_example: '117730161111101800000000'
+  :domestic_account_number_example: 11773016-11111018-00000000
   :bban_format: "\\d{3}\\d{4}\\d{1}\\d{15}\\d{1}"
   :bank_code_format: "\\d{3}"
   :branch_code_format: "\\d{4}"
@@ -389,6 +476,9 @@ IE:
   :account_number_length: 8
   :total_length: 22
   :national_id_length: 10
+  :iban_example: IE29AIBK93115212345678
+  :bban_example: AIBK93115212345678
+  :domestic_account_number_example: 93-11-52 12345678
   :bban_format: "[A-Z]{4}\\d{6}\\d{8}"
   :bank_code_format: "[A-Z]{4}"
   :branch_code_format: "\\d{6}"
@@ -402,6 +492,9 @@ IL:
   :account_number_length: 13
   :total_length: 23
   :national_id_length: 6
+  :iban_example: IL620108000000099999999
+  :bban_example: '010800000099999999'
+  :domestic_account_number_example: 10-800-99999999
   :bban_format: "\\d{3}\\d{3}\\d{13}"
   :bank_code_format: "\\d{3}"
   :branch_code_format: "\\d{3}"
@@ -415,6 +508,9 @@ IS:
   :account_number_length: 18
   :total_length: 26
   :national_id_length: 4
+  :iban_example: IS140159260076545510730339
+  :bban_example: '0159260076545510730339'
+  :domestic_account_number_example: '0159-26-007654-551073-0339'
   :bban_format: "\\d{4}\\d{2}\\d{6}\\d{10}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{2}\\d{6}\\d{10}"
@@ -429,6 +525,9 @@ IT:
   :account_number_length: 12
   :total_length: 27
   :national_id_length: 10
+  :iban_example: IT60X0542811101000000123456
+  :bban_example: X0542811101000000123456
+  :domestic_account_number_example: X 05428 11101 000000123456
   :bban_format: "[A-Z]{1}\\d{5}\\d{5}[A-Z0-9]{12}"
   :bank_code_format: "\\d{5}"
   :branch_code_format: "\\d{5}"
@@ -444,6 +543,9 @@ KW:
   :account_number_length: 22
   :total_length: 30
   :national_id_length: 4
+  :iban_example: KW81CBKU0000000000001234560101
+  :bban_example: CBKU0000000000001234560101
+  :domestic_account_number_example: '1234560101'
   :bban_format: "[A-Z]{4}[A-Z0-9]{22}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{22}"
@@ -456,6 +558,9 @@ KZ:
   :account_number_length: 13
   :total_length: 20
   :national_id_length: 3
+  :iban_example: KZ86125KZT5004100100
+  :bban_example: 125KZT5004100100
+  :domestic_account_number_example: KZ86 125K ZT50 0410 0100
   :bban_format: "\\d{3}[A-Z0-9]{13}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "[A-Z0-9]{13}"
@@ -464,13 +569,16 @@ LB:
   :bank_code_length: 4
   :branch_code_position: 0
   :branch_code_length: 0
-  :account_number_position: 14
-  :account_number_length: 14
+  :account_number_position: 9
+  :account_number_length: 20
   :total_length: 28
   :national_id_length: 4
+  :iban_example: LB62099900000001001901229114
+  :bban_example: '0999 0000 0001 0019 0122 9114'
+  :domestic_account_number_example: 01 001 901229114
   :bban_format: "\\d{4}[A-Z0-9]{20}"
   :bank_code_format: "\\d{4}"
-  :account_number_format: "[A-Z0-9]{14}"
+  :account_number_format: "[A-Z0-9]{20}"
 LI:
   :bank_code_position: 5
   :bank_code_length: 5
@@ -480,6 +588,9 @@ LI:
   :account_number_length: 12
   :total_length: 21
   :national_id_length: 5
+  :iban_example: LI21088100002324013AA
+  :bban_example: '088100002324013AA'
+  :domestic_account_number_example: 8810 2324013AA
   :bban_format: "\\d{5}[A-Z0-9]{12}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "[A-Z0-9]{12}"
@@ -492,6 +603,8 @@ LT:
   :account_number_length: 11
   :total_length: 20
   :national_id_length: 5
+  :iban_example: LT121000011101001000
+  :bban_example: '1000011101001000'
   :bban_format: "\\d{5}\\d{11}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{11}"
@@ -504,6 +617,8 @@ LU:
   :account_number_length: 13
   :total_length: 20
   :national_id_length: 3
+  :iban_example: LU280019400644750000
+  :bban_example: '0019400644750000'
   :bban_format: "\\d{3}[A-Z0-9]{13}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "[A-Z0-9]{13}"
@@ -516,6 +631,9 @@ LV:
   :account_number_length: 13
   :total_length: 21
   :national_id_length: 4
+  :iban_example: LV80BANK0000435195001
+  :bban_example: BANK0000435195001
+  :domestic_account_number_example: LV80 BANK 0000 4351 9500 1
   :bban_format: "[A-Z]{4}[A-Z0-9]{13}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{13}"
@@ -528,6 +646,9 @@ MC:
   :account_number_length: 13
   :total_length: 27
   :national_id_length: 10
+  :iban_example: MC5811222000010123456789030
+  :bban_example: 11222 00001 01234567890 30
+  :domestic_account_number_example: 0011111000h
   :bban_format: "\\d{5}\\d{5}[A-Z0-9]{11}\\d{2}"
   :bank_code_format: "\\d{5}"
   :branch_code_format: "\\d{5}"
@@ -543,6 +664,9 @@ MD:
   :account_number_length: 18
   :total_length: 24
   :national_id_length: 2
+  :iban_example: MD24AG000225100013104168
+  :bban_example: AG000225100013104168
+  :domestic_account_number_example: '000225100013104168'
   :bban_format: "[A-Z0-9]{2}[A-Z0-9]{18}"
   :bank_code_format: "[A-Z0-9]{2}"
   :account_number_format: "[A-Z0-9]{18}"
@@ -555,6 +679,9 @@ ME:
   :account_number_length: 15
   :total_length: 22
   :national_id_length: 3
+  :iban_example: ME25505000012345678951
+  :bban_example: '505000012345678951'
+  :domestic_account_number_example: 505 0000123456789 51
   :bban_format: "\\d{3}\\d{13}\\d{2}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{13}\\d{2}"
@@ -567,6 +694,9 @@ MK:
   :account_number_length: 12
   :total_length: 19
   :national_id_length: 3
+  :iban_example: MK07250120000058984
+  :bban_example: '250120000058984'
+  :domestic_account_number_example: MK07 300 0000000424 25
   :bban_format: "\\d{3}[A-Z0-9]{10}\\d{2}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "[A-Z0-9]{10}\\d{2}"
@@ -579,6 +709,9 @@ MR:
   :account_number_length: 13
   :total_length: 27
   :national_id_length: 10
+  :iban_example: MR1300020001010000123456753
+  :bban_example: '00020001010000123456753'
+  :domestic_account_number_example: 00020 00101 00001234567 53
   :bban_format: "\\d{5}\\d{5}\\d{11}\\d{2}"
   :bank_code_format: "\\d{5}"
   :branch_code_format: "\\d{5}"
@@ -592,6 +725,9 @@ MT:
   :account_number_length: 18
   :total_length: 31
   :national_id_length: 9
+  :iban_example: MT84MALT011000012345MTLCAST001S
+  :bban_example: MALT011000012345MTLCAST001S
+  :domestic_account_number_example: 12345MTLCAST001S
   :bban_format: "[A-Z]{4}\\d{5}[A-Z0-9]{18}"
   :bank_code_format: "[A-Z]{4}"
   :branch_code_format: "\\d{5}"
@@ -605,6 +741,9 @@ MU:
   :account_number_length: 18
   :total_length: 30
   :national_id_length: 8
+  :iban_example: MU17BOMM0101101030300200000MUR
+  :bban_example: BOMM0101101030300200000MUR
+  :domestic_account_number_example: MU17 BOMM 0101 1010 3030 0200 000M UR
   :bban_format: "[A-Z]{4}\\d{2}\\d{2}\\d{12}\\d{3}[A-Z]{3}"
   :bank_code_format: "[A-Z]{4}\\d{2}"
   :branch_code_format: "\\d{2}"
@@ -618,6 +757,9 @@ NL:
   :account_number_length: 10
   :total_length: 18
   :national_id_length: 4
+  :iban_example: NL91ABNA0417164300
+  :bban_example: ABNA0417164300
+  :domestic_account_number_example: 041 71 64 300
   :bban_format: "[A-Z]{4}\\d{10}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "\\d{10}"
@@ -632,6 +774,9 @@ NL:
   :account_number_length: 7
   :total_length: 15
   :national_id_length: 4
+  :iban_example: NO9386011117947
+  :bban_example: '86011117947'
+  :domestic_account_number_example: 8601 11 17947
   :bban_format: "\\d{4}\\d{6}\\d{1}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{6}\\d{1}"
@@ -646,6 +791,9 @@ PK:
   :account_number_length: 16
   :total_length: 24
   :national_id_length: 4
+  :iban_example: PK36SCBL0000001123456702
+  :bban_example: SCBL0000001123456702
+  :domestic_account_number_example: '00260101036360'
   :bban_format: "[A-Z]{4}[A-Z0-9]{16}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{16}"
@@ -658,6 +806,9 @@ PL:
   :account_number_length: 16
   :total_length: 28
   :national_id_length: 8
+  :iban_example: PL61109010140000071219812874
+  :bban_example: '109010140000071219812874'
+  :domestic_account_number_example: 61 1090 1014 0000 0712 1981 2874
   :bban_format: "\\d{8}\\d{16}"
   :bank_code_format: "\\d{8}"
   :account_number_format: "\\d{16}"
@@ -670,6 +821,9 @@ PS:
   :account_number_length: 21
   :total_length: 29
   :national_id_length: 4
+  :iban_example: PS92PALS000000000400123456702
+  :bban_example: PALS000000000400123456702
+  :domestic_account_number_example: '400123456702'
   :bban_format: "[A-Z]{4}[A-Z0-9]{21}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{21}"
@@ -682,6 +836,9 @@ PT:
   :account_number_length: 13
   :total_length: 25
   :national_id_length: 4
+  :iban_example: PT50000201231234567890154
+  :bban_example: '000201231234567890154'
+  :domestic_account_number_example: 0002.0123.12345678901.54
   :bban_format: "\\d{4}\\d{4}\\d{11}\\d{2}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{11}\\d{2}"
@@ -697,6 +854,9 @@ RO:
   :account_number_length: 16
   :total_length: 24
   :national_id_length: 4
+  :iban_example: RO49AAAA1B31007593840000
+  :bban_example: AAAA1B31007593840000
+  :domestic_account_number_example: RO49 AAAA 1B31 0075 9384 0000
   :bban_format: "[A-Z]{4}[A-Z0-9]{16}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{16}"
@@ -709,6 +869,9 @@ RS:
   :account_number_length: 15
   :total_length: 22
   :national_id_length: 3
+  :iban_example: RS35260005601001611379
+  :bban_example: '260005601001611379'
+  :domestic_account_number_example: 260-0056010016113-79
   :bban_format: "\\d{3}\\d{13}\\d{2}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{13}\\d{2}"
@@ -721,6 +884,9 @@ SA:
   :account_number_length: 18
   :total_length: 24
   :national_id_length: 2
+  :iban_example: SA0380000000608010167519
+  :bban_example: '80000000608010167519'
+  :domestic_account_number_example: '608010167519'
   :bban_format: "\\d{2}[A-Z0-9]{18}"
   :bank_code_format: "\\d{2}"
   :account_number_format: "[A-Z0-9]{18}"
@@ -733,6 +899,9 @@ SE:
   :account_number_length: 17
   :total_length: 24
   :national_id_length: 3
+  :iban_example: SE4550000000058398257466
+  :bban_example: '50000000058398257466'
+  :domestic_account_number_example: 1234 12 3456 1
   :bban_format: "\\d{3}\\d{16}\\d{1}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{16}\\d{1}"
@@ -748,6 +917,9 @@ SI:
   :account_number_length: 10
   :total_length: 19
   :national_id_length: 5
+  :iban_example: SI56263300012039086
+  :bban_example: '263300012039086'
+  :domestic_account_number_example: 2633 0001 2039 086
   :bban_format: "\\d{5}\\d{8}\\d{2}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{8}\\d{2}"
@@ -760,6 +932,9 @@ SK:
   :account_number_length: 16
   :total_length: 24
   :national_id_length: 4
+  :iban_example: SK3112000000198742637541
+  :bban_example: '12000000198742637541'
+  :domestic_account_number_example: 19-8742637541/1200
   :bban_format: "\\d{4}\\d{6}\\d{10}"
   :bank_code_format: "\\d{4}"
   :account_number_format: "\\d{6}\\d{10}"
@@ -774,6 +949,8 @@ SM:
   :account_number_length: 12
   :total_length: 27
   :national_id_length: 10
+  :iban_example: SM86U0322509800000000270100
+  :bban_example: U0322509800000000270100
   :bban_format: "[A-Z]{1}\\d{5}\\d{5}[A-Z0-9]{12}"
   :bank_code_format: "\\d{5}"
   :branch_code_format: "\\d{5}"
@@ -788,7 +965,10 @@ TN:
   :account_number_position: 10
   :account_number_length: 15
   :total_length: 24
-  :national_id_length: 2
+  :national_id_length: 5
+  :iban_example: TN5910006035183598478831
+  :bban_example: '10006035183598478831'
+  :domestic_account_number_example: 10 006 0351835984788 31
   :bban_format: "\\d{2}\\d{3}\\d{13}\\d{2}"
   :bank_code_format: "\\d{2}"
   :branch_code_format: "\\d{3}"
@@ -802,6 +982,8 @@ TR:
   :account_number_length: 17
   :total_length: 26
   :national_id_length: 5
+  :iban_example: TR330006100519786457841326
+  :bban_example: '0006100519786457841326'
   :bban_format: "\\d{5}\\d{1}[A-Z0-9]{16}"
   :bank_code_format: "\\d{5}"
   :account_number_format: "\\d{1}[A-Z0-9]{16}"
@@ -814,21 +996,28 @@ VG:
   :account_number_length: 16
   :total_length: 24
   :national_id_length: 4
+  :iban_example: VG96VPVG0000012345678901
+  :bban_example: VPVG0000012345678901
+  :domestic_account_number_example: 00000 12 345 678 901
   :bban_format: "[A-Z]{4}\\d{16}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "\\d{16}"
 JO:
   :bank_code_position: 5
   :bank_code_length: 4
-  :branch_code_position: 0
-  :branch_code_length: 0
-  :account_number_position: 9
-  :account_number_length: 22
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 13
+  :account_number_length: 18
   :total_length: 30
   :national_id_length: 4
+  :iban_example: JO94CBJO0010000000000131000302
+  :bban_example: CBJO0010000000000131000302
+  :domestic_account_number_example: '0001310000302'
   :bban_format: "[A-Z]{4}\\d{4}[A-Z0-9]{18}"
   :bank_code_format: "[A-Z]{4}"
-  :account_number_format: "\\d{4}[A-Z0-9]{18}"
+  :branch_code_format: "\\d{4}"
+  :account_number_format: "[A-Z0-9]{18}"
 QA:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -838,6 +1027,9 @@ QA:
   :account_number_length: 21
   :total_length: 29
   :national_id_length: 4
+  :iban_example: QA58DOHB00001234567890ABCDEFG
+  :bban_example: DOHB00001234567890ABCDEFG
+  :domestic_account_number_example: '00001234567890ABCDEFG'
   :bban_format: "[A-Z]{4}[A-Z0-9]{21}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{21}"
@@ -846,14 +1038,17 @@ XK:
   :bank_code_length: 2
   :branch_code_position: 7
   :branch_code_length: 2
-  :account_number_position: 9
-  :account_number_length: 10
+  :account_number_position: 5
+  :account_number_length: 16
   :total_length: 20
-  :national_id_length: 2
+  :national_id_length: 4
+  :iban_example: XK051212012345678906
+  :bban_example: '1212012345678906'
+  :domestic_account_number_example: 1212 0123456789 06
   :bban_format: "\\d{4}\\d{10}\\d{2}"
   :bank_code_format: "\\d{2}"
   :branch_code_format: "\\d{2}"
-  :account_number_format: "\\d{10}"
+  :account_number_format: "\\d{4}\\d{10}\\d{2}"
 TL:
   :bank_code_position: 5
   :bank_code_length: 3
@@ -863,6 +1058,9 @@ TL:
   :account_number_length: 16
   :total_length: 23
   :national_id_length: 3
+  :iban_example: TL380080012345678910157
+  :bban_example: '0080012345678910157'
+  :domestic_account_number_example: '008 00123456789101 57'
   :bban_format: "\\d{3}\\d{14}\\d{2}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{14}\\d{2}"
@@ -875,6 +1073,9 @@ LC:
   :account_number_length: 24
   :total_length: 32
   :national_id_length: 4
+  :iban_example: LC55HEMM000100010012001200023015
+  :bban_example: HEMM000100010012001200023015
+  :domestic_account_number_example: 0001 0001 0012 0012 0002 3015
   :bban_format: "[A-Z]{4}[A-Z0-9]{24}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "[A-Z0-9]{24}"
@@ -887,6 +1088,9 @@ UA:
   :account_number_length: 19
   :total_length: 29
   :national_id_length: 6
+  :iban_example: UA213223130000026007233566001
+  :bban_example: '3223130000026007233566001'
+  :domestic_account_number_example: '26007233566001'
   :bban_format: "\\d{6}[A-Z0-9]{19}"
   :bank_code_format: "\\d{6}"
   :account_number_format: "[A-Z0-9]{19}"
@@ -899,22 +1103,27 @@ ST:
   :account_number_length: 13
   :total_length: 25
   :national_id_length: 8
+  :iban_example: ST68000200010192194210112
+  :bban_example: '000200010192194210112'
+  :domestic_account_number_example: '01921942101.12'
   :bban_format: "\\d{4}\\d{4}\\d{11}\\d{2}"
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{4}"
   :account_number_format: "\\d{11}\\d{2}"
 SC:
   :bank_code_position: 5
-  :bank_code_length: 4
-  :branch_code_position: 9
-  :branch_code_length: 4
+  :bank_code_length: 8
+  :branch_code_position: 0
+  :branch_code_length: 0
   :account_number_position: 13
   :account_number_length: 16
   :total_length: 31
   :national_id_length: 8
+  :iban_example: SC18SSCB11010000000000001497USD
+  :bban_example: SSCB11010000000000001497USD
+  :domestic_account_number_example: '0000000000001497'
   :bban_format: "[A-Z]{4}\\d{2}\\d{2}\\d{16}[A-Z]{3}"
-  :bank_code_format: "[A-Z]{4}"
-  :branch_code_format: "\\d{4}"
+  :bank_code_format: "[A-Z]{4}\\d{4}"
   :account_number_format: "\\d{16}"
 IQ:
   :bank_code_position: 5
@@ -924,7 +1133,10 @@ IQ:
   :account_number_position: 12
   :account_number_length: 12
   :total_length: 23
-  :national_id_length: 4
+  :national_id_length: 7
+  :iban_example: IQ98NBIQ850123456789012
+  :bban_example: NBIQ850123456789012
+  :domestic_account_number_example: '123456789012'
   :bban_format: "[A-Z]{4}\\d{3}\\d{12}"
   :bank_code_format: "[A-Z]{4}"
   :branch_code_format: "\\d{3}"
@@ -938,6 +1150,9 @@ SV:
   :account_number_length: 20
   :total_length: 28
   :national_id_length: 4
+  :iban_example: SV62CENR00000000000000700025
+  :bban_example: CENR00000000000000700025
+  :domestic_account_number_example: '00000000000000700025'
   :bban_format: "[A-Z]{4}\\d{20}"
   :bank_code_format: "[A-Z]{4}"
   :account_number_format: "\\d{20}"
@@ -950,6 +1165,9 @@ BY:
   :account_number_length: 20
   :total_length: 28
   :national_id_length: 4
+  :iban_example: BY13NBRB3600900000002Z00AB00
+  :bban_example: NBRB 3600900000002Z00AB00
+  :domestic_account_number_example: 3600 0000 0000 0Z00 AB00
   :bban_format: "[A-Z0-9]{4}\\d{4}[A-Z0-9]{16}"
   :bank_code_format: "[A-Z0-9]{4}"
   :account_number_format: "\\d{4}[A-Z0-9]{16}"
@@ -962,9 +1180,210 @@ VA:
   :account_number_length: 15
   :total_length: 22
   :national_id_length: 3
+  :iban_example: VA59001123000012345678
+  :bban_example: '001123000012345678'
+  :domestic_account_number_example: '123000012345678'
   :bban_format: "\\d{3}\\d{15}"
   :bank_code_format: "\\d{3}"
   :account_number_format: "\\d{15}"
+AO:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 13
+  :account_number_length: 13
+  :total_length: 25
+  :national_id_length: 8
+CG:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+GQ:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+CI:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 19
+  :total_length: 28
+  :national_id_length: 5
+BF:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 19
+  :total_length: 28
+  :national_id_length: 5
+MA:
+  :bank_code_position: 5
+  :bank_code_length: 3
+  :branch_code_position: 15
+  :branch_code_length: 3
+  :account_number_position: 18
+  :account_number_length: 11
+  :total_length: 28
+  :national_id_length: 3
+SN:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 19
+  :total_length: 28
+  :national_id_length: 5
+CV:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 9
+  :branch_code_length: 4
+  :account_number_position: 13
+  :account_number_length: 11
+  :total_length: 25
+  :national_id_length: 8
+GA:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+BJ:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 19
+  :total_length: 28
+  :national_id_length: 5
+CM:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+MZ:
+  :bank_code_position: 7
+  :bank_code_length: 2
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 9
+  :account_number_length: 17
+  :total_length: 25
+  :national_id_length: 2
+MG:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+CF:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+TG:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 19
+  :total_length: 28
+  :national_id_length: 5
+GW:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 16
+  :total_length: 25
+  :national_id_length: 5
+KM:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+ML:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 14
+  :total_length: 28
+  :national_id_length: 5
+MN:
+  :bank_code_position: 5
+  :bank_code_length: 4
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 9
+  :account_number_length: 12
+  :total_length: 20
+  :national_id_length: 4
+DZ:
+  :bank_code_position: 5
+  :bank_code_length: 3
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 8
+  :account_number_length: 17
+  :total_length: 24
+  :national_id_length: 3
+TD:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+NE:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 10
+  :account_number_length: 19
+  :total_length: 28
+  :national_id_length: 5
 EG:
   :bank_code_position: 5
   :bank_code_length: 4
@@ -973,13 +1392,93 @@ EG:
   :account_number_position: 13
   :account_number_length: 17
   :total_length: 29
-  :national_id_length: 0
+  :national_id_length: 8
+  :iban_example: EG380019000500000000263180002
+  :bban_example: '0019000500000000263180002'
+  :domestic_account_number_example: '000263180002'
   :bban_format: "\\d{4}\\d{4}\\d{17}"
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{4}"
   :account_number_format: "\\d{17}"
-
-# Pseudo Ibans
+LY:
+  :bank_code_position: 5
+  :bank_code_length: 3
+  :branch_code_position: 8
+  :branch_code_length: 3
+  :account_number_position: 11
+  :account_number_length: 15
+  :total_length: 25
+  :national_id_length: 6
+  :iban_example: LY83002048000020100120361
+  :bban_example: '002048000020100120361'
+  :domestic_account_number_example: '000020100120361'
+  :bban_format: "\\d{3}\\d{3}\\d{15}"
+  :bank_code_format: "\\d{3}"
+  :branch_code_format: "\\d{3}"
+  :account_number_format: "\\d{15}"
+SD:
+  :bank_code_position: 5
+  :bank_code_length: 2
+  :branch_code_position: 0
+  :branch_code_length: 0
+  :account_number_position: 7
+  :account_number_length: 12
+  :total_length: 18
+  :national_id_length: 2
+  :iban_example: SD2129010501234001
+  :bban_example: '29010501234001'
+  :domestic_account_number_example: '010501234001'
+  :bban_format: "\\d{2}\\d{12}"
+  :bank_code_format: "\\d{2}"
+  :account_number_format: "\\d{12}"
+BI:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+  :iban_example: BI4210000100010000332045181
+  :bban_example: '10000100010000332045181'
+  :domestic_account_number_example: 00003320451 81
+  :bban_format: "\\d{5}\\d{5}\\d{11}\\d{2}"
+  :bank_code_format: "\\d{5}"
+  :branch_code_format: "\\d{5}"
+  :account_number_format: "\\d{11}\\d{2}"
+DJ:
+  :bank_code_position: 5
+  :bank_code_length: 5
+  :branch_code_position: 10
+  :branch_code_length: 5
+  :account_number_position: 15
+  :account_number_length: 13
+  :total_length: 27
+  :national_id_length: 10
+  :iban_example: DJ2100010000000154000100186
+  :bban_example: '00010000000154000100186'
+  :domestic_account_number_example: '0154000100186'
+  :bban_format: "\\d{5}\\d{5}\\d{11}\\d{2}"
+  :bank_code_format: "\\d{5}"
+  :branch_code_format: "\\d{5}"
+  :account_number_format: "\\d{11}\\d{2}"
+RU:
+  :bank_code_position: 5
+  :bank_code_length: 9
+  :branch_code_position: 14
+  :branch_code_length: 5
+  :account_number_position: 19
+  :account_number_length: 15
+  :total_length: 33
+  :national_id_length: 14
+  :iban_example: RU1704452522540817810538091310419
+  :bban_example: 044525225 40817 810 5 3809 1310419
+  :domestic_account_number_example: 40817 810 5 3809 1310419
+  :bban_format: "\\d{9}\\d{5}[A-Z0-9]{15}"
+  :bank_code_format: "\\d{9}"
+  :branch_code_format: "\\d{5}"
+  :account_number_format: "[A-Z0-9]{15}"
 AU:
   :bank_code_length: 0
   :branch_code_length: 6
@@ -1026,7 +1525,7 @@ US:
     end: 17
     excl: false
   :bank_code_format: "\\d{9}"
-  :account_number_format: "_*\\d{1,17}"
+  :account_number_format: _*\d{1,17}
   :national_id_length: 9
   :pseudo_iban_bank_code_length: 9
   :pseudo_iban_branch_code_length: 0

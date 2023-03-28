@@ -9,6 +9,7 @@ BR:
 BE:
   :local_check_digit_position: 15
   :local_check_digit_length: 2
+  :account_number_format: "\\d{7}\\d{2}\\d{3}"
 BH:
   :bank_code_format: '[A-Z]{4}'
   :account_number_format: '[A-Z0-9]{14}'
@@ -20,10 +21,17 @@ EE:
   :account_number_format: \d{2}\d{11}\d{1}
   :local_check_digit_position: 20
   :local_check_digit_length: 1
+EG:
+  :bank_code_format: \d{4}
+  :branch_code_format: \d{4}
 ES:
   :local_check_digit_position: 13
   :local_check_digit_length: 2
 FI:
+  # Finnish bank codes are 6 digits but the IBANSTRUCTURE is 3 digits
+  :bank_code_length: 6
+  :account_number_position: 11
+  :account_number_length: 8
   :bban_format: \d{6}\d{7}\d{1}
   :bank_code_format: \d{6}
   :account_number_format: \d{7}\d{1}
@@ -41,15 +49,24 @@ HU:
   :bban_format: \d{3}\d{4}\d{1}\d{15}\d{1}
   :account_number_format: \d{1}\d{15}\d{1}
 IS:
+  # Icelandic bank codes are 4 digits but the IBAN registry splits this into 2 \d{2}
+  :bank_code_format: \d{4}
+  :branch_code_format: null
   :local_check_digit_position: 25
   :local_check_digit_length: 1
 IT:
+  :account_number_format: "[A-Z0-9]{12}"
   :local_check_digit_position: 5
   :local_check_digit_length: 1
+IQ:
+  :bank_code_format: "[A-Z]{4}"
+  :branch_code_format: \d{3}
+JO:
+  :bank_code_format: "[A-Z]{4}"
 LB:
   :bban_format: \d{4}[A-Z0-9]{20}
   :bank_code_format: \d{4}
-  :account_number_format: '[A-Z0-9]{14}'
+  :account_number_format: '[A-Z0-9]{20}'
 MC:
   :local_check_digit_position: 26
   :local_check_digit_length: 2
@@ -64,6 +81,10 @@ NL:
 'NO':
   :local_check_digit_position: 15
   :local_check_digit_length: 1
+PL:
+  :bban_format: \d{8}\d{16}
+  :bank_code_format: \d{8}
+  :account_number_format: \d{16}
 PT:
   :branch_code_format: \d{4}
   :account_number_format: \d{11}\d{2}
@@ -76,6 +97,10 @@ QA:
 SA:
   :bank_code_format: \d{2}
   :account_number_format: '[A-Z0-9]{18}'
+SC:
+  :bank_code_format: "[A-Z]{4}\\d{4}"
+  :branch_code_format: null
+  :account_number_format: "\\d{16}"
 SE:
   :pseudo_iban_bank_code_length: 0
   :pseudo_iban_branch_code_length: 5
@@ -98,3 +123,6 @@ TL:
 XR:
   :local_check_digit_position: 18
   :local_check_digit_length: 2
+XK:
+  :account_number_format: \d{4}\d{10}\d{2}
+

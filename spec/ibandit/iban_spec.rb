@@ -3396,7 +3396,7 @@ describe Ibandit::IBAN do
     end
 
     context "for a valid Italian IBAN" do
-      let(:iban_code) { "IT40 S054 2811 1010 0000 0123 456" }
+      let(:iban_code) { "IT60 X054 2811 1010 0000 0123 456" }
 
       it { is_expected.to be_valid }
     end
@@ -3943,6 +3943,66 @@ describe Ibandit::IBAN do
 
     context "with an invalid EG iban" do
       let(:iban_code) { "EG3800190005000000002631800" }
+
+      it { is_expected.to_not be_valid }
+    end
+
+    context "with a valid LY iban" do
+      let(:iban_code) { "LY83002048000020100120361" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "with an invalid LY iban" do
+      let(:iban_code) { "LY830020480000120361" }
+
+      it { is_expected.to_not be_valid }
+    end
+
+    context "with a valid SD iban" do
+      let(:iban_code) { "SD2129010501234001" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "with an invalid SD iban" do
+      let(:iban_code) { "SD21290104001" }
+
+      it { is_expected.to_not be_valid }
+    end
+
+    context "with a valid BI iban" do
+      let(:iban_code) { "BI4210000100010000332045181" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "with an invalid BI iban" do
+      let(:iban_code) { "BI4210000100000332045181" }
+
+      it { is_expected.to_not be_valid }
+    end
+
+    context "with a valid DJ iban" do
+      let(:iban_code) { "DJ2100010000000154000100186" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "with an invalid DJ iban" do
+      let(:iban_code) { "DJ2100010000000000100186" }
+
+      it { is_expected.to_not be_valid }
+    end
+
+    context "with a valid RU iban" do
+      let(:iban_code) { "RU0204452560040702810412345678901" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "with an invalid RU iban" do
+      let(:iban_code) { "RU1704452522540817810538091310419" }
 
       it { is_expected.to_not be_valid }
     end

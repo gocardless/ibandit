@@ -132,7 +132,7 @@ module Ibandit
         if local_details[:branch_code]
           local_details[:branch_code]
         elsif cleaned_bank_code.length > 3
-          cleaned_bank_code[3..-1]
+          cleaned_bank_code[3..]
         end
       account_number =
         if local_details[:account_number].length >= 7
@@ -247,7 +247,7 @@ module Ibandit
 
         bank_code      = cleaned_account_number.slice(0, 4)
         branch_code    = cleaned_account_number.slice(4, 4)
-        account_number = cleaned_account_number[8..-1]
+        account_number = cleaned_account_number[8..]
       end
 
       {
@@ -265,7 +265,7 @@ module Ibandit
         if %w[4 5 6].include?(local_details[:bank_code][0])
           [
             local_details[:account_number][0],
-            local_details[:account_number][1..-1].rjust(7, "0"),
+            local_details[:account_number][1..].rjust(7, "0"),
           ].join
         else
           local_details[:account_number].rjust(8, "0")
@@ -380,7 +380,7 @@ module Ibandit
         bank_code, *parts = local_details[:account_number].split("-")
       else
         bank_code = local_details[:account_number].slice(0, 4)
-        parts = Array(local_details[:account_number][4..-1])
+        parts = Array(local_details[:account_number][4..])
       end
 
       {
@@ -457,7 +457,7 @@ module Ibandit
         cleaned_acct_number = local_details[:account_number].gsub(/[-.\s]/, "")
 
         bank_code      = cleaned_acct_number.slice(0, 4)
-        account_number = cleaned_acct_number[4..-1]
+        account_number = cleaned_acct_number[4..]
       end
 
       {
@@ -483,7 +483,7 @@ module Ibandit
         cleaned_account_number = local_details[:account_number].tr("-", "")
         bank_code = cleaned_account_number.slice(0, 2)
         branch_code = cleaned_account_number.slice(2, 4)
-        account_number = cleaned_account_number[6..-1]
+        account_number = cleaned_account_number[6..]
       end
 
       if account_number && account_number.length == 9
@@ -515,7 +515,7 @@ module Ibandit
         cleaned_acct_number = local_details[:account_number].gsub(/\s/, "")
 
         bank_code      = cleaned_acct_number.slice(2, 8)
-        account_number = cleaned_acct_number[10..-1]
+        account_number = cleaned_acct_number[10..]
       end
 
       {
