@@ -64,7 +64,7 @@ module Ibandit
     def account_number_suffix
       return nil unless country_code == "NZ"
 
-      @account_number[7..-1]
+      @account_number[7..]
     end
 
     def local_check_digits
@@ -77,7 +77,7 @@ module Ibandit
     end
 
     def bban
-      iban[4..-1] unless iban.nil?
+      iban[4..] unless iban.nil?
     end
 
     def pseudo_iban

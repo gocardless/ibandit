@@ -1,0 +1,52 @@
+---
+AU:
+  :bank_code_length: 0
+  :branch_code_length: 6
+  :account_number_length: !ruby/range
+    begin: 5
+    end: 10
+    excl: false
+  :branch_code_format: "\\d{6}"
+  :account_number_format: "[A-Z0-9]{5,10}"
+  :pseudo_iban_bank_code_length: 0
+  :pseudo_iban_branch_code_length: 6
+  :pseudo_iban_account_number_length: 10
+  :national_id_length: 6
+CA:
+  :bank_code_length: 4
+  :branch_code_length: 5
+  :account_number_length: !ruby/range
+    begin: 7
+    end: 12
+    excl: false
+  :bank_code_format: "\\d{4}"
+  :branch_code_format: "\\d{5}"
+  :account_number_format: "\\d{7,12}"
+  :national_id_length: 9
+  :pseudo_iban_bank_code_length: 4
+  :pseudo_iban_branch_code_length: 5
+  :pseudo_iban_account_number_length: 12
+NZ:
+  :bank_code_length: 2
+  :branch_code_length: 4
+  :account_number_length: 10
+  :bank_code_format: "\\d{2}"
+  :branch_code_format: "\\d{4}"
+  :account_number_format: "\\d{7}\\d{3}"
+  :pseudo_iban_bank_code_length: 2
+  :pseudo_iban_branch_code_length: 4
+  :pseudo_iban_account_number_length: 10
+  :national_id_length: 6
+US:
+  :bank_code_length: 9
+  :branch_code_length: 0
+  :account_number_length: !ruby/range
+    begin: 1
+    end: 17
+    excl: false
+  :bank_code_format: "\\d{9}"
+  :account_number_format: "_*\\d{1,17}"
+  :national_id_length: 9
+  :pseudo_iban_bank_code_length: 9
+  :pseudo_iban_branch_code_length: 0
+  :pseudo_iban_account_number_length: 17
