@@ -412,8 +412,8 @@ describe Ibandit::IBAN do
 
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
-        expect(subject.errors).to eq(account_number: "is invalid",
-                                     branch_code: "is invalid")
+        expect(subject.errors).to eq(account_number: "format is invalid",
+                                     branch_code: "format is invalid")
       end
     end
 
@@ -715,7 +715,7 @@ describe Ibandit::IBAN do
 
         it "returns an error on bank_code attribute" do
           expect(subject.valid?).to eq(false)
-          expect(subject.errors).to eq(bank_code: "is invalid")
+          expect(subject.errors).to eq(bank_code: "did not pass checksum test")
         end
       end
 
@@ -810,7 +810,7 @@ describe Ibandit::IBAN do
 
       it "is invalid and has an error populated" do
         expect(subject.valid?).to eq(false)
-        expect(subject.errors).to eq(account_number: "is invalid")
+        expect(subject.errors).to eq(account_number: "format is invalid")
       end
     end
   end
@@ -1144,7 +1144,7 @@ describe Ibandit::IBAN do
 
       it "sets errors on the IBAN" do
         iban.valid_bank_code_format?
-        expect(iban.errors).to include(bank_code: "is invalid")
+        expect(iban.errors).to include(bank_code: "format is invalid")
       end
     end
 
@@ -1185,7 +1185,7 @@ describe Ibandit::IBAN do
 
       it "sets errors on the IBAN" do
         iban.valid_branch_code_format?
-        expect(iban.errors).to include(branch_code: "is invalid")
+        expect(iban.errors).to include(branch_code: "format is invalid")
       end
     end
 
@@ -1225,7 +1225,7 @@ describe Ibandit::IBAN do
 
       it "sets errors on the IBAN" do
         iban.valid_account_number_format?
-        expect(iban.errors).to include(account_number: "is invalid")
+        expect(iban.errors).to include(account_number: "format is invalid")
       end
     end
 
@@ -1285,7 +1285,7 @@ describe Ibandit::IBAN do
         it { is_expected.to be(false) }
 
         it "sets the errors on the IBAN" do
-          expect(iban.errors).to include(bank_code: "is invalid")
+          expect(iban.errors).to include(bank_code: "did not pass modulus check")
         end
       end
 
@@ -1312,7 +1312,7 @@ describe Ibandit::IBAN do
         it { is_expected.to be(false) }
 
         it "sets the errors on the IBAN" do
-          expect(iban.errors).to include(branch_code: "is invalid")
+          expect(iban.errors).to include(branch_code: "did not pass modulus check")
         end
       end
 
@@ -1332,7 +1332,7 @@ describe Ibandit::IBAN do
         it { is_expected.to be(false) }
 
         it "sets the errors on the IBAN" do
-          expect(iban.errors).to include(account_number: "is invalid")
+          expect(iban.errors).to include(account_number: "did not pass modulus check")
         end
       end
     end
@@ -1376,7 +1376,7 @@ describe Ibandit::IBAN do
 
           it "sets the errors on the IBAN" do
             iban.valid_swedish_details?
-            expect(iban.errors).to eq(account_number: "is invalid")
+            expect(iban.errors).to eq(account_number: "length is invalid")
           end
         end
 
@@ -1393,7 +1393,10 @@ describe Ibandit::IBAN do
 
           it "sets the errors on the IBAN" do
             iban.valid?
-            expect(iban.errors).to include(account_number: "is invalid")
+            expect(iban.errors).to include(
+              account_number: "bank code does not exist",
+              format: "Unexpected format for a SE IBAN.",
+            )
             expect(iban.errors).to_not include(:bank_code)
           end
         end
@@ -1411,7 +1414,7 @@ describe Ibandit::IBAN do
 
           it "sets the errors on the IBAN" do
             iban.valid_swedish_details?
-            expect(iban.errors).to eq(account_number: "is invalid")
+            expect(iban.errors).to eq(account_number: "length is invalid")
           end
         end
       end
@@ -1441,7 +1444,7 @@ describe Ibandit::IBAN do
 
           it "sets the errors on the IBAN" do
             iban.valid_swedish_details?
-            expect(iban.errors).to eq(branch_code: "is invalid")
+            expect(iban.errors).to eq(branch_code: "clearing code length is invalid")
           end
         end
 
@@ -1458,7 +1461,7 @@ describe Ibandit::IBAN do
 
           it "sets the errors on the IBAN" do
             iban.valid_swedish_details?
-            expect(iban.errors).to eq(account_number: "is invalid")
+            expect(iban.errors).to eq(account_number: "serial number is invalid")
           end
         end
       end
@@ -1522,7 +1525,7 @@ describe Ibandit::IBAN do
           it { is_expected.to be(false) }
 
           it "sets the errors on the IBAN" do
-            expect(iban.errors).to include(branch_code: "is invalid")
+            expect(iban.errors).to include(branch_code: "did not pass modulus check")
           end
         end
       end
@@ -1587,7 +1590,7 @@ describe Ibandit::IBAN do
           it { is_expected.to be(false) }
 
           it "sets the errors on the IBAN" do
-            expect(iban.errors).to include(branch_code: "is invalid")
+            expect(iban.errors).to include(branch_code: "did not pass modulus check")
           end
         end
       end
@@ -1652,7 +1655,7 @@ describe Ibandit::IBAN do
           it { is_expected.to be(false) }
 
           it "sets the errors on the IBAN" do
-            expect(iban.errors).to include(branch_code: "is invalid")
+            expect(iban.errors).to include(branch_code: "did not pass modulus check")
           end
         end
       end

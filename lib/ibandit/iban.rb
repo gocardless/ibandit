@@ -554,7 +554,7 @@ module Ibandit
     def account_number_not_all_zeros?
       return true if @swift_account_number.to_s.chars.uniq != ["0"]
 
-      @errors[:account_number] = Ibandit.translate(:cannot_be_all_zeros)
+      @errors[:account_number] = Ibandit.translate(:is_invalid)
       false
     end
   end
