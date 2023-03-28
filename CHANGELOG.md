@@ -1,3 +1,8 @@
+## 1.14.0 - March 28, 2023
+
+- Update IBAN registry #233
+- Add GL and FO to the IBAN constructor for local details
+
 ## 1.13.0 - March 6, 2023
 
 - Update BLZ data - BLZ_20230306
