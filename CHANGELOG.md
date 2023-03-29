@@ -1,3 +1,7 @@
+## 1.15.0 - March 28, 2023
+
+- Improve the error messages that are generated
+
 ## 1.14.0 - March 28, 2023
 
 - Update IBAN registry #233

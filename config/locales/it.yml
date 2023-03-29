@@ -10,3 +10,11 @@ it:
     invalid_format: "Formato imprevisto per un IBAN %{country_code}."
     is_invalid: "non è valido"
     does_not_support_payments: "non supporta i pagamenti"
+    has_invalid_format: "formato non valido"
+    failed_checksum_test: "test del checksum non superato"
+    failed_modulus_check: "test del modulo non superato"
+    has_invalid_length: "lunghezza non valida"
+    bank_code_does_not_exist: "codice banca inesistente"
+    has_invalid_clearing_code_length: "lunghezza clearing code non valida"
+    has_invalid_serial_number: "numero di serie non valido"
+
