@@ -41,11 +41,11 @@ US:
   :bank_code_length: 9
   :branch_code_length: 0
   :account_number_length: !ruby/range
-    begin: 1
+    begin: 4
     end: 17
     excl: false
   :bank_code_format: "\\d{9}"
-  :account_number_format: "_*\\d{1,17}"
+  :account_number_format: "_*\\d{4,17}"
   :national_id_length: 9
   :pseudo_iban_bank_code_length: 9
   :pseudo_iban_branch_code_length: 0
