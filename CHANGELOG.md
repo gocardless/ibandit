@@ -1,3 +1,7 @@
+## 1.17.0 - June 5, 2023
+
+- Update BLZ data - BLZ_20230605
+
 ## 1.15.0 - March 28, 2023
 
 - Improve the error messages that are generated

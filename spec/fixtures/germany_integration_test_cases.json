@@ -12,16 +12,6 @@
       { "bank_code": "10060198", "account_number" : "1" }
     ]
   },
-  {
-    "convertor": "000200",
-    "valid": [
-      { "bank_code": "72020700", "account_number" : "1" }
-    ],
-    "invalid": [
-      { "bank_code": "72020700", "account_number" : "1111111861" },
-      { "bank_code": "72020700", "account_number" : "1111111611" }
-    ]
-  },
   // {
   //   "convertor": "000300",
   //   "valid": [
