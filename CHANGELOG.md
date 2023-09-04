@@ -1,3 +1,7 @@
+## 1.18.0 - Sept 4, 2023
+
+- Remove Ruby 2.6 support
+
 ## 1.17.0 - June 5, 2023
 
 - Update BLZ data - BLZ_20230605
@@ -145,7 +149,7 @@
 
 - Skipped 0.11.21
 - Added national_id_length for CA IBANs to prevent segfault when building from
-    local details.
+  local details.
 
 ## 0.11.20 - October 18, 2018
 
@@ -217,54 +221,54 @@
 - Fix `swift_national_id` for Slovenian IBANs. Previously it was
   returning two digits, instead of five.
 
-## 0.11.3 -  March 9, 2017
+## 0.11.3 - March 9, 2017
 
 - Fix bug: Previously, constructing an `Ibandit::IBAN` object with
   `country_code: "SE"` and certain 4-digit values for `account_number`
   would throw `NoMethodError`. The IBAN object can now be successfully
   constructed (and will return a false value for `valid?`).
 
-## 0.11.2 -  July 4, 2016
+## 0.11.2 - July 4, 2016
 
 - Handle invalid pseudo-IBANs
 
-## 0.11.1 -  June 6, 2016
+## 0.11.1 - June 6, 2016
 
 - Update BLZ data
 
-## 0.11.0 -  March 30, 2016
+## 0.11.0 - March 30, 2016
 
 - BREAKING CHANGE: Rename `IBAN#iban_national_id` to `IBAN#swift_national_id`.
   See https://github.com/gocardless/ibandit/pull/69 for more details.
 
-## 0.10.1 -  March 7, 2016
+## 0.10.1 - March 7, 2016
 
 - Update BLZ data
 
-## 0.10.0 -  February 25, 2016
+## 0.10.0 - February 25, 2016
 
 - BREAKING CHANGE: Pass an `Ibandit::IBAN` object to modulus checker hooks,
   rather than a string. See https://github.com/gocardless/ibandit/pull/68 for
   more details.
 
-## 0.9.1 -  January 26, 2016
+## 0.9.1 - January 26, 2016
 
 - Update BLZ data
 
-## 0.9.0 -  January 25, 2016
+## 0.9.0 - January 25, 2016
 
 - BREAKING CHANGE: Update modulus checker hooks to expect a `valid_branch_code?`
   method. See https://github.com/gocardless/ibandit/pull/65 for more details.
 
-## 0.8.8 -  January 22, 2016
+## 0.8.8 - January 22, 2016
 
 - Strip whitespace from Spanish account numbers
 
-## 0.8.7 -  December 8, 2015
+## 0.8.7 - December 8, 2015
 
 - Handle bad characters gracefully when constructing Italian IBANs
 
-## 0.8.6 -  December 6, 2015
+## 0.8.6 - December 6, 2015
 
 - Add details of Swedish validation scheme to Swedish data file
 - Update BLZ data
@@ -286,20 +290,25 @@
 - Update BLZ data
 
 ## 0.8.1 - August 14, 2015
+
 - Clean SWIFT details
 
 ## 0.8.0 - August 14, 2015
+
 - Return local details for Sweden
 - Introduce pseudo-IBANs for Sweden
 
 ## 0.7.0 - August 11, 2015
+
 - Remove all unused `CheckDigit` methods
 
 ## 0.6.6 - July 31, 2015
+
 - Add Croatia to LocalDetailsCleaner and IBANAssembler
 - Add Czech Republic to LocalDetailsCleaner and IBANAssembler
 
 ## 0.6.5 - July 30, 2015
+
 - Add Romania to LocalDetailsCleaner and IBANAssembler
 - Add Bulgaria to LocalDetailsCleaner and IBANAssembler
 - Add Hungary to LocalDetailsCleaner and IBANAssembler
