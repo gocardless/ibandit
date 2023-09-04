@@ -3,13 +3,12 @@
 require File.expand_path("lib/ibandit/version", __dir__)
 
 Gem::Specification.new do |gem|
-  gem.add_development_dependency "gc_ruboconfig",   "~> 3.6.2"
+  gem.add_development_dependency "gc_ruboconfig",   "~> 4.3"
   gem.add_development_dependency "nokogiri",        "~> 1.6"
   gem.add_development_dependency "pry",             "~> 0.13"
-  gem.add_development_dependency "pry-byebug",      "~> 3.9"
-  gem.add_development_dependency "rspec",           "~> 3.3"
+  gem.add_development_dependency "pry-byebug",      "~> 3.10"
+  gem.add_development_dependency "rspec",           "~> 3.12"
   gem.add_development_dependency "rspec-its",       "~> 1.2"
-  gem.add_development_dependency "rspec_junit_formatter", "~> 0.6.0"
   gem.add_development_dependency "sax-machine", "~> 1.3"
 
   gem.add_runtime_dependency "i18n"
