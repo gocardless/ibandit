@@ -1,6 +1,7 @@
 ## 1.18.0 - Sept 4, 2023
 
 - Remove Ruby 2.6 support
+- Update BLZ data - BLZ_20230904
 
 ## 1.17.0 - June 5, 2023
 
