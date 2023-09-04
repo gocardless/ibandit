@@ -1,4 +1,4 @@
-## 2.0.0 - Sept 4, 2023
+## 1.18.0 - Sept 4, 2023
 
 - Remove Ruby 2.6 support
 
