@@ -428,18 +428,18 @@ describe Ibandit::IBAN do
       end
 
       context "and a 3 digit bank code" do
-        let(:account_number) { "0123456" }
+        let(:account_number) { "12345678" }
         let(:bank_code) { "036" }
 
         its(:country_code) { is_expected.to eq("CA") }
         its(:bank_code) { is_expected.to eq("0036") }
         its(:branch_code) { is_expected.to eq("00063") }
-        its(:account_number) { is_expected.to eq("0123456") }
+        its(:account_number) { is_expected.to eq("12345678") }
         its(:swift_bank_code) { is_expected.to eq("0036") }
         its(:swift_branch_code) { is_expected.to eq("00063") }
-        its(:swift_account_number) { is_expected.to eq("0123456") }
+        its(:swift_account_number) { is_expected.to eq("12345678") }
         its(:swift_national_id) { is_expected.to eq("003600063") }
-        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____0123456") }
+        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063____12345678") }
 
         its(:iban) { is_expected.to be_nil }
         its(:valid?) { is_expected.to eq(true) }
@@ -447,40 +447,21 @@ describe Ibandit::IBAN do
       end
 
       context "and a 2 digit bank code" do
-        let(:account_number) { "0123456" }
+        let(:account_number) { "12345678" }
         let(:bank_code) { "36" }
 
         its(:country_code) { is_expected.to eq("CA") }
         its(:bank_code) { is_expected.to eq("36") }
         its(:branch_code) { is_expected.to eq("00063") }
-        its(:account_number) { is_expected.to eq("0123456") }
+        its(:account_number) { is_expected.to eq("12345678") }
         its(:swift_bank_code) { is_expected.to eq("36") }
         its(:swift_branch_code) { is_expected.to eq("00063") }
-        its(:swift_account_number) { is_expected.to eq("0123456") }
+        its(:swift_account_number) { is_expected.to eq("12345678") }
         its(:swift_national_id) { is_expected.to eq("3600063") }
-        its(:pseudo_iban) { is_expected.to eq("CAZZ__3600063_____0123456") }
+        its(:pseudo_iban) { is_expected.to eq("CAZZ__3600063____12345678") }
 
         its(:iban) { is_expected.to be_nil }
         its(:valid?) { is_expected.to eq(false) }
-        its(:to_s) { is_expected.to eq("") }
-      end
-
-      context "and a 7 digit account number" do
-        let(:account_number) { "0123456" }
-        let(:bank_code) { "0036" }
-
-        its(:country_code) { is_expected.to eq("CA") }
-        its(:bank_code) { is_expected.to eq("0036") }
-        its(:branch_code) { is_expected.to eq("00063") }
-        its(:account_number) { is_expected.to eq("0123456") }
-        its(:swift_bank_code) { is_expected.to eq("0036") }
-        its(:swift_branch_code) { is_expected.to eq("00063") }
-        its(:swift_account_number) { is_expected.to eq("0123456") }
-        its(:swift_national_id) { is_expected.to eq("003600063") }
-        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____0123456") }
-
-        its(:iban) { is_expected.to be_nil }
-        its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
       end
 
@@ -491,50 +472,164 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to be false }
       end
 
-      context "and a 12 digit account number" do
-        let(:account_number) { "012345678900" }
+      context "and account number is too long" do
+        let(:account_number) { "1234567890123" }
         let(:bank_code) { "0036" }
 
-        its(:country_code) { is_expected.to eq("CA") }
-        its(:bank_code) { is_expected.to eq("0036") }
-        its(:branch_code) { is_expected.to eq("00063") }
-        its(:account_number) { is_expected.to eq("012345678900") }
-        its(:swift_bank_code) { is_expected.to eq("0036") }
-        its(:swift_branch_code) { is_expected.to eq("00063") }
-        its(:swift_account_number) { is_expected.to eq("012345678900") }
-        its(:swift_national_id) { is_expected.to eq("003600063") }
-        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063012345678900") }
+        it "is invalid and has the correct errors" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).
+            to eq(account_number: "is the wrong length (should be 1..12 characters)")
+        end
+      end
 
-        its(:iban) { is_expected.to be_nil }
-        its(:valid?) { is_expected.to be true }
-        its(:to_s) { is_expected.to eq("") }
+      context "and a 7 digit account number" do
+        let(:bank_code) { "0036" }
+
+        shared_examples "seven_digit_shared_examples" do
+          its(:country_code) { is_expected.to eq("CA") }
+          its(:bank_code) { is_expected.to eq("0036") }
+          its(:branch_code) { is_expected.to eq("00063") }
+          its(:swift_bank_code) { is_expected.to eq("0036") }
+          its(:swift_branch_code) { is_expected.to eq("00063") }
+          its(:swift_national_id) { is_expected.to eq("003600063") }
+
+          its(:iban) { is_expected.to be_nil }
+          its(:to_s) { is_expected.to eq("") }
+        end
+
+        context "with no leading zeroes" do
+          let(:account_number) { "1234567" }
+
+          include_examples "seven_digit_shared_examples"
+          its(:valid?) { is_expected.to eq(true) }
+          its(:account_number) { is_expected.to eq("1234567") }
+          its(:swift_account_number) { is_expected.to eq("1234567") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____1234567") }
+        end
+
+        context "with some leading zeroes" do
+          let(:account_number) { "0123456" }
+
+          include_examples "seven_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("123456") }
+          its(:swift_account_number) { is_expected.to eq("123456") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063______123456") }
+          its(:valid?) { is_expected.to eq(true) }
+        end
+
+        context "with lots of leading zeroes" do
+          let(:account_number) { "0000001" }
+
+          include_examples "seven_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("1") }
+          its(:swift_account_number) { is_expected.to eq("1") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063___________1") }
+          its(:valid?) { is_expected.to eq(true) }
+        end
+
+        context "with all zeroes" do
+          let(:account_number) { "0000000" }
+
+          include_examples "seven_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("0") }
+          its(:swift_account_number) { is_expected.to eq("0") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063___________0") }
+          its(:valid?) { is_expected.to eq(false) }
+        end
+      end
+
+      context "and a 12 digit account number" do
+        let(:bank_code) { "0036" }
+
+        shared_examples "twelve_digit_shared_examples" do
+          its(:country_code) { is_expected.to eq("CA") }
+          its(:bank_code) { is_expected.to eq("0036") }
+          its(:branch_code) { is_expected.to eq("00063") }
+          its(:swift_bank_code) { is_expected.to eq("0036") }
+          its(:swift_branch_code) { is_expected.to eq("00063") }
+          its(:swift_national_id) { is_expected.to eq("003600063") }
+
+          its(:iban) { is_expected.to be_nil }
+          its(:to_s) { is_expected.to eq("") }
+        end
+
+        context "with no leading zeroes" do
+          let(:account_number) { "123456789012" }
+
+          include_examples "twelve_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("123456789012") }
+          its(:swift_account_number) { is_expected.to eq("123456789012") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063123456789012") }
+          its(:valid?) { is_expected.to be true }
+        end
+
+        context "with some leading zeroes" do
+          let(:account_number) { "012345678900" }
+
+          include_examples "twelve_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("12345678900") }
+          its(:swift_account_number) { is_expected.to eq("12345678900") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_12345678900") }
+          its(:valid?) { is_expected.to be true }
+        end
+
+        context "with lots of leading zeroes" do
+          let(:account_number) { "000000000001" }
+
+          include_examples "twelve_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("1") }
+          its(:swift_account_number) { is_expected.to eq("1") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063___________1") }
+          its(:valid?) { is_expected.to be true }
+        end
+
+        context "with all zeroes" do
+          let(:account_number) { "000000000000" }
+
+          include_examples "twelve_digit_shared_examples"
+          its(:account_number) { is_expected.to eq("0") }
+          its(:swift_account_number) { is_expected.to eq("0") }
+          its(:pseudo_iban) { is_expected.to eq("CAZZ003600063___________0") }
+          its(:valid?) { is_expected.to be false }
+        end
       end
     end
 
     context "when the IBAN was created from an Canadian pseudo-IBAN" do
-      let(:arg) { "CAZZ0036000630123456" }
+      let(:arg) { "CAZZ003600063_123456" }
 
       its(:country_code) { is_expected.to eq("CA") }
       its(:bank_code) { is_expected.to eq("0036") }
       its(:branch_code) { is_expected.to eq("00063") }
-      its(:account_number) { is_expected.to eq("0123456") }
+      its(:account_number) { is_expected.to eq("123456") }
       its(:swift_bank_code) { is_expected.to eq("0036") }
       its(:swift_branch_code) { is_expected.to eq("00063") }
-      its(:swift_account_number) { is_expected.to eq("0123456") }
-      its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____0123456") }
+      its(:swift_account_number) { is_expected.to eq("123456") }
+      its(:pseudo_iban) { is_expected.to eq("CAZZ003600063______123456") }
 
       its(:iban) { is_expected.to be_nil }
       its(:valid?) { is_expected.to be true }
       its(:to_s) { is_expected.to eq("") }
     end
 
-    context "when the input is an invalid Canadian pseudo-IBAN" do
-      let(:arg) { "CAZZ00360006301234" }
+    context "when the input is an invalid (all-zeroes account number) Canadian pseudo-IBAN" do
+      let(:arg) { "CAZZ003600063000" }
 
       it "is invalid and has the correct errors" do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).
-          to eq(account_number: "is the wrong length (should be 7..12 characters)")
+          to eq(account_number: "format is invalid")
+      end
+    end
+
+    context "when the input is an invalid (blank account number) Canadian pseudo-IBAN" do
+      let(:arg) { "CAZZ003600063" }
+
+      it "is invalid and has the correct errors" do
+        expect(subject.valid?).to eq(false)
+        expect(subject.errors).
+          to eq(account_number: "is the wrong length (should be 1..12 characters)")
       end
     end
 

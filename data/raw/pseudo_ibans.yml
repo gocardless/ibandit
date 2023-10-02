@@ -16,12 +16,12 @@ CA:
   :bank_code_length: 4
   :branch_code_length: 5
   :account_number_length: !ruby/range
-    begin: 7
+    begin: 1
     end: 12
     excl: false
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{5}"
-  :account_number_format: "\\d{7,12}"
+  :account_number_format: "[1-9]\\d{0,11}" # 1-12 digits, 0 not allowed
   :national_id_length: 9
   :pseudo_iban_bank_code_length: 4
   :pseudo_iban_branch_code_length: 5

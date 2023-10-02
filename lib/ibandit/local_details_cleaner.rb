@@ -91,7 +91,10 @@ module Ibandit
     def self.clean_ca_details(local_details)
       account_number = local_details[:account_number].tr("-", "")
 
-      return {} unless (7..12).cover?(account_number.length)
+      if account_number =~ /\A\d+\z/
+        account_number = account_number.gsub(/\A0+/, "")
+        account_number = "0" if account_number.length == 0
+      end
 
       bank_code = if local_details[:bank_code].length == 3
                     local_details[:bank_code].rjust(4, "0")

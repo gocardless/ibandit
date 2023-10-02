@@ -98,6 +98,15 @@ describe Ibandit::PseudoIBANSplitter do
       its([:account_number]) { is_expected.to eq("012345678900") }
     end
 
+    context "for a canadian pseudo-IBAN with a all-zeroes account number" do
+      let(:pseudo_iban) { "CAZZ003600063000000000000" }
+
+      its([:country_code]) { is_expected.to eq("CA") }
+      its([:bank_code]) { is_expected.to eq("0036") }
+      its([:branch_code]) { is_expected.to eq("00063") }
+      its([:account_number]) { is_expected.to eq("000000000000") }
+    end
+
     context "for a US pseudo-IBAN without padding" do
       let(:pseudo_iban) { "USZZ0123456780123456" }
 

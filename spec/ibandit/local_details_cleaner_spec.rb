@@ -159,19 +159,48 @@ describe Ibandit::LocalDetailsCleaner do
 
   context "Canada" do
     let(:country_code) { "CA" }
-    let(:account_number) { "0123456" }
+    let(:account_number) { "1234567" }
     let(:bank_code) { "0036" }
     let(:branch_code) { "00063" }
 
-    its([:account_number]) { is_expected.to eq("0123456") }
+    its([:account_number]) { is_expected.to eq("1234567") }
     its([:country_code]) { is_expected.to eq(country_code) }
     its([:bank_code]) { is_expected.to eq("0036") }
     its([:branch_code]) { is_expected.to eq("00063") }
 
     context "with a hyphen" do
-      let(:account_number) { "0123456-789" }
+      let(:account_number) { "123456-789" }
 
-      its([:account_number]) { is_expected.to eq("0123456789") }
+      its([:account_number]) { is_expected.to eq("123456789") }
+
+      context "with leading zeroes" do
+        let(:account_number) { "0123456-789" }
+        its([:account_number]) { is_expected.to eq("123456789") }
+      end
+    end
+
+    context "only zeroes" do
+      let(:account_number) { "00000" }
+
+      its([:account_number]) { is_expected.to eq("0") }
+    end
+
+    context "with leading zeroes" do
+      let(:account_number) { "0000001" }
+
+      its([:account_number]) { is_expected.to eq("1") }
+    end
+
+    context "number without leading zeroes" do
+      let(:account_number) { "12345" }
+
+      its([:account_number]) { is_expected.to eq("12345") }
+    end
+
+    context "with invalid characters" do
+      let(:account_number) { "00x123" }
+
+      its([:account_number]) { is_expected.to eq("00x123") }
     end
   end
 
