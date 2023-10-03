@@ -491,6 +491,17 @@ describe Ibandit::IBAN do
         its(:valid?) { is_expected.to be false }
       end
 
+      context "and account number has only zeroes in it" do
+        let(:account_number) { "0000000" }
+        let(:bank_code) { "0036" }
+
+        it "is invalid and has the correct errors" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).
+            to eq(account_number: "format is invalid")
+        end
+      end
+
       context "and a 12 digit account number" do
         let(:account_number) { "012345678900" }
         let(:bank_code) { "0036" }
