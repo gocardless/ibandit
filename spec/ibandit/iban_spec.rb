@@ -1662,10 +1662,68 @@ describe Ibandit::IBAN do
     end
   end
 
-  describe "#valid?" do
+  describe "Pseudo IBAN #valid?" do
+    let(:country_code) { "CA" }
+    let(:arg) do
+      {
+        country_code: country_code,
+        bank_code: "0036",
+        branch_code: "00063",
+        account_number: "1234567",
+      }
+    end
+
     describe "validations called" do
       after { iban.valid? }
 
+      specify { expect(iban).to receive(:valid_pseudo_iban?).at_least(1) }
+      specify { expect(iban).to receive(:valid_pseudo_iban_check_digits?).at_least(1) }
+      specify { expect(iban).to receive(:valid_country_code?).at_least(1) }
+      specify { expect(iban).to receive(:valid_bank_code_length?).at_least(1) }
+      specify { expect(iban).to receive(:valid_branch_code_length?).at_least(1) }
+      specify { expect(iban).to receive(:valid_account_number_length?).at_least(1) }
+      specify { expect(iban).to receive(:valid_bank_code_format?).at_least(1) }
+      specify { expect(iban).to receive(:valid_branch_code_format?).at_least(1) }
+      specify { expect(iban).to receive(:valid_account_number_format?).at_least(1) }
+      specify { expect(iban).to receive(:passes_country_specific_checks?).at_least(1) }
+
+      context "SE" do
+        let(:country_code) { "SE" }
+
+        specify { expect(iban).to receive(:valid_swedish_details?).at_least(1) }
+      end
+
+      context "AU" do
+        let(:country_code) { "AU" }
+
+        specify { expect(iban).to receive(:valid_australian_details?).at_least(1) }
+      end
+
+      context "NZ" do
+        let(:country_code) { "NZ" }
+
+        specify { expect(iban).to receive(:valid_nz_details?).at_least(1) }
+      end
+
+      context "CA" do
+        let(:country_code) { "CA" }
+
+        specify { expect(iban).to receive(:valid_ca_details?).at_least(1) }
+      end
+
+      context "US" do
+        let(:country_code) { "US" }
+
+        specify { expect(iban).to receive(:bank_code_passes_checksum_test?).at_least(1) }
+      end
+    end
+  end
+
+  describe "IBAN #valid?" do
+    describe "validations called" do
+      after { iban.valid? }
+
+      specify { expect(iban).to receive(:valid_iban?).at_least(1) }
       specify { expect(iban).to receive(:valid_country_code?).at_least(1) }
       specify { expect(iban).to receive(:valid_characters?).at_least(1) }
       specify { expect(iban).to receive(:valid_check_digits?).at_least(1) }
@@ -1696,6 +1754,18 @@ describe Ibandit::IBAN do
 
       it "runs country specific checks" do
         expect(iban).to receive(:passes_country_specific_checks?).at_least(1)
+      end
+
+      context "DE" do
+        let(:arg) do
+          {
+            country_code: "DE",
+            bank_code: "20000000",
+            account_number: "7955791111",
+          }
+        end
+
+        specify { expect(iban).to receive(:supports_iban_determination?).at_least(1) }
       end
     end
 
