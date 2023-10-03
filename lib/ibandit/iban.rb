@@ -386,12 +386,6 @@ module Ibandit
 
     def valid_australian_details?
       return true unless country_code == "AU"
-
-      bsb_check? && account_number_not_all_zeros?
-    end
-
-    def bsb_check?
-      return true unless country_code == "AU"
       return true unless Ibandit.modulus_checker
 
       valid_modulus_check_branch_code?
@@ -549,13 +543,6 @@ module Ibandit
       return false if input.nil?
 
       input.slice(2, 2) == Constants::PSEUDO_IBAN_CHECK_DIGITS
-    end
-
-    def account_number_not_all_zeros?
-      return true if @swift_account_number.to_s.chars.uniq != ["0"]
-
-      @errors[:account_number] = Ibandit.translate(:is_invalid)
-      false
     end
   end
 end

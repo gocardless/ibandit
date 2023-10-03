@@ -7,7 +7,7 @@ AU:
     end: 10
     excl: false
   :branch_code_format: "\\d{6}"
-  :account_number_format: "[A-Z0-9]{5,10}"
+  :account_number_format: "(?!0+\\z)[A-Z0-9]{5,10}"
   :pseudo_iban_bank_code_length: 0
   :pseudo_iban_branch_code_length: 6
   :pseudo_iban_account_number_length: 10
@@ -21,7 +21,7 @@ CA:
     excl: false
   :bank_code_format: "\\d{4}"
   :branch_code_format: "\\d{5}"
-  :account_number_format: "\\d{7,12}"
+  :account_number_format: "(?!0+\\z)\\d{7,12}"
   :national_id_length: 9
   :pseudo_iban_bank_code_length: 4
   :pseudo_iban_branch_code_length: 5
