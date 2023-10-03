@@ -1,3 +1,7 @@
+## 1.19.0 - October 3, 2023
+
+- Do not allow all-0 account numbers for CA
+
 ## 1.18.0 - Sept 4, 2023
 
 - Remove Ruby 2.6 support
