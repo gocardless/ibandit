@@ -422,9 +422,54 @@ describe Ibandit::IBAN do
         {
           country_code: "CA",
           bank_code: bank_code,
-          branch_code: "00063",
+          branch_code: branch_code,
           account_number: account_number,
         }
+      end
+      let(:branch_code) { "00063" }
+
+      context "and a 5 digit branch code" do
+        let(:account_number) { "0123456" }
+        let(:bank_code) { "036" }
+        let(:branch_code) { "00063" }
+
+        its(:country_code) { is_expected.to eq("CA") }
+        its(:bank_code) { is_expected.to eq("0036") }
+        its(:branch_code) { is_expected.to eq("00063") }
+        its(:account_number) { is_expected.to eq("0123456") }
+        its(:swift_bank_code) { is_expected.to eq("0036") }
+        its(:swift_branch_code) { is_expected.to eq("00063") }
+        its(:swift_account_number) { is_expected.to eq("0123456") }
+        its(:swift_national_id) { is_expected.to eq("003600063") }
+        its(:pseudo_iban) { is_expected.to eq("CAZZ003600063_____0123456") }
+
+        its(:iban) { is_expected.to be_nil }
+        its(:valid?) { is_expected.to eq(true) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
+      context "for an all zero transit number" do
+        let(:account_number) { "0123456" }
+        let(:bank_code) { "036" }
+        let(:branch_code) { "00000" }
+
+        it "is invalid and has the correct errors" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).
+            to eq(branch_code: "format is invalid")
+        end
+      end
+
+      context "and a 4 digit branch code" do
+        let(:account_number) { "0123456" }
+        let(:bank_code) { "036" }
+        let(:branch_code) { "0063" }
+
+        it "is invalid and has the correct errors" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).
+            to eq(branch_code: "is the wrong length (should be 5 characters)")
+        end
       end
 
       context "and a 3 digit bank code" do

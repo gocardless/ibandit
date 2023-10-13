@@ -1,3 +1,7 @@
+## 1.20.0 - October 13, 2023
+
+- Do not allow all 0 transit numbers in CA
+
 ## 1.19.0 - October 3, 2023
 
 - Do not allow all-0 account numbers for CA
