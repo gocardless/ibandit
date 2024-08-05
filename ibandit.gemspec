@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = ">= 2.7.0"
-  spec.add_development_dependency "gc_ruboconfig",   "~> 4.3"
+  spec.add_development_dependency "gc_ruboconfig",   "~> 5.0"
   spec.add_development_dependency "nokogiri",        "~> 1.6"
   spec.add_development_dependency "pry",             "~> 0.13"
   spec.add_development_dependency "pry-byebug",      "~> 3.10"
