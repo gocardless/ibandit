@@ -158,14 +158,17 @@ module Ibandit
 
     def valid_bank_code_length?
       return unless valid_country_code?
-      return true if structure[:bank_code_length]&.zero?
+      if structure[:bank_code_length].is_a?(Integer) && structure[:bank_code_length].zero?
+        return true
+      end
 
       if swift_bank_code.nil? || swift_bank_code.empty?
         @errors[:bank_code] = Ibandit.translate(:is_required)
         return false
       end
 
-      return true if swift_bank_code.length == structure[:bank_code_length]
+      return true if valid_input_length?(structure[:bank_code_length],
+                                         swift_bank_code.length)
 
       @errors[:bank_code] =
         Ibandit.translate(:wrong_length, expected: structure[:bank_code_length])
@@ -197,14 +200,8 @@ module Ibandit
         return false
       end
 
-      case structure[:account_number_length]
-      when Range
-        if structure[:account_number_length].include?(swift_account_number.length)
-          return true
-        end
-      else
-        return true if swift_account_number.length == structure[:account_number_length]
-      end
+      return true if valid_input_length?(structure[:account_number_length],
+                                         swift_account_number.length)
 
       @errors[:account_number] =
         Ibandit.translate(:wrong_length,
@@ -240,7 +237,9 @@ module Ibandit
 
     def valid_bank_code_format?
       return unless valid_bank_code_length?
-      return true if structure[:bank_code_length]&.zero?
+      if structure[:bank_code_length].is_a?(Integer) && structure[:bank_code_length].zero?
+        return true
+      end
 
       if swift_bank_code&.match?(
         entire_string_regex(structure[:bank_code_format]),
@@ -507,6 +506,15 @@ module Ibandit
 
     def formatted
       iban.to_s.gsub(/(.{4})/, '\1 ').strip
+    end
+
+    def valid_input_length?(allowed_length, input_length)
+      case allowed_length
+      when Range
+        allowed_length.include?(input_length)
+      else
+        allowed_length == input_length
+      end
     end
 
     def valid_modulus_check_bank_code?

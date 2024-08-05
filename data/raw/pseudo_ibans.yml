@@ -13,13 +13,16 @@ AU:
   :pseudo_iban_account_number_length: 10
   :national_id_length: 6
 CA:
-  :bank_code_length: 4
+  :bank_code_length: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
   :branch_code_length: 5
   :account_number_length: !ruby/range
     begin: 7
     end: 12
     excl: false
-  :bank_code_format: "\\d{4}"
+  :bank_code_format: "\\d{3,4}"
   :branch_code_format: "0{0,4}[1-9][0-9]{0,4}"
   :account_number_format: "(?!0+\\z)\\d{7,12}"
   :national_id_length: 9
