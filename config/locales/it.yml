@@ -1,6 +1,6 @@
 it:
   ibandit:
-    invalid_country_code: "\"%{country_code}\" non è un codice di paese IBAN 3166-1 valido"
+    invalid_country_code: '"%{country_code}" non è un codice di paese IBAN 3166-1 valido'
     invalid_check_digits: "Controllo del modulo non riuscito per i caratteri. %{expected_check_digits} caratteri previsti, %{check_digits} immessi."
     invalid_length: "La lunghezza non corrisponde alla specifica SWIFT (%{expected_length} caratteri previsti, %{length} immessi)"
     is_required: "è obbligatorio"
@@ -17,4 +17,4 @@ it:
     bank_code_does_not_exist: "codice banca inesistente"
     has_invalid_clearing_code_length: "lunghezza clearing code non valida"
     has_invalid_serial_number: "numero di serie non valido"
-
+    branch_code_does_not_exist: "codice filiale non esiste"

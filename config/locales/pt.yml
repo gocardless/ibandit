@@ -17,3 +17,4 @@ pt:
     bank_code_does_not_exist: "o código do banco não existe"
     has_invalid_clearing_code_length: "o comprimento do código de libertação é inválido"
     has_invalid_serial_number: "o número de série é inválido"
+    branch_code_does_not_exist: "código da filial não existe"
