@@ -1,3 +1,8 @@
+## 1.21.0 - August 6, 2024
+
+- Canada, Financial Institution number - allow 3 digits
+- modulus_checker failures will now return validation method specific error message
+
 ## 1.20.0 - October 13, 2023
 
 - Do not allow all 0 transit numbers in CA
