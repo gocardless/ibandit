@@ -17,3 +17,4 @@ sl:
     bank_code_does_not_exist: "koda banke ne obstaja"
     has_invalid_clearing_code_length: "dolžina klirinške kode ni veljavna"
     has_invalid_serial_number: "serijska številka ni veljavna"
+    branch_code_does_not_exist: "koda podružnice ne obstaja"

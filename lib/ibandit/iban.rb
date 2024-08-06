@@ -520,14 +520,14 @@ module Ibandit
     def valid_modulus_check_bank_code?
       return true if Ibandit.modulus_checker.valid_bank_code?(self)
 
-      @errors[:bank_code] = Ibandit.translate(:failed_modulus_check)
+      @errors[:bank_code] = Ibandit.translate(:bank_code_does_not_exist)
       false
     end
 
     def valid_modulus_check_branch_code?
       return true if Ibandit.modulus_checker.valid_branch_code?(self)
 
-      @errors[:branch_code] = Ibandit.translate(:failed_modulus_check)
+      @errors[:branch_code] = Ibandit.translate(:branch_code_does_not_exist)
       false
     end
 

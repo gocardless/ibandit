@@ -17,3 +17,4 @@ fr:
     bank_code_does_not_exist: "le code de la banque n'existe pas"
     has_invalid_clearing_code_length: "la longueur du clearing code n'est pas valide"
     has_invalid_serial_number: "le numéro de série n'est pas valide"
+    branch_code_does_not_exist: "le code de la succursale n'existe pas"
