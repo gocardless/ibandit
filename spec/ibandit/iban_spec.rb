@@ -1341,7 +1341,7 @@ describe Ibandit::IBAN do
         it { is_expected.to be(false) }
 
         it "sets the errors on the IBAN" do
-          expect(iban.errors).to include(bank_code: "did not pass modulus check")
+          expect(iban.errors).to include(bank_code: "bank code does not exist")
         end
       end
 
@@ -1368,7 +1368,7 @@ describe Ibandit::IBAN do
         it { is_expected.to be(false) }
 
         it "sets the errors on the IBAN" do
-          expect(iban.errors).to include(branch_code: "did not pass modulus check")
+          expect(iban.errors).to include(branch_code: "branch code does not exist")
         end
       end
 
@@ -1581,7 +1581,7 @@ describe Ibandit::IBAN do
           it { is_expected.to be(false) }
 
           it "sets the errors on the IBAN" do
-            expect(iban.errors).to include(branch_code: "did not pass modulus check")
+            expect(iban.errors).to include(branch_code: "branch code does not exist")
           end
         end
       end
@@ -1646,7 +1646,7 @@ describe Ibandit::IBAN do
           it { is_expected.to be(false) }
 
           it "sets the errors on the IBAN" do
-            expect(iban.errors).to include(branch_code: "did not pass modulus check")
+            expect(iban.errors).to include(branch_code: "branch code does not exist")
           end
         end
       end
@@ -1711,7 +1711,7 @@ describe Ibandit::IBAN do
           it { is_expected.to be(false) }
 
           it "sets the errors on the IBAN" do
-            expect(iban.errors).to include(branch_code: "did not pass modulus check")
+            expect(iban.errors).to include(branch_code: "branch code does not exist")
           end
         end
       end

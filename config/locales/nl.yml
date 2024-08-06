@@ -17,3 +17,4 @@ nl:
     bank_code_does_not_exist: "bankcode bestaat niet"
     has_invalid_clearing_code_length: "lengte clearingcode is ongeldig"
     has_invalid_serial_number: "serienummer is ongeldig"
+    branch_code_does_not_exist: "takcode bestaat niet"

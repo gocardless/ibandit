@@ -17,3 +17,4 @@ en:
     bank_code_does_not_exist: "bank code does not exist"
     has_invalid_clearing_code_length: "clearing code length is invalid"
     has_invalid_serial_number: "serial number is invalid"
+    branch_code_does_not_exist: "branch code does not exist"
