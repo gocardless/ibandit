@@ -869,6 +869,23 @@ describe Ibandit::IBAN do
         expect(subject.errors).to eq(account_number: "format is invalid")
       end
     end
+
+    # Spanish IBANs have recently switched to 8 character national IDs
+    context "with a Spanish IBAN" do
+      let(:iban_code) { "ES9121000418450200051332" }
+
+      its(:country_code) { is_expected.to eq("ES") }
+      its(:bank_code) { is_expected.to eq("2100") }
+      its(:branch_code) { is_expected.to eq("0418") }
+      its(:account_number) { is_expected.to eq("450200051332") }
+      its(:account_number_suffix) { is_expected.to be_nil }
+      its(:swift_bank_code) { is_expected.to eq("2100") }
+      its(:swift_branch_code) { is_expected.to eq("0418") }
+      its(:swift_account_number) { is_expected.to eq("450200051332") }
+      its(:swift_national_id) { is_expected.to eq("21000418") }
+      its(:local_check_digits) { is_expected.to eq("45") }
+      its(:bban) { is_expected.to eq("21000418450200051332") }
+    end
   end
 
   describe "#to_s" do
