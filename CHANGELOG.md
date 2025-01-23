@@ -1,3 +1,8 @@
+## 1.22.0 - January 22, 2025
+
+- Update IBAN structures for `BE`, `ES`, `XK`.
+- Add partial support for `SO`, `NI`, `FK`, `OM`, `YE` IBANs.
+
 ## 1.21.0 - August 6, 2024
 
 - Canada, Financial Institution number - allow 3 digits

@@ -129,19 +129,19 @@ describe Ibandit::IBAN do
     end
 
     context "when the IBAN was created from a Belgian IBAN" do
-      let(:iban_code) { "BE62510007547061" }
+      let(:iban_code) { "BE68539007547034" }
 
       its(:country_code) { is_expected.to eq("BE") }
-      its(:bank_code) { is_expected.to eq("510") }
+      its(:bank_code) { is_expected.to eq("539") }
       its(:branch_code) { is_expected.to be_nil }
-      its(:account_number) { is_expected.to eq("510007547061") }
+      its(:account_number) { is_expected.to eq("539007547034") }
       its(:account_number_suffix) { is_expected.to be_nil }
-      its(:swift_bank_code) { is_expected.to eq("510") }
+      its(:swift_bank_code) { is_expected.to eq("539") }
       its(:swift_branch_code) { is_expected.to be_nil }
-      its(:swift_account_number) { is_expected.to eq("510007547061") }
-      its(:swift_national_id) { is_expected.to eq("510") }
-      its(:local_check_digits) { is_expected.to eq("61") }
-      its(:bban) { is_expected.to eq("510007547061") }
+      its(:swift_account_number) { is_expected.to eq("539007547034") }
+      its(:swift_national_id) { is_expected.to eq("539") }
+      its(:local_check_digits) { is_expected.to eq("34") }
+      its(:bban) { is_expected.to eq("539007547034") }
     end
 
     context "when the IBAN was created with local details" do
@@ -868,6 +868,23 @@ describe Ibandit::IBAN do
         expect(subject.valid?).to eq(false)
         expect(subject.errors).to eq(account_number: "format is invalid")
       end
+    end
+
+    # Spanish IBANs have recently switched to 8 character national IDs
+    context "with a Spanish IBAN" do
+      let(:iban_code) { "ES9121000418450200051332" }
+
+      its(:country_code) { is_expected.to eq("ES") }
+      its(:bank_code) { is_expected.to eq("2100") }
+      its(:branch_code) { is_expected.to eq("0418") }
+      its(:account_number) { is_expected.to eq("450200051332") }
+      its(:account_number_suffix) { is_expected.to be_nil }
+      its(:swift_bank_code) { is_expected.to eq("2100") }
+      its(:swift_branch_code) { is_expected.to eq("0418") }
+      its(:swift_account_number) { is_expected.to eq("450200051332") }
+      its(:swift_national_id) { is_expected.to eq("21000418") }
+      its(:local_check_digits) { is_expected.to eq("45") }
+      its(:bban) { is_expected.to eq("21000418450200051332") }
     end
   end
 
@@ -2234,6 +2251,31 @@ describe Ibandit::IBAN do
     it_behaves_like "a country's IBAN", "RU" do
       let(:valid_iban) { "RU0204452560040702810412345678901" }
       let(:invalid_iban) { "RUXX0204452560040702810412345678901" }
+    end
+
+    it_behaves_like "a country's IBAN", "SO" do
+      let(:valid_iban) { "SO211000001001000100141" }
+      let(:invalid_iban) { "SO411000001001000100141" }
+    end
+
+    it_behaves_like "a country's IBAN", "NI" do
+      let(:valid_iban) { "NI45BAPR00000013000003558124" }
+      let(:invalid_iban) { "NI55BAPR00000013000003558124" }
+    end
+
+    it_behaves_like "a country's IBAN", "FK" do
+      let(:valid_iban) { "FK88SC123456789012" }
+      let(:invalid_iban) { "FK8SC123456789012" }
+    end
+
+    it_behaves_like "a country's IBAN", "OM" do
+      let(:valid_iban) { "OM810180000001299123456" }
+      let(:invalid_iban) { "OM10180000001299123456" }
+    end
+
+    it_behaves_like "a country's IBAN", "YE" do
+      let(:valid_iban) { "YE15CBYE0001018861234567891234" }
+      let(:invalid_iban) { "YE1CBYE0001018861234567891234" }
     end
   end
 
