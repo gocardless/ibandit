@@ -179,16 +179,15 @@ module Ibandit
       return unless valid_country_code?
       return true if swift_branch_code.to_s.length == structure[:branch_code_length]
 
-      if structure[:branch_code_length]&.zero?
-        @errors[:branch_code] = Ibandit.translate(:not_used_in_country,
+      @errors[:branch_code] = if structure[:branch_code_length]&.zero?
+                                Ibandit.translate(:not_used_in_country,
                                                   country_code: country_code)
-      elsif swift_branch_code.nil? || swift_branch_code.empty?
-        @errors[:branch_code] = Ibandit.translate(:is_required)
-      else
-        @errors[:branch_code] =
-          Ibandit.translate(:wrong_length,
-                            expected: structure[:branch_code_length])
-      end
+                              elsif swift_branch_code.nil? || swift_branch_code.empty?
+                                Ibandit.translate(:is_required)
+                              else
+                                Ibandit.translate(:wrong_length,
+                                                  expected: structure[:branch_code_length])
+                              end
       false
     end
 
@@ -390,7 +389,6 @@ module Ibandit
       valid_modulus_check_branch_code?
     end
 
-    # rubocop:disable Metrics/AbcSize
     def bank_code_passes_checksum_test?
       return false unless swift_bank_code
       return false if swift_bank_code.length != 9
@@ -407,8 +405,6 @@ module Ibandit
 
       mod.zero?
     end
-    # rubocop:enable Metrics/AbcSize
-
     ###################
     # Private methods #
     ###################

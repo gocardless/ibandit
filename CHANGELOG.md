@@ -1,5 +1,7 @@
 ## 1.22.0 - January 22, 2025
 
+- Remove support for Ruby < 3.1, add support for Ruby >= 3.4
+- Update BLZ2 data - BLZ_20241209
 - Update IBAN structures for `BE`, `ES`, `XK`.
 - Add partial support for `SO`, `NI`, `FK`, `OM`, `YE` IBANs.
 
