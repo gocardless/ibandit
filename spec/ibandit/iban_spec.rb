@@ -11,9 +11,7 @@ describe Ibandit::IBAN do
   its(:iban) { is_expected.to eq(iban_code) }
 
   context "with locales" do
-    all_keys = YAML.safe_load(
-      File.read("config/locales/en.yml"),
-    )["en"]["ibandit"].keys
+    all_keys = YAML.safe_load_file("config/locales/en.yml")["en"]["ibandit"].keys
 
     Ibandit::Constants::SUPPORTED_LOCALES.each do |locale|
       context "for #{locale}", locale: locale do
@@ -1335,11 +1333,10 @@ describe Ibandit::IBAN do
           valid_branch_code?: valid_branch_code,
           valid_account_number?: valid_account_number,
         )
+        iban.valid_local_modulus_check?
       end
 
       after { Ibandit.modulus_checker = nil }
-
-      before { iban.valid_local_modulus_check? }
 
       context "with an invalid bank code" do
         let(:iban_code) { "AT611904300234573201" }
@@ -1368,11 +1365,12 @@ describe Ibandit::IBAN do
         let(:valid_branch_code) { false }
         let(:valid_account_number) { true }
 
-        before { Ibandit.bic_finder = double(call: "BARCGB22XXX") }
+        before do
+          Ibandit.bic_finder = double(call: "BARCGB22XXX")
+          iban.valid_local_modulus_check?
+        end
 
         after { Ibandit.bic_finder = nil }
-
-        before { iban.valid_local_modulus_check? }
 
         it "calls valid_branch_code? with an IBAN object" do
           expect(Ibandit.modulus_checker).

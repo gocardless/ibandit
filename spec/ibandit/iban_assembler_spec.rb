@@ -293,11 +293,11 @@ describe Ibandit::IBANAssembler do
       it_behaves_like "allows round trips", "ES80 2310 0001 1800 0001 2345"
 
       context "without a bank_code or branch code" do
-        before { args.delete(:bank_code) }
-
-        before { args.delete(:branch_code) }
-
-        before { args[:account_number] = "23100001180000012345" }
+        before do
+          args.delete(:bank_code)
+          args.delete(:branch_code)
+          args[:account_number] = "23100001180000012345"
+        end
 
         it { is_expected.to be_nil }
       end
@@ -487,27 +487,29 @@ describe Ibandit::IBANAssembler do
       it_behaves_like "allows round trips", "HU42 1177 3016 1111 1018 0000 0000"
 
       context "without a bank_code or branch_code" do
-        before { args.delete(:bank_code) }
-
-        before { args.delete(:branch_code) }
-
-        before { args[:account_number] = "11773016-11111018-00000000" }
+        before do
+          args.delete(:bank_code)
+          args.delete(:branch_code)
+          args[:account_number] = "11773016-11111018-00000000"
+        end
 
         it { is_expected.to be_nil }
       end
 
       context "without a bank_code" do
-        before { args.delete(:bank_code) }
-
-        before { args[:account_number] = "11773016-11111018-00000000" }
+        before do
+          args.delete(:bank_code)
+          args[:account_number] = "11773016-11111018-00000000"
+        end
 
         it { is_expected.to be_nil }
       end
 
       context "without a branch_code" do
-        before { args.delete(:branch_code) }
-
-        before { args[:account_number] = "11773016-11111018-00000000" }
+        before do
+          args.delete(:branch_code)
+          args[:account_number] = "11773016-11111018-00000000"
+        end
 
         it { is_expected.to be_nil }
       end
@@ -826,9 +828,10 @@ describe Ibandit::IBANAssembler do
       it_behaves_like "allows round trips", "NO93 8601 1117 947"
 
       context "without a bank_code" do
-        before { args.delete(:bank_code) }
-
-        before { args[:account_number] = "86011117947" }
+        before do
+          args.delete(:bank_code)
+          args[:account_number] = "86011117947"
+        end
 
         it { is_expected.to be_nil }
       end
@@ -854,9 +857,10 @@ describe Ibandit::IBANAssembler do
       it_behaves_like "allows round trips", "PL60 1020 1026 0000 0422 7020 1111"
 
       context "without a bank_code" do
-        before { args.delete(:bank_code) }
-
-        before { args[:account_number] = "60102010260000042270201111" }
+        before do
+          args.delete(:bank_code)
+          args[:account_number] = "60102010260000042270201111"
+        end
 
         it { is_expected.to be_nil }
       end

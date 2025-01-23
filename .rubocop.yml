@@ -1,54 +1,8 @@
 inherit_from: .rubocop_todo.yml
+
 inherit_gem:
   gc_ruboconfig: rubocop.yml
-require: rubocop-rails
 
 AllCops:
   TargetRubyVersion: 3.2
-
-# Limit lines to 90 characters.
-Layout/LineLength:
-  Max: 90
-
-Metrics/ClassLength:
-  Max: 400
-
-# Avoid single-line methods.
-Style/SingleLineMethods:
-  AllowIfMethodIsEmpty: true
-
-# Wants underscores in all large numbers. Pain in the ass for things like
-# unix timestamps.
-Style/NumericLiterals:
-  Enabled: false
-
-# Wants you to use the same argument names for every reduce. This seems kinda
-# naff compared to naming them semantically
-Style/SingleLineBlockParams:
-  Enabled: false
-
-Style/SignalException:
-  EnforcedStyle: 'only_raise'
-
-# Wants to exclude accents from comments
-Style/AsciiComments:
-  Enabled: false
-
-# Configuration parameters: CountComments.
-Metrics/MethodLength:
-  Max: 25
-
-# Configuration parameters: CountComments.
-Metrics/ModuleLength:
-  Max: 400
-
-Layout/DotPosition:
-  EnforcedStyle: 'trailing'
-
-# Wants to to lock to Ruby 2.4 as specified here but as this is a public gem
-# this is quite aggressive.
-Gemspec/RequiredRubyVersion:
-  Enabled: false
-
-Rails/Blank:
-  Enabled: false
+  NewCops: enable

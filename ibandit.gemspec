@@ -27,13 +27,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = ">= 2.7.0"
-  spec.add_development_dependency "gc_ruboconfig",   "~> 5.0"
-  spec.add_development_dependency "nokogiri",        "~> 1.6"
-  spec.add_development_dependency "pry",             "~> 0.13"
-  spec.add_development_dependency "pry-byebug",      "~> 3.10"
-  spec.add_development_dependency "rspec",           "~> 3.12"
-  spec.add_development_dependency "rspec-its",       "~> 1.2"
-  spec.add_development_dependency "sax-machine", "~> 1.3"
 
-  spec.add_runtime_dependency "i18n"
+  spec.add_dependency "i18n"
 end

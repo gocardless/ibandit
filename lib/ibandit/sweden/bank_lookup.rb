@@ -13,7 +13,7 @@ module Ibandit
       end
 
       def self.bank_info_table
-        @swedish_bank_lookup ||=
+        @bank_info_table ||=
           begin
             relative_path = "../../../../data/raw/swedish_bank_lookup.yml"
             raw_info = YAML.load_file(File.expand_path(relative_path, __FILE__))
