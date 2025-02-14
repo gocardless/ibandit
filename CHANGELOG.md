@@ -1,3 +1,7 @@
+## 1.23.0 - February 14, 2025
+
+- Fix validation for SE IBANs for clearing code 3300 where the account number starts with a 0
+
 ## 1.22.0 - January 22, 2025
 
 - Remove support for Ruby < 3.1, add support for Ruby >= 3.4
