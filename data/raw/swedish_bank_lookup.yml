@@ -5,6 +5,8 @@
 # - As of 30/10/2020: https://www.bankgirot.se/globalassets/dokument/anvandarmanualer/bankernaskontonummeruppbyggnad_anvandarmanual_sv.pdf
 # - Swedish Bankers' Association clearing numbers: https://www.swedishbankers.se/media/4245/1906_clearingnummer-institut.pdf
 # - https://transferwise.com/gb/iban/sweden
+# - Bankgirot: https://www.bankgirot.se/globalassets/dokument/anvandarmanualer/bankernaskontonummeruppbyggnad_anvandarmanual_sv.pdf
+# - Svensk betalinfrastruktur: https://www.bankinfrastruktur.se/framtidens-betalningsinfrastruktur/iban-och-svenskt-nationellt-kontonummer
 #
 # Fields:
 # - Range:                  The range of clearing codes for this bank. Used to
@@ -79,10 +81,11 @@
   :bank: Nordea Personkonto
   # NOTE: We're routing Nordea Personkonto to the main Nordea bank code, but
   # it may belong at one of the other Nordea codes we're not currently using.
+  # Account numbers for this clearing number are the same as personal ID numbers.
   :bank_code: 300
   :clearing_code_length: 4
   :serial_number_length: 10
-  :zerofill_serial_number: false
+  :zerofill_serial_number: true
   :include_clearing_code: false
   :validation_scheme: '2.1'
 - :range: [3301, 3399]
@@ -117,7 +120,7 @@
   :clearing_code_length: 4
   :serial_number_length: 10
   :zerofill_serial_number: false
-  :include_clearing_code: fase
+  :include_clearing_code: false
   :validation_scheme: '2.1'
 - :range: [3783, 3999]
   :bank: Nordea

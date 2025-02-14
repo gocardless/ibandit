@@ -200,6 +200,90 @@ describe Ibandit::IBAN do
       its(:to_s) { is_expected.to eq("SE5412000000012810105723") }
     end
 
+    context "when the IBAN was created from a Swedish IBAN" do
+      context "where the clearing code is part of the account number" do
+        let(:arg) { "SE4730000000031231234567" }
+
+        its(:country_code) { is_expected.to eq("SE") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to be_nil }
+        its(:account_number) { is_expected.to be_nil }
+        its(:swift_bank_code) { is_expected.to eq("300") }
+        its(:swift_branch_code) { is_expected.to be_nil }
+        its(:swift_account_number) { is_expected.to eq("00000031231234567") }
+        its(:iban) { is_expected.to eq("SE4730000000031231234567") }
+        its(:pseudo_iban) { is_expected.to be_nil }
+        its(:to_s) { is_expected.to eq("SE4730000000031231234567") }
+        its(:valid?) { is_expected.to eq(true) }
+      end
+
+      context "where the clearing code is not part of the account number" do
+        let(:arg) { "SE7160000000000123456789" }
+
+        its(:country_code) { is_expected.to eq("SE") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to be_nil }
+        its(:account_number) { is_expected.to be_nil }
+        its(:swift_bank_code) { is_expected.to eq("600") }
+        its(:swift_branch_code) { is_expected.to be_nil }
+        its(:swift_account_number) { is_expected.to eq("00000000123456789") }
+        its(:iban) { is_expected.to eq("SE7160000000000123456789") }
+        its(:pseudo_iban) { is_expected.to be_nil }
+        its(:to_s) { is_expected.to eq("SE7160000000000123456789") }
+        its(:valid?) { is_expected.to eq(true) }
+      end
+
+      context "where the clearing code is 3300, and therefore the account number is the national ID" do
+        context "where the person was born in the 1990s" do
+          let(:arg) { "SE2130000000009308127392" }
+
+          its(:country_code) { is_expected.to eq("SE") }
+          its(:bank_code) { is_expected.to be_nil }
+          its(:branch_code) { is_expected.to be_nil }
+          its(:account_number) { is_expected.to be_nil }
+          its(:swift_bank_code) { is_expected.to eq("300") }
+          its(:swift_branch_code) { is_expected.to be_nil }
+          its(:swift_account_number) { is_expected.to eq("00000009308127392") }
+          its(:iban) { is_expected.to eq("SE2130000000009308127392") }
+          its(:pseudo_iban) { is_expected.to be_nil }
+          its(:to_s) { is_expected.to eq("SE2130000000009308127392") }
+          its(:valid?) { is_expected.to eq(true) }
+        end
+
+        context "where the person was born in the 2000s" do
+          let(:arg) { "SE9430000000000607274287" }
+
+          its(:country_code) { is_expected.to eq("SE") }
+          its(:bank_code) { is_expected.to be_nil }
+          its(:branch_code) { is_expected.to be_nil }
+          its(:account_number) { is_expected.to be_nil }
+          its(:swift_bank_code) { is_expected.to eq("300") }
+          its(:swift_branch_code) { is_expected.to be_nil }
+          its(:swift_account_number) { is_expected.to eq("00000000607274287") }
+          its(:iban) { is_expected.to eq("SE9430000000000607274287") }
+          its(:pseudo_iban) { is_expected.to be_nil }
+          its(:to_s) { is_expected.to eq("SE9430000000000607274287") }
+          its(:valid?) { is_expected.to eq(true) }
+        end
+
+        context "where the person was born in the year 2000" do
+          let(:arg) { "SE3830000000000007134937" }
+
+          its(:country_code) { is_expected.to eq("SE") }
+          its(:bank_code) { is_expected.to be_nil }
+          its(:branch_code) { is_expected.to be_nil }
+          its(:account_number) { is_expected.to be_nil }
+          its(:swift_bank_code) { is_expected.to eq("300") }
+          its(:swift_branch_code) { is_expected.to be_nil }
+          its(:swift_account_number) { is_expected.to eq("00000000007134937") }
+          its(:iban) { is_expected.to eq("SE3830000000000007134937") }
+          its(:pseudo_iban) { is_expected.to be_nil }
+          its(:to_s) { is_expected.to eq("SE3830000000000007134937") }
+          its(:valid?) { is_expected.to eq(true) }
+        end
+      end
+    end
+
     context "when the IBAN was created with local details for Australia" do
       let(:arg) do
         {
