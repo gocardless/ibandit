@@ -64,7 +64,7 @@ module Ibandit
           length += bank[:clearing_code_length] if bank[:include_clearing_code]
 
           cleaned_account_number = account_number.gsub(/\A0+/, "")
-          if bank[:zerofill_serial_number] && !bank[:include_clearing_code]
+          if !bank[:include_clearing_code]
             cleaned_account_number =
               cleaned_account_number.
                 rjust(bank.fetch(:serial_number_length), "0")

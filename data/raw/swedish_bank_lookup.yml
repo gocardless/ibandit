@@ -85,7 +85,7 @@
   :bank_code: 300
   :clearing_code_length: 4
   :serial_number_length: 10
-  :zerofill_serial_number: true
+  :zerofill_serial_number: false
   :include_clearing_code: false
   :validation_scheme: '2.1'
 - :range: [3301, 3399]

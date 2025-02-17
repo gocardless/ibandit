@@ -1,3 +1,7 @@
+## 1.24.0 - February 18, 2025
+
+- Fix validation for SE IBANs where the account number starts with a 0 and the clearing number is not included in the IBAN
+
 ## 1.23.0 - February 14, 2025
 
 - Fix validation for SE IBANs for clearing code 3300 where the account number starts with a 0

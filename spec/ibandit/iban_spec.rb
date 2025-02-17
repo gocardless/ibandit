@@ -183,6 +183,74 @@ describe Ibandit::IBAN do
       its(:iban) { is_expected.to eq("SE5412000000012810105723") }
       its(:pseudo_iban) { is_expected.to eq("SEZZX1281XXX0105723") }
       its(:to_s) { is_expected.to eq("SE5412000000012810105723") }
+
+      context "and the clearing code is not part of the IBAN" do
+        context "and the branch code allows for zero-filling of short account numbers" do
+          let(:arg) do
+            {
+              country_code: "SE",
+              branch_code: "6000",
+              account_number: "1234567",
+            }
+          end
+
+          its(:country_code) { is_expected.to eq("SE") }
+          its(:bank_code) { is_expected.to be_nil }
+          its(:branch_code) { is_expected.to eq("6000") }
+          its(:account_number) { is_expected.to eq("001234567") }
+          its(:swift_bank_code) { is_expected.to eq("600") }
+          its(:swift_branch_code) { is_expected.to be_nil }
+          its(:swift_account_number) { is_expected.to eq("00000000001234567") }
+          its(:iban) { is_expected.to eq("SE2260000000000001234567") }
+          its(:pseudo_iban) { is_expected.to eq("SEZZX6000X001234567") }
+          its(:to_s) { is_expected.to eq("SE2260000000000001234567") }
+          its(:valid?) { is_expected.to eq(true) }
+        end
+
+        context "and the branch code does not allow for zero-filling of short account numbers" do
+          let(:arg) do
+            {
+              country_code: "SE",
+              branch_code: "3300",
+              account_number: "1234567",
+            }
+          end
+
+          its(:country_code) { is_expected.to eq("SE") }
+          its(:bank_code) { is_expected.to be_nil }
+          its(:branch_code) { is_expected.to eq("3300") }
+          its(:account_number) { is_expected.to eq("1234567") }
+          its(:swift_bank_code) { is_expected.to eq("300") }
+          its(:swift_branch_code) { is_expected.to be_nil }
+          its(:swift_account_number) { is_expected.to eq("00000000001234567") }
+          its(:iban) { is_expected.to eq("SE4130000000000001234567") }
+          its(:pseudo_iban) { is_expected.to eq("SEZZX3300XXX1234567") }
+          its(:to_s) { is_expected.to eq("SE4130000000000001234567") }
+          its(:valid?) { is_expected.to eq(false) }
+        end
+      end
+
+      context "and the clearing code is part of the IBAN" do
+        let(:arg) do
+          {
+            country_code: "SE",
+            branch_code: "3410",
+            account_number: "1234567",
+          }
+        end
+
+        its(:country_code) { is_expected.to eq("SE") }
+        its(:bank_code) { is_expected.to be_nil }
+        its(:branch_code) { is_expected.to eq("3410") }
+        its(:account_number) { is_expected.to eq("1234567") }
+        its(:swift_bank_code) { is_expected.to eq("300") }
+        its(:swift_branch_code) { is_expected.to be_nil }
+        its(:swift_account_number) { is_expected.to eq("00000034101234567") }
+        its(:iban) { is_expected.to eq("SE1030000000034101234567") }
+        its(:pseudo_iban) { is_expected.to eq("SEZZX3410XXX1234567") }
+        its(:to_s) { is_expected.to eq("SE1030000000034101234567") }
+        its(:valid?) { is_expected.to eq(true) }
+      end
     end
 
     context "when the IBAN was created from a pseudo-IBAN" do
