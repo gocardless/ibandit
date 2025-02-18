@@ -1,3 +1,7 @@
+## 1.25.0 - February 18, 2025
+
+- `SE` pseudo-ibans no longer fail validation due to the `ZZ` check digit.
+
 ## 1.24.0 - February 18, 2025
 
 - Fix validation for SE IBANs where the account number starts with a 0 and the clearing number is not included in the IBAN

@@ -128,6 +128,7 @@ module Ibandit
     end
 
     def valid_check_digits?
+      return true if source == :pseudo_iban && check_digits == Constants::PSEUDO_IBAN_CHECK_DIGITS
       return unless decomposable? && valid_characters?
 
       expected_check_digits = CheckDigit.iban(country_code, bban)

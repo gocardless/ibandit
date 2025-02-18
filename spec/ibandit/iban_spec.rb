@@ -183,6 +183,7 @@ describe Ibandit::IBAN do
       its(:iban) { is_expected.to eq("SE5412000000012810105723") }
       its(:pseudo_iban) { is_expected.to eq("SEZZX1281XXX0105723") }
       its(:to_s) { is_expected.to eq("SE5412000000012810105723") }
+      its(:valid?) { is_expected.to eq(true) }
 
       context "and the clearing code is not part of the IBAN" do
         context "and the branch code allows for zero-filling of short account numbers" do
@@ -266,9 +267,17 @@ describe Ibandit::IBAN do
       its(:iban) { is_expected.to eq("SE5412000000012810105723") }
       its(:pseudo_iban) { is_expected.to eq("SEZZX1281XXX0105723") }
       its(:to_s) { is_expected.to eq("SE5412000000012810105723") }
+      its(:valid?) { is_expected.to eq(true) }
     end
 
     context "when the IBAN was created from a Swedish IBAN" do
+      context "with check digits that make it look like a pseudo-IBAN" do
+        let(:arg) { "SEZZ30000000031231234567" }
+
+        its(:country_code) { is_expected.to eq("SE") }
+        its(:valid?) { is_expected.to eq(false) }
+      end
+
       context "where the clearing code is part of the account number" do
         let(:arg) { "SE4730000000031231234567" }
 
