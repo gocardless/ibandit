@@ -1,0 +1,21 @@
+sk:
+  ibandit:
+    invalid_country_code: "'%{country_code}' nie je platný ISO 3166-1 IBAN kód krajiny"
+    invalid_check_digits: "Kontrolné číslice neprešli modulus kontrolou. Očakával som '%{expected_check_digits}', dostal som '%{check_digits}'."
+    invalid_length: "Dĺžka nesúhlasí so špecifikáciou SWIFT (očakával som %{expected_length} znakov, dostal som %{length})"
+    is_required: "je povinné"
+    wrong_length: "má nesprávnu dĺžku (má byť %{expected} znakov)"
+    not_used_in_country: "nie je používaný v %{country_code}"
+    non_alphanumeric_characters: "Nealfanumerické znaky nájdené: %{characters}"
+    invalid_format: "Neočakávaný formát pre %{country_code} IBAN."
+    is_invalid: "je neplatný"
+    does_not_support_payments: "nepodporuje platby"
+    has_invalid_format: "formát je neplatný"
+    failed_checksum_test: "nesprávny kontrolný súčet"
+    failed_modulus_check: "nesprávna kontrola modulo"
+    has_invalid_length: "dĺžka je neplatná"
+    bank_code_does_not_exist: "bankový kód neexistuje"
+    has_invalid_clearing_code_length: "dĺžka kódu clearingu je neplatná"
+    has_invalid_serial_number: "sériové číslo je neplatné"
+    branch_code_does_not_exist: "kód pobočky neexistuje"
+
