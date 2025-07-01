@@ -59,7 +59,7 @@ describe Ibandit::GermanDetailsConverter do
   end
 
   describe "integration tests" do
-    include_examples "json based fixture", "germany_integration_test_cases" do
+    it_behaves_like "json based fixture", "germany_integration_test_cases" do
       let(:test_subject) do
         described_class.
           convert(bank_code: bank_code, account_number: account_number)
@@ -68,7 +68,7 @@ describe Ibandit::GermanDetailsConverter do
   end
 
   describe "unit tests" do
-    include_examples "json based fixture", "germany_unit_test_cases" do
+    it_behaves_like "json based fixture", "germany_unit_test_cases" do
       let(:test_subject) do
         klass.new(bank_code, account_number).converted_details
       end
