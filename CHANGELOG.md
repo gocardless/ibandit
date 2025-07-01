@@ -1,3 +1,7 @@
+## 1.26.0 - July 1, 2025
+
+- Update BLZ data - BLZ_20250609
+
 ## 1.25.0 - February 18, 2025
 
 - `SE` pseudo-ibans no longer fail validation due to the `ZZ` check digit.
