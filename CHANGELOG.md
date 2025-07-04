@@ -1,3 +1,7 @@
+## 1.26.1 - July 4, 2025
+
+- Gracefully fail validation for NZ accounts if no account number is provided
+
 ## 1.26.0 - July 1, 2025
 
 - Update BLZ data - BLZ_20250609
