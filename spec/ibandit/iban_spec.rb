@@ -799,6 +799,24 @@ describe Ibandit::IBAN do
         its(:to_s) { is_expected.to eq("") }
       end
 
+      context "with a nil account number" do
+        let(:account_number) { nil }
+
+        its(:country_code) { is_expected.to eq("NZ") }
+        its(:bank_code) { is_expected.to eq("11") }
+        its(:branch_code) { is_expected.to eq("2222") }
+        its(:account_number) { is_expected.to eq(nil) }
+        its(:account_number_suffix) { is_expected.to eq(nil) }
+        its(:swift_bank_code) { is_expected.to eq("11") }
+        its(:swift_branch_code) { is_expected.to eq("2222") }
+        its(:swift_account_number) { is_expected.to eq(nil) }
+        its(:swift_national_id) { is_expected.to eq("112222") }
+        its(:iban) { is_expected.to be_nil }
+        its(:pseudo_iban) { is_expected.to eq(nil) }
+        its(:valid?) { is_expected.to eq(false) }
+        its(:to_s) { is_expected.to eq("") }
+      end
+
       context "with bank and branch code embedded in account_number field" do
         let(:arg) do
           {

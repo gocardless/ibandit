@@ -56,12 +56,14 @@ module Ibandit
     end
 
     def account_number
+      return nil if @account_number.nil?
       return @account_number unless country_code == "NZ"
 
       @account_number[0..6]
     end
 
     def account_number_suffix
+      return nil if @account_number.nil?
       return nil unless country_code == "NZ"
 
       @account_number[7..]
