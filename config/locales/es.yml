@@ -18,3 +18,4 @@ es:
     has_invalid_clearing_code_length: "codigo de oficina de oficina de compensación invalido"
     has_invalid_serial_number: "número de serie invalido"
     branch_code_does_not_exist: "código de sucursal no existe"
+    is_public_iban: "es un IBAN públicamente conocido y no puede ser utilizado"

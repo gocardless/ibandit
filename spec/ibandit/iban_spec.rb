@@ -2126,7 +2126,7 @@ describe Ibandit::IBAN do
     end
 
     it_behaves_like "a country's IBAN", "FR" do
-      let(:valid_iban) { "FR14 2004 1010 0505 0001 3M02 606" }
+      let(:valid_iban) { "FR57 2004 1010 0505 0001 3M02 608" }
       let(:invalid_iban) { "FRXX14 2004 1010 0505 0001 3M02 606" }
     end
 
@@ -2527,6 +2527,20 @@ describe Ibandit::IBAN do
       let(:iban_code) { "NL91ABNA0417164300" }
 
       its(:local_check_digits) { is_expected.to eq("0") }
+    end
+  end
+
+  describe "not_a_public_iban?" do
+    context "with a French IBAN that is not in the public IBANs list" do
+      let(:iban_code) { "FR1420041010050500013M02607" }
+
+      its(:not_a_public_iban?) { is_expected.to eq(true) }
+    end
+
+    context "with a French IBAN that is in the public IBANs list" do
+      let(:iban_code) { "FR7614706001747393731796188" }
+
+      its(:not_a_public_iban?) { is_expected.to eq(false) }
     end
   end
 end

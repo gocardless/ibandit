@@ -18,3 +18,4 @@ it:
     has_invalid_clearing_code_length: "lunghezza clearing code non valida"
     has_invalid_serial_number: "numero di serie non valido"
     branch_code_does_not_exist: "codice filiale non esiste"
+    is_public_iban: "è un IBAN pubblicamente noto e non può essere utilizzato"

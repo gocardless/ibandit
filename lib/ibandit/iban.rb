@@ -93,7 +93,7 @@ module Ibandit
 
     ###############
     # Validations #
-    ###############
+    # ##############f
 
     def valid?
       has_iban = !iban.nil?
@@ -443,6 +443,7 @@ module Ibandit
         valid_account_number_format?,
         valid_local_modulus_check?,
         passes_country_specific_checks?,
+        not_a_public_iban?,
       ].all?
     end
 
@@ -550,6 +551,19 @@ module Ibandit
       return false if input.nil?
 
       input.slice(2, 2) == Constants::PSEUDO_IBAN_CHECK_DIGITS
+    end
+
+    def not_a_public_iban?
+      @french_public_ibans ||= YAML.load_file(
+        File.expand_path("../../data/french_public_ibans.yml", __dir__),
+      )["french_public_ibans"]
+
+      if !@french_public_ibans.include?(iban)
+        true
+      else
+        @errors[:iban] = Ibandit.translate(:is_public_iban)
+        false
+      end
     end
   end
 end
