@@ -93,7 +93,7 @@ module Ibandit
 
     ###############
     # Validations #
-    # ##############f
+    ###############
 
     def valid?
       has_iban = !iban.nil?
