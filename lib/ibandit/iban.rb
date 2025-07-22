@@ -554,6 +554,8 @@ module Ibandit
     end
 
     def not_a_public_iban?
+      return true if country_code != "FR"
+
       @french_public_ibans ||= YAML.load_file(
         File.expand_path("../../data/french_public_ibans.yml", __dir__),
       )["french_public_ibans"]
