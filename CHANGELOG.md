@@ -1,3 +1,7 @@
+## 1.28.0 - December 8, 2025
+
+- Update BLZ data - BLZ_20251208
+
 ## 1.27.0 - September 8, 2025
 
 - Update BLZ data - BLZ_20250908
