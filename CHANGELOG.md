@@ -1,3 +1,7 @@
+## 1.30.0 - March 16, 2026
+
+- Update SE data - added Bank Lunar
+
 ## 1.29.0 - March 9, 2025
 
 - Update BLZ data - BLZ_20260309
