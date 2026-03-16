@@ -1,4 +1,4 @@
-## 1.29.0 - March 16, 2026
+## 1.30.0 - March 16, 2026
 
 - Update SE data - added Bank Lunar
 
