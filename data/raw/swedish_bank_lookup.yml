@@ -437,3 +437,11 @@
   :zerofill_serial_number: true
   :include_clearing_code: true
   :validation_scheme: '2.3'
+- :range: [9710, 9719]
+  :bank: Lunar Bank
+  :bank_code: 971
+  :clearing_code_length: 4
+  :serial_number_length: 7
+  :zerofill_serial_number: false
+  :include_clearing_code: true
+  :validation_scheme: '1.2'
