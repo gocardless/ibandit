@@ -445,3 +445,11 @@
   :zerofill_serial_number: false
   :include_clearing_code: true
   :validation_scheme: '1.2'
+- :range: [9780, 9789]
+  :bank: Klarna Bank
+  :bank_code: 978
+  :clearing_code_length: 4
+  :serial_number_length: 7
+  :zerofill_serial_number: false
+  :include_clearing_code: true
+  :validation_scheme: '1.2'
