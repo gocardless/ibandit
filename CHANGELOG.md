@@ -1,3 +1,7 @@
+## 1.32.0 - July 2, 2026
+
+- Update SE data - added Klarna Bank
+
 ## 1.31.0 - June 8, 2026
 
 - Update BLZ data - BLZ_20260608
