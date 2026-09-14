@@ -1,3 +1,7 @@
+## 1.34.0 - September 11, 2026
+
+- [Breaking] Reject NZ account numbers whose 3 digit suffix does not start with a zero
+
 ## 1.33.0 - September 2, 2026
 
 - Update BLZ data - BLZ_20260907

@@ -1598,7 +1598,7 @@ NZ:
   :account_number_length: 10
   :bank_code_format: "\\d{2}"
   :branch_code_format: "\\d{4}"
-  :account_number_format: "\\d{7}\\d{3}"
+  :account_number_format: "\\d{7}0\\d{2}"
   :pseudo_iban_bank_code_length: 2
   :pseudo_iban_branch_code_length: 4
   :pseudo_iban_account_number_length: 10

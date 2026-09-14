@@ -764,21 +764,32 @@ describe Ibandit::IBAN do
       end
 
       context "with a 3 digit account number suffix" do
-        let(:account_number) { "3333333-944" }
+        let(:account_number) { "3333333-044" }
 
         its(:country_code) { is_expected.to eq("NZ") }
         its(:bank_code) { is_expected.to eq("11") }
         its(:branch_code) { is_expected.to eq("2222") }
         its(:account_number) { is_expected.to eq("3333333") }
-        its(:account_number_suffix) { is_expected.to eq("944") }
+        its(:account_number_suffix) { is_expected.to eq("044") }
         its(:swift_bank_code) { is_expected.to eq("11") }
         its(:swift_branch_code) { is_expected.to eq("2222") }
-        its(:swift_account_number) { is_expected.to eq("3333333944") }
+        its(:swift_account_number) { is_expected.to eq("3333333044") }
         its(:swift_national_id) { is_expected.to eq("112222") }
         its(:iban) { is_expected.to be_nil }
-        its(:pseudo_iban) { is_expected.to eq("NZZZ1122223333333944") }
+        its(:pseudo_iban) { is_expected.to eq("NZZZ1122223333333044") }
         its(:valid?) { is_expected.to eq(true) }
         its(:to_s) { is_expected.to eq("") }
+      end
+
+      context "with a 3 digit account number suffix not starting with a zero" do
+        let(:account_number) { "3333333-500" }
+
+        its(:account_number_suffix) { is_expected.to eq("500") }
+
+        it "is invalid and has the correct errors" do
+          expect(subject.valid?).to eq(false)
+          expect(subject.errors).to eq(account_number: "format is invalid")
+        end
       end
 
       context "with a 2 digit account number suffix" do
