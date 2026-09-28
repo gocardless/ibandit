@@ -1076,6 +1076,14 @@ describe Ibandit::LocalDetailsCleaner do
       its([:branch_code]) { is_expected.to eq("2222") }
       its([:account_number]) { is_expected.to eq("3333333044") }
 
+      context "with a 1-digit account number suffix" do
+        let(:account_number) { "11-2222-3333333-1" }
+
+        its([:bank_code]) { is_expected.to eq("11") }
+        its([:branch_code]) { is_expected.to eq("2222") }
+        its([:account_number]) { is_expected.to eq("3333333001") }
+      end
+
       context "with a 2-digit account number suffix" do
         let(:account_number) { "11-2222-3333333-44" }
 

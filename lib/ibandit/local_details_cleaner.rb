@@ -468,12 +468,12 @@ module Ibandit
 
     def self.clean_nz_details(local_details)
       # This method supports being passed the component parts of the NZ account
-      # number, or a single 15/16 digit string (BBbbbb-AAAAAAA-0SS) in the
+      # number, or a single 14/15/16 digit string with a 1/2/3-digit suffix in the
       # account number field.
       #
-      # When given a 15/16 digit string, the component parts (i.e bank_code,
+      # When given a 14/15/16 digit string, the component parts (i.e bank_code,
       # branch_code and account_number) are extracted, with the 7-digit account
-      # number body and 2/3-digit account number suffix making up the actual
+      # number body and 1/2/3-digit account number suffix making up the actual
       # account_number field.
       if local_details[:bank_code] && local_details[:branch_code]
         bank_code = local_details[:bank_code]
@@ -486,7 +486,7 @@ module Ibandit
         account_number = cleaned_account_number[6..]
       end
 
-      if account_number && account_number.length == 9
+      if account_number && [8, 9].include?(account_number.length)
         # > Some banks (such as BNZ) include three digits of the suffix in their
         # > presentation of the account number to the end customer. Other banks
         # > only show the last two digits of the suffix to the end customer.
@@ -494,8 +494,8 @@ module Ibandit
         # > first digit of the suffix is always 0 so it's usually ignored.
         # > [https://en.wikipedia.org/wiki/New_Zealand_bank_account_number]
         #
-        # Here, we insert the zero in cases where it is ignored.
-        account_number = account_number[0..6] + "0" + account_number[7..8]
+        # Here, we restore omitted leading zeros in the suffix.
+        account_number = account_number[0..6] + account_number[7..].rjust(3, "0")
       end
 
       {

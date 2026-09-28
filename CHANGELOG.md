@@ -1,3 +1,7 @@
+## 1.35.0 - September 28, 2026
+
+- Accept one-digit NZ account suffixes and normalise them to the three-digit bank form.
+
 ## 1.34.0 - September 11, 2026
 
 - [Breaking] Reject NZ account numbers whose 3 digit suffix does not start with a zero

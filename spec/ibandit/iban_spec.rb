@@ -810,6 +810,19 @@ describe Ibandit::IBAN do
         its(:to_s) { is_expected.to eq("") }
       end
 
+      context "with a 1 digit account number suffix" do
+        let(:account_number) { "3333333-1" }
+
+        its(:country_code) { is_expected.to eq("NZ") }
+        its(:bank_code) { is_expected.to eq("11") }
+        its(:branch_code) { is_expected.to eq("2222") }
+        its(:account_number) { is_expected.to eq("3333333") }
+        its(:account_number_suffix) { is_expected.to eq("001") }
+        its(:swift_account_number) { is_expected.to eq("3333333001") }
+        its(:pseudo_iban) { is_expected.to eq("NZZZ1122223333333001") }
+        its(:valid?) { is_expected.to eq(true) }
+      end
+
       context "with a nil account number" do
         let(:account_number) { nil }
 
