@@ -548,20 +548,26 @@ iban = Ibandit::IBAN.new(
 iban.pseudo_iban            # => "NZZZ0100043333333044"
 iban.iban                   # => nil
 
+# A 1 or 2 digit suffix is padded with leading zeroes to the three-digit bank
+# form. A suffix supplied with 3 digits must already start with a zero: `S`
+# becomes `00S`, `SS` becomes `0SS`, never `SS0`.
+
 iban = Ibandit::IBAN.new(
   country_code: 'NZ',
   account_number: '01-0004-3333333-44'
 )
-iban.pseudo_iban          # => "NZZZ0100043333333044"
-iban.bank_code            # => "01"
-iban.branch_code          # => "0004"
-iban.account_number       # => "3333333044"
+iban.pseudo_iban            # => "NZZZ0100043333333044"
+iban.bank_code              # => "01"
+iban.branch_code            # => "0004"
+iban.account_number         # => "3333333"
+iban.account_number_suffix  # => "044"
 
 iban = Ibandit::IBAN.new('NZZZ0100043333333044')
-iban.country_code         # => "NZ"
-iban.bank_code            # => "01"
-iban.branch_code          # => "0004"
-iban.account_number       # => "3333333044"
+iban.country_code           # => "NZ"
+iban.bank_code              # => "01"
+iban.branch_code            # => "0004"
+iban.account_number         # => "3333333"
+iban.account_number_suffix  # => "044"
 
 # USA
 iban = Ibandit::IBAN.new(

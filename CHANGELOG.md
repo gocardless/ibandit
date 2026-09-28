@@ -1,3 +1,31 @@
+## 1.35.0 - September 28, 2026
+
+- Accept one-digit NZ account suffixes and normalise them to the three-digit bank form.
+
+## 1.34.0 - September 11, 2026
+
+- [Breaking] Reject NZ account numbers whose 3 digit suffix does not start with a zero
+
+## 1.33.0 - September 2, 2026
+
+- Update BLZ data - BLZ_20260907
+
+## 1.32.0 - July 2, 2026
+
+- Update SE data - added Klarna Bank
+
+## 1.31.0 - June 8, 2026
+
+- Update BLZ data - BLZ_20260608
+
+## 1.30.0 - March 16, 2026
+
+- Update SE data - added Bank Lunar
+
+## 1.29.0 - March 9, 2025
+
+- Update BLZ data - BLZ_20260309
+
 ## 1.28.0 - December 8, 2025
 
 - Update BLZ data - BLZ_20251208
