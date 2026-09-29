@@ -1,3 +1,9 @@
+## 1.36.0 - September 29, 2026
+
+- Add Slovak translations
+- Update German translation for invalid check digits
+- Drop CI testing for Rubies older than 3.3
+
 ## 1.35.0 - September 28, 2026
 
 - Accept one-digit NZ account suffixes and normalise them to the three-digit bank form.
