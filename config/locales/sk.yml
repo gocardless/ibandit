@@ -13,7 +13,7 @@ sk:
     has_invalid_format: "formát je neplatný"
     failed_checksum_test: "nesprávny kontrolný súčet"
     failed_modulus_check: "nesprávna kontrola modulo"
-    has_invalid_length: "dĺžka je neplatná"
+    failed_modulus_check: "neúspešná kontrola modulo"
     bank_code_does_not_exist: "bankový kód neexistuje"
     has_invalid_clearing_code_length: "dĺžka kódu clearingu je neplatná"
     has_invalid_serial_number: "sériové číslo je neplatné"
