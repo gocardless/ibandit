@@ -27,7 +27,7 @@ module Ibandit
     ).uniq
 
     SUPPORTED_LOCALES = %w[
-      da de en es fr it nb nl pt sl sv
+      da de en es fr it nb nl pt sk sl sv
     ].freeze
   end
 end
