@@ -2,7 +2,7 @@ sk:
   ibandit:
     invalid_country_code: "'%{country_code}' nie je platný ISO 3166-1 IBAN kód krajiny"
     invalid_check_digits: "Kontrolné číslice neprešli kontrolou modulo. Očakávané '%{expected_check_digits}', zadané '%{check_digits}'."
-    invalid_length: "Dĺžka nesúhlasí so špecifikáciou SWIFT (očakával som %{expected_length} znakov, dostal som %{length})"
+    invalid_length: "Dĺžka nezodpovedá špecifikácii SWIFT (očakávaných %{expected_length} znakov, zadaných %{length})"
     is_required: "je povinné"
     wrong_length: "má nesprávnu dĺžku (má byť %{expected} znakov)"
     not_used_in_country: "nie je používaný v %{country_code}"
