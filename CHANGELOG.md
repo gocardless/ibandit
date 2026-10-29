@@ -1,3 +1,7 @@
+## 1.37.0 - October 29, 2026
+
+- [Breaking] Call the configured modulus checker's `valid_bank_code?` for US details, as is already done for AU, NZ and CA. US routing numbers the checker does not recognise are now invalid.
+
 ## 1.36.0 - September 29, 2026
 
 - Add Slovak translations

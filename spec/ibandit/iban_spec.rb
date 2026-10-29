@@ -1936,6 +1936,82 @@ describe Ibandit::IBAN do
     end
   end
 
+  describe "valid_us_details" do
+    subject { iban.valid_us_details? }
+
+    context "with non-US details" do
+      let(:arg) do
+        {
+          country_code: "GB",
+          bank_code: "1234",
+          branch_code: "200000",
+          account_number: "55779911",
+        }
+      end
+
+      it { is_expected.to be(true) }
+    end
+
+    context "with US details" do
+      let(:arg) do
+        {
+          country_code: "US",
+          bank_code: "026073150",
+          account_number: "2715500356",
+        }
+      end
+
+      context "without a modulus checker defined" do
+        it { is_expected.to be(true) }
+      end
+
+      context "with a modulus checker defined" do
+        before do
+          Ibandit.modulus_checker = double(
+            valid_bank_code?: valid_bank_code,
+          )
+          iban.valid_us_details?
+        end
+
+        after { Ibandit.modulus_checker = nil }
+
+        let(:valid_bank_code) { true }
+
+        it "calls valid_bank_code? with an IBAN object" do
+          expect(Ibandit.modulus_checker).
+            to receive(:valid_bank_code?).
+            with(instance_of(described_class))
+
+          iban.valid_us_details?
+        end
+
+        it { is_expected.to be(true) }
+
+        context "with a bank code that does not exist" do
+          let(:valid_bank_code) { false }
+
+          it { is_expected.to be(false) }
+
+          it "sets the errors on the IBAN" do
+            expect(iban.errors).to include(bank_code: "bank code does not exist")
+          end
+        end
+      end
+
+      context "with a bank code that fails the checksum test" do
+        let(:arg) do
+          {
+            country_code: "US",
+            bank_code: "123456789",
+            account_number: "12345678",
+          }
+        end
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
+
   describe "Pseudo IBAN #valid?" do
     let(:country_code) { "CA" }
     let(:arg) do
@@ -1988,7 +2064,7 @@ describe Ibandit::IBAN do
       context "US" do
         let(:country_code) { "US" }
 
-        specify { expect(iban).to receive(:bank_code_passes_checksum_test?).at_least(1) }
+        specify { expect(iban).to receive(:valid_us_details?).at_least(1) }
       end
     end
   end
