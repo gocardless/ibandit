@@ -298,7 +298,7 @@ module Ibandit
       when "AU" then valid_australian_details?
       when "NZ" then valid_nz_details?
       when "CA" then valid_ca_details?
-      when "US" then bank_code_passes_checksum_test?
+      when "US" then valid_us_details?
       else true
       end
     end
@@ -390,6 +390,14 @@ module Ibandit
       return true unless Ibandit.modulus_checker
 
       valid_modulus_check_branch_code?
+    end
+
+    def valid_us_details?
+      return true unless country_code == "US"
+      return false unless bank_code_passes_checksum_test?
+      return true unless Ibandit.modulus_checker
+
+      valid_modulus_check_bank_code?
     end
 
     def bank_code_passes_checksum_test?
